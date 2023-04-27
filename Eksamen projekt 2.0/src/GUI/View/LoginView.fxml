@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane fx:id="acpBackgroundLogin" prefHeight="399.0" prefWidth="367.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.LoginController">
+   <children>
+      <PasswordField fx:id="paswPassword" layoutX="109.0" layoutY="256.0" promptText="Password" />
+      <TextField fx:id="txtfUsername" layoutX="109.0" layoutY="200.0" promptText="Username" />
+      <Button fx:id="btnSignIn" layoutX="157.0" layoutY="296.0" mnemonicParsing="false" onAction="#handleSignIn" text="Sign in" />
+      <ImageView fx:id="logoImgViewLogin" fitHeight="125.0" fitWidth="200.0" layoutX="84.0" layoutY="14.0">
+         <image>
+            <Image url="@../../../Resources/Pictures/WuavLogo.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
