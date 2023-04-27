@@ -1,7 +1,7 @@
-/*
+
 package BLL;
 
-import BE.Customers;
+import BE.Customer;
 import DAL.CustomerDAO;
 import DAL.ICustomerDataAccess;
 
@@ -14,15 +14,13 @@ public class CustomerManager {
 
     public CustomerManager() throws IOException {customerDAO = new CustomerDAO();}
 
-    public List<Customers> loadCustomer(Customers) throws Exception{return  customerDAO.loadCustomer(Customers);}
+    public List<Customer> loadCustomer(Customer) throws Exception{return  customerDAO.loadCustomer(customer);}
 
-    public List<Customers> loadProjectManagers() throws  Exception{return customerDAO.loadProjectManagers();}
+    public List<Customer> loadProjectManagers() throws  Exception{return customerDAO.loadProjectManagers();}
 
-    public Customers createNewCustomer(Customers customers) throws Exception {return customerDAO.createNewCustomer(customers);}
+    public Customer createNewCustomer(Customer customer) throws Exception {return customerDAO.createNewCustomer(customer);}
 
-    public void deleteCustomer(Customers selectedCustomer) throws Exception {customerDAO.deleteCustomer(selectedCustomer);}
+    public void deleteCustomer(Customer selectedCustomer) throws Exception {customerDAO.deleteCustomer(selectedCustomer);}
 
 
 }
-
- */
