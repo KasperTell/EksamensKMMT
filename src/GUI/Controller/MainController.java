@@ -2,6 +2,7 @@ package GUI.Controller;
 
 import BE.User;
 import GUI.Model.UserModel;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -65,5 +66,8 @@ public class MainController extends BaseController {
 
 */
 
+    }
+
+    public void handleOpenCustomerDoc(ActionEvent actionEvent) {
     }
 }
