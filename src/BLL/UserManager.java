@@ -15,7 +15,7 @@ public class UserManager {
 
     public List<User> loadUser(String name) throws Exception{return userDAO.loadUser(name);}
 
-    public List<User> loadTechnicians() throws Exception{return userDAO.loadTechnicians();}
+    public List<User> loadUserOfAKind(int role) throws Exception{return userDAO.loadUserOfAType(role);}
 
     public User createNewUser(String firstName, String lastName, String username, String password, int role) throws Exception {return userDAO.createNewUser(firstName, lastName, username, password, role);}
 

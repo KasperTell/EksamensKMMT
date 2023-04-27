@@ -4,17 +4,34 @@ import BE.User;
 import GUI.Model.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 
 public class MainController extends BaseController {
     @FXML
-    private TableView<User> tblvTechnicians;
+    private Tab openProjects;
     @FXML
-    private TableColumn<User, String> clmFirstName, clmLastName;
+    private TableView OpenProjectsTable;
     @FXML
-    private Button btnCreateNewUser, btnDeleteUser;
+    private TableView closeProjectsTable;
+    @FXML
+    private TableView fileTable;
+    @FXML
+    private ListView lstTechniciansOnCase;
+    @FXML
+    private ListView<User> lstTechnicians;
+
+    @FXML
+    private ListView<User> lstProjectManagers;
+    @FXML
+    private ListView<User> lstSalesPersons;
+    @FXML
+    private Label email,zipCode,address,name,city,telephone,customerHeader;
+    @FXML
+    private TextField txtfSearchField;
+    @FXML
+    private TextArea NotesTextArea;
+    @FXML
+    private Button btnCustomerInfo;
 
     private UserModel userModel;
 
@@ -22,52 +39,41 @@ public class MainController extends BaseController {
     @Override
     public void setup() throws Exception {
         userModel = getModel().getUserModel();
-
-        /*
-        tblvTechnicians.setItems(userModel.getAllTechnicians());
-        clmFirstName.setCellValueFactory(c -> new SimpleObjectProperty<>(c.getValue().getFirstName()));
-        clmLastName.setCellValueFactory(c -> new SimpleObjectProperty<>(c.getValue().getLastName()));
-
-
-
-
-
+        lstTechnicians.setItems(userModel.getAllTechnicians());
+        lstProjectManagers.setItems(userModel.getallProjectManagers());
+        lstSalesPersons.setItems(userModel.getallSalesmen());
     }
 
-*/
 
-    /*
-    public void handleCreateNewUser(ActionEvent actionEvent) {
-        try {
-            //Binding all the data to the variables.
-            //String firstName = txtfFirstName.getText();
-            //String lastName = txtfLastName.getText();
-            //String username = txtfUsername.getText();
-            //String password = txtfPassword.getText();
-            String firstName = "Kasper";
-            String lastName = "Tell";
-            String username = "2";
-            String password = "2";
-            String salt = BCrypt.gensalt(12);
-            password = BCrypt.hashpw(password, salt);
-            int role = 1;
 
-            //Sending the variables to the model.
-            userModel.createNewUser(firstName, lastName, username, password, role);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public void handleDeleteUser(ActionEvent actionEvent) throws Exception {
-        main.java.BE.User selectedUser = tblvTechnicians.getSelectionModel().getSelectedItem();
-        userModel.deleteUser(selectedUser);
-    }
-
-*/
-
-    }
 
     public void handleOpenCustomerDoc(ActionEvent actionEvent) {
+    }
+
+    public void closeProjectAction(ActionEvent actionEvent) {
+    }
+
+    public void reopenProjectAction(ActionEvent actionEvent) {
+    }
+
+    public void openFileAction(ActionEvent actionEvent) {
+    }
+
+    public void saveFileAction(ActionEvent actionEvent) {
+    }
+
+    public void saveNoteAction(ActionEvent actionEvent) {
+    }
+
+    public void newUserAction(ActionEvent actionEvent) {
+    }
+
+    public void removeUserAction(ActionEvent actionEvent) {
+    }
+
+    public void addTechnicianAction(ActionEvent actionEvent) {
+    }
+
+    public void removeTechnicianAction(ActionEvent actionEvent) {
     }
 }

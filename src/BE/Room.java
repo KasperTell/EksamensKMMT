@@ -3,14 +3,14 @@ package BE;
 public class Room {
 
     private int id;
-    private int roomnumber;
+    private int roomNumber;
     private int messurements;
     private String note;
     private String ssid;
 
     public Room(int id, int roomnumber, int messurements, String note, String ssid) {
         this.id = id;
-        this.roomnumber = roomnumber;
+        this.roomNumber = roomnumber;
         this.messurements = messurements;
         this.note = note;
         this.ssid = ssid;
@@ -25,11 +25,11 @@ public class Room {
     }
 
     public int getRoomnumber() {
-        return roomnumber;
+        return roomNumber;
     }
 
     public void setRoomnumber(int roomnumber) {
-        this.roomnumber = roomnumber;
+        this.roomNumber = roomnumber;
     }
 
     public int getMessurements() {

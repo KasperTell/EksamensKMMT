@@ -10,21 +10,23 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: f2f2f2;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: f2f2f2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.MainController">
    <children>
       <TabPane layoutX="50.0" layoutY="150.0" prefHeight="500.0" prefWidth="300.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Åbne projekter">
+          <Tab fx:id="openProjects" text="Åbne projekter">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView prefHeight="468.5" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="OpenProjectsTable" prefHeight="445.0" prefWidth="300.0" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="Dato" />
                             <TableColumn prefWidth="224.0" text="Kunde" />
                           </columns>
                         </TableView>
+                        <Button layoutX="4.0" layoutY="447.0" mnemonicParsing="false" onAction="#closeProjectAction" text="Luk projekt" />
                      </children>
                   </AnchorPane>
             </content>
@@ -33,12 +35,13 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView layoutY="7.0" prefHeight="468.5" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="closeProjectsTable" layoutY="7.0" prefHeight="438.0" prefWidth="300.0" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <columns>
                               <TableColumn prefWidth="75.0" text="Dato" />
                               <TableColumn prefWidth="224.0" text="Kunde" />
                            </columns>
                         </TableView>
+                        <Button layoutY="438.0" mnemonicParsing="false" onAction="#reopenProjectAction" text="Genåben projekt" />
                      </children>
                   </AnchorPane>
             </content>
@@ -51,14 +54,17 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="24.0" layoutY="32.0" text="Label" />
-                        <Label layoutX="107.0" layoutY="163.0" text="Label" />
-                        <Label layoutX="34.0" layoutY="163.0" text="Label" />
-                        <Label layoutX="100.0" layoutY="114.0" text="Label" />
-                        <Label layoutX="24.0" layoutY="114.0" text="Label" />
-                        <Label layoutX="93.0" layoutY="69.0" text="Label" />
-                        <Label layoutX="20.0" layoutY="69.0" text="Label" />
-                        <Label layoutX="93.0" layoutY="32.0" text="Label" />
+                        <Label layoutX="24.0" layoutY="32.0" text="Navn" />
+                        <Label fx:id="email" layoutX="107.0" layoutY="163.0" text="Label" />
+                        <Label layoutX="24.0" layoutY="163.0" text="Email" />
+                        <Label fx:id="zipCode" layoutX="107.0" layoutY="114.0" text="Label" />
+                        <Label layoutX="24.0" layoutY="114.0" text="Postnr." />
+                        <Label fx:id="address" layoutX="107.0" layoutY="69.0" text="Label" />
+                        <Label layoutX="20.0" layoutY="69.0" text="Adresse" />
+                        <Label fx:id="name" layoutX="107.0" layoutY="32.0" text="Label" />
+                        <Label fx:id="city" layoutX="164.0" layoutY="114.0" text="Label" />
+                        <Label layoutX="24.0" layoutY="198.0" text="Telefon nr." />
+                        <Label fx:id="telephone" layoutX="107.0" layoutY="198.0" text="Telefon nr." />
                      </children>
                   </AnchorPane>
             </content>
@@ -67,7 +73,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView prefHeight="423.0" prefWidth="300.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="fileTable" prefHeight="423.0" prefWidth="300.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                               <TableColumn prefWidth="57.3084716796875" />
                             <TableColumn prefWidth="75.0" text="Filnavn" />
@@ -75,8 +81,8 @@
                               <TableColumn prefWidth="57.3084716796875" text="Indkluder i rapport" />
                           </columns>
                         </TableView>
-                        <Button layoutX="29.0" layoutY="428.0" mnemonicParsing="false" text="Åben" />
-                        <Button layoutX="105.0" layoutY="434.0" mnemonicParsing="false" text="Gem" />
+                        <Button layoutX="7.0" layoutY="434.0" mnemonicParsing="false" onAction="#openFileAction" text="Åben" />
+                        <Button layoutX="66.0" layoutY="434.0" mnemonicParsing="false" onAction="#saveFileAction" text="Gem" />
                      </children>
                   </AnchorPane>
             </content>
@@ -85,13 +91,13 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="205.0" prefWidth="287.0">
                      <children>
-                        <TextArea prefHeight="406.0" prefWidth="300.0" AnchorPane.bottomAnchor="63.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                        <Button layoutX="29.0" layoutY="412.0" mnemonicParsing="false" text="Gem" />
+                        <TextArea fx:id="NotesTextArea" prefHeight="425.0" prefWidth="300.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Button layoutX="4.0" layoutY="431.0" mnemonicParsing="false" onAction="#saveNoteAction" text="Gem" />
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Tejniker">
+            <Tab text="Tekniker">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="205.0" prefWidth="287.0">
                      <children>
@@ -103,44 +109,49 @@
         </tabs>
       </TabPane>
       <Button layoutX="69.0" layoutY="685.0" mnemonicParsing="false" text="Nyt Projekt" />
-      <Button layoutX="869.0" layoutY="685.0" mnemonicParsing="false" text="Ny bruger" />
-      <Button layoutX="992.0" layoutY="687.0" mnemonicParsing="false" text="Fjern Bruger" />
+      <Button layoutX="869.0" layoutY="685.0" mnemonicParsing="false" onAction="#newUserAction" text="Ny bruger" />
+      <Button layoutX="960.0" layoutY="686.0" mnemonicParsing="false" onAction="#removeUserAction" text="Fjern Bruger" />
       <Button layoutX="190.0" layoutY="686.0" mnemonicParsing="false" text="Ny kunde" />
-      <Button fx:id="btnCustomerInfo" layoutX="716.0" layoutY="688.0" mnemonicParsing="false" onAction="#handleOpenCustomerDoc" prefHeight="26.0" prefWidth="90.0" text="Info" />
+      <Button fx:id="btnCustomerInfo" layoutX="450.0" layoutY="684.0" mnemonicParsing="false" onAction="#handleOpenCustomerDoc" prefHeight="26.0" prefWidth="90.0" text="Info" />
       <TextField fx:id="txtfSearchField" layoutX="97.0" layoutY="95.0" promptText="Søg..." />
-      <Button layoutX="289.0" layoutY="687.0" mnemonicParsing="false" text="Luk projekt" />
       <TabPane layoutX="850.0" layoutY="150.0" prefHeight="500.0" prefWidth="300.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
-            <Tab fx:id="lstTechnicians" text="Tekniker">
+            <Tab text="Tekniker">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView layoutX="-34.0" layoutY="15.0" prefHeight="468.5" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ListView fx:id="lstTechnicians" layoutX="-34.0" layoutY="15.0" prefHeight="468.5" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ListView fx:id="lstTechnicians" layoutX="10.0" layoutY="10.0" prefHeight="468.5" prefWidth="300.0" />
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab fx:id="lstProjectManagers" text="Project manager">
+            <Tab text="Project manager">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView layoutX="15.0" layoutY="71.0" prefHeight="468.5" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ListView fx:id="lstProjectManagers" layoutX="15.0" layoutY="71.0" prefHeight="468.5" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab fx:id="lstSalesPersons" text="Sælger">
+            <Tab text="Sælger">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView layoutX="77.0" layoutY="112.0" prefHeight="468.5" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ListView fx:id="lstSalesPersons" layoutX="77.0" layoutY="112.0" prefHeight="468.5" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
          </tabs>
       </TabPane>
-      <Button layoutX="770.0" layoutY="324.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="64.0" text="Tilføj tekniker" />
-      <Button layoutX="768.0" layoutY="369.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="71.0" text="fjern tekniker" />
+      <Button layoutX="756.0" layoutY="324.0" mnemonicParsing="false" onAction="#addTechnicianAction" prefHeight="26.0" prefWidth="90.0" text="Tilføj tekniker" />
+      <Button layoutX="755.0" layoutY="369.0" mnemonicParsing="false" onAction="#removeTechnicianAction" prefHeight="26.0" prefWidth="90.0" text="fjern tekniker" />
+      <Label fx:id="customerHeader" layoutX="461.0" layoutY="77.0" text="Kunde">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

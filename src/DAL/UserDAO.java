@@ -15,14 +15,20 @@ public class UserDAO implements IUserDataAccess {
     public UserDAO() throws IOException {databaseConnector = DatabaseConnector.getInstance();}
 
     @Override
-    public List<User> loadTechnicians() throws Exception {
+    public List<User> loadUserOfAType(int roleType) throws Exception {
 
-        ArrayList<User> allTechnicians = new ArrayList<>();
+        ArrayList<User> allUserOfAType = new ArrayList<>();
+
+
         //SQL Query.
-        String sql = "SELECT * FROM Users WHERE Role = 1 AND Is_Deleted IS NULL";
+        //String sql = "SELECT * FROM Users WHERE Role ="+roleType+"AND Is_Deleted IS NULL";
+        String sql = "SELECT * FROM Users WHERE Role =? AND Is_Deleted IS NULL";
         //Getting the connection to the database.
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, roleType);
+
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -36,14 +42,17 @@ public class UserDAO implements IUserDataAccess {
 
                 User technician = new User(id, firstName, lastName, username, password, role);
 
-                allTechnicians.add(technician);
+                allUserOfAType.add(technician);
             }
-            return allTechnicians;
+            return allUserOfAType;
         } catch (Exception ex) {
             ex.printStackTrace();
             throw new Exception("Failed to retrieve Technicians from database", ex);
         }
     }
+
+
+
 
     @Override
     public List<User> loadUser(String name) throws Exception {

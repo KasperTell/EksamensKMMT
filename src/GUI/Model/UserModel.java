@@ -10,6 +10,8 @@ import java.util.List;
 public class UserModel {
 
     private ObservableList<User> allTechnicians;
+    private ObservableList<User> allSalesmen;
+    private ObservableList<User> allProjectManager;
     private UserManager userManager;
     private User user;
     private User createdUser;
@@ -17,7 +19,12 @@ public class UserModel {
     public UserModel() throws Exception {
         userManager = new UserManager();
         allTechnicians = FXCollections.observableArrayList();
-        allTechnicians.addAll(userManager.loadTechnicians());
+        allSalesmen = FXCollections.observableArrayList();
+        allProjectManager = FXCollections.observableArrayList();
+        allTechnicians.addAll(userManager.loadUserOfAKind(4));
+        allSalesmen.addAll(userManager.loadUserOfAKind(3));
+        allProjectManager.addAll(userManager.loadUserOfAKind(2));
+
         System.out.println(allTechnicians.size());
     }
 
@@ -25,13 +32,18 @@ public class UserModel {
 
     public ObservableList<User> getAllTechnicians() {return allTechnicians;}
 
+    public ObservableList<User> getallSalesmen() {return allSalesmen;}
+
+
+    public ObservableList<User> getallProjectManagers() {return allProjectManager;}
+
     public boolean validateUsername(String username) throws Exception{return userManager.validateUsername(username);}
 
     public void createNewUser(String firstName, String lastName, String username, String password, int role) throws Exception {
         createdUser =  userManager.createNewUser(firstName, lastName, username, password, role);
         allTechnicians.add(createdUser);
         allTechnicians.clear();
-        allTechnicians.addAll(userManager.loadTechnicians());
+        allTechnicians.addAll(userManager.loadUserOfAKind(role));
     }
 
     public User getLoggedinUser(){return user;}
