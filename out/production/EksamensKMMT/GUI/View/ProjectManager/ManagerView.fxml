@@ -82,7 +82,7 @@
                           </columns>
                         </TableView>
                         <Button fx:id="openFile" layoutX="7.0" layoutY="434.0" mnemonicParsing="false" onAction="#openFileAction" text="Åben" />
-                        <Button fx:id="saveFile" layoutX="66.0" layoutY="434.0" mnemonicParsing="false" onAction="#saveFileAction" text="Gem" />
+                        <Button fx:id="btnSaveNewFile" layoutX="66.0" layoutY="434.0" mnemonicParsing="false" onAction="#handleSaveNewFile" text="Gem" />
                      </children>
                   </AnchorPane>
             </content>

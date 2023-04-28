@@ -6,10 +6,21 @@ import PersonsTypes.PersonTypeChooser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableView;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
 
 public class MainController extends BaseController {
     @FXML
-    private Button closeProject,reOpenProject,openFile,saveFile,saveNote,newProject,newUser,removeUser,newCustomer,addTechnician,removeTechnician;
+    private Button closeProject,reOpenProject,openFile,btnSaveNewFile,saveNote,newProject,newUser,removeUser,newCustomer,addTechnician,removeTechnician;
 
     @FXML
     private Tab openProjects;
@@ -37,6 +48,9 @@ public class MainController extends BaseController {
     @FXML
     private Button btnCustomerInfo;
 
+    private File file;
+    private String filePath = "Resources/Pictures/ImagesSavedFromTechnicians";
+    private Path target = Paths.get(filePath);
     private UserModel userModel;
 
     PersonTypeChooser personTypeChooser=new PersonTypeChooser();
@@ -58,7 +72,7 @@ public class MainController extends BaseController {
        closeProject.setDisable(turnButtonOnOrOff[0]);
        reOpenProject.setDisable(turnButtonOnOrOff[1]);
        openFile.setDisable(turnButtonOnOrOff[2]);
-       saveFile.setDisable(turnButtonOnOrOff[3]);
+       btnSaveNewFile.setDisable(turnButtonOnOrOff[3]);
        saveNote.setDisable(turnButtonOnOrOff[4]);
        newProject.setDisable(turnButtonOnOrOff[5]);
        newUser.setDisable(turnButtonOnOrOff[6]);
@@ -82,9 +96,6 @@ public class MainController extends BaseController {
     public void openFileAction(ActionEvent actionEvent) {
     }
 
-    public void saveFileAction(ActionEvent actionEvent) {
-    }
-
     public void saveNoteAction(ActionEvent actionEvent) {
     }
 
@@ -104,5 +115,22 @@ public class MainController extends BaseController {
     }
 
     public void newCustomerAction(ActionEvent actionEvent) {
+    }
+    @FXML
+    private void handleSaveNewFile(ActionEvent actionEvent) {
+        Stage stage = new Stage();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("File explore");
+
+        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*jpeg");
+        fileChooser.getExtensionFilters().add(extensionFilter);
+        file = fileChooser.showOpenDialog(stage);
+        if(file != null) {
+            try{
+                Files.copy(file.toPath(), target.resolve(file.toPath().getFileName()), REPLACE_EXISTING);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
