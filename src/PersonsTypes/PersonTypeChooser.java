@@ -1,24 +1,28 @@
 package PersonsTypes;
 
+
 public class PersonTypeChooser {
 
     public static PersonTypes personTypes;
 
-    public void chooseType(String type)
+
+    public void chooseType(PersonType personType)
     {
 
-        switch (type)
+
+        switch (personType)
         {
 
-            case "Salesman":
+
+            case Salesman:
                 personTypes=new PersonTypes(new Salesman());
                 break;
 
-            case "ProjectManager":
+            case ProjectManager:
                 personTypes=new PersonTypes(new ProjectManager());
                 break;
 
-            case "Technician":
+            case Technician:
                 personTypes=new PersonTypes(new Technician());
                 break;
 
