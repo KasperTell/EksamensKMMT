@@ -1,12 +1,12 @@
 package PersonsTypes;
 
-public class PersonTypes {
+public class PersonTypesKlient {
 
     private IPersonTypes iPersonTypes;
 
 
 
-    public PersonTypes(IPersonTypes iPersonTypes)
+    public PersonTypesKlient(IPersonTypes iPersonTypes)
     {
         this.iPersonTypes=iPersonTypes;
     }

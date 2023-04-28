@@ -3,7 +3,7 @@ package PersonsTypes;
 
 public class PersonTypeChooser {
 
-    public static PersonTypes personTypes;
+    public static PersonTypesKlient personTypes;
 
 
     public void chooseType(PersonType personType)
@@ -13,17 +13,16 @@ public class PersonTypeChooser {
         switch (personType)
         {
 
-
             case Salesman:
-                personTypes=new PersonTypes(new Salesman());
+                personTypes=new PersonTypesKlient(new Salesman());
                 break;
 
             case ProjectManager:
-                personTypes=new PersonTypes(new ProjectManager());
+                personTypes=new PersonTypesKlient(new ProjectManager());
                 break;
 
             case Technician:
-                personTypes=new PersonTypes(new Technician());
+                personTypes=new PersonTypesKlient(new Technician());
                 break;
 
         }

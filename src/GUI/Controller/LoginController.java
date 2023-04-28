@@ -5,7 +5,7 @@ import GUI.Model.FacadeModel;
 import GUI.Model.UserModel;
 import PersonsTypes.PersonType;
 import PersonsTypes.PersonTypeChooser;
-import PersonsTypes.PersonTypes;
+import PersonsTypes.PersonTypesKlient;
 import PersonsTypes.Technician;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
