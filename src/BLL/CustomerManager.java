@@ -7,6 +7,7 @@ import DAL.ICustomerDataAccess;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.List;
 
 public class CustomerManager {
 
@@ -14,9 +15,9 @@ public class CustomerManager {
 
     public CustomerManager() throws IOException {customerDAO = new CustomerDAO();}
 
-    public List<Customer> loadCustomer(Customer) throws Exception{return  customerDAO.loadCustomer(customer);}
+    public List<Customer> loadCustomer(String companyname) throws Exception{return (List<Customer>) customerDAO.loadCustomer(companyname);}
 
-    public List<Customer> loadProjectManagers() throws  Exception{return customerDAO.loadProjectManagers();}
+    public List<Customer> loadProjectManagers() throws  Exception{return (List<Customer>) customerDAO.loadProjectManagers();}
 
     public Customer createNewCustomer(Customer customer) throws Exception {return customerDAO.createNewCustomer(customer);}
 
