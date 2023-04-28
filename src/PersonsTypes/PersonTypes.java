@@ -21,6 +21,17 @@ public class PersonTypes {
         return iPersonTypes.getViewString();
     }
 
+    public String getCSS()
+    {
+        return iPersonTypes.getViewCss();
+    }
+
+
+    public Boolean[] turnButtonOnOrOff() {
+
+
+        return iPersonTypes.turnButtonOnOrOff();
+    }
 
 
 }

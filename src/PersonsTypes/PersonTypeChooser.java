@@ -32,5 +32,18 @@ public class PersonTypeChooser {
 
     }
 
+    public String getCSS()
+    {
+        return personTypes.getCSS();
+
+    }
+
+    public Boolean[] turnButtonOnOrOff()
+    {
+        return personTypes.turnButtonOnOrOff();
+
+    }
+
+
 
 }

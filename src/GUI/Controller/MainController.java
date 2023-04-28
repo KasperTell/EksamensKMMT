@@ -2,11 +2,15 @@ package GUI.Controller;
 
 import BE.User;
 import GUI.Model.UserModel;
+import PersonsTypes.PersonTypeChooser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 public class MainController extends BaseController {
+    @FXML
+    private Button closeProject,reOpenProject,openFile,saveFile,saveNote,newProject,newUser,removeUser,newCustomer,addTechnician,removeTechnician;
+
     @FXML
     private Tab openProjects;
     @FXML
@@ -35,6 +39,8 @@ public class MainController extends BaseController {
 
     private UserModel userModel;
 
+    PersonTypeChooser personTypeChooser=new PersonTypeChooser();
+
 
     @Override
     public void setup() throws Exception {
@@ -42,9 +48,26 @@ public class MainController extends BaseController {
         lstTechnicians.setItems(userModel.getAllTechnicians());
         lstProjectManagers.setItems(userModel.getallProjectManagers());
         lstSalesPersons.setItems(userModel.getallSalesmen());
+        turnButtonONOrOff();
     }
 
+    private void turnButtonONOrOff() {
 
+        Boolean[] turnButtonOnOrOff=personTypeChooser.turnButtonOnOrOff();
+
+       closeProject.setDisable(turnButtonOnOrOff[0]);
+       reOpenProject.setDisable(turnButtonOnOrOff[1]);
+       openFile.setDisable(turnButtonOnOrOff[2]);
+       saveFile.setDisable(turnButtonOnOrOff[3]);
+       saveNote.setDisable(turnButtonOnOrOff[4]);
+       newProject.setDisable(turnButtonOnOrOff[5]);
+       newUser.setDisable(turnButtonOnOrOff[6]);
+       removeUser.setDisable(turnButtonOnOrOff[7]);
+       newCustomer.setDisable(turnButtonOnOrOff[8]);
+       addTechnician.setDisable(turnButtonOnOrOff[9]);
+       removeTechnician.setDisable(turnButtonOnOrOff[10]);
+
+    }
 
 
     public void handleOpenCustomerDoc(ActionEvent actionEvent) {
@@ -75,5 +98,11 @@ public class MainController extends BaseController {
     }
 
     public void removeTechnicianAction(ActionEvent actionEvent) {
+    }
+
+    public void newProjectAction(ActionEvent actionEvent) {
+    }
+
+    public void newCustomerAction(ActionEvent actionEvent) {
     }
 }

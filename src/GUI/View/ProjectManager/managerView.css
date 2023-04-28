@@ -1,0 +1,77 @@
+
+#background
+{
+    -fx-background-color: #2E3440;
+}
+
+
+VBox
+{
+    -fx-background-color: #3B4252;
+}
+
+Rectangle
+{
+    -fx-stroke: #2E3440;
+}
+
+Button
+{
+     -fx-background-color: #4C566A;
+     -fx-text-fill: white;
+}
+
+.text-field
+{
+    -fx-background-color: #2E3440;
+    -fx-text-fill: white;
+}
+
+.text-area
+{
+    -fx-focus-color: transparent;
+    -fx-text-box-border: transparent;
+    -fx-text-fill: white;
+    -fx-background-color: #2E3440 ;
+}
+
+ .text-area .content
+{
+    -fx-background-color: #2E3440 ;
+
+}
+
+ .list-view
+{
+     -fx-padding: 0px;
+}
+
+.list-view .list-cell:even {
+     -fx-background-color: #2E3440;
+     -fx-text-fill: white;
+}
+
+.list-view .list-cell:odd {
+     -fx-background-color: #2E3440;
+     -fx-text-fill: white;
+}
+
+.list-view:focused .list-cell:filled:focused:selected
+{
+     -fx-background-color: #4C566A;
+}
+
+
+.combo-box
+{
+     -fx-background-color: #2E3440;
+     -fx-text-fill: white;
+     -fx-text-fill: -fx-text-base-color;
+
+}
+
+
+
+
+
+
