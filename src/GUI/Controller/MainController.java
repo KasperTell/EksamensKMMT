@@ -2,10 +2,20 @@ package GUI.Controller;
 
 import BE.User;
 import GUI.Model.UserModel;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
 
 public class MainController extends BaseController {
     @FXML
@@ -13,8 +23,10 @@ public class MainController extends BaseController {
     @FXML
     private TableColumn<User, String> clmFirstName, clmLastName;
     @FXML
-    private Button btnCreateNewUser, btnDeleteUser;
-
+    private Button btnCreateNewUser, btnDeleteUser, btnSaveNewFile;
+    private File file;
+    private String filePath = "Resources/Pictures/ImagesSavedFromTechnicians";
+    private Path target = Paths.get(filePath);
     private UserModel userModel;
 
 
@@ -65,5 +77,22 @@ public class MainController extends BaseController {
 
 */
 
+    }
+    @FXML
+    private void handleSaveNewFile(ActionEvent actionEvent) {
+        Stage stage = new Stage();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("File explore");
+
+        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*jpeg");
+        fileChooser.getExtensionFilters().add(extensionFilter);
+        file = fileChooser.showOpenDialog(stage);
+        if(file != null) {
+            try{
+                Files.copy(file.toPath(), target.resolve(file.toPath().getFileName()), REPLACE_EXISTING);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

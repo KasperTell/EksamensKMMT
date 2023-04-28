@@ -79,7 +79,7 @@
                               <TableColumn prefWidth="127.333251953125" text="Indkluder i rapport" />
                           </columns>
                         </TableView>
-                        <Button layoutX="52.0" layoutY="274.0" mnemonicParsing="false" text="Gem" />
+                        <Button fx:id="btnSaveNewFile" layoutX="52.0" layoutY="274.0" mnemonicParsing="false" onAction="#handleSaveNewFile" text="Gem" />
                         <Button layoutX="8.0" layoutY="274.0" mnemonicParsing="false" text="Åben" />
                      </children>
                   </AnchorPane>
