@@ -1,6 +1,6 @@
 package BE;
 
-public class Customers {
+public class Customer {
         private int id;
         private String address;
         private int phonenumber;
@@ -11,7 +11,7 @@ public class Customers {
         private String lastName;
         private int room;
 
-    public Customers(int id, String address, int phonenumber, String companyname, int zipcode, String mail, String firstName, String lastName, int room) {
+    public Customer(int id, String address, int phonenumber, String companyname, int zipcode, String mail, String firstName, String lastName, int room) {
         this.id = id;
         this.address = address;
         this.phonenumber = phonenumber;

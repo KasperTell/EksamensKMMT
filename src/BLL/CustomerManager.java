@@ -1,12 +1,13 @@
-/*
+
 package BLL;
 
-import BE.Customers;
+import BE.Customer;
 import DAL.CustomerDAO;
 import DAL.ICustomerDataAccess;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.List;
 
 public class CustomerManager {
 
@@ -14,15 +15,13 @@ public class CustomerManager {
 
     public CustomerManager() throws IOException {customerDAO = new CustomerDAO();}
 
-    public List<Customers> loadCustomer(Customers) throws Exception{return  customerDAO.loadCustomer(Customers);}
+    public List<Customer> loadCustomer(String companyname) throws Exception{return (List<Customer>) customerDAO.loadCustomer(companyname);}
 
-    public List<Customers> loadProjectManagers() throws  Exception{return customerDAO.loadProjectManagers();}
+    public List<Customer> loadProjectManagers() throws  Exception{return (List<Customer>) customerDAO.loadProjectManagers();}
 
-    public Customers createNewCustomer(Customers customers) throws Exception {return customerDAO.createNewCustomer(customers);}
+    public Customer createNewCustomer(Customer customer) throws Exception {return customerDAO.createNewCustomer(customer);}
 
-    public void deleteCustomer(Customers selectedCustomer) throws Exception {customerDAO.deleteCustomer(selectedCustomer);}
+    public void deleteCustomer(Customer selectedCustomer) throws Exception {customerDAO.deleteCustomer(selectedCustomer);}
 
 
 }
-
- */
