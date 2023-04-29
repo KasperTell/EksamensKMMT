@@ -1,25 +1,28 @@
 package BE;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Project {
     private int id;
     private String title;
     private int customernumber;
-    private Date date;
-    private boolean open_close;
+    private LocalDate date;
+    private boolean open;
 
-    public Project(int id, String title, int customernumber, Date date, boolean open_close) {
+    public Project(int id, String title, int customernumber, LocalDate date, boolean open) {
         this.id = id;
         this.title = title;
         this.customernumber = customernumber;
         this.date = date;
-        this.open_close = open_close;
+        this.open = open;
     }
 
     public int getId() {
         return id;
     }
+
+
 
     public void setId(int id) {
         this.id = id;
@@ -41,19 +44,33 @@ public class Project {
         this.customernumber = customernumber;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public boolean isOpen_close() {
-        return open_close;
+    public boolean isOpen() {
+        return open;
     }
 
-    public void setOpen_close(boolean open_close) {
-        this.open_close = open_close;
+    public void setOpen(boolean open_close) {
+        this.open = open_close;
     }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", customernumber=" + customernumber +
+                ", date=" + date +
+                ", open=" + open +
+                '}';
+    }
+
+
+
 }

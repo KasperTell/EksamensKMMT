@@ -2,25 +2,27 @@ package BE;
 
 public class Customer {
         private int id;
-        private String address;
-        private int phonenumber;
-        private String companyname;
-        private int zipcode;
-        private String mail;
         private String firstName;
         private String lastName;
-        private int room;
+    private String companyName;
+        private String address;
+        private int phoneNumber;
 
-    public Customer(int id, String address, int phonenumber, String companyname, int zipcode, String mail, String firstName, String lastName, int room) {
+        private int zipCode;
+        private String mail;
+
+
+
+    public Customer(int id, String address, int phoneNumber, String companyName, int zipCode, String mail, String firstName, String lastName ) {
         this.id = id;
         this.address = address;
-        this.phonenumber = phonenumber;
-        this.companyname = companyname;
-        this.zipcode = zipcode;
+        this.phoneNumber = phoneNumber;
+        this.companyName = companyName;
+        this.zipCode = zipCode;
         this.mail = mail;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.room = room;
+
     }
 
     public int getId() {
@@ -39,38 +41,6 @@ public class Customer {
         this.address = address;
     }
 
-    public int getPhonenumber() {
-        return phonenumber;
-    }
-
-    public void setPhonenumber(int phonenumber) {
-        this.phonenumber = phonenumber;
-    }
-
-    public String getCompanyname() {
-        return companyname;
-    }
-
-    public void setCompanyname(String companyname) {
-        this.companyname = companyname;
-    }
-
-    public int getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(int zipcode) {
-        this.zipcode = zipcode;
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -87,11 +57,36 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public int getRoom() {
-        return room;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setRoom(int room) {
-        this.room = room;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public int getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(int zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
 }

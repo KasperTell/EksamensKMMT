@@ -25,7 +25,6 @@ public class UserModel {
         allSalesmen.addAll(userManager.loadUserOfAKind(3));
         allProjectManager.addAll(userManager.loadUserOfAKind(2));
 
-        System.out.println(allTechnicians.size());
     }
 
     public List<User> loadUser(String name)throws Exception{return userManager.loadUser(name);}

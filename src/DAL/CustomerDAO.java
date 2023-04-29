@@ -36,9 +36,9 @@ public class CustomerDAO implements ICustomerDataAccess {
                 String mail = rs.getString("Mail");
                 String firstName = rs.getString("First_Name");
                 String lastName = rs.getString("Last_Name");
-                int room = rs.getInt("Room");
 
-                Customer customer = new Customer(id, address, phonenumber, companyname, zipcode, mail, firstName, lastName, room);
+
+                Customer customer = new Customer(id, address, phonenumber, companyname, zipcode, mail, firstName, lastName);
 
                 allProjectManager.add(customer);
             }
@@ -73,9 +73,9 @@ public class CustomerDAO implements ICustomerDataAccess {
                 String mail = rs.getString("Mail");
                 String firstName = rs.getString("First_Name");
                 String lastName = rs.getString("Last_Name");
-                int room = rs.getInt("Room");
 
-                Customer customer = new Customer(id, address, phonenumber, companyname, zipcode, mail, firstName, lastName, room);
+
+                Customer customer = new Customer(id, address, phonenumber, companyname, zipcode, mail, firstName, lastName);
 
                 allCustomer.add(customer);
             }
@@ -100,7 +100,7 @@ public class CustomerDAO implements ICustomerDataAccess {
     @Override
     public Customer createNewCustomer(String address, int phonenumber, String companyname, int zipcode, String mail, String firstName, String lastName, int room) throws Exception {
         //SQL Query
-        String sql = "INSERT INTO Customer (address, phonenumber, companyname, zipcode, mail, firstName, lastName, room) VALUES(?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Customer (address, phonenumber, companyname, zipcode, mail, firstName, lastName) VALUES(?,?,?,?,?,?,?)";
         //Getting the connection to the database
         try (java.sql.Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -112,7 +112,6 @@ public class CustomerDAO implements ICustomerDataAccess {
             stmt.setString(5, mail);
             stmt.setString(6, firstName);
             stmt.setString(7, lastName);
-            stmt.setInt(8, room);
             stmt.execute();
 
             ResultSet rs = stmt.getGeneratedKeys();
@@ -120,7 +119,7 @@ public class CustomerDAO implements ICustomerDataAccess {
             if (rs.next()) {
                 id = rs.getInt(1);
             }
-            Customer customer = new Customer(id, address, phonenumber, companyname, zipcode, mail, firstName, lastName, room);
+            Customer customer = new Customer(id, address, phonenumber, companyname, zipcode, mail, firstName, lastName);
             return customer;
             }catch (SQLException ex){
             ex.printStackTrace();
