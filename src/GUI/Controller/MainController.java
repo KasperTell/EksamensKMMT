@@ -1,6 +1,8 @@
 package GUI.Controller;
 
+import BE.Project;
 import BE.User;
+import GUI.Model.ProjectModel;
 import GUI.Model.UserModel;
 import PersonsTypes.PersonTypeChooser;
 import javafx.event.ActionEvent;
@@ -8,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -20,14 +23,16 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class MainController extends BaseController {
     @FXML
+    private TableColumn projectDateOpen,projectOpenCustomer,projectCloseDate,projectCloseCustomer;
+
+    @FXML
     private Button closeProject,reOpenProject,openFile,btnSaveNewFile,saveNote,newProject,newUser,removeUser,newCustomer,addTechnician,removeTechnician;
 
     @FXML
     private Tab openProjects;
     @FXML
-    private TableView OpenProjectsTable;
-    @FXML
-    private TableView closeProjectsTable;
+    private TableView<Project> openProjectsTable,closeProjectsTable;
+
     @FXML
     private TableView fileTable;
     @FXML
@@ -52,6 +57,7 @@ public class MainController extends BaseController {
     private String filePath = "Resources/Pictures/ImagesSavedFromTechnicians";
     private Path target = Paths.get(filePath);
     private UserModel userModel;
+    private ProjectModel projectModel;
 
     PersonTypeChooser personTypeChooser=new PersonTypeChooser();
 
@@ -63,6 +69,22 @@ public class MainController extends BaseController {
         lstProjectManagers.setItems(userModel.getallProjectManagers());
         lstSalesPersons.setItems(userModel.getallSalesmen());
         turnButtonONOrOff();
+        setProjectColoums();
+    }
+
+    private void setProjectColoums() throws Exception {
+
+        projectModel=new ProjectModel();
+
+        projectDateOpen.setCellValueFactory(new PropertyValueFactory<>("date"));
+        projectOpenCustomer.setCellValueFactory(new PropertyValueFactory<>("title"));
+        projectCloseDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        projectCloseCustomer.setCellValueFactory(new PropertyValueFactory<>("title"));
+
+        openProjectsTable.setItems(projectModel.getAllProjectsOpen());
+        closeProjectsTable.setItems(projectModel.getAllProjectsClose());
+
+
     }
 
     private void turnButtonONOrOff() {

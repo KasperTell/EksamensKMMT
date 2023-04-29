@@ -20,10 +20,10 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="OpenProjectsTable" prefHeight="445.0" prefWidth="300.0" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="openProjectsTable" prefHeight="445.0" prefWidth="300.0" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="Dato" />
-                            <TableColumn prefWidth="224.0" text="Kunde" />
+                            <TableColumn fx:id="projectDateOpen" prefWidth="75.0" text="Dato" />
+                            <TableColumn fx:id="projectOpenCustomer" prefWidth="224.0" text="Kunde" />
                           </columns>
                         </TableView>
                         <Button fx:id="closeProject" layoutX="4.0" layoutY="447.0" mnemonicParsing="false" onAction="#closeProjectAction" text="Luk projekt" />
@@ -37,8 +37,8 @@
                      <children>
                         <TableView fx:id="closeProjectsTable" layoutY="7.0" prefHeight="438.0" prefWidth="300.0" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <columns>
-                              <TableColumn prefWidth="75.0" text="Dato" />
-                              <TableColumn prefWidth="224.0" text="Kunde" />
+                              <TableColumn fx:id="projectCloseDate" prefWidth="75.0" text="Dato" />
+                              <TableColumn fx:id="projectCloseCustomer" prefWidth="224.0" text="Kunde" />
                            </columns>
                         </TableView>
                         <Button fx:id="reOpenProject" layoutY="438.0" mnemonicParsing="false" onAction="#reopenProjectAction" text="Genåben projekt" />

@@ -1,13 +1,9 @@
 package GUI.Model;
 
 import BE.Project;
-import BE.User;
 import BLL.ProjectManager;
-import BLL.UserManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.io.IOException;
 
 public class ProjectModel {
 
@@ -25,7 +21,9 @@ public ProjectModel() throws Exception {
 
 }
 
+    public ObservableList<Project> getAllProjectsOpen() {return projectsOpen;}
 
+    public ObservableList<Project> getAllProjectsClose() {return projectClose;}
 
 
 
