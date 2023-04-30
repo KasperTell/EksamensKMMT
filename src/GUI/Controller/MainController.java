@@ -1,17 +1,17 @@
 package GUI.Controller;
 
+import BE.Customer;
 import BE.Project;
 import BE.ProjectFiles;
 import BE.User;
 import GUI.Model.ProjectFilesModel;
 import GUI.Model.ProjectModel;
 import GUI.Model.UserModel;
+import GUI.Model.CustomerModel;
 import PersonsTypes.PersonTypeChooser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -20,6 +20,9 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 
@@ -184,6 +187,29 @@ public class MainController extends BaseController {
     }
 
     public void newCustomerAction(ActionEvent actionEvent) {
+        List<Customer> customer = new ArrayList<>();
+        // Create a new instance of the customer class
+        Customer newCustomer = new Customer();
+
+        //set the properties of the new Customer
+        newCustomer.setFirstName(name.getText());
+        newCustomer.setAddress(address.getText());
+        newCustomer.setZipCode(Integer.parseInt(zipCode.getText()));
+        newCustomer.setCity(city.getText());
+        newCustomer.setMail(email.getText());
+        newCustomer.setPhoneNumber(Integer.parseInt(telephone.getText()));
+
+        // Add the new customer to your systems list of customer
+        customer.add(newCustomer);
+
+        // Update the UI to display the new customer's information
+        projectOpenCustomer.setText(newCustomer.getFirstName());
+        name.setText(newCustomer.getFirstName());
+        address.setText(newCustomer.getAddress());
+        zipCode.setText(String.valueOf(newCustomer.getZipCode()));
+        city.setText(newCustomer.getCity());
+        email.setText(newCustomer.getMail());
+        telephone.setText(String.valueOf(newCustomer.getPhoneNumber()));
     }
     @FXML
     private void handleSaveNewFile(ActionEvent actionEvent) {

@@ -11,9 +11,11 @@ public class Customer {
         private int zipCode;
         private String mail;
 
+        private String city;
 
 
-    public Customer(int id, String address, int phoneNumber, String companyName, int zipCode, String mail, String firstName, String lastName ) {
+
+    public Customer() {
         this.id = id;
         this.address = address;
         this.phoneNumber = phoneNumber;
@@ -22,6 +24,7 @@ public class Customer {
         this.mail = mail;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.city = city;
 
     }
 
@@ -87,6 +90,13 @@ public class Customer {
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
 }

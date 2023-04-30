@@ -7,9 +7,12 @@ import DAL.ICustomerDataAccess;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerManager {
+
+    List<Customer> customer = new ArrayList<>();
 
     private ICustomerDataAccess customerDAO;
 
