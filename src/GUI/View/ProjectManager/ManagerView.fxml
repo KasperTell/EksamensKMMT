@@ -75,10 +75,10 @@
                      <children>
                         <TableView fx:id="fileTable" prefHeight="423.0" prefWidth="300.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
-                              <TableColumn prefWidth="57.3084716796875" />
-                            <TableColumn prefWidth="75.0" text="Filnavn" />
-                            <TableColumn prefWidth="75.0" text="Dato" />
-                              <TableColumn prefWidth="57.3084716796875" text="Indkluder i rapport" />
+                              <TableColumn fx:id="filesPictureColoum" prefWidth="57.3084716796875" />
+                            <TableColumn fx:id="filesFilenameColoum" prefWidth="75.0" text="Filnavn" />
+                            <TableColumn fx:id="filesDate" prefWidth="75.0" text="Dato" />
+                              <TableColumn fx:id="filesInReport" prefWidth="57.3084716796875" text="Indkluder i rapport" />
                           </columns>
                         </TableView>
                         <Button fx:id="openFile" layoutX="7.0" layoutY="434.0" mnemonicParsing="false" onAction="#openFileAction" text="Åben" />

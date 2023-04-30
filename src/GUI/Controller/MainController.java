@@ -1,7 +1,9 @@
 package GUI.Controller;
 
 import BE.Project;
+import BE.ProjectFiles;
 import BE.User;
+import GUI.Model.ProjectFilesModel;
 import GUI.Model.ProjectModel;
 import GUI.Model.UserModel;
 import PersonsTypes.PersonTypeChooser;
@@ -22,8 +24,9 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 
 public class MainController extends BaseController {
+
     @FXML
-    private TableColumn projectDateOpen,projectOpenCustomer,projectCloseDate,projectCloseCustomer;
+    private TableColumn projectDateOpen,projectOpenCustomer,projectCloseDate,projectCloseCustomer,filesPictureColoum,filesFilenameColoum,filesDate,filesInReport;
 
     @FXML
     private Button closeProject,reOpenProject,openFile,btnSaveNewFile,saveNote,newProject,newUser,removeUser,newCustomer,addTechnician,removeTechnician;
@@ -34,16 +37,13 @@ public class MainController extends BaseController {
     private TableView<Project> openProjectsTable,closeProjectsTable;
 
     @FXML
-    private TableView fileTable;
+    private TableView<ProjectFiles> fileTable;
     @FXML
     private ListView lstTechniciansOnCase;
-    @FXML
-    private ListView<User> lstTechnicians;
 
     @FXML
-    private ListView<User> lstProjectManagers;
-    @FXML
-    private ListView<User> lstSalesPersons;
+    private ListView<User> lstProjectManagers,lstTechnicians,lstSalesPersons;
+
     @FXML
     private Label email,zipCode,address,name,city,telephone,customerHeader;
     @FXML
@@ -53,11 +53,17 @@ public class MainController extends BaseController {
     @FXML
     private Button btnCustomerInfo;
 
+    private Project selectedProject;
+
+
     private File file;
     private String filePath = "Resources/Pictures/ImagesSavedFromTechnicians";
     private Path target = Paths.get(filePath);
     private UserModel userModel;
     private ProjectModel projectModel;
+
+    private ProjectFilesModel projectFilesModel;
+
 
     PersonTypeChooser personTypeChooser=new PersonTypeChooser();
 
@@ -70,7 +76,63 @@ public class MainController extends BaseController {
         lstSalesPersons.setItems(userModel.getallSalesmen());
         turnButtonONOrOff();
         setProjectColoums();
+        listenerLstAllCloseProjects();
+        listenerLstAllOpenProjects();
     }
+
+
+    @FXML
+    private void listenerLstAllCloseProjects() {
+        closeProjectsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+        {
+            selectedProject  = closeProjectsTable.getSelectionModel().getSelectedItem();
+            try {
+                setupFiles();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    @FXML
+    private void listenerLstAllOpenProjects() {
+        openProjectsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+        {
+
+            selectedProject = openProjectsTable.getSelectionModel().getSelectedItem();
+            try {
+                setupFiles();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        });
+
+    }
+
+    @FXML
+    private void setupFiles() throws Exception {
+        projectFilesModel=new ProjectFilesModel();
+        int projectNumber=selectedProject.getId();
+        //filesPictureColoum.setCellValueFactory(new PropertyValueFactory<>("date"));
+        filesFilenameColoum.setCellValueFactory(new PropertyValueFactory<>("name"));
+        filesDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        //filesInReport.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+        fileTable.setItems(projectFilesModel.getAllFilesFromProject(projectNumber));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     private void setProjectColoums() throws Exception {
 
@@ -87,23 +149,8 @@ public class MainController extends BaseController {
 
     }
 
-    private void turnButtonONOrOff() {
 
-        Boolean[] turnButtonOnOrOff=personTypeChooser.turnButtonOnOrOff();
 
-       closeProject.setDisable(turnButtonOnOrOff[0]);
-       reOpenProject.setDisable(turnButtonOnOrOff[1]);
-       openFile.setDisable(turnButtonOnOrOff[2]);
-       btnSaveNewFile.setDisable(turnButtonOnOrOff[3]);
-       saveNote.setDisable(turnButtonOnOrOff[4]);
-       newProject.setDisable(turnButtonOnOrOff[5]);
-       newUser.setDisable(turnButtonOnOrOff[6]);
-       removeUser.setDisable(turnButtonOnOrOff[7]);
-       newCustomer.setDisable(turnButtonOnOrOff[8]);
-       addTechnician.setDisable(turnButtonOnOrOff[9]);
-       removeTechnician.setDisable(turnButtonOnOrOff[10]);
-
-    }
 
 
     public void handleOpenCustomerDoc(ActionEvent actionEvent) {
@@ -155,4 +202,25 @@ public class MainController extends BaseController {
             }
         }
     }
+
+
+    private void turnButtonONOrOff() {
+
+        Boolean[] turnButtonOnOrOff=personTypeChooser.turnButtonOnOrOff();
+
+        closeProject.setDisable(turnButtonOnOrOff[0]);
+        reOpenProject.setDisable(turnButtonOnOrOff[1]);
+        openFile.setDisable(turnButtonOnOrOff[2]);
+        btnSaveNewFile.setDisable(turnButtonOnOrOff[3]);
+        saveNote.setDisable(turnButtonOnOrOff[4]);
+        newProject.setDisable(turnButtonOnOrOff[5]);
+        newUser.setDisable(turnButtonOnOrOff[6]);
+        removeUser.setDisable(turnButtonOnOrOff[7]);
+        newCustomer.setDisable(turnButtonOnOrOff[8]);
+        addTechnician.setDisable(turnButtonOnOrOff[9]);
+        removeTechnician.setDisable(turnButtonOnOrOff[10]);
+
+    }
+
+
 }
