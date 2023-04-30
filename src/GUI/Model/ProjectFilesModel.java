@@ -17,7 +17,7 @@ public class ProjectFilesModel {
     public ProjectFilesModel() throws Exception {
         projectFilesManager = new ProjectFilesManager();
         projectFiles = FXCollections.observableArrayList();
-        projectFiles.addAll(projectFilesManager.loadFilesFromAProject(0));
+//        projectFiles.addAll(projectFilesManager.loadFilesFromAProject(0));
 
     }
 
@@ -25,7 +25,6 @@ public class ProjectFilesModel {
     public ObservableList<ProjectFiles> getAllFilesFromProject(int projectID) throws Exception {
 
         projectFiles.addAll(projectFilesManager.loadFilesFromAProject(projectID));
-
          return projectFiles;
     }
 

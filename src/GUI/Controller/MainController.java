@@ -114,10 +114,11 @@ public class MainController extends BaseController {
     private void setupFiles() throws Exception {
         projectFilesModel=new ProjectFilesModel();
         int projectNumber=selectedProject.getId();
-        //filesPictureColoum.setCellValueFactory(new PropertyValueFactory<>("date"));
+        filesPictureColoum.setCellValueFactory(new PropertyValueFactory<>("picture"));
+
         filesFilenameColoum.setCellValueFactory(new PropertyValueFactory<>("name"));
         filesDate.setCellValueFactory(new PropertyValueFactory<>("date"));
-        //filesInReport.setCellValueFactory(new PropertyValueFactory<>("date"));
+        filesInReport.setCellValueFactory(new PropertyValueFactory<>("usedBox"));
 
         fileTable.setItems(projectFilesModel.getAllFilesFromProject(projectNumber));
     }

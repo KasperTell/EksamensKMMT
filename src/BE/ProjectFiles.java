@@ -21,15 +21,15 @@ private CheckBox usedBox;
 
 
 
-    public ProjectFiles(int id, int projectID, String name, String filePath, LocalDate date, byte used) {
+    public ProjectFiles(int id, int projectID, String name, String filePath, LocalDate date, byte used, ImageView picture,CheckBox usedBox) {
         this.id = id;
         this.projectID = projectID;
         this.filePath = filePath;
                 this.date = date;
         this.used = used;
         this.name=name;
-        //this.picture = picture;
-       // this.usedBox = usedBox;
+        this.picture = picture;
+        this.usedBox = usedBox;
     }
 
     public int getId() {

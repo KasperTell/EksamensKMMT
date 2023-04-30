@@ -1,6 +1,10 @@
 package DAL;
 
 import BE.ProjectFiles;
+import PersonsTypes.ImageViewKlient;
+import PersonsTypes.LillePng;
+import javafx.scene.control.CheckBox;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -19,11 +23,14 @@ public class FilesDAO {
     public List<ProjectFiles> loadFilesFromAProject(int projectID) throws Exception {
 
         ArrayList<ProjectFiles> loadFilesFromAProject = new ArrayList<>();
+        ImageView picture;
+        ImageViewKlient pictureFrame = null;
 
 
-        //SQL Query.
-        //String sql = "SELECT * FROM Users WHERE Role ="+roleType+"AND Is_Deleted IS NULL";
+
         String sql = "SELECT * FROM ProjectFile WHERE ProjectID =?";
+
+
         //Getting the connection to the database.
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -43,7 +50,26 @@ public class FilesDAO {
 
 
 
-                ProjectFiles files = new ProjectFiles(id,projectID,name,filePath,date,usedInDoc ) ;
+                String filetype=filePath.substring(filePath.length()-4,filePath.length());
+                System.out.println(filetype);
+
+                switch (filetype)
+                {
+                    case ".jpg":
+                        pictureFrame = new ImageViewKlient(new LillePng());
+                        break;
+
+                    case "":
+                        break;
+                }
+
+                picture=pictureFrame.getImageView();
+
+                CheckBox checkBox=new CheckBox();
+
+
+
+                ProjectFiles files = new ProjectFiles(id, projectID,name, filePath,date, usedInDoc, picture,checkBox) ;
 
                 loadFilesFromAProject.add(files);
             }
