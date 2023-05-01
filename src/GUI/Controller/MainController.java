@@ -126,14 +126,16 @@ public class MainController extends BaseController {
     @FXML
     private void setupFiles() throws Exception {
         projectFilesModel=new ProjectFilesModel();
-        int projectNumber=selectedProject.getId();
-        filesPictureColoum.setCellValueFactory(new PropertyValueFactory<>("picture"));
+        if(selectedProject != null) {
+            int projectNumber = selectedProject.getId();
+            filesPictureColoum.setCellValueFactory(new PropertyValueFactory<>("picture"));
 
-        filesFilenameColoum.setCellValueFactory(new PropertyValueFactory<>("name"));
-        filesDate.setCellValueFactory(new PropertyValueFactory<>("date"));
-        filesInReport.setCellValueFactory(new PropertyValueFactory<>("usedBox"));
+            filesFilenameColoum.setCellValueFactory(new PropertyValueFactory<>("name"));
+            filesDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+            filesInReport.setCellValueFactory(new PropertyValueFactory<>("usedBox"));
 
-        fileTable.setItems(projectFilesModel.getAllFilesFromProject(projectNumber));
+            fileTable.setItems(projectFilesModel.getAllFilesFromProject(projectNumber));
+        }
     }
 
 
@@ -170,10 +172,18 @@ public class MainController extends BaseController {
     public void handleOpenCustomerDoc(ActionEvent actionEvent) {
     }
 
-    public void closeProjectAction(ActionEvent actionEvent) {
+    public void closeProjectAction(ActionEvent actionEvent) throws Exception {
+        int closeProject = 1;
+        int id = selectedProject.getId();
+        selectedProject = null;
+        projectModel.changeProjectStatus(closeProject, id);
     }
 
-    public void reopenProjectAction(ActionEvent actionEvent) {
+    public void reopenProjectAction(ActionEvent actionEvent) throws Exception {
+        int reOpenProject = 0;
+        int id = selectedProject.getId();
+        selectedProject = null;
+        projectModel.changeProjectStatus(reOpenProject, id);
     }
 
     public void openFileAction(ActionEvent actionEvent) {
@@ -204,15 +214,16 @@ public class MainController extends BaseController {
     private void setUpCustomer() throws Exception{
 
         customerModel = new CustomerModel();
+        if(selectedProject != null) {
+            int customerID = selectedProject.getCustomernumber();
+            Customer customer = customerModel.loadCustomer(customerID);
 
-        int customerID = selectedProject.getCustomernumber();
-        Customer customer = customerModel.loadCustomer(customerID);
-
-        name.setText(customer.getFirstName());
-        address.setText(customer.getAddress());
-        zipCode.setText(String.valueOf(customer.getZipCode()));
-        email.setText(customer.getMail());
-        telephone.setText(String.valueOf(customer.getPhoneNumber()));
+            name.setText(customer.getFirstName());
+            address.setText(customer.getAddress());
+            zipCode.setText(String.valueOf(customer.getZipCode()));
+            email.setText(customer.getMail());
+            telephone.setText(String.valueOf(customer.getPhoneNumber()));
+        }
     }
 
     @FXML

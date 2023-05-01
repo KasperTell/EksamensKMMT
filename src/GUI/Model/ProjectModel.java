@@ -26,14 +26,12 @@ public ProjectModel() throws Exception {
     public ObservableList<Project> getAllProjectsClose() {return projectClose;}
 
 
+    public void changeProjectStatus(int projectStatus, int id) throws Exception {
+    projectManager.changeProjectStatus(projectStatus, id);
+    projectsOpen.clear();
+    projectClose.clear();
+    projectClose.addAll(projectManager.loadProjectOfAType(false));
+    projectsOpen.addAll(projectManager.loadProjectOfAType(true));
 
-
-
-
-
-
-
-
-
-
+}
 }

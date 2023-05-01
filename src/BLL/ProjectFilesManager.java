@@ -1,9 +1,7 @@
 package BLL;
 
-import BE.Project;
 import BE.ProjectFiles;
 import DAL.FilesDAO;
-import DAL.ProjectDAO;
 
 import java.io.IOException;
 import java.util.ArrayList;

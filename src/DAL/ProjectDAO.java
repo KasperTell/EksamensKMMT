@@ -6,10 +6,11 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class ProjectDAO {
+public class ProjectDAO implements IProjectDataAccess{
 
     private DatabaseConnector databaseConnector;
 
@@ -69,7 +70,17 @@ public class ProjectDAO {
         }
     }
 
-
-
+    public void changeProjectStatus(int projectStatus, int id) throws Exception {
+    String sql = "UPDATE Project SET OpenClose = ? WHERE ID = ?";
+    try(Connection conn = databaseConnector.getConnection()){
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, projectStatus);
+        stmt.setInt(2, id);
+        stmt.execute();
+    } catch(SQLException ex){
+        ex.printStackTrace();
+        throw new Exception("Could not edit project status");
+    }
+    }
 
 }
