@@ -9,6 +9,7 @@ import GUI.Model.ProjectModel;
 import GUI.Model.UserModel;
 import GUI.Model.CustomerModel;
 import PersonsTypes.PersonTypeChooser;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -57,7 +58,7 @@ public class MainController extends BaseController {
     private Button btnCustomerInfo;
 
     private Project selectedProject;
-
+    private ProjectFiles selectedFiles;
 
     private File file;
     private String filePath = "Resources/Pictures/ImagesSavedFromTechnicians";
@@ -81,6 +82,7 @@ public class MainController extends BaseController {
         setProjectColoums();
         listenerLstAllCloseProjects();
         listenerLstAllOpenProjects();
+        listenerFilesMarkedOrNot();
     }
 
 
@@ -99,6 +101,8 @@ public class MainController extends BaseController {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+
+
         });
     }
 
@@ -123,6 +127,9 @@ public class MainController extends BaseController {
 
     }
 
+
+
+
     @FXML
     private void setupFiles() throws Exception {
         projectFilesModel=new ProjectFilesModel();
@@ -135,7 +142,28 @@ public class MainController extends BaseController {
             filesInReport.setCellValueFactory(new PropertyValueFactory<>("usedBox"));
 
             fileTable.setItems(projectFilesModel.getAllFilesFromProject(projectNumber));
+
+
         }
+    }
+
+
+
+    private void listenerFilesMarkedOrNot() {
+
+        fileTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+        {
+
+            selectedFiles = fileTable.getSelectionModel().getSelectedItem();
+
+            if (selectedFiles!=null)
+            {
+                    if (selectedFiles.getUsedBox().isSelected())
+                        System.out.println("selected");
+                    else
+                        System.out.println("not selected");
+            }
+        });
     }
 
 
@@ -150,7 +178,15 @@ public class MainController extends BaseController {
 
 
 
-    private void setProjectColoums() throws Exception {
+
+
+
+
+
+
+
+
+        private void setProjectColoums() throws Exception {
 
         projectModel=new ProjectModel();
 
