@@ -167,8 +167,8 @@ public class UserDAO implements IUserDataAccess {
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             //Setting the parameters and executing the query.
-            stmt.setInt(1, technicianID);
-            stmt.setInt(2,projectID);
+            stmt.setInt(1, projectID);
+            stmt.setInt(2, technicianID);
             stmt.execute();
 
             ResultSet rs = stmt.getGeneratedKeys();
