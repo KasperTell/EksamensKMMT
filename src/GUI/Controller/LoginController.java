@@ -7,9 +7,11 @@ import PersonsTypes.PersonType;
 import PersonsTypes.PersonTypeChooser;
 import PersonsTypes.PersonTypesKlient;
 import PersonsTypes.Technician;
+import com.sun.tools.javac.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -18,22 +20,27 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.util.Collection;
+
 public class LoginController extends BaseController {
+    @FXML
+    private AnchorPane acpBackgroundLogin;
+    @FXML
+    private ImageView ImgViewLogin;
     @FXML
     private PasswordField paswPassword;
     @FXML
     private TextField txtfUsername;
     @FXML
     private Button btnSignIn;
-    @FXML
-    private ImageView logoImgViewLogin;
-
     private PersonTypeChooser personTypeChooser;
     private UserModel userModel;
     private User user;
+
 
     public void handleSignIn(ActionEvent actionEvent) throws Exception {
 
@@ -75,24 +82,22 @@ public class LoginController extends BaseController {
 
     private void openMainWindow() throws Exception {
 
-        Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(personTypeChooser.getViewString()));
-        Parent root = loader.load();
+        AnchorPane pane = loader.load();
+        acpBackgroundLogin.getChildren().setAll(pane);
 
         MainController controller = loader.getController();
         controller.setModel(new FacadeModel());
         controller.setup();
 
-        stage.setScene(new Scene(root));
-        stage.show();
-        closeWindow(btnSignIn);
-        System.out.println(userModel.getLoggedinUser());
-
     }
+
+
 
     public void setup() {
         userModel = getModel().getUserModel();
-        logoImgViewLogin.setImage(new Image("Pictures/WuavLogo.png"));
+        ImgViewLogin.setImage(new Image("Pictures/LoginBackground.jpg"));
+        ImgViewLogin.setOpacity(0.25);
     }
 }
