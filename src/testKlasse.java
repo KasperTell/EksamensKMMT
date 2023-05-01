@@ -1,4 +1,7 @@
+import BLL.CustomerManager;
+import DAL.CustomerDAO;
 import DAL.ProjectDAO;
+import GUI.Model.CustomerModel;
 
 import java.io.IOException;
 
@@ -9,8 +12,11 @@ public class testKlasse {
     public static void main(String[] args) throws Exception {
 
 
-        ProjectDAO projectDAO=new ProjectDAO();
-        System.out.println(projectDAO.loadProjectOfAType(false));
+        //CustomerManager customerManager = new CustomerManager();
+        CustomerModel customerModel = new CustomerModel();
+
+        System.out.println(customerModel.loadCustomer(13));
+
 
 
 

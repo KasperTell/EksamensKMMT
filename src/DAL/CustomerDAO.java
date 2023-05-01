@@ -5,7 +5,6 @@ import BE.Customer;
 import java.awt.*;
 import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
 
 public class CustomerDAO implements ICustomerDataAccess {
 
@@ -15,76 +14,41 @@ public class CustomerDAO implements ICustomerDataAccess {
         databaseConnector = DatabaseConnector.getInstance();
     }
 
-    @Override
-    public java.util.List<Customer> loadProjectManager() throws Exception {
+   @Override
+    public Customer loadCustomer(int customerID) throws Exception {
 
-        ArrayList<Customer> allProjectManager = new ArrayList<>();
         //SQL Query
-        String sql = "SELECT * FROM Customer WHERE Role = 2";
+        String sql = "SELECT * FROM Customers WHERE ID = ?";
         // getting the connection to the database.
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, customerID);
             ResultSet rs = stmt.executeQuery();
 
+            Customer customer = null;
             while (rs.next()) {
                 //Map DB to user object
                 int id = rs.getInt("ID");
-                String address = rs.getString("Address");
-                int phonenumber = rs.getInt("Phonenumber");
-                String companyname = rs.getString("CompanyName");
-                int zipcode = rs.getInt("Zipcode");
-                String mail = rs.getString("Mail");
                 String firstName = rs.getString("First_Name");
                 String lastName = rs.getString("Last_Name");
+                String companyname = rs.getString("Company_Name");
+                String address = rs.getString("Address");
+                int zipcode = rs.getInt("Zip_Code");
+                String mail = rs.getString("Mail");
+                int phonenumber = rs.getInt("Phone_Number");
+                String city = rs.getString("City");
 
 
-                Customer customer = new Customer(id, address, phonenumber, companyname, zipcode, mail, firstName, lastName);
+                customer = new Customer(id, address, phonenumber, companyname, zipcode, mail, firstName, lastName, city);
 
-                allProjectManager.add(customer);
             }
-            return allProjectManager;
+            return customer;
         } catch (Exception ex) {
             ex.printStackTrace();
             throw new Exception("Failed to add Customer from the database", ex);
         }
     }
 
-    @Override
-    public java.util.List<Customer> loadCustomer(String companyname) throws Exception {
-        ArrayList<Customer> allCustomer = new ArrayList<>();
-        //SQL Query
-        String sql = "SELECT * FROM Customer WHERE Companyname = ?";
-        //Getting the connection to the database.
-        try (java.sql.Connection conn = databaseConnector.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement(sql);
-
-            //Setting the paramers and executing the statement.
-            stmt.setString(1, companyname);
-            ResultSet rs = stmt.executeQuery();
-
-            // Loop through rows from the database result set
-            while (rs.next()) {
-                //Map DB row to user object
-                int id = rs.getInt("ID");
-                String address = rs.getString("Address");
-                int phonenumber = rs.getInt("Phonenumber");
-                companyname = rs.getString("CompanyName");
-                int zipcode = rs.getInt("Zipcode");
-                String mail = rs.getString("Mail");
-                String firstName = rs.getString("First_Name");
-                String lastName = rs.getString("Last_Name");
-
-
-                Customer customer = new Customer(id, address, phonenumber, companyname, zipcode, mail, firstName, lastName);
-
-                allCustomer.add(customer);
-            }
-            return allCustomer;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw new Exception("Could not get EventKoordinator from database", ex);
-        }
-    }
 
     @Override
     public java.util.List<Customer> loadProjectManager(String companyname) throws Exception {
@@ -96,11 +60,16 @@ public class CustomerDAO implements ICustomerDataAccess {
         return null;
     }
 
-
     @Override
     public Customer createNewCustomer(String address, int phonenumber, String companyname, int zipcode, String mail, String firstName, String lastName, int room) throws Exception {
+        return null;
+    }
+
+
+
+    public Customer createNewCustomer(String address, int phonenumber, String companyname, int zipcode, String mail, String firstName, String lastName, int room, String city) throws Exception {
         //SQL Query
-        String sql = "INSERT INTO Customer (address, phonenumber, companyname, zipcode, mail, firstName, lastName) VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Customer (address, phonenumber, companyname, zipcode, mail, firstName, lastName, city) VALUES(?,?,?,?,?,?,?,?)";
         //Getting the connection to the database
         try (java.sql.Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -112,6 +81,7 @@ public class CustomerDAO implements ICustomerDataAccess {
             stmt.setString(5, mail);
             stmt.setString(6, firstName);
             stmt.setString(7, lastName);
+            stmt.setString(8,city);
             stmt.execute();
 
             ResultSet rs = stmt.getGeneratedKeys();
@@ -119,7 +89,7 @@ public class CustomerDAO implements ICustomerDataAccess {
             if (rs.next()) {
                 id = rs.getInt(1);
             }
-            Customer customer = new Customer(id, address, phonenumber, companyname, zipcode, mail, firstName, lastName);
+            Customer customer = new Customer(id, address, phonenumber, companyname, zipcode, mail, firstName,  lastName, city);
             return customer;
             }catch (SQLException ex){
             ex.printStackTrace();

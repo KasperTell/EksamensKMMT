@@ -21,10 +21,8 @@ public class CustomerModel {
 
     public CustomerModel() throws Exception {
         customerManager = new CustomerManager();
-        allProjectmanager = FXCollections.observableArrayList();
-        allProjectmanager.addAll(customerManager.loadProjectManagers());
     }
-    public List<Customer> loadCustomer(String companyname) throws Exception {return customerManager.loadCustomer(companyname);}
+    public Customer loadCustomer(int customerID) throws Exception {return customerManager.loadCustomer(customerID);}
 
     public void createNewCustomer(Customer customer) throws Exception {
         createdCustomer = customerManager.createNewCustomer(customer);

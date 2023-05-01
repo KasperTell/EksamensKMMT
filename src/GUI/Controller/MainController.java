@@ -1,17 +1,17 @@
 package GUI.Controller;
 
+import BE.Customer;
 import BE.Project;
 import BE.ProjectFiles;
 import BE.User;
 import GUI.Model.ProjectFilesModel;
 import GUI.Model.ProjectModel;
 import GUI.Model.UserModel;
+import GUI.Model.CustomerModel;
 import PersonsTypes.PersonTypeChooser;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -20,6 +20,9 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 
@@ -61,7 +64,7 @@ public class MainController extends BaseController {
     private Path target = Paths.get(filePath);
     private UserModel userModel;
     private ProjectModel projectModel;
-
+    private CustomerModel customerModel;
     private ProjectFilesModel projectFilesModel;
 
 
@@ -87,6 +90,11 @@ public class MainController extends BaseController {
         {
             selectedProject  = closeProjectsTable.getSelectionModel().getSelectedItem();
             try {
+                setUpCustomer();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            try {
                 setupFiles();
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -100,6 +108,11 @@ public class MainController extends BaseController {
         {
 
             selectedProject = openProjectsTable.getSelectionModel().getSelectedItem();
+            try {
+                setUpCustomer();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             try {
                 setupFiles();
             } catch (Exception e) {
@@ -186,6 +199,23 @@ public class MainController extends BaseController {
 
     public void newCustomerAction(ActionEvent actionEvent) {
     }
+
+    @FXML
+    private void setUpCustomer() throws Exception{
+
+        customerModel = new CustomerModel();
+
+        int customerID = selectedProject.getCustomernumber();
+        Customer customer = customerModel.loadCustomer(customerID);
+
+        name.setText(customer.getFirstName());
+        address.setText(customer.getAddress());
+        zipCode.setText(String.valueOf(customer.getZipCode()));
+        city.setText(customer.getCity());
+        email.setText(customer.getMail());
+        telephone.setText(String.valueOf(customer.getPhoneNumber()));
+    }
+
     @FXML
     private void handleSaveNewFile(ActionEvent actionEvent) {
         Stage stage = new Stage();

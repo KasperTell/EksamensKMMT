@@ -5,9 +5,10 @@ import BE.Customer;
 import java.awt.*;
 
 public interface ICustomerDataAccess {
-    java.util.List<Customer> loadProjectManager() throws Exception;
 
-    java.util.List<Customer> loadCustomer(String companyname) throws Exception;
+    Customer loadCustomer(int customerID) throws Exception;
+
+
     java.util.List<Customer> loadProjectManager(String companyname) throws Exception;
     
     Customer createNewCustomer(Customer customer) throws Exception;
