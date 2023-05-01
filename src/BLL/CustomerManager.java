@@ -18,7 +18,7 @@ public class CustomerManager {
 
     public CustomerManager() throws IOException {customerDAO = new CustomerDAO();}
 
-    public List<Customer> loadCustomer(String companyname) throws Exception{return (List<Customer>) customerDAO.loadCustomer(companyname);}
+    public Customer loadCustomer(int customerID) throws Exception{return customerDAO.loadCustomer(customerID);}
 
     public List<Customer> loadProjectManagers() throws  Exception{return (List<Customer>) customerDAO.loadProjectManagers();}
 

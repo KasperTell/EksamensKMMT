@@ -64,7 +64,7 @@ public class MainController extends BaseController {
     private Path target = Paths.get(filePath);
     private UserModel userModel;
     private ProjectModel projectModel;
-
+    private CustomerModel customerModel;
     private ProjectFilesModel projectFilesModel;
 
 
@@ -90,6 +90,11 @@ public class MainController extends BaseController {
         {
             selectedProject  = closeProjectsTable.getSelectionModel().getSelectedItem();
             try {
+                setUpCustomer();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            try {
                 setupFiles();
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -103,6 +108,11 @@ public class MainController extends BaseController {
         {
 
             selectedProject = openProjectsTable.getSelectionModel().getSelectedItem();
+            try {
+                setUpCustomer();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             try {
                 setupFiles();
             } catch (Exception e) {
@@ -187,30 +197,24 @@ public class MainController extends BaseController {
     }
 
     public void newCustomerAction(ActionEvent actionEvent) {
-        List<Customer> customer = new ArrayList<>();
-        // Create a new instance of the customer class
-        Customer newCustomer = new Customer();
-
-        //set the properties of the new Customer
-        newCustomer.setFirstName(name.getText());
-        newCustomer.setAddress(address.getText());
-        newCustomer.setZipCode(Integer.parseInt(zipCode.getText()));
-        newCustomer.setCity(city.getText());
-        newCustomer.setMail(email.getText());
-        newCustomer.setPhoneNumber(Integer.parseInt(telephone.getText()));
-
-        // Add the new customer to your systems list of customer
-        customer.add(newCustomer);
-
-        // Update the UI to display the new customer's information
-        projectOpenCustomer.setText(newCustomer.getFirstName());
-        name.setText(newCustomer.getFirstName());
-        address.setText(newCustomer.getAddress());
-        zipCode.setText(String.valueOf(newCustomer.getZipCode()));
-        city.setText(newCustomer.getCity());
-        email.setText(newCustomer.getMail());
-        telephone.setText(String.valueOf(newCustomer.getPhoneNumber()));
     }
+
+    @FXML
+    private void setUpCustomer() throws Exception{
+
+        customerModel = new CustomerModel();
+
+        int customerID = selectedProject.getCustomernumber();
+        Customer customer = customerModel.loadCustomer(customerID);
+
+        name.setText(customer.getFirstName());
+        address.setText(customer.getAddress());
+        zipCode.setText(String.valueOf(customer.getZipCode()));
+        city.setText(customer.getCity());
+        email.setText(customer.getMail());
+        telephone.setText(String.valueOf(customer.getPhoneNumber()));
+    }
+
     @FXML
     private void handleSaveNewFile(ActionEvent actionEvent) {
         Stage stage = new Stage();
