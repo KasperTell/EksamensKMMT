@@ -211,7 +211,6 @@ public class MainController extends BaseController {
         name.setText(customer.getFirstName());
         address.setText(customer.getAddress());
         zipCode.setText(String.valueOf(customer.getZipCode()));
-        city.setText(customer.getCity());
         email.setText(customer.getMail());
         telephone.setText(String.valueOf(customer.getPhoneNumber()));
     }

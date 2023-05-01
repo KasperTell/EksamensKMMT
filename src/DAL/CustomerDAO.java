@@ -36,10 +36,9 @@ public class CustomerDAO implements ICustomerDataAccess {
                 int zipcode = rs.getInt("Zip_Code");
                 String mail = rs.getString("Mail");
                 int phonenumber = rs.getInt("Phone_Number");
-                String city = rs.getString("City");
 
 
-                customer = new Customer(id, address, phonenumber, companyname, zipcode, mail, firstName, lastName, city);
+                customer = new Customer(id, address, phonenumber, companyname, zipcode, mail, firstName, lastName);
 
             }
             return customer;
@@ -89,7 +88,7 @@ public class CustomerDAO implements ICustomerDataAccess {
             if (rs.next()) {
                 id = rs.getInt(1);
             }
-            Customer customer = new Customer(id, address, phonenumber, companyname, zipcode, mail, firstName,  lastName, city);
+            Customer customer = new Customer(id, address, phonenumber, companyname, zipcode, mail, firstName,  lastName);
             return customer;
             }catch (SQLException ex){
             ex.printStackTrace();
