@@ -85,6 +85,7 @@ public class LoginController extends BaseController {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(personTypeChooser.getViewString()));
         AnchorPane pane = loader.load();
+        pane.getStylesheets().add(personTypeChooser.getCSS());
         acpBackgroundLogin.getChildren().setAll(pane);
 
         MainController controller = loader.getController();
