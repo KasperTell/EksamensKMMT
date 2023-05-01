@@ -37,6 +37,7 @@ public class UserModel {
     public ObservableList<User> getallProjectManagers() {return allProjectManager;}
 
     public boolean validateUsername(String username) throws Exception{return userManager.validateUsername(username);}
+    public void moveTechnician(int technicianID, int projectID)throws Exception {userManager.moveTechnician(technicianID, projectID);}
 
     public void createNewUser(String firstName, String lastName, String username, String password, int role) throws Exception {
         createdUser =  userManager.createNewUser(firstName, lastName, username, password, role);

@@ -1,5 +1,6 @@
 package DAL;
 
+import BE.ProjectTechnician;
 import BE.User;
 
 import java.io.IOException;
@@ -12,7 +13,9 @@ public class UserDAO implements IUserDataAccess {
 
     private DatabaseConnector databaseConnector;
 
-    public UserDAO() throws IOException {databaseConnector = DatabaseConnector.getInstance();}
+    public UserDAO() throws IOException {
+        databaseConnector = DatabaseConnector.getInstance();
+    }
 
     @Override
     public List<User> loadUserOfAType(int roleType) throws Exception {
@@ -50,8 +53,6 @@ public class UserDAO implements IUserDataAccess {
             throw new Exception("Failed to retrieve Technicians from database", ex);
         }
     }
-
-
 
 
     @Override
@@ -102,7 +103,7 @@ public class UserDAO implements IUserDataAccess {
             if (rs.next()) {
                 return true;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("Failed to validate", e);
         }
@@ -127,17 +128,16 @@ public class UserDAO implements IUserDataAccess {
 
             ResultSet rs = stmt.getGeneratedKeys();
             int id = 0;
-            if(rs.next()){
+            if (rs.next()) {
                 id = rs.getInt(1);
             }
             User user = new User(id, firstName, lastName, username, password, role);
             return user;
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
             throw new Exception("Could not create User", ex);
         }
     }
-
 
 
     @Override
@@ -147,16 +147,43 @@ public class UserDAO implements IUserDataAccess {
         //SQL query.
         String sql = "UPDATE Users SET Is_Deleted = ? WHERE ID = ?";
         //Getting the connection to the database.
-        try(Connection conn = databaseConnector.getConnection()){
+        try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
             //Setting the parameter and executing the query.
             stmt.setDate(1, Date.valueOf(localDate));
             stmt.setInt(2, selectedUser.getId());
             stmt.execute();
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
             throw new Exception("Could not delete this user", ex);
         }
     }
+
+    @Override
+    public ProjectTechnician moveTechnician(int technicianID, int projectID) throws Exception {
+        //SQL Query
+        String sql = "INSERT INTO ProjectTechnician (ProjectID, UserID) VALUES (?,?)";
+        //Getting the connection to the database.
+        try (Connection conn = databaseConnector.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            //Setting the parameters and executing the query.
+            stmt.setInt(1, projectID);
+            stmt.setInt(2, technicianID);
+            stmt.execute();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+            int id = 0;
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+            ProjectTechnician projectTechnician = new ProjectTechnician(id, technicianID, projectID);
+            return projectTechnician;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new Exception("Could not move Technician", ex);
+
+
+        }
     }
+}
 

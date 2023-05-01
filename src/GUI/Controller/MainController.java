@@ -198,10 +198,19 @@ public class MainController extends BaseController {
     public void removeUserAction(ActionEvent actionEvent) {
     }
 
-    public void addTechnicianAction(ActionEvent actionEvent) {
+    public void addTechnicianAction(ActionEvent actionEvent) throws Exception {
+        int projectID = selectedProject.getId();
+        int technicanID = lstTechnicians.getSelectionModel().getSelectedItem().getId();
+
+        System.out.println(projectID);
+        System.out.println(technicanID);
+
+        userModel.moveTechnician(technicanID,projectID);
+
     }
 
     public void removeTechnicianAction(ActionEvent actionEvent) {
+
     }
 
     public void newProjectAction(ActionEvent actionEvent) {

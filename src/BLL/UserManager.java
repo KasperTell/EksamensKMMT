@@ -1,5 +1,6 @@
 package BLL;
 
+import BE.ProjectTechnician;
 import BE.User;
 import DAL.IUserDataAccess;
 import DAL.UserDAO;
@@ -22,6 +23,8 @@ public class UserManager {
     public void deleteUser(User selectedUser) throws Exception {userDAO.deleteUser(selectedUser);}
 
     public boolean validateUsername(String username) throws Exception{return userDAO.validateUsername(username);}
+
+    public ProjectTechnician moveTechnician(int technicianID, int projectID) throws  Exception {return userDAO.moveTechnician(technicianID,projectID);}
 
 
 
