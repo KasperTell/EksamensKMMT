@@ -1,4 +1,4 @@
-package PersonsTypes;
+package DAL.PictureClasses;
 
 
 import javafx.scene.image.Image;
@@ -9,8 +9,6 @@ import java.io.FileNotFoundException;
 
 public class LillePng implements IImageViewKlient {
 
-
-    private final String STI_SLUTNING="/lille_guld.png";
 
 
     @Override

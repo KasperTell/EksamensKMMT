@@ -1,8 +1,10 @@
 package DAL;
 
 import BE.ProjectFiles;
-import PersonsTypes.ImageViewKlient;
-import PersonsTypes.LillePng;
+import DAL.PictureClasses.ImageViewKlient;
+import DAL.PictureClasses.LilleJpeg;
+import DAL.PictureClasses.LilleJpg;
+import DAL.PictureClasses.LillePng;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.ImageView;
 
@@ -56,16 +58,26 @@ public class FilesDAO {
                 switch (filetype)
                 {
                     case ".jpg":
+                        pictureFrame = new ImageViewKlient(new LilleJpg());
+                        break;
+
+                    case ".png":
                         pictureFrame = new ImageViewKlient(new LillePng());
                         break;
 
-                    case "":
+                    case "jpeg":
+                        pictureFrame = new ImageViewKlient(new LilleJpeg());
                         break;
+
                 }
 
                 picture=pictureFrame.getImageView();
 
                 CheckBox checkBox=new CheckBox();
+
+
+                if (usedInDoc==0)
+                    checkBox.setSelected(true);
 
 
 

@@ -1,4 +1,4 @@
-package PersonsTypes;
+package DAL.PictureClasses;
 
 import javafx.scene.image.ImageView;
 
