@@ -9,18 +9,26 @@ import GUI.Model.ProjectModel;
 import GUI.Model.UserModel;
 import GUI.Model.CustomerModel;
 import PersonsTypes.PersonTypeChooser;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +37,12 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class MainController extends BaseController {
 
+    public Button btnAddNewProject;
+    public ComboBox<Customer> cbxCustomer;
+    public TextField txtfProjectName;
+    public Label customerHeader1;
+    public VBox vbxCreateNewProject;
+    public AnchorPane acpMainView;
     @FXML
     private TableColumn projectDateOpen,projectOpenCustomer,projectCloseDate,projectCloseCustomer,filesPictureColoum,filesFilenameColoum,filesDate,filesInReport;
 
@@ -67,6 +81,7 @@ public class MainController extends BaseController {
     private ProjectModel projectModel;
     private CustomerModel customerModel;
     private ProjectFilesModel projectFilesModel;
+    private boolean isMenuOpen;
 
 
     PersonTypeChooser personTypeChooser=new PersonTypeChooser();
@@ -75,9 +90,11 @@ public class MainController extends BaseController {
     @Override
     public void setup() throws Exception {
         userModel = getModel().getUserModel();
+        customerModel = getModel().getCustomerModel();
         lstTechnicians.setItems(userModel.getAllTechnicians());
         lstProjectManagers.setItems(userModel.getallProjectManagers());
         lstSalesPersons.setItems(userModel.getallSalesmen());
+        cbxCustomer.setItems(customerModel.getAllCustomers());
         turnButtonONOrOff();
         setProjectColoums();
         listenerLstAllCloseProjects();
@@ -165,27 +182,6 @@ public class MainController extends BaseController {
             }
         });
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         private void setProjectColoums() throws Exception {
 
         projectModel=new ProjectModel();
@@ -200,10 +196,6 @@ public class MainController extends BaseController {
 
 
     }
-
-
-
-
 
     public void handleOpenCustomerDoc(ActionEvent actionEvent) {
     }
@@ -249,7 +241,31 @@ public class MainController extends BaseController {
 
     }
 
-    public void newProjectAction(ActionEvent actionEvent) {
+    public void newProjectAction() {
+        TranslateTransition transition = new TranslateTransition();
+        vbxCreateNewProject.toFront();
+        transition.setNode(vbxCreateNewProject);
+        transition.setDuration(Duration.millis(150));
+
+        if(!isMenuOpen){
+            isMenuOpen = true;
+            transition.setToX(0);
+            acpMainView.setOpacity(0.2);
+            EventHandler<MouseEvent> menuHandler = new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    newProjectAction();
+                    acpMainView.removeEventHandler(MouseEvent.MOUSE_CLICKED, this);
+
+                }
+            };
+            acpMainView.addEventHandler(MouseEvent.MOUSE_CLICKED, menuHandler);
+        } else {
+            isMenuOpen = false;
+            transition.setToX(-400);
+            acpMainView.setOpacity(1);
+        }
+        transition.play();
     }
 
     public void newCustomerAction(ActionEvent actionEvent) {
@@ -309,4 +325,15 @@ public class MainController extends BaseController {
     }
 
 
+    public void handleAddNewProject(ActionEvent actionEvent) throws SQLException {
+        int id = 1;
+        String title = txtfProjectName.getText();
+        int customerID = cbxCustomer.getSelectionModel().getSelectedItem().getId();
+        LocalDate date = LocalDate.now();
+        boolean isOpen = true;
+        Project project = new Project(id, title, customerID, date, isOpen);
+        projectModel.createNewProject(project);
+
+        newProjectAction();
+    }
 }

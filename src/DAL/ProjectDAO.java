@@ -1,12 +1,10 @@
 package DAL;
 
 import BE.Project;
+import BE.User;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -70,6 +68,20 @@ public class ProjectDAO implements IProjectDataAccess{
         }
     }
 
+    public Project createNewProject(Project project) throws SQLException {
+        String sql = "INSERT INTO Project (Title, customerID, Date, OpenClose) VALUES (?,?,?,?)";
+        try (Connection conn = databaseConnector.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            //Setting the parameters and executing the query.
+            stmt.setString(1, project.getTitle());
+            stmt.setInt(2, project.getCustomernumber());
+            stmt.setDate(3, Date.valueOf(project.getDate()));
+            stmt.setInt(4, 0);
+            stmt.execute();
+        }
+        return project;
+    }
+
     public void changeProjectStatus(int projectStatus, int id) throws Exception {
     String sql = "UPDATE Project SET OpenClose = ? WHERE ID = ?";
     try(Connection conn = databaseConnector.getConnection()){
@@ -79,7 +91,7 @@ public class ProjectDAO implements IProjectDataAccess{
         stmt.execute();
     } catch(SQLException ex){
         ex.printStackTrace();
-        throw new Exception("Could not edit project status");
+        throw new SQLException("Could not edit project status");
     }
     }
 

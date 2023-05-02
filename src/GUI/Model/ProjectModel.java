@@ -5,6 +5,8 @@ import BLL.ProjectManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.SQLException;
+
 public class ProjectModel {
 
     private ObservableList<Project> projectsOpen;
@@ -25,6 +27,10 @@ public ProjectModel() throws Exception {
 
     public ObservableList<Project> getAllProjectsClose() {return projectClose;}
 
+    public void createNewProject(Project project) throws SQLException{
+    projectManager.createNewProject(project);
+    projectsOpen.add(project);
+    }
 
     public void changeProjectStatus(int projectStatus, int id) throws Exception {
     projectManager.changeProjectStatus(projectStatus, id);
@@ -32,6 +38,5 @@ public ProjectModel() throws Exception {
     projectClose.clear();
     projectClose.addAll(projectManager.loadProjectOfAType(false));
     projectsOpen.addAll(projectManager.loadProjectOfAType(true));
-
 }
 }

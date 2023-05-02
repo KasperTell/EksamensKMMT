@@ -11,6 +11,7 @@ import java.util.List;
 public class CustomerModel {
 
     private ObservableList<Customer> allProjectmanager;
+    private ObservableList<Customer> allCustomers;
 
     private CustomerManager customerManager;
 
@@ -21,7 +22,11 @@ public class CustomerModel {
 
     public CustomerModel() throws Exception {
         customerManager = new CustomerManager();
+        allCustomers = FXCollections.observableArrayList();
+        allCustomers.addAll(customerManager.loadAllCustomers());
     }
+
+    public ObservableList<Customer> getAllCustomers(){return allCustomers;}
     public Customer loadCustomer(int customerID) throws Exception {return customerManager.loadCustomer(customerID);}
 
     public void createNewCustomer(Customer customer) throws Exception {

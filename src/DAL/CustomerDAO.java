@@ -2,9 +2,11 @@ package DAL;
 
 import BE.Customer;
 
-import java.awt.*;
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerDAO implements ICustomerDataAccess {
 
@@ -12,6 +14,36 @@ public class CustomerDAO implements ICustomerDataAccess {
 
     public CustomerDAO() throws IOException {
         databaseConnector = DatabaseConnector.getInstance();
+    }
+
+
+    public List<Customer> loadAllCustomers() throws SQLException{
+        ArrayList<Customer> allCustomers = new ArrayList<>();
+
+        String sql = "SELECT * FROM Customers";
+
+        try(Connection conn = databaseConnector.getConnection()){
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while(rs.next()){
+                int id = rs.getInt("ID");
+                String firstName = rs.getString("First_Name");
+                String lastName = rs.getString("Last_Name");
+                String companyname = rs.getString("Company_Name");
+                String address = rs.getString("Address");
+                int zipcode = rs.getInt("Zip_Code");
+                String mail = rs.getString("Mail");
+                int phonenumber = rs.getInt("Phone_Number");
+
+                Customer customer = new Customer(id, address, phonenumber, companyname, zipcode, mail, firstName, lastName);
+                allCustomers.add(customer);
+            }
+            return allCustomers;
+        } catch (SQLException ex){
+            ex.printStackTrace();
+            throw new SQLException("Could not get all customers");
+        }
     }
 
    @Override
