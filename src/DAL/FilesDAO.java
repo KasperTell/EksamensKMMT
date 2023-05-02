@@ -48,7 +48,6 @@ public class FilesDAO {
 
 
                 String filetype = filePath.substring(filePath.length() - 4, filePath.length());
-                System.out.println(filetype);
 
                 switch (filetype) {
                     case ".jpg":

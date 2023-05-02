@@ -12,7 +12,7 @@ import javafx.collections.ObservableList;
 public class ProjectFilesModel {
 
 
-    private static ListProperty<ProjectFiles> projectFiles, oldprojectFiles;
+    private static ListProperty<ProjectFiles> projectFiles;
 
     private ProjectFilesManager projectFilesManager;
     private boolean isRunning = true;
@@ -20,8 +20,6 @@ public class ProjectFilesModel {
     public ProjectFilesModel() throws Exception {
         projectFilesManager = new ProjectFilesManager();
         projectFiles=new SimpleListProperty<>();
-
-
 
     }
 
@@ -51,8 +49,7 @@ public class ProjectFilesModel {
                         throw new RuntimeException(e);
                     }
                 }
-
-                                    else
+                else
                 {
                     try {
                         projectFilesManager.updateUsedInDoc(false,tjek.getId());
@@ -63,9 +60,8 @@ public class ProjectFilesModel {
 
             }
 
-
                 try {
-                    Thread.sleep(2000);}
+                    Thread.sleep(1000);}
                 catch (InterruptedException e) {
                     System.out.println("This is a treat exception");;
                 }
@@ -77,11 +73,8 @@ public class ProjectFilesModel {
         t.start();
 
 
-
-
-
-
     }
+
 
 
 
