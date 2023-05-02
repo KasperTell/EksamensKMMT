@@ -12,7 +12,6 @@ private String filePath,name;
 
 private LocalDate date;
 
-private byte used;
 
 private ImageView picture;
 
@@ -21,12 +20,12 @@ private CheckBox usedBox;
 
 
 
-    public ProjectFiles(int id, int projectID, String name, String filePath, LocalDate date, byte used, ImageView picture,CheckBox usedBox) {
+    public ProjectFiles(int id, int projectID, String name, String filePath, LocalDate date,  ImageView picture,CheckBox usedBox) {
         this.id = id;
         this.projectID = projectID;
         this.filePath = filePath;
                 this.date = date;
-        this.used = used;
+
         this.name=name;
         this.picture = picture;
         this.usedBox = usedBox;
@@ -64,13 +63,6 @@ private CheckBox usedBox;
         this.date = date;
     }
 
-    public byte getUsed() {
-        return used;
-    }
-
-    public void setUsed(byte used) {
-        this.used = used;
-    }
 
     public ImageView getPicture() {
         return picture;
@@ -95,5 +87,18 @@ private CheckBox usedBox;
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+
+        Boolean newBox=true;
+        if (usedBox.isSelected())
+            newBox=true;
+            else
+                newBox=false;
+
+
+        return newBox+"";
     }
 }

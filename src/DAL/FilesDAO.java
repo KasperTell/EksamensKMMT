@@ -9,9 +9,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,14 +27,12 @@ public class FilesDAO {
         ImageViewKlient pictureFrame = null;
 
 
-
         String sql = "SELECT * FROM ProjectFile WHERE ProjectID =?";
 
 
         //Getting the connection to the database.
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
-
             stmt.setInt(1, projectID);
 
             ResultSet rs = stmt.executeQuery();
@@ -51,12 +47,10 @@ public class FilesDAO {
                 byte usedInDoc = rs.getByte("usedInDoc");
 
 
-
-                String filetype=filePath.substring(filePath.length()-4,filePath.length());
+                String filetype = filePath.substring(filePath.length() - 4, filePath.length());
                 System.out.println(filetype);
 
-                switch (filetype)
-                {
+                switch (filetype) {
                     case ".jpg":
                         pictureFrame = new ImageViewKlient(new LilleJpg());
                         break;
@@ -71,17 +65,16 @@ public class FilesDAO {
 
                 }
 
-                picture=pictureFrame.getImageView();
+                picture = pictureFrame.getImageView();
 
-                CheckBox checkBox=new CheckBox();
+                CheckBox checkBox = new CheckBox();
 
 
-                if (usedInDoc==0)
+                if (usedInDoc == 0)
                     checkBox.setSelected(true);
 
 
-
-                ProjectFiles files = new ProjectFiles(id, projectID,name, filePath,date, usedInDoc, picture,checkBox) ;
+                ProjectFiles files = new ProjectFiles(id, projectID, name, filePath, date, picture, checkBox);
 
                 loadFilesFromAProject.add(files);
             }
@@ -90,6 +83,39 @@ public class FilesDAO {
             ex.printStackTrace();
             throw new Exception("Failed to retrieve files from database", ex);
         }
+
+    }
+
+        public void updateUsedInDoc(Boolean usedInDoc, int id) throws Exception {
+
+            byte used;
+            String sql = "UPDATE ProjectFile SET usedInDoc = ? WHERE ID = ?";
+
+            try (Connection conn = databaseConnector.getConnection()) {
+                PreparedStatement stmt = conn.prepareStatement(sql);
+
+                if (usedInDoc) {
+                     used=0;
+                }
+                else {
+                     used = 1;
+                }
+
+                // Bind parameters
+
+                stmt.setByte(1, used);
+                stmt.setInt(2, id);
+
+                stmt.executeUpdate();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+                throw new Exception("Could not update fileList", ex);
+            }
+        }
+
+
+
     }
 
 
@@ -119,4 +145,4 @@ public class FilesDAO {
 
 
 
-}
+

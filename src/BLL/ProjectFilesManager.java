@@ -16,7 +16,16 @@ public class ProjectFilesManager {
         filesDAO = new FilesDAO();
     }
 
-    public ArrayList<ProjectFiles> loadFilesFromAProject(int projectID) throws Exception{return (ArrayList<ProjectFiles>) filesDAO.loadFilesFromAProject(projectID);}
+    public ArrayList<ProjectFiles> loadFilesFromAProject(int projectID) throws Exception{
+
+        return (ArrayList<ProjectFiles>) filesDAO.loadFilesFromAProject(projectID);
+    }
+
+
+    public void updateUsedInDoc(Boolean usedInDoc, int id) throws Exception {
+        filesDAO.updateUsedInDoc(usedInDoc,id);
+    }
+
 
 
 
