@@ -30,13 +30,13 @@ public class CustomerDAO implements ICustomerDataAccess {
                 int id = rs.getInt("ID");
                 String firstName = rs.getString("First_Name");
                 String lastName = rs.getString("Last_Name");
-                String companyname = rs.getString("Company_Name");
+                String companyName = rs.getString("Company_Name");
                 String address = rs.getString("Address");
                 int zipcode = rs.getInt("Zip_Code");
                 String mail = rs.getString("Mail");
-                int phonenumber = rs.getInt("Phone_Number");
+                int phoneNumber = rs.getInt("Phone_Number");
 
-                Customer customer = new Customer(id, address, phonenumber, companyname, zipcode, mail, firstName, lastName);
+                Customer customer = new Customer(id, firstName, lastName, companyName, address, mail, phoneNumber, zipcode);
                 allCustomers.add(customer);
             }
             return allCustomers;
@@ -63,14 +63,14 @@ public class CustomerDAO implements ICustomerDataAccess {
                 int id = rs.getInt("ID");
                 String firstName = rs.getString("First_Name");
                 String lastName = rs.getString("Last_Name");
-                String companyname = rs.getString("Company_Name");
+                String companyName = rs.getString("Company_Name");
                 String address = rs.getString("Address");
                 int zipcode = rs.getInt("Zip_Code");
                 String mail = rs.getString("Mail");
-                int phonenumber = rs.getInt("Phone_Number");
+                int phoneNumber = rs.getInt("Phone_Number");
 
 
-                customer = new Customer(id, address, phonenumber, companyname, zipcode, mail, firstName, lastName);
+                customer = new Customer(id, firstName, lastName, companyName, address, mail, phoneNumber, zipcode);
 
             }
             return customer;
@@ -80,73 +80,42 @@ public class CustomerDAO implements ICustomerDataAccess {
         }
     }
 
-
-    @Override
-    public java.util.List<Customer> loadProjectManager(String companyname) throws Exception {
-        return null;
-    }
-
     @Override
     public Customer createNewCustomer(Customer customer) throws Exception {
-        return null;
-    }
-
-    @Override
-    public Customer createNewCustomer(String address, int phonenumber, String companyname, int zipcode, String mail, String firstName, String lastName, int room) throws Exception {
-        return null;
-    }
-
-
-
-    public Customer createNewCustomer(String address, int phonenumber, String companyname, int zipcode, String mail, String firstName, String lastName, int room, String city) throws Exception {
-        //SQL Query
-        String sql = "INSERT INTO Customer (address, phonenumber, companyname, zipcode, mail, firstName, lastName, city) VALUES(?,?,?,?,?,?,?,?)";
-        //Getting the connection to the database
-        try (java.sql.Connection conn = databaseConnector.getConnection()) {
+        String sql = "INSERT INTO Customers(First_Name, Last_Name, Company_Name, Address, Zip_Code, Mail, Phone_Number) VALUES (?,?,?,?,?,?,?)";
+        try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            //Setting the parameters and executing the query
-            stmt.setString(1, address);
-            stmt.setInt(2, phonenumber);
-            stmt.setString(3, companyname);
-            stmt.setInt(4, zipcode);
-            stmt.setString(5, mail);
-            stmt.setString(6, firstName);
-            stmt.setString(7, lastName);
-            stmt.setString(8,city);
+            //Setting the parameters and executing the query.
+            stmt.setString(1, customer.getFirstName());
+            stmt.setString(2, customer.getLastName());
+            stmt.setString(3, customer.getCompanyName());
+            stmt.setString(4, customer.getAddress());
+            stmt.setInt(5, customer.getZipCode());
+            stmt.setString(6, customer.getMail());
+            stmt.setInt(7, customer.getPhoneNumber());
             stmt.execute();
 
             ResultSet rs = stmt.getGeneratedKeys();
-            int id = 0;
-            if (rs.next()) {
-                id = rs.getInt(1);
+            if(rs.next()){
+                customer.setId(rs.getInt(1));
             }
-            Customer customer = new Customer(id, address, phonenumber, companyname, zipcode, mail, firstName,  lastName);
-            return customer;
-            }catch (SQLException ex){
-            ex.printStackTrace();
-            throw new Exception("Could not create Customer", ex);
         }
+        return customer;
     }
+
     @Override
     public void deleteCustomer(Customer selectedCustomer) throws  Exception {
         //SQL query
         String sql = "DELETE FROM Customer WHERE Customer_ID = ?";
         //Getting connection to the database.
-        try(java.sql.Connection conn = databaseConnector.getConnection()){
+        try (java.sql.Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
             //Setting the parameter and executing the query.
             stmt.setInt(1, selectedCustomer.getId());
             stmt.execute();
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
             throw new Exception("Could not delete this event", ex);
         }
     }
-
-    @Override
-    public List loadProjectManagers() {
-        return null;
-    }
-
-
 }

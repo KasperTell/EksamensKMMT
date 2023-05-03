@@ -12,13 +12,8 @@ public class CustomerModel {
 
     private ObservableList<Customer> allProjectmanager;
     private ObservableList<Customer> allCustomers;
-
     private CustomerManager customerManager;
-
-    private Customer customer;
-
     private Customer createdCustomer;
-    private User user;
 
     public CustomerModel() throws Exception {
         customerManager = new CustomerManager();
@@ -31,14 +26,8 @@ public class CustomerModel {
 
     public void createNewCustomer(Customer customer) throws Exception {
         createdCustomer = customerManager.createNewCustomer(customer);
-        allProjectmanager.add(createdCustomer);
-        allProjectmanager.clear();
-        allProjectmanager.addAll(customerManager.loadProjectManagers());
+        allCustomers.add(createdCustomer);
     }
-
-    public User getLoggedinUser(){return user;}
-
-    public void setLoggedinUser (User user) {this.user = user;}
 
     public void deleteCustomer (Customer selectedCustomer) throws Exception {
         customerManager.deleteCustomer(selectedCustomer);

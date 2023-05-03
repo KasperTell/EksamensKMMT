@@ -39,43 +39,33 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 
 public class MainController extends BaseController {
-
-    public Button btnAddNewProject;
-    public ComboBox<Customer> cbxCustomer;
-    public TextField txtfProjectName;
-    public Label customerHeader1;
-    public VBox vbxCreateNewProject;
-    public AnchorPane acpMainView;
+    @FXML
+    private ComboBox<Customer> cbxCustomer;
+    @FXML
+    private VBox vbxCreateNewProject, vbxCreateNewCustomer;
+    @FXML
+    private AnchorPane acpMainView;
     @FXML
     private TableColumn projectDateOpen,projectOpenCustomer,projectCloseDate,projectCloseCustomer,filesPictureColoum,filesFilenameColoum,filesDate,filesInReport;
 
     @FXML
-    private Button closeProject,reOpenProject,openFile,btnSaveNewFile,saveNote,newProject,newUser,removeUser,newCustomer,addTechnician,removeTechnician;
-
+    private Button closeProject,reOpenProject,openFile,btnSaveNewFile,saveNote,newProject,newUser,removeUser,newCustomer,addTechnician,removeTechnician, btnAddNewProject, btnCustomerInfo, btnAddNewCustomer;
     @FXML
     private Tab openProjects;
     @FXML
     private TableView<Project> openProjectsTable,closeProjectsTable;
-
     @FXML
     private TableView<ProjectFiles> fileTable;
     @FXML
-    private ListView<User> lstTechniciansOnCase;
-
-    @FXML
-    private ListView<User> lstProjectManagers,lstTechnicians,lstSalesPersons;
-
+    private ListView<User> lstProjectManagers,lstTechnicians,lstSalesPersons, lstTechniciansOnCase;
     @FXML
     private Label email,zipCode,address,name,city,telephone,customerHeader;
     @FXML
-    private TextField txtfSearchField;
+    private TextField txtfSearchField, txtfProjectName, txtfPhoneNumber, txtfEmail, txtfZipCode, txtfAddress, txtfcompanyName, txtfCustomerLastName, txtfCustomerFirstName;
     @FXML
     private TextArea NotesTextArea;
-    @FXML
-    private Button btnCustomerInfo;
 
     private Project selectedProject;
-    private ProjectFiles selectedFiles;
 
     private File file;
     private String filePath = "Resources/Pictures/ImagesSavedFromTechnicians";
@@ -86,9 +76,7 @@ public class MainController extends BaseController {
     private ProjectFilesModel projectFilesModel;
     private boolean isMenuOpen;
 
-
     PersonTypeChooser personTypeChooser=new PersonTypeChooser();
-
 
     @Override
     public void setup() throws Exception {
@@ -112,6 +100,7 @@ public class MainController extends BaseController {
         closeProjectsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
         {
             selectedProject  = closeProjectsTable.getSelectionModel().getSelectedItem();
+            System.out.println(selectedProject.getId());
             try {
                 setUpCustomer();
             } catch (Exception e) {
@@ -136,6 +125,8 @@ public class MainController extends BaseController {
         {
 
             selectedProject = openProjectsTable.getSelectionModel().getSelectedItem();
+            System.out.println(selectedProject.getId());
+            System.out.println(selectedProject.getCustomernumber());
             try {
                 setUpCustomer();
             } catch (Exception e) {
@@ -265,7 +256,31 @@ public class MainController extends BaseController {
         transition.play();
     }
 
-    public void newCustomerAction(ActionEvent actionEvent) {
+    public void newCustomerAction() {
+        TranslateTransition transition = new TranslateTransition();
+        vbxCreateNewCustomer.toFront();
+        transition.setNode(vbxCreateNewCustomer);
+        transition.setDuration(Duration.millis(150));
+
+        if(!isMenuOpen){
+            isMenuOpen = true;
+            transition.setToX(0);
+            acpMainView.setOpacity(0.2);
+            EventHandler<MouseEvent> menuHandler = new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    newCustomerAction();
+                    acpMainView.removeEventHandler(MouseEvent.MOUSE_CLICKED, this);
+
+                }
+            };
+            acpMainView.addEventHandler(MouseEvent.MOUSE_CLICKED, menuHandler);
+        } else {
+            isMenuOpen = false;
+            transition.setToX(-400);
+            acpMainView.setOpacity(1);
+        }
+        transition.play();
     }
 
     @FXML
@@ -338,5 +353,20 @@ public class MainController extends BaseController {
         projectModel.createNewProject(project);
 
         newProjectAction();
+    }
+
+    public void handleAddNewCustomer(ActionEvent actionEvent) throws Exception {
+        int id = 1;
+        String firstName = txtfCustomerFirstName.getText();
+        String lastName = txtfCustomerLastName.getText();
+        String companyName = txtfcompanyName.getText();
+        String customerAddress = txtfAddress.getText();
+        String mail = txtfEmail.getText();
+        int phoneNumber = Integer.parseInt(txtfPhoneNumber.getText());
+        int customerZipCode = Integer.parseInt(txtfZipCode.getText());
+        Customer customer = new Customer(id, firstName, lastName, companyName, customerAddress, mail, phoneNumber, customerZipCode);
+        customerModel.createNewCustomer(customer);
+
+        newCustomerAction();
     }
 }
