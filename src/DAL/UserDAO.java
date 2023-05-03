@@ -2,6 +2,7 @@ package DAL;
 
 import BE.ProjectTechnician;
 import BE.User;
+import PersonsTypes.Technician;
 
 import java.io.IOException;
 import java.sql.*;
@@ -158,32 +159,53 @@ public class UserDAO implements IUserDataAccess {
             throw new Exception("Could not delete this user", ex);
         }
     }
-
     @Override
-    public ProjectTechnician moveTechnician(int technicianID, int projectID) throws Exception {
-        //SQL Query
-        String sql = "INSERT INTO ProjectTechnician (ProjectID, UserID) VALUES (?,?)";
-        //Getting the connection to the database.
+    public ProjectTechnician moveTechnicianById(int technicianID, int projectID) throws Exception {
+        //Check if technician is already assigned to selected project
+        String sql = "SELECT * FROM ProjectTechnician WHERE ProjectID = ? AND UserID = ?";
         try (Connection conn = databaseConnector.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            //Setting the parameters and executing the query.
+            PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, projectID);
             stmt.setInt(2, technicianID);
-            stmt.execute();
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+            //Technician already assigned, do nothing
+            }else{
+                //Remove technician from all projects except selected
+                String sqlDelete = "DELETE FROM ProjectTechnician WHERE ProjectID <> ? AND UserID = ?";
+                PreparedStatement stmtDelete = conn.prepareStatement(sqlDelete);
+                stmtDelete.setInt(1, projectID);
+                stmtDelete.setInt(2, technicianID);
+                stmtDelete.executeUpdate();
+                //Insert into selected project
+                sql = "INSERT INTO ProjectTechnician (ProjectID, UserID) VALUES (?,?)";
+                PreparedStatement stmtInsert = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                //Setting the parameters and executing the query.
+                stmtInsert.setInt(1, projectID);
+                stmtInsert.setInt(2, technicianID);
+                stmtInsert.execute();
 
-            ResultSet rs = stmt.getGeneratedKeys();
-            int id = 0;
-            if (rs.next()) {
-                id = rs.getInt(1);
+                //Get generated ID
+                ResultSet rsInsert = stmtInsert.getGeneratedKeys();
+                int id = 0;
+                if (rsInsert.next()) {
+                    id = rsInsert.getInt(1);
+                }
+                ProjectTechnician projectTechnician = new ProjectTechnician(id, technicianID, projectID);
+                return projectTechnician;
             }
-            ProjectTechnician projectTechnician = new ProjectTechnician(id, technicianID, projectID);
-            return projectTechnician;
         } catch (SQLException ex) {
             ex.printStackTrace();
             throw new Exception("Could not move Technician", ex);
 
-
         }
+
+        return null;
     }
-}
+
+
+
+
+
+    }
 

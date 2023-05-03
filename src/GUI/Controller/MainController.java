@@ -9,6 +9,7 @@ import GUI.Model.ProjectModel;
 import GUI.Model.UserModel;
 import GUI.Model.CustomerModel;
 import PersonsTypes.PersonTypeChooser;
+import PersonsTypes.Technician;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
@@ -217,17 +218,21 @@ public class MainController extends BaseController {
     }
 
     public void addTechnicianAction(ActionEvent actionEvent) throws Exception {
-        int projectID = selectedProject.getId();
-        int technicanID = lstTechnicians.getSelectionModel().getSelectedItem().getId();
-
-        System.out.println(projectID);
-        System.out.println(technicanID);
-
-        userModel.moveTechnician(technicanID,projectID);
-
+        int selectedProjectID = selectedProject.getId();
+        int technicianID = lstTechnicians.getSelectionModel().getSelectedItem().getId();
+        try {
+            userModel.moveTechnicianById(technicianID,selectedProjectID);
+            List<User> technicians = userModel.getAllTechnicians();
+            lstTechniciansOnCase.getItems().clear();
+            lstTechniciansOnCase.getItems().addAll(technicians);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void removeTechnicianAction(ActionEvent actionEvent) {
+
+
+        public void removeTechnicianAction(ActionEvent actionEvent) {
 
     }
 

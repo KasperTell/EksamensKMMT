@@ -13,5 +13,5 @@ public interface IUserDataAccess {
     User createNewUser(String firstName, String lastName, String username, String password, int role) throws Exception;
     void deleteUser(User selectedUser) throws Exception;
 
-    ProjectTechnician moveTechnician(int technicianID, int projectID) throws Exception;
+    ProjectTechnician moveTechnicianById(int technicianID, int projectID) throws Exception;
 }

@@ -24,7 +24,7 @@ public class UserManager {
 
     public boolean validateUsername(String username) throws Exception{return userDAO.validateUsername(username);}
 
-    public ProjectTechnician moveTechnician(int technicianID, int projectID) throws  Exception {return userDAO.moveTechnician(technicianID,projectID);}
+    public ProjectTechnician moveTechnicianById(int technicianID, int projectID) throws  Exception {return userDAO.moveTechnicianById(technicianID,projectID);}
 
 
 
