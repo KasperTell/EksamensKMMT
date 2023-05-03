@@ -2,6 +2,7 @@ package GUI.Model;
 
 import BE.User;
 import BLL.UserManager;
+import PersonsTypes.Technician;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -61,6 +62,10 @@ public class UserModel {
     public void deleteUser(User selectedKoordinator) throws Exception {
         userManager.deleteUser(selectedKoordinator);
         allTechnicians.remove(selectedKoordinator);
+    }
+    public void removeTechnicianFromProject(User selectedTechnician, int projectID) throws Exception {
+        allTechniciansOnProject.remove(selectedTechnician);
+        userManager.removeTechnicianFromProject(selectedTechnician, projectID);
     }
 
     public void moveTechnician(int technicanID, int projectID) throws Exception {

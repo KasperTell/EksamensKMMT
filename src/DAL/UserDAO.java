@@ -161,6 +161,19 @@ public class UserDAO implements IUserDataAccess {
         }
     }
 
+    public void removeTechnicianFromProject(User selectedTechnician, int projectID) throws Exception{
+        //SQL Query
+        String sql = "DELETE FROM ProjectTechnician WHERE ProjectID = ? AND UserID = ?";
+        try (Connection conn = databaseConnector.getConnection()){
+            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            //Setting the parameters and executing the query.
+            stmt.setInt(1, projectID);
+            stmt.setInt(2, selectedTechnician.getId());
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            throw new Exception("Something went wrong while removing a technician from a project.", ex);
+        }
+    }
     public List<User> filterTechnicianById(int projectID) throws SQLException {
         ArrayList<User> allUsers = new ArrayList<>();
         String sql = "SELECT * FROM ProjectTechnician INNER JOIN Users ON ProjectTechnician.UserID = Users.ID WHERE ProjectID = ?;";
@@ -208,5 +221,6 @@ public class UserDAO implements IUserDataAccess {
             throw new Exception("Could not move Technician", ex);
         }
     }
+
 }
 

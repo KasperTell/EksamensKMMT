@@ -215,6 +215,7 @@ public class MainController extends BaseController {
     }
 
     public void removeUserAction(ActionEvent actionEvent) {
+
     }
 
     public void addTechnicianAction(ActionEvent actionEvent) throws Exception {
@@ -228,7 +229,12 @@ public class MainController extends BaseController {
     }
 
 
-    public void removeTechnicianAction(ActionEvent actionEvent) {
+
+    public void removeTechnicianAction(ActionEvent actionEvent) throws Exception{
+        User selectedTechnician = lstTechniciansOnCase.getSelectionModel().getSelectedItem();
+        int projectID = selectedProject.getId();
+        userModel.removeTechnicianFromProject(selectedTechnician, projectID);
+
 
     }
 
