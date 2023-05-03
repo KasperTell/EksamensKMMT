@@ -16,5 +16,5 @@ public interface IUserDataAccess {
     List<User> filterTechnicianById(int projectID) throws SQLException;
     ProjectTechnician moveTechnician(int technicianID, int projectID) throws Exception;
 
-    void removeTechnicianFromProject(int technicianID, int projectID) throws Exception;
+    void removeTechnicianFromProject(User selectedTechnician, int projectID) throws Exception;
 }

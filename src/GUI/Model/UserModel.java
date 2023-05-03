@@ -37,9 +37,9 @@ public class UserModel {
     public ObservableList<User> getAllTechniciansOnProject(int projectID) throws Exception {
         allTechniciansOnProject.clear();
         allTechniciansOnProject.addAll(userManager.filterTechnicianById(projectID));
-
         return allTechniciansOnProject;
     }
+
 
     public ObservableList<User> getallProjectManagers() {return allProjectManager;}
 
@@ -63,11 +63,9 @@ public class UserModel {
         userManager.deleteUser(selectedKoordinator);
         allTechnicians.remove(selectedKoordinator);
     }
-    public void removeTechnicianFromProject(int technicianID, int projectID) throws Exception {
-        userManager.removeTechnicianFromProject(technicianID, projectID);
-        allTechnicians.remove(technicianID, projectID);
-
-
+    public void removeTechnicianFromProject(User selectedTechnician, int projectID) throws Exception {
+        allTechniciansOnProject.remove(selectedTechnician);
+        userManager.removeTechnicianFromProject(selectedTechnician, projectID);
     }
 
     public void moveTechnician(int technicanID, int projectID) throws Exception {

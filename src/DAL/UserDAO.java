@@ -161,17 +161,17 @@ public class UserDAO implements IUserDataAccess {
         }
     }
 
-    public void removeTechnicianFromProject(int projectId, int technicianId) {
+    public void removeTechnicianFromProject(User selectedTechnician, int projectID) throws Exception{
         //SQL Query
         String sql = "DELETE FROM ProjectTechnician WHERE ProjectID = ? AND UserID = ?";
         try (Connection conn = databaseConnector.getConnection()){
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             //Setting the parameters and executing the query.
-            stmt.setInt(1, projectId);
-            stmt.setInt(2, technicianId);
+            stmt.setInt(1, projectID);
+            stmt.setInt(2, selectedTechnician.getId());
             stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Something went wrong while removing a technician from a project.", e);
+        } catch (SQLException ex) {
+            throw new Exception("Something went wrong while removing a technician from a project.", ex);
         }
     }
     public List<User> filterTechnicianById(int projectID) throws SQLException {
