@@ -75,9 +75,15 @@ public class ProjectDAO implements IProjectDataAccess{
             //Setting the parameters and executing the query.
             stmt.setString(1, project.getTitle());
             stmt.setInt(2, project.getCustomernumber());
+            System.out.println(project.getCustomernumber());
             stmt.setDate(3, Date.valueOf(project.getDate()));
             stmt.setInt(4, 0);
             stmt.execute();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+            if(rs.next()){
+                project.setId(rs.getInt(1));
+            }
         }
         return project;
     }

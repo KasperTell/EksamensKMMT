@@ -165,7 +165,7 @@
             <Insets />
          </opaqueInsets>
          <children>
-            <Label fx:id="customerHeader1" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="355.0" text="Opret et nyt projekt">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="355.0" text="Opret et nyt projekt">
                <font>
                   <Font name="System Bold" size="34.0" />
                </font>
@@ -183,6 +183,61 @@
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin></Button>
+         </children>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </VBox>
+      <VBox fx:id="vbxCreateNewCustomer" layoutX="10.0" layoutY="10.0" prefHeight="814.0" prefWidth="345.0" spacing="30.0" translateX="-400.0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="355.0" text="Opret en ny kunde">
+               <font>
+                  <Font name="System Bold" size="34.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtfCustomerFirstName" promptText="Fornavn på kunden">
+               <VBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="txtfCustomerLastName" promptText="Efternavn på kunden">
+               <VBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="txtfcompanyName" promptText="Virksomhedsnavn">
+               <VBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="txtfAddress" promptText="Adresse">
+               <VBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="txtfZipCode" promptText="Postnummer">
+               <VBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="txtfEmail" promptText="Email">
+               <VBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="txtfPhoneNumber" promptText="Telefonnummer">
+               <VBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </VBox.margin>
+            </TextField>
+            <Button fx:id="btnAddNewCustomer" mnemonicParsing="false" onAction="#handleAddNewCustomer" text="Tilføj kunde">
+               <VBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </VBox.margin>
+            </Button>
          </children>
          <padding>
             <Insets top="20.0" />
