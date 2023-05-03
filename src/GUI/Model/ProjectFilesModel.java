@@ -4,15 +4,18 @@ import BE.Project;
 import BE.ProjectFiles;
 import BLL.ProjectFilesManager;
 import BLL.ProjectManager;
+import javafx.application.Platform;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.List;
+
 public class ProjectFilesModel {
 
 
-    private static ListProperty<ProjectFiles> projectFiles;
+    private  ListProperty<ProjectFiles> projectFiles, projectFilesRun;
 
     private ProjectFilesManager projectFilesManager;
     private boolean isRunning = true;
@@ -35,45 +38,59 @@ public class ProjectFilesModel {
 
     public void observer()
     {
+
         Thread t = new Thread(() ->
         {
 
-            while (isRunning) {
+                while (isRunning) {
 
-            for (ProjectFiles tjek: projectFiles)
-            {
-                if (tjek.getUsedBox().isSelected()) {
-                    try {
-                        projectFilesManager.updateUsedInDoc(true,tjek.getId());
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
+
+
+                    for (ProjectFiles tjek : projectFiles) {
+                        if (tjek.getUsedBox().isSelected()) {
+                            try {
+                                Platform.runLater(() -> {
+                                    try {
+                                        projectFilesManager.updateUsedInDoc(true, tjek.getId());
+                                    } catch (Exception e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                });
+
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                        } else {
+                            try {
+                                Platform.runLater(() -> {
+                                    try {
+                                        projectFilesManager.updateUsedInDoc(true, tjek.getId());
+                                    } catch (Exception e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                });
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+
                     }
-                }
-                else
-                {
+
                     try {
-                        projectFilesManager.updateUsedInDoc(false,tjek.getId());
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
+                        Thread.sleep(2000);
+
+                    } catch (InterruptedException e) {
+                        System.out.println("This is a treat exception");
+                        ;
                     }
+
                 }
-
-            }
-
-                try {
-                    Thread.sleep(1000);}
-                catch (InterruptedException e) {
-                    System.out.println("This is a treat exception");;
-                }
-
-            }
 
         });
         t.setDaemon(true); //I mark the thread as a daemon thread, so  its terminated when I exit the app.
         t.start();
 
-
-    }
+        }
 
 
 

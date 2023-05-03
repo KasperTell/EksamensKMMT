@@ -18,6 +18,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -27,7 +31,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -70,6 +77,7 @@ public class MainController extends BaseController {
     private TextArea NotesTextArea;
 
     private Project selectedProject;
+    private ProjectFiles selectedfile;
 
     private File file;
     private String filePath = "Resources/Pictures/ImagesSavedFromTechnicians";
@@ -97,7 +105,8 @@ public class MainController extends BaseController {
         setProjectColoums();
         listenerLstAllCloseProjects();
         listenerLstAllOpenProjects();
-//        listenerFilesMarkedOrNot();
+        listenerMouseClickPicture();
+
     }
 
 
@@ -152,6 +161,56 @@ public class MainController extends BaseController {
         });
 
     }
+
+
+    public void listenerMouseClickPicture()
+    {
+        fileTable.setOnMouseClicked(event -> {
+
+             selectedfile = fileTable.getSelectionModel().getSelectedItem();
+
+
+            if (event.getClickCount() == 2) { //Ved dobbeltklik kan man starte musikken
+                try {
+                   showFile();
+                } catch (Exception e) {
+                    displayError(e);
+                }
+            }
+        });
+    }
+
+    private void showFile() {
+
+
+
+            boolean filesExits = Files.exists(Path.of(selectedfile.getFilePath())); //check om filen eksisterer
+            File file = new File(selectedfile.getFilePath());
+
+            try {
+
+                if (filesExits) {
+
+                    Desktop desktop = Desktop.getDesktop();
+
+                    if (file.exists()) desktop.open(file);
+                } //else
+                else
+                    System.out.println("Virker ikke");
+                // informationUser("File do not exist!");
+                // Her kaldes en metode, der viser et vindue med besked om, at filen ikke findes.
+                // Text file, should be opening in default text editor
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+
+        }
+
+
+
+
 
 
     @FXML
