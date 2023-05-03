@@ -9,7 +9,11 @@ import GUI.Model.ProjectModel;
 import GUI.Model.UserModel;
 import GUI.Model.CustomerModel;
 import PersonsTypes.PersonTypeChooser;
+import PersonsTypes.Technician;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,21 +22,23 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 
 public class MainController extends BaseController {
-
 
     public Button btnAddNewProject;
     public ComboBox<Customer> cbxCustomer;
@@ -41,29 +47,28 @@ public class MainController extends BaseController {
     public VBox vbxCreateNewProject;
     public AnchorPane acpMainView;
     @FXML
-    private ListView<Project> testListView;
-    @FXML
-    private TextField searchBox;
-    @FXML
-    private Button searchButton;
-    @FXML
     private TableColumn projectDateOpen,projectOpenCustomer,projectCloseDate,projectCloseCustomer,filesPictureColoum,filesFilenameColoum,filesDate,filesInReport;
+
     @FXML
     private Button closeProject,reOpenProject,openFile,btnSaveNewFile,saveNote,newProject,newUser,removeUser,newCustomer,addTechnician,removeTechnician;
+
     @FXML
     private Tab openProjects;
     @FXML
     private TableView<Project> openProjectsTable,closeProjectsTable;
+
     @FXML
     private TableView<ProjectFiles> fileTable;
     @FXML
     private ListView<User> lstTechniciansOnCase;
-    private ListView lstTechniciansOnCase;
 
     @FXML
     private ListView<User> lstProjectManagers,lstTechnicians,lstSalesPersons;
+
     @FXML
     private Label email,zipCode,address,name,city,telephone,customerHeader;
+    @FXML
+    private TextField txtfSearchField;
     @FXML
     private TextArea NotesTextArea;
     @FXML
@@ -71,6 +76,7 @@ public class MainController extends BaseController {
 
     private Project selectedProject;
     private ProjectFiles selectedFiles;
+
     private File file;
     private String filePath = "Resources/Pictures/ImagesSavedFromTechnicians";
     private Path target = Paths.get(filePath);
@@ -87,12 +93,8 @@ public class MainController extends BaseController {
     @Override
     public void setup() throws Exception {
         userModel = getModel().getUserModel();
-
         customerModel = getModel().getCustomerModel();
         projectFilesModel = getModel().getProjectFilesModel();
-
-        projectModel = getModel().getProjectModel();
-
         lstTechnicians.setItems(userModel.getAllTechnicians());
         lstProjectManagers.setItems(userModel.getallProjectManagers());
         lstSalesPersons.setItems(userModel.getallSalesmen());
@@ -103,8 +105,6 @@ public class MainController extends BaseController {
         listenerLstAllOpenProjects();
 //        listenerFilesMarkedOrNot();
     }
-
-
 
 
     @FXML
@@ -178,13 +178,7 @@ public class MainController extends BaseController {
 
 
 
-
     private void setProjectColoums() throws Exception {
-
-
-
-        private void setProjectColoums() throws Exception {
-
 
         projectModel=new ProjectModel();
 
@@ -195,6 +189,8 @@ public class MainController extends BaseController {
 
         openProjectsTable.setItems(projectModel.getAllProjectsOpen());
         closeProjectsTable.setItems(projectModel.getAllProjectsClose());
+
+
     }
 
     public void handleOpenCustomerDoc(ActionEvent actionEvent) {
@@ -330,13 +326,6 @@ public class MainController extends BaseController {
         removeTechnician.setDisable(turnButtonOnOrOff[10]);
 
     }
-    
-    public void searchProjectsByStringQuery(KeyEvent keyEvent) throws Exception {
-        String query = searchBox.getText();
-        //testListView.setItems(projectModel.searchByQuery(query));
-        openProjectsTable.getItems().clear();
-        openProjectsTable.setItems(projectModel.searchByQuery(query));
-
 
 
     public void handleAddNewProject(ActionEvent actionEvent) throws SQLException {
@@ -350,9 +339,4 @@ public class MainController extends BaseController {
 
         newProjectAction();
     }
-
-
-    }
-
-
 }
