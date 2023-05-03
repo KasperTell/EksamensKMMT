@@ -105,8 +105,7 @@ public class ProjectDAO implements IProjectDataAccess{
 
         ArrayList<Project> projects = new ArrayList<>();
         //SQL Query.
-        String sql = "SELECT * FROM Project WHERE Title LIKE ?";
-        //String sql = "SELECT * FROM Project WHERE Adress LIKE '%' + ? + '%'";
+        String sql = "SELECT * FROM Project INNER JOIN Customers ON Project.customerID = Customers.ID WHERE Customers.Address LIKE ?";
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
 
