@@ -11,6 +11,8 @@ public class ProjectModel {
 
     private ObservableList<Project> projectsOpen;
     private ObservableList<Project> projectClose;
+    private ObservableList<Project> searchedProjects;
+    private String searchQuery;
 
     private ProjectManager projectManager;
 
@@ -18,6 +20,8 @@ public ProjectModel() throws Exception {
     projectManager = new ProjectManager();
     projectsOpen = FXCollections.observableArrayList();
     projectClose = FXCollections.observableArrayList();
+    searchedProjects = FXCollections.observableArrayList();
+    //searchedProjects.addAll(projectManager.searchByQuery(searchQuery));
     projectsOpen.addAll(projectManager.loadProjectOfAType(true));
     projectClose.addAll(projectManager.loadProjectOfAType(false));
 
@@ -27,10 +31,17 @@ public ProjectModel() throws Exception {
 
     public ObservableList<Project> getAllProjectsClose() {return projectClose;}
 
+
     public void createNewProject(Project project) throws SQLException{
     projectManager.createNewProject(project);
     projectsOpen.add(project);
     }
+
+    public ObservableList<Project> searchByQuery(String searchQuery) throws Exception {
+        System.out.println(searchedProjects.size() + "Search");
+        searchedProjects.addAll(projectManager.searchByQuery(searchQuery));
+    return searchedProjects; }
+
 
     public void changeProjectStatus(int projectStatus, int id) throws Exception {
     projectManager.changeProjectStatus(projectStatus, id);

@@ -3,10 +3,7 @@ package GUI.Model;
 import BE.Customer;
 import BE.User;
 import BLL.CustomerManager;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.util.List;
 
 public class CustomerModel {
 
@@ -19,6 +16,7 @@ public class CustomerModel {
 
     private Customer createdCustomer;
     private User user;
+
 
     public CustomerModel() throws Exception {
         customerManager = new CustomerManager();
@@ -44,6 +42,8 @@ public class CustomerModel {
         customerManager.deleteCustomer(selectedCustomer);
         allProjectmanager.remove(selectedCustomer);
     }
+
+
 
 
 
