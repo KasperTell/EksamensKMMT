@@ -60,7 +60,7 @@ public class MainController extends BaseController {
     @FXML
     private TableView<ProjectFiles> fileTable;
     @FXML
-    private ListView lstTechniciansOnCase;
+    private ListView<User> lstTechniciansOnCase;
 
     @FXML
     private ListView<User> lstProjectManagers,lstTechnicians,lstSalesPersons;
@@ -94,6 +94,7 @@ public class MainController extends BaseController {
     public void setup() throws Exception {
         userModel = getModel().getUserModel();
         customerModel = getModel().getCustomerModel();
+        projectFilesModel = getModel().getProjectFilesModel();
         lstTechnicians.setItems(userModel.getAllTechnicians());
         lstProjectManagers.setItems(userModel.getallProjectManagers());
         lstSalesPersons.setItems(userModel.getallSalesmen());
@@ -117,13 +118,15 @@ public class MainController extends BaseController {
                 throw new RuntimeException(e);
             }
             try {
-
                 setupFiles();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-
-
+            try{
+                setupTechniciansOnProject();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -143,7 +146,11 @@ public class MainController extends BaseController {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-
+            try{
+                setupTechniciansOnProject();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
         });
 
     }
@@ -151,7 +158,6 @@ public class MainController extends BaseController {
 
     @FXML
     private void setupFiles() throws Exception {
-        projectFilesModel=new ProjectFilesModel();
         if(selectedProject != null) {
             int projectNumber = selectedProject.getId();
             filesPictureColoum.setCellValueFactory(new PropertyValueFactory<>("picture"));
@@ -165,10 +171,9 @@ public class MainController extends BaseController {
 
 
             projectFilesModel.observer();
-
-
         }
     }
+
 
 
 
@@ -218,21 +223,18 @@ public class MainController extends BaseController {
     }
 
     public void addTechnicianAction(ActionEvent actionEvent) throws Exception {
-        int selectedProjectID = selectedProject.getId();
-        int technicianID = lstTechnicians.getSelectionModel().getSelectedItem().getId();
-        try {
-            userModel.moveTechnicianById(technicianID,selectedProjectID);
-            List<User> technicians = userModel.getAllTechnicians();
-            lstTechniciansOnCase.getItems().clear();
-            lstTechniciansOnCase.getItems().addAll(technicians);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        int projectID = selectedProject.getId();
+        int technicanID = lstTechnicians.getSelectionModel().getSelectedItem().getId();
+
+        System.out.println(projectID);
+        System.out.println(technicanID);
+
+        userModel.moveTechnician(technicanID,projectID);
     }
 
 
 
-        public void removeTechnicianAction(ActionEvent actionEvent) {
+    public void removeTechnicianAction(ActionEvent actionEvent) {
 
     }
 
@@ -269,7 +271,6 @@ public class MainController extends BaseController {
     @FXML
     private void setUpCustomer() throws Exception{
 
-        customerModel = new CustomerModel();
         if(selectedProject != null) {
             int customerID = selectedProject.getCustomernumber();
             Customer customer = customerModel.loadCustomer(customerID);
@@ -279,6 +280,13 @@ public class MainController extends BaseController {
             zipCode.setText(String.valueOf(customer.getZipCode()));
             email.setText(customer.getMail());
             telephone.setText(String.valueOf(customer.getPhoneNumber()));
+        }
+    }
+
+    private void setupTechniciansOnProject() throws Exception{
+        if(selectedProject != null){
+            int projectId = selectedProject.getId();
+            lstTechniciansOnCase.setItems(userModel.getAllTechniciansOnProject(projectId));
         }
     }
 

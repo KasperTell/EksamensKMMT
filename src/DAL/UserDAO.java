@@ -1,5 +1,6 @@
 package DAL;
 
+import BE.Customer;
 import BE.ProjectTechnician;
 import BE.User;
 import PersonsTypes.Technician;
@@ -159,53 +160,53 @@ public class UserDAO implements IUserDataAccess {
             throw new Exception("Could not delete this user", ex);
         }
     }
-    @Override
-    public ProjectTechnician moveTechnicianById(int technicianID, int projectID) throws Exception {
-        //Check if technician is already assigned to selected project
-        String sql = "SELECT * FROM ProjectTechnician WHERE ProjectID = ? AND UserID = ?";
+
+    public List<User> filterTechnicianById(int projectID) throws SQLException {
+        ArrayList<User> allUsers = new ArrayList<>();
+        String sql = "SELECT * FROM ProjectTechnician INNER JOIN Users ON ProjectTechnician.UserID = Users.ID WHERE ProjectID = ?;";
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, projectID);
-            stmt.setInt(2, technicianID);
             ResultSet rs = stmt.executeQuery();
-            if(rs.next()){
-            //Technician already assigned, do nothing
-            }else{
-                //Remove technician from all projects except selected
-                String sqlDelete = "DELETE FROM ProjectTechnician WHERE ProjectID <> ? AND UserID = ?";
-                PreparedStatement stmtDelete = conn.prepareStatement(sqlDelete);
-                stmtDelete.setInt(1, projectID);
-                stmtDelete.setInt(2, technicianID);
-                stmtDelete.executeUpdate();
-                //Insert into selected project
-                sql = "INSERT INTO ProjectTechnician (ProjectID, UserID) VALUES (?,?)";
-                PreparedStatement stmtInsert = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                //Setting the parameters and executing the query.
-                stmtInsert.setInt(1, projectID);
-                stmtInsert.setInt(2, technicianID);
-                stmtInsert.execute();
-
-                //Get generated ID
-                ResultSet rsInsert = stmtInsert.getGeneratedKeys();
-                int id = 0;
-                if (rsInsert.next()) {
-                    id = rsInsert.getInt(1);
-                }
-                ProjectTechnician projectTechnician = new ProjectTechnician(id, technicianID, projectID);
-                return projectTechnician;
+            while (rs.next()) {
+                int id = rs.getInt("UserID");
+                String firstName = rs.getString("First_Name");
+                String lastName = rs.getString("Last_Name");
+                String username = rs.getString("Username");
+                String password = rs.getString("Password");
+                int role = rs.getInt("Role");
+                User user = new User(id, firstName, lastName, username, password, role);
+                allUsers.add(user);
             }
+            return allUsers;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new SQLException("Could not move Technician", ex);
+        }
+    }
+    @Override
+    public ProjectTechnician moveTechnician(int technicianID, int projectID) throws Exception {
+        //SQL Query
+        String sql = "INSERT INTO ProjectTechnician (ProjectID, UserID) VALUES (?,?)";
+        //Getting the connection to the database.
+        try (Connection conn = databaseConnector.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            //Setting the parameters and executing the query.
+            stmt.setInt(1, projectID);
+            stmt.setInt(2, technicianID);
+            stmt.execute();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+            int id = 0;
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+            ProjectTechnician projectTechnician = new ProjectTechnician(id, technicianID, projectID);
+            return projectTechnician;
         } catch (SQLException ex) {
             ex.printStackTrace();
             throw new Exception("Could not move Technician", ex);
-
         }
-
-        return null;
     }
-
-
-
-
-
-    }
+}
 

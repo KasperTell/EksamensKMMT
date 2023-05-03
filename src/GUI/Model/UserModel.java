@@ -12,6 +12,7 @@ public class UserModel {
     private ObservableList<User> allTechnicians;
     private ObservableList<User> allSalesmen;
     private ObservableList<User> allProjectManager;
+    private ObservableList<User> allTechniciansOnProject;
     private UserManager userManager;
     private User user;
     private User createdUser;
@@ -24,7 +25,7 @@ public class UserModel {
         allTechnicians.addAll(userManager.loadUserOfAKind(4));
         allSalesmen.addAll(userManager.loadUserOfAKind(3));
         allProjectManager.addAll(userManager.loadUserOfAKind(2));
-
+        allTechniciansOnProject = FXCollections.observableArrayList();
     }
 
     public List<User> loadUser(String name)throws Exception{return userManager.loadUser(name);}
@@ -32,12 +33,16 @@ public class UserModel {
     public ObservableList<User> getAllTechnicians() {return allTechnicians;}
 
     public ObservableList<User> getallSalesmen() {return allSalesmen;}
+    public ObservableList<User> getAllTechniciansOnProject(int projectID) throws Exception {
+        allTechniciansOnProject.clear();
+        allTechniciansOnProject.addAll(userManager.filterTechnicianById(projectID));
+        return allTechniciansOnProject;
+    }
 
 
     public ObservableList<User> getallProjectManagers() {return allProjectManager;}
 
     public boolean validateUsername(String username) throws Exception{return userManager.validateUsername(username);}
-    public void moveTechnicianById(int technicianID, int projectID)throws Exception {userManager.moveTechnicianById(technicianID, projectID);}
 
     public void createNewUser(String firstName, String lastName, String username, String password, int role) throws Exception {
         createdUser =  userManager.createNewUser(firstName, lastName, username, password, role);
@@ -58,6 +63,10 @@ public class UserModel {
         allTechnicians.remove(selectedKoordinator);
     }
 
-
+    public void moveTechnician(int technicanID, int projectID) throws Exception {
+        userManager.moveTechnician(technicanID, projectID);
+        allTechniciansOnProject.clear();
+        allTechniciansOnProject.addAll(userManager.filterTechnicianById(projectID));
+    }
 }
 

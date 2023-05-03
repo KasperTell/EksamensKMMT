@@ -3,6 +3,7 @@ package DAL;
 import BE.ProjectTechnician;
 import BE.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface IUserDataAccess {
@@ -12,6 +13,6 @@ public interface IUserDataAccess {
     List<User> loadUserOfAType(int role) throws Exception;
     User createNewUser(String firstName, String lastName, String username, String password, int role) throws Exception;
     void deleteUser(User selectedUser) throws Exception;
-
-    ProjectTechnician moveTechnicianById(int technicianID, int projectID) throws Exception;
+    List<User> filterTechnicianById(int projectID) throws SQLException;
+    ProjectTechnician moveTechnician(int technicianID, int projectID) throws Exception;
 }
