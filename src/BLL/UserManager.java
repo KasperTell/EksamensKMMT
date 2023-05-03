@@ -27,6 +27,7 @@ public class UserManager {
 
     public List<User> filterTechnicianById(int projectID) throws Exception {return userDAO.filterTechnicianById(projectID);}
 
+    public void removeTechnicianFromProject(int technicianID, int projectID) throws Exception {userDAO.removeTechnicianFromProject(technicianID, projectID);}
     public ProjectTechnician moveTechnician(int technicanID, int projectID) throws Exception {
         return userDAO.moveTechnician(technicanID, projectID);
     }

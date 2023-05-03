@@ -220,6 +220,7 @@ public class MainController extends BaseController {
     }
 
     public void removeUserAction(ActionEvent actionEvent) {
+
     }
 
     public void addTechnicianAction(ActionEvent actionEvent) throws Exception {
@@ -233,10 +234,20 @@ public class MainController extends BaseController {
     }
 
 
-
-    public void removeTechnicianAction(ActionEvent actionEvent) {
+    public void removeTechnicianAction(ActionEvent actionEvent) throws Exception{
+        int projectID = selectedProject.getId();
+        int technicianID = lstTechniciansOnCase.getSelectionModel().getSelectedItem().getId();
+        userModel.removeTechnicianFromProject(technicianID,projectID);
 
     }
+    /*
+    public void removeTechnicianAction(ActionEvent actionEvent) throws Exception{
+        int technicianID = lstTechniciansOnCase.getSelectionModel().getSelectedItem().getId();
+        int projectID = selectedProject.getId();
+        userModel.removeTechnicianFromProject(technicianID,projectID);
+    }
+
+     */
 
     public void newProjectAction() {
         TranslateTransition transition = new TranslateTransition();
