@@ -9,6 +9,7 @@ import GUI.Model.ProjectModel;
 import GUI.Model.UserModel;
 import GUI.Model.CustomerModel;
 import PersonsTypes.PersonTypeChooser;
+import PersonsTypes.Technician;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
@@ -18,6 +19,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -39,42 +41,35 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class MainController extends BaseController {
 
-    public Button btnAddNewProject;
-    public ComboBox<Customer> cbxCustomer;
-    public TextField txtfProjectName;
-    public Label customerHeader1;
-    public VBox vbxCreateNewProject;
-    public AnchorPane acpMainView;
     @FXML
-    private TableColumn projectDateOpen,projectOpenCustomer,projectCloseDate,projectCloseCustomer,filesPictureColoum,filesFilenameColoum,filesDate,filesInReport;
+    private ComboBox<Customer> cbxCustomer;
+    @FXML
+    private VBox vbxCreateNewProject, vbxCreateNewCustomer;
+    @FXML
+    private AnchorPane acpMainView;
 
     @FXML
-    private Button closeProject,reOpenProject,openFile,btnSaveNewFile,saveNote,newProject,newUser,removeUser,newCustomer,addTechnician,removeTechnician;
+    private TableColumn projectDateOpen, projectOpenCustomer, projectCloseDate, projectCloseCustomer, filesPictureColoum, filesFilenameColoum, filesDate, filesInReport;
 
+    @FXML
+    private Button closeProject,reOpenProject,openFile,btnSaveNewFile,saveNote,newProject,newUser,removeUser,newCustomer,addTechnician,removeTechnician, btnAddNewProject, btnCustomerInfo, btnAddNewCustomer;
     @FXML
     private Tab openProjects;
     @FXML
     private TableView<Project> openProjectsTable,closeProjectsTable;
-
     @FXML
     private TableView<ProjectFiles> fileTable;
     @FXML
-    private ListView lstTechniciansOnCase;
+    private ListView<User> lstProjectManagers,lstTechnicians,lstSalesPersons, lstTechniciansOnCase;
 
     @FXML
-    private ListView<User> lstProjectManagers,lstTechnicians,lstSalesPersons;
-
+    private Label email, zipCode, address, name, city, telephone, customerHeader;
     @FXML
-    private Label email,zipCode,address,name,city,telephone,customerHeader;
-    @FXML
-    private TextField txtfSearchField;
+    private TextField txtfSearchField, txtfProjectName, txtfPhoneNumber, txtfEmail, txtfZipCode, txtfAddress, txtfcompanyName, txtfCustomerLastName, txtfCustomerFirstName, searchBox;
     @FXML
     private TextArea NotesTextArea;
-    @FXML
-    private Button btnCustomerInfo;
 
     private Project selectedProject;
-    private ProjectFiles selectedFiles;
 
     private File file;
     private String filePath = "Resources/Pictures/ImagesSavedFromTechnicians";
@@ -86,13 +81,14 @@ public class MainController extends BaseController {
     private boolean isMenuOpen;
 
 
-    PersonTypeChooser personTypeChooser=new PersonTypeChooser();
+    PersonTypeChooser personTypeChooser = new PersonTypeChooser();
 
 
     @Override
     public void setup() throws Exception {
         userModel = getModel().getUserModel();
         customerModel = getModel().getCustomerModel();
+        projectFilesModel = getModel().getProjectFilesModel();
         lstTechnicians.setItems(userModel.getAllTechnicians());
         lstProjectManagers.setItems(userModel.getallProjectManagers());
         lstSalesPersons.setItems(userModel.getallSalesmen());
@@ -109,20 +105,24 @@ public class MainController extends BaseController {
     private void listenerLstAllCloseProjects() {
         closeProjectsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
         {
-            selectedProject  = closeProjectsTable.getSelectionModel().getSelectedItem();
+
+            selectedProject = closeProjectsTable.getSelectionModel().getSelectedItem();
+
             try {
                 setUpCustomer();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
             try {
-
                 setupFiles();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-
-
+            try {
+                setupTechniciansOnProject();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -132,6 +132,8 @@ public class MainController extends BaseController {
         {
 
             selectedProject = openProjectsTable.getSelectionModel().getSelectedItem();
+            System.out.println(selectedProject.getId());
+            System.out.println(selectedProject.getCustomernumber());
             try {
                 setUpCustomer();
             } catch (Exception e) {
@@ -142,7 +144,11 @@ public class MainController extends BaseController {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-
+            try {
+                setupTechniciansOnProject();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
 
     }
@@ -150,8 +156,7 @@ public class MainController extends BaseController {
 
     @FXML
     private void setupFiles() throws Exception {
-        projectFilesModel=new ProjectFilesModel();
-        if(selectedProject != null) {
+        if (selectedProject != null) {
             int projectNumber = selectedProject.getId();
             filesPictureColoum.setCellValueFactory(new PropertyValueFactory<>("picture"));
 
@@ -164,17 +169,13 @@ public class MainController extends BaseController {
 
 
             projectFilesModel.observer();
-
-
         }
     }
 
 
-
-
     private void setProjectColoums() throws Exception {
 
-        projectModel=new ProjectModel();
+        projectModel = new ProjectModel();
 
         projectDateOpen.setCellValueFactory(new PropertyValueFactory<>("date"));
         projectOpenCustomer.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -214,6 +215,7 @@ public class MainController extends BaseController {
     }
 
     public void removeUserAction(ActionEvent actionEvent) {
+
     }
 
     public void addTechnicianAction(ActionEvent actionEvent) throws Exception {
@@ -223,11 +225,16 @@ public class MainController extends BaseController {
         System.out.println(projectID);
         System.out.println(technicanID);
 
-        userModel.moveTechnician(technicanID,projectID);
-
+        userModel.moveTechnician(technicanID, projectID);
     }
 
-    public void removeTechnicianAction(ActionEvent actionEvent) {
+
+
+    public void removeTechnicianAction(ActionEvent actionEvent) throws Exception{
+        User selectedTechnician = lstTechniciansOnCase.getSelectionModel().getSelectedItem();
+        int projectID = selectedProject.getId();
+        userModel.removeTechnicianFromProject(selectedTechnician, projectID);
+
 
     }
 
@@ -237,7 +244,7 @@ public class MainController extends BaseController {
         transition.setNode(vbxCreateNewProject);
         transition.setDuration(Duration.millis(150));
 
-        if(!isMenuOpen){
+        if (!isMenuOpen) {
             isMenuOpen = true;
             transition.setToX(0);
             acpMainView.setOpacity(0.2);
@@ -258,14 +265,37 @@ public class MainController extends BaseController {
         transition.play();
     }
 
-    public void newCustomerAction(ActionEvent actionEvent) {
+    public void newCustomerAction() {
+        TranslateTransition transition = new TranslateTransition();
+        vbxCreateNewCustomer.toFront();
+        transition.setNode(vbxCreateNewCustomer);
+        transition.setDuration(Duration.millis(150));
+
+        if(!isMenuOpen){
+            isMenuOpen = true;
+            transition.setToX(0);
+            acpMainView.setOpacity(0.2);
+            EventHandler<MouseEvent> menuHandler = new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    newCustomerAction();
+                    acpMainView.removeEventHandler(MouseEvent.MOUSE_CLICKED, this);
+
+                }
+            };
+            acpMainView.addEventHandler(MouseEvent.MOUSE_CLICKED, menuHandler);
+        } else {
+            isMenuOpen = false;
+            transition.setToX(-400);
+            acpMainView.setOpacity(1);
+        }
+        transition.play();
     }
 
     @FXML
-    private void setUpCustomer() throws Exception{
+    private void setUpCustomer() throws Exception {
 
-        customerModel = new CustomerModel();
-        if(selectedProject != null) {
+        if (selectedProject != null) {
             int customerID = selectedProject.getCustomernumber();
             Customer customer = customerModel.loadCustomer(customerID);
 
@@ -274,6 +304,13 @@ public class MainController extends BaseController {
             zipCode.setText(String.valueOf(customer.getZipCode()));
             email.setText(customer.getMail());
             telephone.setText(String.valueOf(customer.getPhoneNumber()));
+        }
+    }
+
+    private void setupTechniciansOnProject() throws Exception {
+        if (selectedProject != null) {
+            int projectId = selectedProject.getId();
+            lstTechniciansOnCase.setItems(userModel.getAllTechniciansOnProject(projectId));
         }
     }
 
@@ -286,8 +323,8 @@ public class MainController extends BaseController {
         FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*jpeg");
         fileChooser.getExtensionFilters().add(extensionFilter);
         file = fileChooser.showOpenDialog(stage);
-        if(file != null) {
-            try{
+        if (file != null) {
+            try {
                 Files.copy(file.toPath(), target.resolve(file.toPath().getFileName()), REPLACE_EXISTING);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -298,7 +335,7 @@ public class MainController extends BaseController {
 
     private void turnButtonONOrOff() {
 
-        Boolean[] turnButtonOnOrOff=personTypeChooser.turnButtonOnOrOff();
+        Boolean[] turnButtonOnOrOff = personTypeChooser.turnButtonOnOrOff();
 
         closeProject.setDisable(turnButtonOnOrOff[0]);
         reOpenProject.setDisable(turnButtonOnOrOff[1]);
@@ -325,5 +362,27 @@ public class MainController extends BaseController {
         projectModel.createNewProject(project);
 
         newProjectAction();
+    }
+
+
+    public void searchProjectsByStringQuery(KeyEvent keyEvent) throws Exception {
+        String query = searchBox.getText();
+        //testListView.setItems(projectModel.searchByQuery(query));
+        openProjectsTable.getItems().clear();
+        openProjectsTable.setItems(projectModel.searchByQuery(query));
+    }
+    public void handleAddNewCustomer(ActionEvent actionEvent) throws Exception {
+        int id = 1;
+        String firstName = txtfCustomerFirstName.getText();
+        String lastName = txtfCustomerLastName.getText();
+        String companyName = txtfcompanyName.getText();
+        String customerAddress = txtfAddress.getText();
+        String mail = txtfEmail.getText();
+        int phoneNumber = Integer.parseInt(txtfPhoneNumber.getText());
+        int customerZipCode = Integer.parseInt(txtfZipCode.getText());
+        Customer customer = new Customer(id, firstName, lastName, companyName, customerAddress, mail, phoneNumber, customerZipCode);
+        customerModel.createNewCustomer(customer);
+
+        newCustomerAction();
     }
 }

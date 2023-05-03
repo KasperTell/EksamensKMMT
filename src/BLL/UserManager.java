@@ -6,6 +6,7 @@ import DAL.IUserDataAccess;
 import DAL.UserDAO;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserManager {
@@ -24,10 +25,12 @@ public class UserManager {
 
     public boolean validateUsername(String username) throws Exception{return userDAO.validateUsername(username);}
 
-    public ProjectTechnician moveTechnician(int technicianID, int projectID) throws  Exception {return userDAO.moveTechnician(technicianID,projectID);}
+    public List<User> filterTechnicianById(int projectID) throws Exception {return userDAO.filterTechnicianById(projectID);}
 
+    public void removeTechnicianFromProject(User selectedTechnician, int projectID) throws Exception
+    {userDAO.removeTechnicianFromProject(selectedTechnician, projectID);}
 
-
-
-
+    public ProjectTechnician moveTechnician(int technicanID, int projectID) throws Exception {
+        return userDAO.moveTechnician(technicanID, projectID);
+    }
 }

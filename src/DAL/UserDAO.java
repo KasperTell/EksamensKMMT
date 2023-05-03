@@ -1,7 +1,9 @@
 package DAL;
 
+import BE.Customer;
 import BE.ProjectTechnician;
 import BE.User;
+import PersonsTypes.Technician;
 
 import java.io.IOException;
 import java.sql.*;
@@ -159,6 +161,42 @@ public class UserDAO implements IUserDataAccess {
         }
     }
 
+    public void removeTechnicianFromProject(User selectedTechnician, int projectID) throws Exception{
+        //SQL Query
+        String sql = "DELETE FROM ProjectTechnician WHERE ProjectID = ? AND UserID = ?";
+        try (Connection conn = databaseConnector.getConnection()){
+            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            //Setting the parameters and executing the query.
+            stmt.setInt(1, projectID);
+            stmt.setInt(2, selectedTechnician.getId());
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            throw new Exception("Something went wrong while removing a technician from a project.", ex);
+        }
+    }
+    public List<User> filterTechnicianById(int projectID) throws SQLException {
+        ArrayList<User> allUsers = new ArrayList<>();
+        String sql = "SELECT * FROM ProjectTechnician INNER JOIN Users ON ProjectTechnician.UserID = Users.ID WHERE ProjectID = ?;";
+        try (Connection conn = databaseConnector.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, projectID);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("UserID");
+                String firstName = rs.getString("First_Name");
+                String lastName = rs.getString("Last_Name");
+                String username = rs.getString("Username");
+                String password = rs.getString("Password");
+                int role = rs.getInt("Role");
+                User user = new User(id, firstName, lastName, username, password, role);
+                allUsers.add(user);
+            }
+            return allUsers;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new SQLException("Could not move Technician", ex);
+        }
+    }
     @Override
     public ProjectTechnician moveTechnician(int technicianID, int projectID) throws Exception {
         //SQL Query
@@ -181,9 +219,8 @@ public class UserDAO implements IUserDataAccess {
         } catch (SQLException ex) {
             ex.printStackTrace();
             throw new Exception("Could not move Technician", ex);
-
-
         }
     }
+
 }
 

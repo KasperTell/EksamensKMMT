@@ -25,5 +25,9 @@ public class ProjectManager {
         projectDAO.changeProjectStatus(projectStatus, id);
     }
 
+    public ArrayList<Project> searchByQuery(String query) throws Exception {
+        return projectDAO.searchByQuery(query);
+    }
+
 
 }
