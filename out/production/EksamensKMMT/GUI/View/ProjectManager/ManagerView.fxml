@@ -118,7 +118,7 @@
             <Button fx:id="removeUser" layoutX="960.0" layoutY="686.0" mnemonicParsing="false" onAction="#removeUserAction" text="Fjern Bruger" />
             <Button fx:id="newCustomer" layoutX="190.0" layoutY="686.0" mnemonicParsing="false" onAction="#newCustomerAction" text="Ny kunde" />
             <Button fx:id="btnCustomerInfo" layoutX="450.0" layoutY="684.0" mnemonicParsing="false" onAction="#handleOpenCustomerDoc" prefHeight="26.0" prefWidth="90.0" text="Info" />
-            <TextField fx:id="txtfSearchField" layoutX="97.0" layoutY="95.0" promptText="Søg..." />
+            <TextField fx:id="searchBox" layoutX="97.0" layoutY="95.0" onKeyReleased="#searchProjectsByStringQuery" promptText="Søg..." />
             <TabPane layoutX="850.0" layoutY="150.0" prefHeight="500.0" prefWidth="300.0" tabClosingPolicy="UNAVAILABLE">
                <tabs>
                   <Tab text="Tekniker">

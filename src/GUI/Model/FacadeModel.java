@@ -1,6 +1,8 @@
 package GUI.Model;
 
+import BE.Project;
 import BLL.ProjectFilesManager;
+import javafx.collections.ObservableList;
 
 public class FacadeModel {
 
@@ -8,6 +10,7 @@ public class FacadeModel {
     private ProjectFilesModel projectFilesModel;
     private ProjectModel projectModel;
     private CustomerModel customerModel;
+
 
     public FacadeModel() throws Exception{
         projectFilesModel = new ProjectFilesModel();
@@ -26,5 +29,6 @@ public class FacadeModel {
     public void setCustomerModel(CustomerModel customerModel){this.customerModel = customerModel;}
     public UserModel getUserModel(){return userModel;}
     public void setUserModel(UserModel userModel){this.userModel = userModel;}
+
 
 }

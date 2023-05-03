@@ -95,4 +95,45 @@ public class ProjectDAO implements IProjectDataAccess{
     }
     }
 
+    public ArrayList<Project> searchByQuery(String query) throws Exception {
+
+        ArrayList<Project> projects = new ArrayList<>();
+        //SQL Query.
+        String sql = "SELECT * FROM Project WHERE Title LIKE ?";
+        //String sql = "SELECT * FROM Project WHERE Adress LIKE '%' + ? + '%'";
+        try (Connection conn = databaseConnector.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            //Setting the parameters and executing the statement.
+            stmt.setString(1, "%" + query + "%");
+
+
+            ResultSet rs = stmt.executeQuery();
+
+
+
+            // Loop through rows from the database result set
+            while (rs.next()) {
+                //Map DB row to user object
+                int id = rs.getInt("ID");
+                String title = rs.getString("title");
+                int customerID = rs.getInt("customerID");
+                LocalDate date = rs.getDate("date").toLocalDate();
+                boolean openClose = rs.getBoolean("OpenClose");
+
+                Project project = new Project(id, title, customerID, date, openClose);
+
+                projects.add(project);
+
+            }
+            System.out.println(projects.size() + "Saerch DAL");
+            return projects;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new Exception("Could not get EventKoordinator from database", ex);
+        }
+
+    }
+
 }

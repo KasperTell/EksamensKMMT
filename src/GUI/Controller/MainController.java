@@ -19,6 +19,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -42,20 +43,20 @@ public class MainController extends BaseController {
 
     public Button btnAddNewProject;
     public ComboBox<Customer> cbxCustomer;
-    public TextField txtfProjectName;
+    public TextField txtfProjectName, searchBox;
     public Label customerHeader1;
     public VBox vbxCreateNewProject;
     public AnchorPane acpMainView;
     @FXML
-    private TableColumn projectDateOpen,projectOpenCustomer,projectCloseDate,projectCloseCustomer,filesPictureColoum,filesFilenameColoum,filesDate,filesInReport;
+    private TableColumn projectDateOpen, projectOpenCustomer, projectCloseDate, projectCloseCustomer, filesPictureColoum, filesFilenameColoum, filesDate, filesInReport;
 
     @FXML
-    private Button closeProject,reOpenProject,openFile,btnSaveNewFile,saveNote,newProject,newUser,removeUser,newCustomer,addTechnician,removeTechnician;
+    private Button closeProject, reOpenProject, openFile, btnSaveNewFile, saveNote, newProject, newUser, removeUser, newCustomer, addTechnician, removeTechnician;
 
     @FXML
     private Tab openProjects;
     @FXML
-    private TableView<Project> openProjectsTable,closeProjectsTable;
+    private TableView<Project> openProjectsTable, closeProjectsTable;
 
     @FXML
     private TableView<ProjectFiles> fileTable;
@@ -63,10 +64,10 @@ public class MainController extends BaseController {
     private ListView<User> lstTechniciansOnCase;
 
     @FXML
-    private ListView<User> lstProjectManagers,lstTechnicians,lstSalesPersons;
+    private ListView<User> lstProjectManagers, lstTechnicians, lstSalesPersons;
 
     @FXML
-    private Label email,zipCode,address,name,city,telephone,customerHeader;
+    private Label email, zipCode, address, name, city, telephone, customerHeader;
     @FXML
     private TextField txtfSearchField;
     @FXML
@@ -87,7 +88,7 @@ public class MainController extends BaseController {
     private boolean isMenuOpen;
 
 
-    PersonTypeChooser personTypeChooser=new PersonTypeChooser();
+    PersonTypeChooser personTypeChooser = new PersonTypeChooser();
 
 
     @Override
@@ -111,7 +112,7 @@ public class MainController extends BaseController {
     private void listenerLstAllCloseProjects() {
         closeProjectsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
         {
-            selectedProject  = closeProjectsTable.getSelectionModel().getSelectedItem();
+            selectedProject = closeProjectsTable.getSelectionModel().getSelectedItem();
             try {
                 setUpCustomer();
             } catch (Exception e) {
@@ -122,7 +123,7 @@ public class MainController extends BaseController {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-            try{
+            try {
                 setupTechniciansOnProject();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -146,9 +147,9 @@ public class MainController extends BaseController {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-            try{
+            try {
                 setupTechniciansOnProject();
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
@@ -158,7 +159,7 @@ public class MainController extends BaseController {
 
     @FXML
     private void setupFiles() throws Exception {
-        if(selectedProject != null) {
+        if (selectedProject != null) {
             int projectNumber = selectedProject.getId();
             filesPictureColoum.setCellValueFactory(new PropertyValueFactory<>("picture"));
 
@@ -175,12 +176,9 @@ public class MainController extends BaseController {
     }
 
 
-
-
-
     private void setProjectColoums() throws Exception {
 
-        projectModel=new ProjectModel();
+        projectModel = new ProjectModel();
 
         projectDateOpen.setCellValueFactory(new PropertyValueFactory<>("date"));
         projectOpenCustomer.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -229,9 +227,8 @@ public class MainController extends BaseController {
         System.out.println(projectID);
         System.out.println(technicanID);
 
-        userModel.moveTechnician(technicanID,projectID);
+        userModel.moveTechnician(technicanID, projectID);
     }
-
 
 
     public void removeTechnicianAction(ActionEvent actionEvent) {
@@ -244,7 +241,7 @@ public class MainController extends BaseController {
         transition.setNode(vbxCreateNewProject);
         transition.setDuration(Duration.millis(150));
 
-        if(!isMenuOpen){
+        if (!isMenuOpen) {
             isMenuOpen = true;
             transition.setToX(0);
             acpMainView.setOpacity(0.2);
@@ -269,9 +266,9 @@ public class MainController extends BaseController {
     }
 
     @FXML
-    private void setUpCustomer() throws Exception{
+    private void setUpCustomer() throws Exception {
 
-        if(selectedProject != null) {
+        if (selectedProject != null) {
             int customerID = selectedProject.getCustomernumber();
             Customer customer = customerModel.loadCustomer(customerID);
 
@@ -283,8 +280,8 @@ public class MainController extends BaseController {
         }
     }
 
-    private void setupTechniciansOnProject() throws Exception{
-        if(selectedProject != null){
+    private void setupTechniciansOnProject() throws Exception {
+        if (selectedProject != null) {
             int projectId = selectedProject.getId();
             lstTechniciansOnCase.setItems(userModel.getAllTechniciansOnProject(projectId));
         }
@@ -299,8 +296,8 @@ public class MainController extends BaseController {
         FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*jpeg");
         fileChooser.getExtensionFilters().add(extensionFilter);
         file = fileChooser.showOpenDialog(stage);
-        if(file != null) {
-            try{
+        if (file != null) {
+            try {
                 Files.copy(file.toPath(), target.resolve(file.toPath().getFileName()), REPLACE_EXISTING);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -311,7 +308,7 @@ public class MainController extends BaseController {
 
     private void turnButtonONOrOff() {
 
-        Boolean[] turnButtonOnOrOff=personTypeChooser.turnButtonOnOrOff();
+        Boolean[] turnButtonOnOrOff = personTypeChooser.turnButtonOnOrOff();
 
         closeProject.setDisable(turnButtonOnOrOff[0]);
         reOpenProject.setDisable(turnButtonOnOrOff[1]);
@@ -338,5 +335,12 @@ public class MainController extends BaseController {
         projectModel.createNewProject(project);
 
         newProjectAction();
+    }
+
+    public void searchProjectsByStringQuery(KeyEvent keyEvent) throws Exception {
+        String query = searchBox.getText();
+        //testListView.setItems(projectModel.searchByQuery(query));
+        openProjectsTable.getItems().clear();
+        openProjectsTable.setItems(projectModel.searchByQuery(query));
     }
 }

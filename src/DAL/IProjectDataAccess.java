@@ -11,4 +11,5 @@ public interface IProjectDataAccess {
     void changeProjectStatus(int projectStatus, int id) throws Exception;
 
     Project createNewProject(Project project) throws SQLException;
+    ArrayList<Project> searchByQuery(String query) throws Exception;
 }
