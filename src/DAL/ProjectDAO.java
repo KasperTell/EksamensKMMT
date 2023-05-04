@@ -144,8 +144,7 @@ public class ProjectDAO implements IProjectDataAccess{
 
 
     public void saveNote(String note, int projectID) throws Exception {
-        System.out.println();
-        String sql = "UPDATE Project SET Note = ? WHERE ID = ?";
+        String sql = "UPDATE Project ON Note = ? WHERE Project_ID = ? AND customerID = ?";
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, note);
