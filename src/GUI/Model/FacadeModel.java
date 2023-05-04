@@ -11,7 +11,10 @@ public class FacadeModel {
     private ProjectModel projectModel;
     private CustomerModel customerModel;
 
-
+    /**
+     * Constructor for the class "FacadeModel"
+     * @throws Exception
+     */
     public FacadeModel() throws Exception{
         projectFilesModel = new ProjectFilesModel();
         projectModel = new ProjectModel();
@@ -19,6 +22,10 @@ public class FacadeModel {
         userModel = new UserModel();
     }
 
+    /**
+     * Getters and setters for the models.
+     * @return
+     */
     public ProjectFilesModel getProjectFilesModel(){return projectFilesModel;}
     public void setProjectFilesModel(ProjectFilesModel projectFilesModel){this.projectFilesModel = projectFilesModel;}
 
@@ -29,6 +36,4 @@ public class FacadeModel {
     public void setCustomerModel(CustomerModel customerModel){this.customerModel = customerModel;}
     public UserModel getUserModel(){return userModel;}
     public void setUserModel(UserModel userModel){this.userModel = userModel;}
-
-
 }

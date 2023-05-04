@@ -1,28 +1,36 @@
 package BE;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Project {
-    private int id;
+    private int id, customerID;
     private String title;
-    private int customernumber;
     private LocalDate date;
     private boolean open;
 
-    public Project(int id, String title, int customernumber, LocalDate date, boolean open) {
+    /**
+     * Constructor for the class "Project".
+     * @param id
+     * @param title
+     * @param customerID
+     * @param date
+     * @param open
+     */
+    public Project(int id, String title, int customerID, LocalDate date, boolean open) {
         this.id = id;
         this.title = title;
-        this.customernumber = customernumber;
+        this.customerID = customerID;
         this.date = date;
         this.open = open;
     }
 
+    /**
+     * Getters and setters for the entire class.
+     * @return
+     */
     public int getId() {
         return id;
     }
-
-
 
     public void setId(int id) {
         this.id = id;
@@ -36,12 +44,12 @@ public class Project {
         this.title = title;
     }
 
-    public int getCustomernumber() {
-        return customernumber;
+    public int getCustomerID() {
+        return customerID;
     }
 
-    public void setCustomernumber(int customernumber) {
-        this.customernumber = customernumber;
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
     }
 
     public LocalDate getDate() {
@@ -60,17 +68,18 @@ public class Project {
         this.open = open_close;
     }
 
+    /**
+     * Overriding the default toString method.
+     * @return
+     */
     @Override
     public String toString() {
         return "Project{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", customernumber=" + customernumber +
+                ", customerId=" + customerID +
                 ", date=" + date +
                 ", open=" + open +
                 '}';
     }
-
-
-
 }

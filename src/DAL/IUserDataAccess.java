@@ -8,13 +8,12 @@ import java.util.List;
 
 public interface IUserDataAccess {
 
-    List<User> loadUser(String username) throws Exception;
-    boolean validateUsername(String username) throws Exception;
-    List<User> loadUserOfAType(int role) throws Exception;
-    User createNewUser(String firstName, String lastName, String username, String password, int role) throws Exception;
-    void deleteUser(User selectedUser) throws Exception;
+    User loadUser(String username) throws SQLException;
+    boolean validateUsername(String username) throws SQLException;
+    List<User> loadUserOfAType(int role) throws SQLException;
+    User createNewUser(User user) throws SQLException;
+    void deleteUser(User selectedUser) throws SQLException;
     List<User> filterTechnicianById(int projectID) throws SQLException;
-    ProjectTechnician moveTechnician(int technicianID, int projectID) throws Exception;
-
-    void removeTechnicianFromProject(User selectedTechnician, int projectID) throws Exception;
+    ProjectTechnician moveTechnician(int technicianID, int projectID) throws SQLException;
+    void removeTechnicianFromProject(User selectedTechnician, int projectID) throws SQLException;
 }

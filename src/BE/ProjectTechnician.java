@@ -1,16 +1,24 @@
 package BE;
 
 public class ProjectTechnician {
-    private int id;
-    private int technicianID;
-    private int projectID;
+    private int id, technicianID, projectID;
 
+    /**
+     * Constructor for the class "ProjectTechnician"
+     * @param id
+     * @param technicianID
+     * @param projectID
+     */
     public ProjectTechnician(int id, int technicianID, int projectID) {
         this.id = id;
         this.technicianID = technicianID;
         this.projectID = projectID;
     }
 
+    /**
+     * Getters and setters for the entire class.
+     * @return
+     */
     public int getId() {
         return id;
     }

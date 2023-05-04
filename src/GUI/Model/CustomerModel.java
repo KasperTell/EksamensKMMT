@@ -1,37 +1,48 @@
 package GUI.Model;
 
 import BE.Customer;
-import BE.User;
 import BLL.CustomerManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.List;
-
 public class CustomerModel {
 
-    private ObservableList<Customer> allProjectmanager;
     private ObservableList<Customer> allCustomers;
     private CustomerManager customerManager;
     private Customer createdCustomer;
 
+    /**
+     * Constructor for the class "CustomerModel".
+     * @throws Exception
+     */
     public CustomerModel() throws Exception {
         customerManager = new CustomerManager();
         allCustomers = FXCollections.observableArrayList();
         allCustomers.addAll(customerManager.loadAllCustomers());
     }
 
+    /**
+     * Getter for the list of all customers.
+     * @return
+     */
     public ObservableList<Customer> getAllCustomers(){return allCustomers;}
+
+    /**
+     * Sends the customer based on a specific ID through the model.
+     * @param customerID
+     * @return
+     * @throws Exception
+     */
     public Customer loadCustomer(int customerID) throws Exception {return customerManager.loadCustomer(customerID);}
 
+    /**
+     * Sends the customer through the model and adds it to the list of all customers.
+     * @param customer
+     * @throws Exception
+     */
     public void createNewCustomer(Customer customer) throws Exception {
         createdCustomer = customerManager.createNewCustomer(customer);
         allCustomers.add(createdCustomer);
-    }
-
-    public void deleteCustomer (Customer selectedCustomer) throws Exception {
-        customerManager.deleteCustomer(selectedCustomer);
-        allProjectmanager.remove(selectedCustomer);
     }
 
 

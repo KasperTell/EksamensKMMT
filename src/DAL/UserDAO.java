@@ -1,9 +1,7 @@
 package DAL;
 
-import BE.Customer;
 import BE.ProjectTechnician;
 import BE.User;
-import PersonsTypes.Technician;
 
 import java.io.IOException;
 import java.sql.*;
@@ -15,18 +13,26 @@ public class UserDAO implements IUserDataAccess {
 
     private DatabaseConnector databaseConnector;
 
+    /**
+     * Constructor for the class "UserDAO"
+     * @throws IOException
+     */
     public UserDAO() throws IOException {
         databaseConnector = DatabaseConnector.getInstance();
     }
 
-    @Override
-    public List<User> loadUserOfAType(int roleType) throws Exception {
+    /**
+     * Getting a list of users/employees
+     * @param roleType
+     * @return
+     * @throws SQLException
+     */
+    public List<User> loadUserOfAType(int roleType) throws SQLException {
 
         ArrayList<User> allUserOfAType = new ArrayList<>();
 
 
         //SQL Query.
-        //String sql = "SELECT * FROM Users WHERE Role ="+roleType+"AND Is_Deleted IS NULL";
         String sql = "SELECT * FROM Users WHERE Role =? AND Is_Deleted IS NULL";
         //Getting the connection to the database.
         try (Connection conn = databaseConnector.getConnection()) {
@@ -37,7 +43,7 @@ public class UserDAO implements IUserDataAccess {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                //Map DB row to user object
+                //Getting the info from the database.
                 int id = rs.getInt("ID");
                 String firstName = rs.getString("First_Name");
                 String lastName = rs.getString("Last_Name");
@@ -52,14 +58,18 @@ public class UserDAO implements IUserDataAccess {
             return allUserOfAType;
         } catch (Exception ex) {
             ex.printStackTrace();
-            throw new Exception("Failed to retrieve Technicians from database", ex);
+            throw new SQLException("Failed to retrieve Technicians from database", ex);
         }
     }
 
-
-    @Override
-    public List<User> loadUser(String name) throws Exception {
-        ArrayList<User> allUsers = new ArrayList<>();
+    /**
+     * Getting a specific user from the database based on a username.
+     * @param name
+     * @return
+     * @throws SQLException
+     */
+    public User loadUser(String name) throws SQLException {
+        User user = null;
         //SQL Query.
         String sql = "SELECT * FROM Users WHERE Username = ?";
         //Getting the connection to the database.
@@ -69,10 +79,8 @@ public class UserDAO implements IUserDataAccess {
             //Setting the parameters and executing the statement.
             stmt.setString(1, name);
             ResultSet rs = stmt.executeQuery();
-
-            // Loop through rows from the database result set
-            while (rs.next()) {
-                //Map DB row to user object
+            while(rs.next()) {
+                // Loop through rows from the database result set and getting the information.
                 int id = rs.getInt("Id");
                 String firstName = rs.getString("First_Name");
                 String lastName = rs.getString("Last_Name");
@@ -80,20 +88,23 @@ public class UserDAO implements IUserDataAccess {
                 String password = rs.getString("Password");
                 int role = rs.getInt("Role");
 
-                User user = new User(id, firstName, lastName, username, password, role);
-
-                allUsers.add(user);
+                user = new User(id, firstName, lastName, username, password, role);
             }
-            return allUsers;
+            return user;
 
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-            throw new Exception("Could not get EventKoordinator from database", ex);
+            throw new SQLException("Could not get the user from the database", ex);
         }
     }
 
-    @Override
-    public boolean validateUsername(String username) throws Exception {
+    /**
+     * Checking if the database has a entry matching the username from the application.
+     * @param username
+     * @return
+     * @throws SQLException
+     */
+    public boolean validateUsername(String username) throws SQLException {
         //SQL Query.
         String sql = "SELECT * FROM Users WHERE Username = ?";
         //Getting the connection to the database.
@@ -107,44 +118,49 @@ public class UserDAO implements IUserDataAccess {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Failed to validate", e);
+            throw new SQLException("Failed to validate", e);
         }
         return false;
     }
 
-
-    @Override
-    public User createNewUser(String firstName, String lastName, String username, String password, int role) throws Exception {
+    /**
+     * Creating a new user/employee in the database.
+     * @param user
+     * @return
+     * @throws Exception
+     */
+    public User createNewUser(User user) throws SQLException {
         //SQL Query.
         String sql = "INSERT INTO Users (First_Name, Last_Name, Username, Password, Role) VALUES(?,?,?,?,?)";
         //Getting the connection to the database.
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             //Setting the parameters and executing the query.
-            stmt.setString(1, firstName);
-            stmt.setString(2, lastName);
-            stmt.setString(3, username);
-            stmt.setString(4, password);
-            stmt.setInt(5, role);
+            stmt.setString(1, user.getFirstName());
+            stmt.setString(2, user.getLastName());
+            stmt.setString(3, user.getUserName());
+            stmt.setString(4, user.getPassword());
+            stmt.setInt(5, user.getRole());
             stmt.execute();
 
             ResultSet rs = stmt.getGeneratedKeys();
-            int id = 0;
             if (rs.next()) {
-                id = rs.getInt(1);
+                user.setId(rs.getInt(1));
             }
-            User user = new User(id, firstName, lastName, username, password, role);
             return user;
         } catch (SQLException ex) {
             ex.printStackTrace();
-            throw new Exception("Could not create User", ex);
+            throw new SQLException("Could not create User", ex);
         }
     }
 
 
-    @Override
-    public void deleteUser(User selectedUser) throws Exception {
-
+    /**
+     * Soft deleting a user/employee from the database.
+     * @param selectedUser
+     * @throws Exception
+     */
+    public void deleteUser(User selectedUser) throws SQLException {
         LocalDate localDate = LocalDate.now();
         //SQL query.
         String sql = "UPDATE Users SET Is_Deleted = ? WHERE ID = ?";
@@ -157,11 +173,17 @@ public class UserDAO implements IUserDataAccess {
             stmt.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
-            throw new Exception("Could not delete this user", ex);
+            throw new SQLException("Could not delete this user", ex);
         }
     }
 
-    public void removeTechnicianFromProject(User selectedTechnician, int projectID) throws Exception{
+    /**
+     * Remove a user/employee from a project.
+     * @param selectedTechnician
+     * @param projectID
+     * @throws Exception
+     */
+    public void removeTechnicianFromProject(User selectedTechnician, int projectID) throws SQLException{
         //SQL Query
         String sql = "DELETE FROM ProjectTechnician WHERE ProjectID = ? AND UserID = ?";
         try (Connection conn = databaseConnector.getConnection()){
@@ -171,16 +193,25 @@ public class UserDAO implements IUserDataAccess {
             stmt.setInt(2, selectedTechnician.getId());
             stmt.executeUpdate();
         } catch (SQLException ex) {
-            throw new Exception("Something went wrong while removing a technician from a project.", ex);
+            throw new SQLException("Something went wrong while removing a technician from a project.", ex);
         }
     }
+
+    /**
+     * Get a list of all users/employees working on a specific project.
+     * @param projectID
+     * @return
+     * @throws SQLException
+     */
     public List<User> filterTechnicianById(int projectID) throws SQLException {
         ArrayList<User> allUsers = new ArrayList<>();
+        //SQL query and database connection.
         String sql = "SELECT * FROM ProjectTechnician INNER JOIN Users ON ProjectTechnician.UserID = Users.ID WHERE ProjectID = ?;";
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, projectID);
             ResultSet rs = stmt.executeQuery();
+            //Getting the information from the database.
             while (rs.next()) {
                 int id = rs.getInt("UserID");
                 String firstName = rs.getString("First_Name");
@@ -197,8 +228,15 @@ public class UserDAO implements IUserDataAccess {
             throw new SQLException("Could not move Technician", ex);
         }
     }
-    @Override
-    public ProjectTechnician moveTechnician(int technicianID, int projectID) throws Exception {
+
+    /**
+     * Assign a user/employee to a project through the database.
+     * @param technicianID
+     * @param projectID
+     * @return
+     * @throws Exception
+     */
+    public ProjectTechnician moveTechnician(int technicianID, int projectID) throws SQLException {
         //SQL Query
         String sql = "INSERT INTO ProjectTechnician (ProjectID, UserID) VALUES (?,?)";
         //Getting the connection to the database.
@@ -218,7 +256,7 @@ public class UserDAO implements IUserDataAccess {
             return projectTechnician;
         } catch (SQLException ex) {
             ex.printStackTrace();
-            throw new Exception("Could not move Technician", ex);
+            throw new SQLException("Could not move Technician", ex);
         }
     }
 
