@@ -6,11 +6,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="acpBackgroundLogin" prefHeight="800" prefWidth="1200" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.LoginController">
+<AnchorPane fx:id="loginAnchorPane" prefHeight="800" prefWidth="1200" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.LoginController">
    <children>
-      <ImageView fx:id="ImgViewLogin" fitHeight="800.0" fitWidth="1200.0" />
-      <PasswordField fx:id="paswPassword" layoutX="521.0" layoutY="429.0" promptText="Password" />
-      <TextField fx:id="txtfUsername" layoutX="520.0" layoutY="363.0" promptText="Username" />
-      <Button fx:id="btnSignIn" layoutX="568.0" layoutY="512.0" mnemonicParsing="false" onAction="#handleSignIn" text="Sign in" />
+      <ImageView fx:id="imageViewLogin" fitHeight="800.0" fitWidth="1200.0" />
+      <PasswordField fx:id="passwordBox" layoutX="500.0" layoutY="402.0" prefHeight="30.0" prefWidth="200.0" promptText="Password" />
+      <TextField fx:id="usernameBox" layoutX="500.0" layoutY="367.0" prefHeight="30.0" prefWidth="200.0" promptText="Username" />
+      <Button fx:id="signIn" layoutX="550.0" layoutY="452.0" mnemonicParsing="false" onAction="#handleSignIn" prefHeight="30.0" prefWidth="100.0" text="Sign in" />
+      <ImageView fx:id="loginIcon" fitHeight="50.0" fitWidth="50.0" layoutX="575.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

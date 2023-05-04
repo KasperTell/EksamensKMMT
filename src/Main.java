@@ -26,6 +26,7 @@ public class Main extends Application {
         controller.setup();
 
         primaryStage.setScene(new Scene(root));
+        root.getStylesheets().add("GUI/View/Login.css");
         primaryStage.show();
 
     }
