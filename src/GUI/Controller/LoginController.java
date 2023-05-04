@@ -19,7 +19,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 public class LoginController extends BaseController {
     @FXML
-    private AnchorPane anchorPaneLogin;
+    private AnchorPane loginAnchorPane;
     @FXML
     private ImageView imageViewLogin, loginIcon;
     @FXML
@@ -78,7 +78,7 @@ public class LoginController extends BaseController {
         loader.setLocation(getClass().getResource(personTypeChooser.getViewString()));
         AnchorPane pane = loader.load();
         pane.getStylesheets().add(personTypeChooser.getCSS());
-        anchorPaneLogin.getChildren().setAll(pane);
+        loginAnchorPane.getChildren().setAll(pane);
 
         MainController controller = loader.getController();
         controller.setModel(new FacadeModel());
@@ -90,9 +90,9 @@ public class LoginController extends BaseController {
 
     public void setup() {
         userModel = getModel().getUserModel();
-        imageViewLogin.setImage(new Image("Pictures/LoginBackground.jpg"));
+        imageViewLogin.setImage(new Image("Pictures/LoginBackgroundBlur.jpg"));
         loginIcon.setImage(new Image("Pictures/LoginLogo.png"));
 
-        imageViewLogin.setOpacity(0.50);
+        imageViewLogin.setOpacity(0.40);
     }
 }
