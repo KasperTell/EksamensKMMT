@@ -28,6 +28,9 @@ public class ProjectManager {
     public ArrayList<Project> searchByQuery(String query) throws Exception {
         return projectDAO.searchByQuery(query);
     }
+    public void saveNote(String note, int projectID) throws Exception{
+        projectDAO.saveNote(note, projectID);
+    }
 
 
 }

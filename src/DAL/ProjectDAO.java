@@ -1,7 +1,6 @@
 package DAL;
 
 import BE.Project;
-import BE.User;
 
 import java.io.IOException;
 import java.sql.*;
@@ -47,6 +46,7 @@ public class ProjectDAO implements IProjectDataAccess{
                 int customerID = rs.getInt("customerID");
                 LocalDate date = rs.getDate("date").toLocalDate();
                 openClose = rs.getByte("OpenClose");
+                String note = rs.getString("note");
 
 
                 boolean open1;
@@ -57,7 +57,7 @@ public class ProjectDAO implements IProjectDataAccess{
                     open1=false;
 
 
-                Project project = new Project(id, title, customerID, date, open1);
+                Project project = new Project(id, title, customerID, date, open1, note);
 
                 loadProjectofAType.add(project);
             }
@@ -125,8 +125,9 @@ public class ProjectDAO implements IProjectDataAccess{
                 int customerID = rs.getInt("customerID");
                 LocalDate date = rs.getDate("date").toLocalDate();
                 boolean openClose = rs.getBoolean("OpenClose");
+                String note = rs.getString("note");
 
-                Project project = new Project(id, title, customerID, date, openClose);
+                Project project = new Project(id, title, customerID, date, openClose, note);
 
                 projects.add(project);
 
@@ -139,6 +140,21 @@ public class ProjectDAO implements IProjectDataAccess{
             throw new Exception("Could not get EventKoordinator from database", ex);
         }
 
+    }
+
+
+
+    public void saveNote(String note, int projectID) throws Exception {
+        String sql = "INSERT INTO project_notes (note, project_id) VALUES (?, ?)";
+        try (Connection conn = databaseConnector.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, note);
+            stmt.setInt(2, projectID);
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new SQLException("Could not edit project status");
+        }
     }
 
 }

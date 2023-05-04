@@ -74,7 +74,7 @@ public class MainController extends BaseController {
     @FXML
     private TextField txtfSearchField, txtfProjectName, txtfPhoneNumber, txtfEmail, txtfZipCode, txtfAddress, txtfcompanyName, txtfCustomerLastName, txtfCustomerFirstName, searchBox;
     @FXML
-    private TextArea NotesTextArea;
+    private TextArea txtaNote;
 
     private Project selectedProject;
     private ProjectFiles selectedfile;
@@ -267,7 +267,10 @@ public class MainController extends BaseController {
     public void openFileAction(ActionEvent actionEvent) {
     }
 
-    public void saveNoteAction(ActionEvent actionEvent) {
+    public void saveNoteAction(ActionEvent actionEvent) throws Exception {
+        String note = txtaNote.getText();
+        int projectId = selectedProject.getId();
+        projectModel.saveNote(note, projectId);
     }
 
     public void newUserAction(ActionEvent actionEvent) {
@@ -417,7 +420,8 @@ public class MainController extends BaseController {
         int customerID = cbxCustomer.getSelectionModel().getSelectedItem().getId();
         LocalDate date = LocalDate.now();
         boolean isOpen = true;
-        Project project = new Project(id, title, customerID, date, isOpen);
+        String note = txtaNote.getText();
+        Project project = new Project(id, title, customerID, date, isOpen, note);
         projectModel.createNewProject(project);
 
         newProjectAction();

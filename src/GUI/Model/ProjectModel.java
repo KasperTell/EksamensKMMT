@@ -46,4 +46,7 @@ public ProjectModel() throws Exception {
         searchedProjects.addAll(projectManager.searchByQuery(searchQuery));
         return searchedProjects; }
 
+    public void saveNote(String note, int projectID) throws Exception {
+        projectManager.saveNote(note, projectID);
+    }
 }

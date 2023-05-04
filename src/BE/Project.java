@@ -9,14 +9,17 @@ public class Project {
     private int customernumber;
     private LocalDate date;
     private boolean open;
+    private String note;
 
-    public Project(int id, String title, int customernumber, LocalDate date, boolean open) {
+    public Project(int id, String title, int customernumber, LocalDate date, boolean open,  String note) {
         this.id = id;
         this.title = title;
         this.customernumber = customernumber;
         this.date = date;
         this.open = open;
+        this.note = note;
     }
+
 
     public int getId() {
         return id;
@@ -60,6 +63,14 @@ public class Project {
         this.open = open_close;
     }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
     @Override
     public String toString() {
         return "Project{" +
@@ -68,9 +79,7 @@ public class Project {
                 ", customernumber=" + customernumber +
                 ", date=" + date +
                 ", open=" + open +
+                ", note='" + note + '\'' +
                 '}';
     }
-
-
-
 }
