@@ -143,17 +143,33 @@ public class ProjectDAO implements IProjectDataAccess{
     }
 
 
-    public void saveNote(String note, int projectID) throws Exception {
-        String sql = "UPDATE Project ON Note = ? WHERE Project_ID = ? AND customerID = ?";
+    /*
+    public Project saveNote(String note, int projectID) throws Exception {
+        String sql = "INSERT INTO Project_Note WHERE Project_ID = ?";
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, note);
             stmt.setInt(2, projectID);
-            stmt.executeUpdate();
+            stmt.execute();
         } catch (SQLException ex) {
             ex.printStackTrace();
             throw new SQLException("Could not edit project status");
         }
+        return saveNote(note, projectID);
+    }
+    */
+    public void saveNote(String note, int id, int customerID) throws Exception {
+        String sql = "INSERT INTO Project (Note) SELECT ? FROM Project WHERE ID = ? AND customerID = ?";
+        try (Connection conn = databaseConnector.getConnection()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, note);
+            stmt.setInt(2, id);
+            stmt.setInt(3, customerID);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new Exception("Error saving note: " + e.getMessage());
+        }
     }
 
 }
+

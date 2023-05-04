@@ -132,6 +132,11 @@ public class MainController extends BaseController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            try {
+                setupNotes();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
@@ -157,6 +162,11 @@ public class MainController extends BaseController {
                 setupTechniciansOnProject();
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+            try {
+                setupNotes();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         });
 
@@ -269,8 +279,9 @@ public class MainController extends BaseController {
 
     public void saveNoteAction(ActionEvent actionEvent) throws Exception {
         String note = txtaNote.getText();
-        int projectId = selectedProject.getId();
-        projectModel.saveNote(note, projectId);
+        int id = selectedProject.getId();
+        int customerID = selectedProject.getId();
+        projectModel.saveNote(note, id, customerID);
     }
 
     public void newUserAction(ActionEvent actionEvent) {
@@ -376,6 +387,14 @@ public class MainController extends BaseController {
         }
     }
 
+    private void setupNotes() throws Exception {
+        if (selectedProject != null) {
+            String note = txtaNote.getText();
+            int id = selectedProject.getId();
+            int customerID = selectedProject.getId();
+            txtaNote.setText(projectModel.saveNote(note, id, customerID));
+        }
+    }
     @FXML
     private void handleSaveNewFile(ActionEvent actionEvent) {
         Stage stage = new Stage();

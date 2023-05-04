@@ -12,5 +12,5 @@ public interface IProjectDataAccess {
 
     Project createNewProject(Project project) throws SQLException;
     ArrayList<Project> searchByQuery(String query) throws Exception;
-    void saveNote(String note, int projectID) throws Exception;
+    void saveNote(String note, int id, int customerID) throws Exception;
 }
