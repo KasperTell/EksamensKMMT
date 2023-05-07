@@ -206,6 +206,7 @@ public class MainController extends BaseController {
                 displayError(e);
                 e.printStackTrace();
             }
+            projectFilesModel.isRunningFalse(); //Stopper tidligere løkker i projectFiles
             projectFilesModel.observer();
         }
     }

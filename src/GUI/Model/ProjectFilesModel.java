@@ -17,7 +17,7 @@ public class ProjectFilesModel {
     private ProjectFilesManager projectFilesManager;
     private boolean isRunning = true;
 
-    int x=0, x1=0;
+
 
 
     /**
@@ -49,14 +49,13 @@ public class ProjectFilesModel {
     public void observer()
     {
 
-        Boolean[] tjek1= new Boolean[projectFiles.size()];
-
-
         Thread t = new Thread(() ->
         {
+            isRunning=true;
 
                 while (isRunning) {
                     for (ProjectFiles tjek : projectFiles) {
+
 
 
                         if (tjek.getUsedBox().isSelected()) {
@@ -64,17 +63,13 @@ public class ProjectFilesModel {
                                 {
 
                                     Platform.runLater(() -> {
-
-
                                         try {
                                             projectFilesManager.updateUsedInDoc(true, tjek.getId());
                                         } catch (Exception e) {
                                             throw new RuntimeException(e);
                                         }
-
                                     });
                                 }
-
                             }
                          else {
 
@@ -91,23 +86,31 @@ public class ProjectFilesModel {
 
                             }
 
-
-
-
                     }
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(2000);
 
 
                     } catch (InterruptedException e) {
                         System.out.println("This is a treat exception");
                     }
+
+               //     System.out.println("tæller "+idNew);
+
                     }
-
-
 
         });
         t.setDaemon(true); //I mark the thread as a daemon thread, so  its terminated when I exit the app.
         t.start();
+
         }
+
+    public void isRunningFalse()
+    {
+        isRunning=false;
+    }
+
+
+
 }
+
