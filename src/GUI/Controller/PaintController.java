@@ -9,13 +9,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javax.imageio.ImageIO;
-
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -23,16 +19,12 @@ import java.util.ResourceBundle;
 
 public class PaintController implements Initializable {
 
-
     @FXML private Button brush, saveCanvas, newCanvas;
     @FXML private ColorPicker colorPicker;
     @FXML private TextField brushSize, fileName;
     @FXML private Canvas canvas;
-
     boolean toolSelected = false;
-
     GraphicsContext brushTool;
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -49,20 +41,12 @@ public class PaintController implements Initializable {
         });
     }
 
-
     public void handleSelectTool(ActionEvent actionEvent) {
         toolSelected = true;
     }
+    public void handleNewCanvas(ActionEvent actionEvent) {brushTool.restore();}
+    public void handleSaveCanvas(ActionEvent actionEvent) throws IOException {saveCanvas(canvas);}
 
-    public void handleNewCanvas(ActionEvent actionEvent) {
-        brushTool.restore();
-
-    }
-
-    public void handleSaveCanvas(ActionEvent actionEvent) throws IOException {
-        saveCanvas(canvas);
-
-    }
     public void saveCanvas(Canvas c) throws IOException {
 
         int width = (int) c.getWidth();
@@ -71,10 +55,7 @@ public class PaintController implements Initializable {
 
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         WritableImage picture = c.snapshot(null, null);
-
         ImageIO.write(SwingFXUtils.fromFXImage(picture, null), "png", new File(filepath));
-
-
     }
 
     public void handleBackToMainView(ActionEvent actionEvent) {
