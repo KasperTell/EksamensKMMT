@@ -4,15 +4,15 @@ import BE.Customer;
 import BE.Project;
 import BE.ProjectFiles;
 import BE.User;
-import GUI.Model.ProjectFilesModel;
-import GUI.Model.ProjectModel;
-import GUI.Model.UserModel;
-import GUI.Model.CustomerModel;
+import GUI.Model.*;
 import PersonsTypes.PersonTypeChooser;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,16 +24,20 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Objects;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
@@ -534,5 +538,20 @@ public class MainController extends BaseController {
         }
         //Close the vbox.
         newCustomerAction();
+    }
+
+
+    public void handleDraw(ActionEvent actionEvent) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/GUI/View/Paint/PaintView.fxml"));
+        Parent root = loader.load();
+
+        PaintController controller = loader.getController();
+
+        Stage stage = new Stage();
+
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }

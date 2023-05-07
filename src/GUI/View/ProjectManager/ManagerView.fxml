@@ -158,6 +158,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
+            <Button fx:id="draw" layoutX="647.0" layoutY="685.0" mnemonicParsing="false" onAction="#handleDraw" text="draw" />
          </children>
       </AnchorPane>
       <VBox fx:id="vbxCreateNewProject" prefHeight="814.0" prefWidth="345.0" spacing="30.0" translateX="-400.0">
