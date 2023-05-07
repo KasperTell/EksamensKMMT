@@ -42,6 +42,8 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 public class MainController extends BaseController {
 
     @FXML
+    private Tab fileTab;
+    @FXML
     private ComboBox<Customer> cbxCustomer;
     @FXML
     private VBox vbxCreateNewProject, vbxCreateNewCustomer;
@@ -122,7 +124,7 @@ public class MainController extends BaseController {
                 displayError(e);
                 e.printStackTrace();
             }
-            setupNote();
+            NotesTextArea.setText(selectedProject.getNote());
         });
     }
 
@@ -142,18 +144,11 @@ public class MainController extends BaseController {
                 displayError(e);
                 e.printStackTrace();
             }
-            setupNote();
+            NotesTextArea.setText(selectedProject.getNote());
 
         });
 
     }
-
-    public void setupNote()
-    {
-        projectFilesModel.isRunningFalse();
-        NotesTextArea.setText(selectedProject.getNote());
-    }
-
 
 
 

@@ -17,8 +17,8 @@ public class ProjectFilesModel {
     private ProjectFilesManager projectFilesManager;
     private boolean isRunning = true;
 
-
-
+    private int runs=0;
+private int number=0 ;
 
     /**
      * Constructor for the class "ProjectFilesModel".
@@ -49,46 +49,68 @@ public class ProjectFilesModel {
     public void observer()
     {
 
+        boolean[] oldSelected= new boolean[projectFiles.getSize()];
+
+
         Thread t = new Thread(() ->
         {
             isRunning=true;
 
+            if (projectFiles.getSize()!=0) //Ingen grund til gennemløb, hvis der er ingen filer.
                 while (isRunning) {
-                    for (ProjectFiles tjek : projectFiles) {
 
 
+                    for (ProjectFiles tjek : projectFiles) { //Her gennemløbes hele projectFiles linje for linje
 
-                        if (tjek.getUsedBox().isSelected()) {
+                        if (tjek.getUsedBox().isSelected())
 
+                        {
+                            if (runs==0)                    //Vi vil sammenligne data fra projectfiles med et oldselection arkiv. I første omgang gemmes i oldselection til sammenligning senere.
+                                oldSelected[number]=true;
+
+                                if ( oldSelected[number]==false)        //Vi gemmer hvis gamle værdi er false og ny er true. Så er der sket en ændring som skal gemmes.
                                 {
 
                                     Platform.runLater(() -> {
                                         try {
-                                            projectFilesManager.updateUsedInDoc(true, tjek.getId());
+
+                                            projectFilesManager.updateUsedInDoc(true, tjek.getId()); 
+
                                         } catch (Exception e) {
                                             throw new RuntimeException(e);
-                                        }
+                                            }
                                     });
                                 }
+                                oldSelected[number]=true;
                             }
                          else {
 
-                            {
-                                Platform.runLater(() -> {
+                            if (runs==0)
+                                oldSelected[number]=false;
 
+                            if ( oldSelected[number]==true)
+                            {
+
+                                Platform.runLater(() -> {
                                     try {
                                         projectFilesManager.updateUsedInDoc(false, tjek.getId());
+
                                     } catch (Exception e) {
                                         throw new RuntimeException(e);
                                     }
                                 });
                             }
-
+                            oldSelected[number]=false;
                             }
 
+                         number++;
+                         if (number==projectFiles.getSize())
+                             number=0;
+
+                         runs++;
                     }
                     try {
-                        Thread.sleep(2000);
+                        Thread.sleep(1000);
 
 
                     } catch (InterruptedException e) {
