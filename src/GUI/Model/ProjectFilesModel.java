@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 
+
 public class ProjectFilesModel {
 
 
@@ -68,19 +69,9 @@ private int number=0 ;
                             if (runs==0)                    //Vi vil sammenligne data fra projectfiles med et oldselection arkiv. I første omgang gemmes i oldselection til sammenligning senere.
                                 oldSelected[number]=true;
 
-                                if ( oldSelected[number]==false)        //Vi gemmer hvis gamle værdi er false og ny er true. Så er der sket en ændring som skal gemmes.
-                                {
+                                if ( oldSelected[number]==false)        //Hvis gamle værdi er false og ny er true. Så er der sket en ændring som skal gemmes.
+                                updateDataBase(true, tjek.getId()); //Kalder updateringsmetoden
 
-                                    Platform.runLater(() -> {
-                                        try {
-
-                                            projectFilesManager.updateUsedInDoc(true, tjek.getId()); 
-
-                                        } catch (Exception e) {
-                                            throw new RuntimeException(e);
-                                            }
-                                    });
-                                }
                                 oldSelected[number]=true;
                             }
                          else {
@@ -89,25 +80,15 @@ private int number=0 ;
                                 oldSelected[number]=false;
 
                             if ( oldSelected[number]==true)
-                            {
+                            updateDataBase(false, tjek.getId());
 
-                                Platform.runLater(() -> {
-                                    try {
-                                        projectFilesManager.updateUsedInDoc(false, tjek.getId());
-
-                                    } catch (Exception e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                });
-                            }
                             oldSelected[number]=false;
                             }
 
-                         number++;
+                            number++;
                          if (number==projectFiles.getSize())
                              number=0;
-
-                         runs++;
+                             runs++;
                     }
                     try {
                         Thread.sleep(1000);
@@ -127,7 +108,20 @@ private int number=0 ;
 
         }
 
-    public void isRunningFalse()
+    private void updateDataBase(Boolean check, int id) {
+        Platform.runLater(() -> {
+            try {
+                projectFilesManager.updateUsedInDoc(check, id);
+
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+
+    }
+
+    public void fileLoopStop()
     {
         isRunning=false;
     }

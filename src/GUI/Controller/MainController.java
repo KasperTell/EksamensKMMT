@@ -211,8 +211,8 @@ public class MainController extends BaseController {
                 displayError(e);
                 e.printStackTrace();
             }
-            projectFilesModel.isRunningFalse(); //Stopper tidligere løkker i projectFiles
-            projectFilesModel.observer();
+            projectFilesModel.fileLoopStop(); //Stopper tidligere løkker i projectFiles
+            projectFilesModel.observer(); //Her startes en løkke, der observere ændringer i CheckBox
         }
     }
 
