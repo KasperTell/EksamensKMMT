@@ -1,19 +1,20 @@
 package BE;
 
 public class Customer {
-        private int id;
-        private String firstName;
-        private String lastName;
-    private String companyName;
-        private String address;
-        private int phoneNumber;
+    private int id, phoneNumber, zipCode;
+    private String firstName, lastName, companyName, address, mail;
 
-        private int zipCode;
-        private String mail;
-
-
-
-
+    /**
+     * Constructor for the class "Customer"
+     * @param id
+     * @param firstName
+     * @param lastName
+     * @param companyName
+     * @param address
+     * @param mail
+     * @param phoneNumber
+     * @param zipCode
+     */
     public Customer(int id, String firstName, String lastName, String companyName, String address, String mail, int phoneNumber, int zipCode) {
         this.id = id;
         this.address = address;
@@ -23,9 +24,12 @@ public class Customer {
         this.mail = mail;
         this.firstName = firstName;
         this.lastName = lastName;
-
     }
 
+    /**
+     * Getters and setters for the entire class.
+     * @return
+     */
     public int getId() {
         return id;
     }
@@ -90,9 +94,12 @@ public class Customer {
         this.mail = mail;
     }
 
+    /**
+     * Overriding the default toString method, so it now returns the customers first name, last name and the company name.
+     * @return
+     */
     @Override
     public String toString() {
-        return
-                firstName + " " + lastName + " " + companyName;
+        return firstName + " " + lastName + " " + companyName;
     }
 }

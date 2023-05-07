@@ -1,31 +1,38 @@
 package DAL;
 
 import BE.Project;
-import BE.User;
 
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProjectDAO implements IProjectDataAccess{
 
     private DatabaseConnector databaseConnector;
 
+    /**
+     * Constructor for the class "ProjectDAO".
+     * @throws IOException
+     */
     public ProjectDAO() throws IOException {databaseConnector = DatabaseConnector.getInstance();}
 
 
-
-    public ArrayList<Project> loadProjectOfAType(boolean open) throws Exception {
+    /**
+     * Gets all projects marked as open from the database.
+     * @param open
+     * @return
+     * @throws Exception
+     */
+    public List<Project> loadProjectOfAType(boolean open) throws Exception {
 
         ArrayList<Project> loadProjectofAType = new ArrayList<>();
-
-
+        //SQL query.
         String sql = "SELECT * FROM Project WHERE OpenClose =?";
         //Getting the connection to the database.
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
-
 
             byte openClose;
 
@@ -33,21 +40,18 @@ public class ProjectDAO implements IProjectDataAccess{
                 openClose=0;
             else
                 openClose=1;
-
-
-
+            //Setting the parameter and execute the statement.
             stmt.setInt(1, openClose);
 
             ResultSet rs = stmt.executeQuery();
 
+            //Getting the information from the database.
             while (rs.next()) {
-                //Map DB row to user object
                 int id = rs.getInt("ID");
                 String title = rs.getString("title");
                 int customerID = rs.getInt("customerID");
                 LocalDate date = rs.getDate("date").toLocalDate();
                 openClose = rs.getByte("OpenClose");
-
 
                 boolean open1;
 
@@ -68,14 +72,22 @@ public class ProjectDAO implements IProjectDataAccess{
         }
     }
 
+    /**
+     * Create a new project in the database.
+     * @param project
+     * @return
+     * @throws SQLException
+     */
     public Project createNewProject(Project project) throws SQLException {
+        //SQL query
         String sql = "INSERT INTO Project (Title, customerID, Date, OpenClose) VALUES (?,?,?,?)";
+        //Getting connection to the database.
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             //Setting the parameters and executing the query.
             stmt.setString(1, project.getTitle());
-            stmt.setInt(2, project.getCustomernumber());
-            System.out.println(project.getCustomernumber());
+            stmt.setInt(2, project.getCustomerID());
+            System.out.println(project.getCustomerID());
             stmt.setDate(3, Date.valueOf(project.getDate()));
             stmt.setInt(4, 0);
             stmt.execute();
@@ -88,20 +100,34 @@ public class ProjectDAO implements IProjectDataAccess{
         return project;
     }
 
-    public void changeProjectStatus(int projectStatus, int id) throws Exception {
-    String sql = "UPDATE Project SET OpenClose = ? WHERE ID = ?";
-    try(Connection conn = databaseConnector.getConnection()){
+    /**
+     * Changing the project status in the database.
+     * @param projectStatus
+     * @param id
+     * @throws Exception
+     */
+    public void changeProjectStatus(int projectStatus, int id) throws SQLException {
+        //SQL Query and getting database connection.
+        String sql = "UPDATE Project SET OpenClose = ? WHERE ID = ?";
+        try(Connection conn = databaseConnector.getConnection()){
         PreparedStatement stmt = conn.prepareStatement(sql);
+        //Setting the parameters and executing the statement.
         stmt.setInt(1, projectStatus);
         stmt.setInt(2, id);
         stmt.execute();
     } catch(SQLException ex){
         ex.printStackTrace();
         throw new SQLException("Could not edit project status");
-    }
+        }
     }
 
-    public ArrayList<Project> searchByQuery(String query) throws Exception {
+    /**
+     * Getting all the projects from the database based on a query.
+     * @param query
+     * @return
+     * @throws Exception
+     */
+    public List<Project> searchByQuery(String query) throws SQLException {
 
         ArrayList<Project> projects = new ArrayList<>();
         //SQL Query.
@@ -112,14 +138,10 @@ public class ProjectDAO implements IProjectDataAccess{
             //Setting the parameters and executing the statement.
             stmt.setString(1, "%" + query + "%");
 
-
             ResultSet rs = stmt.executeQuery();
-
-
-
             // Loop through rows from the database result set
             while (rs.next()) {
-                //Map DB row to user object
+                //Getting the data.
                 int id = rs.getInt("ID");
                 String title = rs.getString("title");
                 int customerID = rs.getInt("customerID");
@@ -131,14 +153,11 @@ public class ProjectDAO implements IProjectDataAccess{
                 projects.add(project);
 
             }
-            System.out.println(projects.size() + "Saerch DAL");
             return projects;
 
         } catch (Exception ex) {
             ex.printStackTrace();
-            throw new Exception("Could not get EventKoordinator from database", ex);
+            throw new SQLException("Failed to return the list of projects based on search query", ex);
         }
-
     }
-
 }

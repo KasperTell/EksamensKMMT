@@ -9,28 +9,34 @@ public class ProjectFiles {
 
 private int id, projectID;
 private String filePath,name;
-
 private LocalDate date;
-
-
 private ImageView picture;
-
 private CheckBox usedBox;
 
-
-
-
+    /**
+     * Constructor for the class "ProjectFiles".
+     * @param id
+     * @param projectID
+     * @param name
+     * @param filePath
+     * @param date
+     * @param picture
+     * @param usedBox
+     */
     public ProjectFiles(int id, int projectID, String name, String filePath, LocalDate date,  ImageView picture,CheckBox usedBox) {
         this.id = id;
         this.projectID = projectID;
         this.filePath = filePath;
-                this.date = date;
-
+        this.date = date;
         this.name=name;
         this.picture = picture;
         this.usedBox = usedBox;
     }
 
+    /**
+     * Getters and setters for the entire class.
+     * @return
+     */
     public int getId() {
         return id;
     }
@@ -89,10 +95,14 @@ private CheckBox usedBox;
         this.name = name;
     }
 
+    /**
+     * Overriding the default toString method.
+     * @return
+     */
     @Override
     public String toString() {
 
-        Boolean newBox=true;
+        boolean newBox=true;
         if (usedBox.isSelected())
             newBox=true;
             else

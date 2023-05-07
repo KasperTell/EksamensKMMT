@@ -32,9 +32,14 @@ public class LoginController extends BaseController {
     private UserModel userModel;
     private User user;
 
-
+    /**
+     * Handle what happens when the sign-in button in the clicked.
+     * If the login information is correct, open a new FXML file.
+     * @param actionEvent
+     * @throws Exception
+     */
     public void handleSignIn(ActionEvent actionEvent) throws Exception {
-
+        //Setting the local variables.
         String username = usernameBox.getText();
         String password = passwordBox.getText();
         
@@ -44,12 +49,11 @@ public class LoginController extends BaseController {
             loginFailedAlert();
         } else {
             //Set the user based on the correct username and get the matching password.
-            user = userModel.loadUser(username).get(0);
+            user = userModel.loadUser(username);
             //Check if the database password matches the user password, else show error.
             if(BCrypt.checkpw(password, user.getPassword())) {
                 userModel.setLoggedinUser(user);
                 chooseUserType();
-
                 openMainWindow();
             }
             else{
@@ -59,21 +63,24 @@ public class LoginController extends BaseController {
     }
 
     private void chooseUserType() {
-
         personTypeChooser=new PersonTypeChooser();
-
         personTypeChooser.chooseType(PersonType.ProjectManager);
-
     }
 
+    /**
+     * Alert for failing to login.
+     */
     private void loginFailedAlert(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText("Wrong username or password");
         alert.showAndWait();
     }
 
+    /**
+     * Opens the "main view" window for the specific user role.
+     * @throws Exception
+     */
     private void openMainWindow() throws Exception {
-
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(personTypeChooser.getViewString()));
         AnchorPane pane = loader.load();
@@ -86,8 +93,7 @@ public class LoginController extends BaseController {
 
     }
 
-
-
+    @Override
     public void setup() {
         userModel = getModel().getUserModel();
         imageViewLogin.setImage(new Image("Pictures/LoginBackgroundBlur.jpg"));

@@ -2,14 +2,18 @@ package BE;
 
 public class User {
 
-    private int id;
-    private String firstName;
-    private String lastName;
-    private String username;
-    private String password;
-    private int role;
+    private int id, role;
+    private String firstName, lastName, username, password;
 
-
+    /**
+     * Constructor for the class "User".
+     * @param id
+     * @param firstName
+     * @param lastName
+     * @param username
+     * @param password
+     * @param role
+     */
     public User(int id, String firstName, String lastName, String username, String password, int role){
         this.id = id;
         this.firstName = firstName;
@@ -64,19 +68,13 @@ public class User {
 
     public int getRole(){return role;}
 
+
     /**
-     *The customized toString method.
+     * Overriding the default toString method, so it returns the user/employees firstname and lastname.
+     * @return
      */
     @Override
     public String toString() {
         return firstName + " " + lastName ;
     }
-
-
-
-
-
-
-
-
 }

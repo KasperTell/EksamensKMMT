@@ -1,7 +1,6 @@
 package BE;
 
 public class Room {
-
     private int id;
     private int roomNumber;
     private int messurements;

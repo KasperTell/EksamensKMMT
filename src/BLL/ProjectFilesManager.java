@@ -2,31 +2,36 @@ package BLL;
 
 import BE.ProjectFiles;
 import DAL.FilesDAO;
+import DAL.iFileDataAccess;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class ProjectFilesManager {
 
-    FilesDAO filesDAO;
+    private iFileDataAccess filesDAO;
 
+    /**
+     * Constructor for the class "ProjectFilesManager".
+     * @throws IOException
+     */
+    public ProjectFilesManager() throws IOException {filesDAO = new FilesDAO();}
 
+    /**
+     * Gets a list of files based on an ID.
+     * @param projectID
+     * @return
+     * @throws Exception
+     */
+    public List<ProjectFiles> loadFilesFromAProject(int projectID) throws Exception{return filesDAO.loadFilesFromAProject(projectID);}
 
-    public ProjectFilesManager() throws IOException {
-        filesDAO = new FilesDAO();
-    }
-
-    public ArrayList<ProjectFiles> loadFilesFromAProject(int projectID) throws Exception{
-
-        return (ArrayList<ProjectFiles>) filesDAO.loadFilesFromAProject(projectID);
-    }
-
-
+    /**
+     * Sends an update on a documents status through the BLL.
+     * @param usedInDoc
+     * @param id
+     * @throws Exception
+     */
     public void updateUsedInDoc(Boolean usedInDoc, int id) throws Exception {
         filesDAO.updateUsedInDoc(usedInDoc,id);
     }
-
-
-
-
 }

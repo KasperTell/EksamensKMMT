@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.time.LocalDate;
 
 public class Main extends Application {
@@ -15,7 +14,6 @@ public class Main extends Application {
 
         LocalDate localDate = LocalDate.now();
         System.out.println(localDate);
-
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("GUI/View/LoginView.fxml"));
@@ -28,6 +26,6 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root));
         root.getStylesheets().add("GUI/View/Login.css");
         primaryStage.show();
-
     }
 }
+

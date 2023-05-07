@@ -13,13 +13,10 @@ public abstract class BaseController {
 
     public FacadeModel getModel(){return facadeModel;}
 
-
-    public void closeWindow(Button btn){
-        Stage stage = (Stage) btn.getScene().getWindow();
-        stage.close();
-    }
-
-
+    /**
+     * Global error message.
+     * @param t
+     */
     public void displayError(Throwable t){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Something went wrong");

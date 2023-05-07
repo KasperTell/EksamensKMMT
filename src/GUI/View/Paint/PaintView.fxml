@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.PaintController">
+   <children>
+      <HBox prefHeight="100.0" prefWidth="1000.0" spacing="10.0">
+         <children>
+            <Button fx:id="brush" mnemonicParsing="false" onAction="#handleSelectTool" text="Brush" />
+            <ColorPicker fx:id="colorPicker" />
+            <TextField fx:id="brushSize" />
+            <Button fx:id="newCanvas" mnemonicParsing="false" onAction="#handleNewCanvas" text="New Canvas" />
+            <Button fx:id="saveCanvas" mnemonicParsing="false" onAction="#handleSaveCanvas" text="Save Canvas" />
+            <TextField fx:id="fileName" promptText="file Name" />
+            <Button fx:id="back" mnemonicParsing="false" onAction="#handleBackToMainView" text="Button" />
+         </children>
+         <padding>
+            <Insets left="10.0" top="10.0" />
+         </padding>
+      </HBox>
+      <Canvas fx:id="canvas" height="600.0" layoutX="198.0" layoutY="125.0" width="600.0" />
+   </children>
+</AnchorPane>
