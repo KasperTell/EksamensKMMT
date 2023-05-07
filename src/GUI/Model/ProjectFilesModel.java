@@ -19,7 +19,7 @@ public class ProjectFilesModel {
 
     private ProjectFilesManager projectFilesManager;
     private boolean isRunning = true;
-
+    int x=0, x1=0;
     public ProjectFilesModel() throws Exception {
         projectFilesManager = new ProjectFilesManager();
         projectFiles=new SimpleListProperty<>();
@@ -38,53 +38,60 @@ public class ProjectFilesModel {
 
     public void observer()
     {
+        Boolean[] tjek1= new Boolean[projectFiles.size()];
 
         Thread t = new Thread(() ->
         {
 
                 while (isRunning) {
 
-
-
                     for (ProjectFiles tjek : projectFiles) {
-                        if (tjek.getUsedBox().isSelected()) {
-                            try {
-                                Platform.runLater(() -> {
-                                    try {
-                                        projectFilesManager.updateUsedInDoc(true, tjek.getId());
-                                    } catch (Exception e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                });
 
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
+
+                        if (tjek.getUsedBox().isSelected()) {
+
+                                {
+
+                                    Platform.runLater(() -> {
+
+
+                                        try {
+                                            projectFilesManager.updateUsedInDoc(true, tjek.getId());
+                                        } catch (Exception e) {
+                                            throw new RuntimeException(e);
+                                        }
+
+                                    });
+                                }
+
                             }
-                        } else {
-                            try {
+                         else {
+
+                            {
                                 Platform.runLater(() -> {
+
                                     try {
-                                        projectFilesManager.updateUsedInDoc(true, tjek.getId());
+                                        projectFilesManager.updateUsedInDoc(false, tjek.getId());
                                     } catch (Exception e) {
                                         throw new RuntimeException(e);
                                     }
                                 });
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
+                            }
+
                             }
                         }
 
-                    }
-
                     try {
-                        Thread.sleep(2000);
+                        Thread.sleep(1000);
 
                     } catch (InterruptedException e) {
                         System.out.println("This is a treat exception");
                         ;
                     }
 
-                }
+                    }
+
+
 
         });
         t.setDaemon(true); //I mark the thread as a daemon thread, so  its terminated when I exit the app.
