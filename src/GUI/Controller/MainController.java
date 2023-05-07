@@ -24,9 +24,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.awt.*;
@@ -37,7 +35,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Objects;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
@@ -125,6 +122,7 @@ public class MainController extends BaseController {
                 displayError(e);
                 e.printStackTrace();
             }
+            setupNote();
         });
     }
 
@@ -144,9 +142,20 @@ public class MainController extends BaseController {
                 displayError(e);
                 e.printStackTrace();
             }
+            setupNote();
+
         });
 
     }
+
+    public void setupNote()
+    {
+        projectFilesModel.isRunningFalse();
+        NotesTextArea.setText(selectedProject.getNote());
+    }
+
+
+
 
     /**
      * Listener for the tableview containing files for opening files.
@@ -162,6 +171,7 @@ public class MainController extends BaseController {
                     displayError(e);
                 }
             }
+
         });
     }
 
@@ -484,8 +494,9 @@ public class MainController extends BaseController {
         int customerID = cbxCustomer.getSelectionModel().getSelectedItem().getId();
         LocalDate date = LocalDate.now();
         boolean isOpen = true;
+        String note="";
         //Initializing the project.
-        Project project = new Project(id, title, customerID, date, isOpen);
+        Project project = new Project(id, title, customerID, date, isOpen, note);
         try {
             //Send the project to the database.
             projectModel.createNewProject(project);

@@ -4,24 +4,29 @@ import java.time.LocalDate;
 
 public class Project {
     private int id, customerID;
-    private String title;
+    private String title,note;
     private LocalDate date;
     private boolean open;
 
+
+
     /**
      * Constructor for the class "Project".
+     *
      * @param id
      * @param title
      * @param customerID
      * @param date
      * @param open
+     * @param note
      */
-    public Project(int id, String title, int customerID, LocalDate date, boolean open) {
+    public Project(int id, String title, int customerID, LocalDate date, boolean open, String note) {
         this.id = id;
         this.title = title;
         this.customerID = customerID;
         this.date = date;
         this.open = open;
+        this.note=note;
     }
 
     /**
@@ -67,6 +72,15 @@ public class Project {
     public void setOpen(boolean open_close) {
         this.open = open_close;
     }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
 
     /**
      * Overriding the default toString method.

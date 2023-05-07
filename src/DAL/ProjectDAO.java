@@ -52,6 +52,7 @@ public class ProjectDAO implements IProjectDataAccess{
                 int customerID = rs.getInt("customerID");
                 LocalDate date = rs.getDate("date").toLocalDate();
                 openClose = rs.getByte("OpenClose");
+                String note=rs.getString("note");
 
                 boolean open1;
 
@@ -61,7 +62,7 @@ public class ProjectDAO implements IProjectDataAccess{
                     open1=false;
 
 
-                Project project = new Project(id, title, customerID, date, open1);
+                Project project = new Project(id, title, customerID, date, open1,note);
 
                 loadProjectofAType.add(project);
             }
@@ -147,8 +148,9 @@ public class ProjectDAO implements IProjectDataAccess{
                 int customerID = rs.getInt("customerID");
                 LocalDate date = rs.getDate("date").toLocalDate();
                 boolean openClose = rs.getBoolean("OpenClose");
+                String note=rs.getString("note");
 
-                Project project = new Project(id, title, customerID, date, openClose);
+                Project project = new Project(id, title, customerID, date, openClose, note);
 
                 projects.add(project);
 
