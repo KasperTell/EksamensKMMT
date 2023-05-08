@@ -155,7 +155,6 @@ public class MainController extends BaseController {
         ImageView view10 = new ImageView(img10);
         draw.setGraphic(view10);
 
-
     }
 
     /**
@@ -367,7 +366,7 @@ public class MainController extends BaseController {
             EventHandler<MouseEvent> menuHandler = new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    newProjectAction();
+                    newUserAction();
                     acpMainView.removeEventHandler(MouseEvent.MOUSE_CLICKED, this);
 
                 }
