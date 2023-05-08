@@ -6,6 +6,7 @@ import BE.ProjectFiles;
 import BE.User;
 import GUI.Model.*;
 import PersonsTypes.PersonTypeChooser;
+import UTIL.CustomerPdf;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -29,7 +30,9 @@ import javafx.util.Duration;
 
 import java.awt.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -124,9 +127,16 @@ public class MainController extends BaseController {
                 displayError(e);
                 e.printStackTrace();
             }
-            NotesTextArea.setText(selectedProject.getNote());
+
+            NotesTextArea.setWrapText(true); //Laver linjeskift i textArealet.
+            NotesTextArea.setText(selectedProject.getNote()); //Viser noten
+            setupCustomerHeadField();
+
         });
     }
+
+
+
 
     /**
      * Listener for the listview containing open projects.
@@ -144,11 +154,29 @@ public class MainController extends BaseController {
                 displayError(e);
                 e.printStackTrace();
             }
+            NotesTextArea.setWrapText(true);
             NotesTextArea.setText(selectedProject.getNote());
+            setupCustomerHeadField();
 
         });
 
     }
+
+
+    public void setupCustomerHeadField()
+    {
+        int customerID = selectedProject.getCustomerID();
+        Customer customer = null;
+        try {
+            customer = customerModel.loadCustomer(customerID);
+        } catch (Exception e) {
+            displayError(e);
+            e.printStackTrace();
+        }
+
+        customerHeader.setText(customer.getFirstName());
+    }
+
 
 
 
@@ -159,7 +187,7 @@ public class MainController extends BaseController {
     {
         fileTable.setOnMouseClicked(event -> {
              selectedfile = fileTable.getSelectionModel().getSelectedItem();
-            if (event.getClickCount() == 2) { //Ved dobbeltklik kan man starte musikken
+            if (event.getClickCount() == 2) { //Her vises filen, når man dobbeltklikker.
                 try {
                    showFile();
                 } catch (Exception e) {
@@ -179,13 +207,9 @@ public class MainController extends BaseController {
             try {
                 if (filesExits) {
                     Desktop desktop = Desktop.getDesktop();
-                    if (file.exists()) desktop.open(file);
-                } //else
-                else
-                    System.out.println("Virker ikke");
-                // informationUser("File do not exist!");
-                // Her kaldes en metode, der viser et vindue med besked om, at filen ikke findes.
-                // Text file, should be opening in default text editor
+                    if (file.exists()) desktop.open(file); //Her åbnes filen i computerens standard program til filtypen.
+                }
+
 
             } catch (Exception e) {
                 displayError(e);
@@ -211,7 +235,7 @@ public class MainController extends BaseController {
                 displayError(e);
                 e.printStackTrace();
             }
-            projectFilesModel.fileLoopStop(); //Stopper tidligere løkker i projectFiles
+            projectFilesModel.fileLoopStop(); //Stopper tidligere løkker i projectFiles inden ny startes
             projectFilesModel.observer(); //Her startes en løkke, der observere ændringer i CheckBox
         }
     }
@@ -232,7 +256,13 @@ public class MainController extends BaseController {
 
     }
 
-    public void handleOpenCustomerDoc(ActionEvent actionEvent) {
+    public void handleOpenCustomerDoc(ActionEvent actionEvent) throws FileNotFoundException, MalformedURLException {
+
+        CustomerPdf customerPdf=new CustomerPdf();
+        customerPdf.makePdf();
+
+
+
     }
 
     /**
@@ -274,6 +304,11 @@ public class MainController extends BaseController {
     }
 
     public void openFileAction(ActionEvent actionEvent) {
+
+
+
+
+
     }
 
     public void saveNoteAction(ActionEvent actionEvent) {

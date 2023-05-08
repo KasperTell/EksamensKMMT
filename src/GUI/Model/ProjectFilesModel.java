@@ -45,6 +45,7 @@ private int number=0 ;
     }
 
     /**
+     * As part of the observer pattern. This is the observer part. It observes if a checkbox has been checked/Unchecked.
      *
      */
     public void observer()
@@ -108,6 +109,10 @@ private int number=0 ;
 
         }
 
+    /**
+     * Used in observer method. This is the update part of the observer pattern
+     *@param check
+     */
     private void updateDataBase(Boolean check, int id) {
         Platform.runLater(() -> {
             try {
@@ -121,6 +126,9 @@ private int number=0 ;
 
     }
 
+    /**
+     * This method stop the observer loop.
+     */
     public void fileLoopStop()
     {
         isRunning=false;
