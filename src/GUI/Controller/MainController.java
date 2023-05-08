@@ -546,7 +546,7 @@ public class MainController extends BaseController {
 
         closeProject.setDisable(turnButtonOnOrOff[0]);
         reOpenProject.setDisable(turnButtonOnOrOff[1]);
-        openFile.setDisable(turnButtonOnOrOff[2]);
+        //openFile.setDisable(turnButtonOnOrOff[2]);
         btnSaveNewFile.setDisable(turnButtonOnOrOff[3]);
         saveNote.setDisable(turnButtonOnOrOff[4]);
         newProject.setDisable(turnButtonOnOrOff[5]);

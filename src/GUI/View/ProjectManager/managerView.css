@@ -57,3 +57,79 @@ Button
 
 
 
+
+
+
+
+
+
+#lstTechniciansOnCase, #lstSalesPersons, #lstProjectManagers, #lstTechnicians
+{
+    -fx-background-color: #f2f2f2;
+
+}
+
+
+
+.tab-pane
+{
+    -fx-focus-color: #18263A;
+}
+
+.tab-header-area .tab-header-background
+{
+    -fx-background-color: #90AED6;
+}
+
+.tab-pane .tab:selected
+{
+    -fx-background-color: #18263A ;
+    -fx-background-insets: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #f2f2f2;
+    -fx-font-weight: bold;
+    -fx-padding: 0 10 0 10;
+}
+
+.tab-pane:top *.tab-header-area
+{
+    -fx-padding: 0 0 0 0;
+
+    /* NO SPACE LEFT OF FIRST TAB */
+    /* -fx-padding: 0 0 0 30; */
+}
+
+.tab-pane
+{
+    -fx-background-color: transparent;
+
+}
+
+.tab-pane .tab
+{
+    -fx-background-color: transparent;
+}
+
+.tab-pane:focused .tab-header-area .headers-region .tab:selected .focus-indicator
+{
+    -fx-border-width: 0;
+    -fx-border-insets: 0 0 0 0;
+    -fx-border-radius: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
