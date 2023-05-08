@@ -1,73 +1,45 @@
-
-#background
+#acpMainView
 {
-    -fx-background-color: #2E3440;
+    -fx-background-color: #333333;
 }
 
+#contactInfoPane
 
-VBox
 {
-    -fx-background-color: #3B4252;
-}
-
-Rectangle
-{
-    -fx-stroke: #2E3440;
-}
-
-Button
-{
-     -fx-background-color: #4C566A;
-     -fx-text-fill: white;
+    -fx-background-color: #f2f2f2;
 }
 
 .text-field
 {
-    -fx-background-color: #2E3440;
-    -fx-text-fill: white;
+    -fx-background-color: #333333;
+    -fx-text-fill: #f2f2f2;
+    -fx-border-width: 1px;
+    -fx-border-color: black;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
 }
 
-.text-area
+Button
 {
-    -fx-focus-color: transparent;
-    -fx-text-box-border: transparent;
-    -fx-text-fill: white;
-    -fx-background-color: #2E3440 ;
+    -fx-background-color: #333333;
+    -fx-text-fill: #f2f2f2;
+    -fx-border-width: 1px;
+    -fx-border-color: black;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
 }
 
- .text-area .content
+#addTechnician, #removeTechnician, #newUser, #removeUser, #newProject, #newCustomer, #reOpenProject, #closeProject
 {
-    -fx-background-color: #2E3440 ;
-
+    -fx-background-color: #333333;
+    -fx-border-width: 0px;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
 }
 
- .list-view
+#header1, #header2, #header3
 {
-     -fx-padding: 0px;
-}
-
-.list-view .list-cell:even {
-     -fx-background-color: #2E3440;
-     -fx-text-fill: white;
-}
-
-.list-view .list-cell:odd {
-     -fx-background-color: #2E3440;
-     -fx-text-fill: white;
-}
-
-.list-view:focused .list-cell:filled:focused:selected
-{
-     -fx-background-color: #4C566A;
-}
-
-
-.combo-box
-{
-     -fx-background-color: #2E3440;
-     -fx-text-fill: white;
-     -fx-text-fill: -fx-text-base-color;
-
+    -fx-text-fill: #f2f2f2;
 }
 
 
