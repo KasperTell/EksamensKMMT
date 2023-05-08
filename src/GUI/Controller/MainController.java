@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -19,6 +20,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -41,6 +44,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class MainController extends BaseController {
 
+    @FXML  private ImageView arrowButton;
     @FXML
     private Tab fileTab;
     @FXML
@@ -105,6 +109,41 @@ public class MainController extends BaseController {
         listenerLstAllCloseProjects();
         listenerLstAllOpenProjects();
         listenerMouseClickPicture();
+
+        // new stuff
+
+        Image img = new Image("Pictures/Arrow.png");
+        ImageView view = new ImageView(img);
+        addTechnician.setGraphic(view);
+
+        Image img2 = new Image("Pictures/Arrow2.png");
+        ImageView view2 = new ImageView(img2);
+        removeTechnician.setGraphic(view2);
+
+        Image img3 = new Image("Pictures/Add Employee Button.png");
+        ImageView view3 = new ImageView(img3);
+        newUser.setGraphic(view3);
+
+        Image img4 = new Image("Pictures/Remove Employee Button.png");
+        ImageView view4 = new ImageView(img4);
+        removeUser.setGraphic(view4);
+
+        Image img5 = new Image("Pictures/Add Project Button.png");
+        ImageView view5 = new ImageView(img5);
+        newProject.setGraphic(view5);
+
+        Image img6 = new Image("Pictures/Add Customer Button.png");
+        ImageView view6 = new ImageView(img6);
+        newCustomer.setGraphic(view6);
+
+        Image img7 = new Image("Pictures/Open PDF Button.png");
+        ImageView view7 = new ImageView(img7);
+        reOpenProject.setGraphic(view6);
+
+        Image img8 = new Image("Pictures/Close Project Button.png");
+        ImageView view8 = new ImageView(img8);
+        closeProject.setGraphic(view8);
+
 
     }
 
