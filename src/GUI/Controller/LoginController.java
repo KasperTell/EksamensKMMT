@@ -3,8 +3,7 @@ package GUI.Controller;
 import BE.User;
 import GUI.Model.FacadeModel;
 import GUI.Model.UserModel;
-import PersonsTypes.PersonType;
-import PersonsTypes.PersonTypeChooser;
+import PersonsTypes.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -64,7 +63,24 @@ public class LoginController extends BaseController {
 
     private void chooseUserType() {
         personTypeChooser=new PersonTypeChooser();
-        personTypeChooser.chooseType(PersonType.ProjectManager);
+
+        int personType = user.getRole();
+        switch (personType)
+        {
+
+            case 2:
+                personTypeChooser.chooseType(PersonType.ProjectManager);
+                break;
+
+            case 3:
+                personTypeChooser.chooseType(PersonType.Salesman);
+                break;
+
+            case 4:
+                personTypeChooser.chooseType(PersonType.Technician);
+                break;
+
+        }
     }
 
     /**

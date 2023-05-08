@@ -1,11 +1,13 @@
 package BLL;
 
 import BE.ProjectTechnician;
+import BE.Role;
 import BE.User;
 import DAL.IUserDataAccess;
 import DAL.UserDAO;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserManager {
@@ -81,4 +83,6 @@ public class UserManager {
      * @throws Exception
      */
     public ProjectTechnician moveTechnician(int technicianID, int projectID) throws Exception {return userDAO.moveTechnician(technicianID, projectID);}
+
+    public List<Role> AllRoles() throws SQLException {return userDAO.allRoles();}
 }
