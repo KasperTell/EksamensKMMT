@@ -1,5 +1,6 @@
 package GUI.Model;
 
+import BE.Role;
 import BE.User;
 import BLL.UserManager;
 import PersonsTypes.Technician;
@@ -14,6 +15,7 @@ public class UserModel {
     private ObservableList<User> allSalesmen;
     private ObservableList<User> allProjectManager;
     private ObservableList<User> allTechniciansOnProject;
+    private ObservableList<Role> allRoles;
     private UserManager userManager;
     private User user;
 
@@ -30,6 +32,8 @@ public class UserModel {
         allSalesmen.addAll(userManager.loadUserOfAKind(3));
         allProjectManager.addAll(userManager.loadUserOfAKind(2));
         allTechniciansOnProject = FXCollections.observableArrayList();
+        allRoles = FXCollections.observableArrayList();
+        allRoles.addAll(userManager.AllRoles());
     }
 
     /**
@@ -39,6 +43,8 @@ public class UserModel {
      * @throws Exception
      */
     public User loadUser(String name)throws Exception{return userManager.loadUser(name);}
+
+    public ObservableList<Role> getAllRoles() {return allRoles;}
 
     /**
      * Getters for the lists.
@@ -70,9 +76,13 @@ public class UserModel {
      */
     public void createNewUser(User createdUser) throws Exception {
         User newUser =  userManager.createNewUser(createdUser);
-        allTechnicians.add(newUser);
-        allTechnicians.clear();
-        allTechnicians.addAll(userManager.loadUserOfAKind(createdUser.getRole()));
+        if(newUser.getRole() == 4) {
+            allTechnicians.add(newUser);
+        } else if(newUser.getRole() == 3) {
+            allSalesmen.add(newUser);
+        } else{
+            allProjectManager.add(newUser);
+        }
     }
 
     /**
@@ -92,7 +102,13 @@ public class UserModel {
      */
     public void deleteUser(User selectedUser) throws Exception {
         userManager.deleteUser(selectedUser);
-        allTechnicians.remove(selectedUser);
+        if(selectedUser.getRole() == 2){
+        allTechnicians.remove(selectedUser);}
+        if(selectedUser.getRole() == 3){
+        allSalesmen.remove(selectedUser);}
+        else {
+            allProjectManager.remove(selectedUser);
+        }
     }
 
     /**

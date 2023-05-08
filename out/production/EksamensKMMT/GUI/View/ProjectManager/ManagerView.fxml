@@ -256,5 +256,50 @@
             <Insets top="20.0" />
          </padding>
       </VBox>
+      <VBox fx:id="vbxCreateNewUser" layoutX="10.0" layoutY="10.0" prefHeight="814.0" prefWidth="345.0" spacing="30.0" translateX="-400.0">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="355.0" text="Opret et nyt projekt">
+               <font>
+                  <Font name="System Bold" size="34.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtfEmployeeFirstName" promptText="Fornavn på ansatte">
+               <VBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="txtfEmployeeLastName" promptText="Efternavn på ansatte">
+               <VBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="txtfEmployeeUsername" promptText="Burgernavn til den ansatte">
+               <VBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField fx:id="txtfEmployeePassword" promptText="Adgangskode til den ansatte">
+               <VBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </VBox.margin>
+            </TextField>
+            <ComboBox fx:id="cbxRoles" prefWidth="150.0">
+               <VBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </VBox.margin>
+            </ComboBox>
+            <Button fx:id="btnAddNewUser" mnemonicParsing="false" onAction="#handleAddNewUser" text="Tilføj ny bruger">
+               <VBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </VBox>
    </children>
 </AnchorPane>

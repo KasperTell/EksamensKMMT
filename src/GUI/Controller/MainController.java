@@ -1,9 +1,6 @@
 package GUI.Controller;
 
-import BE.Customer;
-import BE.Project;
-import BE.ProjectFiles;
-import BE.User;
+import BE.*;
 import GUI.Model.*;
 import PersonsTypes.PersonTypeChooser;
 import UTIL.CustomerPdf;
@@ -12,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -30,6 +26,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.awt.*;
 import java.io.File;
@@ -53,7 +50,9 @@ public class MainController extends BaseController {
     @FXML
     private ComboBox<Customer> cbxCustomer;
     @FXML
-    private VBox vbxCreateNewProject, vbxCreateNewCustomer;
+    private ComboBox<Role> cbxRoles;
+    @FXML
+    private VBox vbxCreateNewProject, vbxCreateNewCustomer, vbxCreateNewUser;
     @FXML
     private AnchorPane acpMainView;
 
@@ -61,7 +60,7 @@ public class MainController extends BaseController {
     private TableColumn projectDateOpen, projectOpenCustomer, projectCloseDate, projectCloseCustomer, filesPictureColoum, filesFilenameColoum, filesDate, filesInReport;
 
     @FXML
-    private Button closeProject,reOpenProject,openFile,btnSaveNewFile,saveNote,newProject,newUser,removeUser,newCustomer,addTechnician,removeTechnician, btnAddNewProject, btnCustomerInfo, btnAddNewCustomer;
+    private Button closeProject,reOpenProject,openFile,btnSaveNewFile,saveNote,newProject,newUser,removeUser,newCustomer,addTechnician,removeTechnician, btnAddNewProject, btnCustomerInfo, btnAddNewCustomer, btnAddNewUser;
     @FXML
     private Tab openProjects;
     @FXML
@@ -73,7 +72,7 @@ public class MainController extends BaseController {
     @FXML
     private Label email, zipCode, address, name, city, telephone, customerHeader;
     @FXML
-    private TextField txtfSearchField, txtfProjectName, txtfPhoneNumber, txtfEmail, txtfZipCode, txtfAddress, txtfcompanyName, txtfCustomerLastName, txtfCustomerFirstName, searchBox;
+    private TextField txtfSearchField, txtfProjectName, txtfPhoneNumber, txtfEmail, txtfZipCode, txtfAddress, txtfcompanyName, txtfCustomerLastName, txtfCustomerFirstName, searchBox, txtfEmployeePassword, txtfEmployeeUsername, txtfEmployeeFirstName, txtfEmployeeLastName;
     @FXML
     private TextArea NotesTextArea;
 
@@ -107,6 +106,7 @@ public class MainController extends BaseController {
         lstProjectManagers.setItems(userModel.getallProjectManagers());
         lstSalesPersons.setItems(userModel.getallSalesmen());
         cbxCustomer.setItems(customerModel.getAllCustomers());
+        cbxRoles.setItems(userModel.getAllRoles());
         turnButtonONOrOff();
         setProjectColumns();
         listenerLstAllCloseProjects();
@@ -296,12 +296,8 @@ public class MainController extends BaseController {
     }
 
     public void handleOpenCustomerDoc(ActionEvent actionEvent) throws FileNotFoundException, MalformedURLException {
-
         CustomerPdf customerPdf=new CustomerPdf();
         customerPdf.makePdf();
-
-
-
     }
 
     /**
@@ -343,21 +339,55 @@ public class MainController extends BaseController {
     }
 
     public void openFileAction(ActionEvent actionEvent) {
-
-
-
-
-
     }
 
     public void saveNoteAction(ActionEvent actionEvent) {
     }
+    @FXML
+    private void newUserAction() {
+        //Initializing a new transition.
+        TranslateTransition transition = new TranslateTransition();
+        vbxCreateNewUser.toFront();
+        transition.setNode(vbxCreateNewUser);
+        transition.setDuration(Duration.millis(150));
 
-    public void newUserAction(ActionEvent actionEvent) {
+        //If the Vbox is not shown, show it and set the background out of focus.
+        if (!isMenuOpen) {
+            isMenuOpen = true;
+            transition.setToX(0);
+            acpMainView.setOpacity(0.2);
+            EventHandler<MouseEvent> menuHandler = new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    newProjectAction();
+                    acpMainView.removeEventHandler(MouseEvent.MOUSE_CLICKED, this);
+
+                }
+            };
+            acpMainView.addEventHandler(MouseEvent.MOUSE_CLICKED, menuHandler);
+            //else remove the vbox and set the main view back in focus.
+        } else {
+            isMenuOpen = false;
+            transition.setToX(-400);
+            acpMainView.setOpacity(1);
+        }
+        transition.play();
     }
 
     public void removeUserAction(ActionEvent actionEvent) {
-
+        User selectedUser = null;
+        if(lstTechnicians.getSelectionModel().getSelectedItem() != null){
+            selectedUser = lstTechnicians.getSelectionModel().getSelectedItem();}
+        else if(lstProjectManagers.getSelectionModel().getSelectedItem() != null){
+           selectedUser = lstProjectManagers.getSelectionModel().getSelectedItem();}
+        else if(lstSalesPersons.getSelectionModel().getSelectedItem() != null){
+        selectedUser = lstSalesPersons.getSelectionModel().getSelectedItem();}
+        try {
+            userModel.deleteUser(selectedUser);
+        } catch (Exception e){
+            displayError(e);
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -569,6 +599,7 @@ public class MainController extends BaseController {
         try {
             //Send the project to the database.
             projectModel.createNewProject(project);
+            newProjectAction();
         } catch (SQLException e) {
             displayError(e);
             e.printStackTrace();
@@ -613,6 +644,7 @@ public class MainController extends BaseController {
         try {
             //Sending the customer to the database.
             customerModel.createNewCustomer(customer);
+            newCustomerAction();
         } catch (Exception e) {
             displayError(e);
             e.printStackTrace();
@@ -634,5 +666,30 @@ public class MainController extends BaseController {
 
         stage.setScene(new Scene(root));
         stage.show();
+    }
+
+    /**
+     * Handle what happens when the "Add new user" button is clicked.
+     * Initializing a new user to be inserted in the database.
+     * @param actionEvent
+     */
+    public void handleAddNewUser(ActionEvent actionEvent) {
+        int id = 1;
+        String firstName = txtfEmployeeFirstName.getText();
+        String lastName = txtfEmployeeLastName.getText();
+        String username = txtfEmployeeUsername.getText();
+        String password = txtfEmployeePassword.getText();
+        String salt = BCrypt.gensalt(12);
+        password = BCrypt.hashpw(password, salt);
+        int role = cbxRoles.getSelectionModel().getSelectedItem().getId();
+
+        User user = new User(id, firstName, lastName, username, password, role);
+        try{
+            userModel.createNewUser(user);
+            newUserAction();
+        } catch (Exception e) {
+            displayError(e);
+            e.printStackTrace();
+        }
     }
 }

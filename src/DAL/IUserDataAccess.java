@@ -1,6 +1,7 @@
 package DAL;
 
 import BE.ProjectTechnician;
+import BE.Role;
 import BE.User;
 
 import java.sql.SQLException;
@@ -16,4 +17,5 @@ public interface IUserDataAccess {
     List<User> filterTechnicianById(int projectID) throws SQLException;
     ProjectTechnician moveTechnician(int technicianID, int projectID) throws SQLException;
     void removeTechnicianFromProject(User selectedTechnician, int projectID) throws SQLException;
+    List<Role> allRoles() throws SQLException;
 }

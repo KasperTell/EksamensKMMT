@@ -8,8 +8,6 @@ public class PersonTypeChooser {
 
     public void chooseType(PersonType personType)
     {
-
-
         switch (personType)
         {
 
@@ -46,7 +44,4 @@ public class PersonTypeChooser {
         return personTypes.turnButtonOnOrOff();
 
     }
-
-
-
 }

@@ -13,7 +13,6 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 
-import java.awt.*;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 
