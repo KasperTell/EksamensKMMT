@@ -61,7 +61,7 @@ public class MainController extends BaseController {
     private TableColumn projectDateOpen, projectOpenCustomer, projectCloseDate, projectCloseCustomer, filesPictureColoum, filesFilenameColoum, filesDate, filesInReport;
 
     @FXML
-    private Button closeProject,reOpenProject,openFile,btnSaveNewFile,saveNote,newProject,newUser,removeUser,newCustomer,addTechnician,removeTechnician, btnAddNewProject, btnCustomerInfo, btnAddNewCustomer;
+    private Button closeProject,reOpenProject,openFile,btnSaveNewFile,saveNote,newProject,newUser,removeUser,newCustomer,addTechnician,removeTechnician, btnAddNewProject, btnCustomerInfo, btnAddNewCustomer, draw;
     @FXML
     private Tab openProjects;
     @FXML
@@ -141,11 +141,19 @@ public class MainController extends BaseController {
 
         Image img7 = new Image("Pictures/Open PDF Button.png");
         ImageView view7 = new ImageView(img7);
-        reOpenProject.setGraphic(view6);
+        reOpenProject.setGraphic(view7);
 
         Image img8 = new Image("Pictures/Close Project Button.png");
         ImageView view8 = new ImageView(img8);
         closeProject.setGraphic(view8);
+
+        Image img9 = new Image("Pictures/Open PDF Button.png");
+        ImageView view9 = new ImageView(img9);
+        btnCustomerInfo.setGraphic(view9);
+
+        Image img10 = new Image("Pictures/Paint.png");
+        ImageView view10 = new ImageView(img10);
+        draw.setGraphic(view10);
 
 
     }

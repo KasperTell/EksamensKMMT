@@ -29,12 +29,22 @@ Button
     -fx-background-radius: 5;
 }
 
-#addTechnician, #removeTechnician, #newUser, #removeUser, #newProject, #newCustomer, #reOpenProject, #closeProject
+#addTechnician, #removeTechnician, #newUser, #removeUser, #newProject, #newCustomer, #reOpenProject, #closeProject, #btnCustomerInfo, #draw
 {
     -fx-background-color: #333333;
     -fx-border-width: 0px;
     -fx-border-radius: 0;
     -fx-background-radius: 0;
+}
+
+#openFile, #btnSaveNewFile, #saveNote
+{
+    -fx-background-color: #E84910;
+    -fx-text-fill: #f2f2f2;
+    -fx-border-width: 0px;
+    -fx-border-color: black;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
 }
 
 #header1, #header2, #header3
