@@ -28,7 +28,7 @@
                               <TableView fx:id="openProjectsTable" prefHeight="468.5" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columns>
                                   <TableColumn fx:id="projectDateOpen" prefWidth="85.0" resizable="false" text="Date" />
-                                  <TableColumn fx:id="projectOpenCustomer" prefWidth="213.0" resizable="false" text="Customer" />
+                                  <TableColumn fx:id="projectOpenCustomer" prefWidth="213.0" resizable="false" text="Project" />
                                 </columns>
                               </TableView>
                            </children>
@@ -42,7 +42,7 @@
                               <TableView fx:id="closeProjectsTable" layoutY="7.0" prefHeight="468.5" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <columns>
                                     <TableColumn fx:id="projectCloseDate" prefWidth="85.0" resizable="false" text="Date" />
-                                    <TableColumn fx:id="projectCloseCustomer" prefWidth="213.0" resizable="false" text="Customer" />
+                                    <TableColumn fx:id="projectCloseCustomer" prefWidth="213.0" resizable="false" text="Project" />
                                  </columns>
                               </TableView>
                            </children>
