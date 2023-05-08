@@ -112,6 +112,15 @@ public class MainController extends BaseController {
         listenerLstAllCloseProjects();
         listenerLstAllOpenProjects();
         listenerMouseClickPicture();
+        reOpenProject.setDisable(true);
+        closeProject.setDisable(true);
+        draw.setDisable(true);
+        btnCustomerInfo.setDisable(true);
+        saveNote.setDisable(true);
+        addTechnician.setDisable(true);
+        removeTechnician.setDisable(true);
+        btnSaveNewFile.setDisable(true);
+
 
         // new stuff
 
@@ -176,16 +185,22 @@ public class MainController extends BaseController {
 
             NotesTextArea.setWrapText(true); //Laver linjeskift i textArealet.
             NotesTextArea.setText(selectedProject.getNote()); //Viser noten
-            setupCustomerHeadField();
+
+            //setupCustomerHeadField();
+
+            if (selectedProject != null)
+            {
+                reOpenProject.setDisable(false);
+                closeProject.setDisable(true);
+            }
 
         });
     }
 
 
 
-
     /**
-     * Listener for the listview containing open projects.
+     * Listener for the table-view containing open projects.
      */
     @FXML
     private void listenerLstAllOpenProjects() {
@@ -202,7 +217,19 @@ public class MainController extends BaseController {
             }
             NotesTextArea.setWrapText(true);
             NotesTextArea.setText(selectedProject.getNote());
-            setupCustomerHeadField();
+            //setupCustomerHeadField();
+
+            if (selectedProject != null)
+            {
+                reOpenProject.setDisable(true);
+                closeProject.setDisable(false);
+                draw.setDisable(false);
+                btnCustomerInfo.setDisable(false);
+                addTechnician.setDisable(false);
+                removeTechnician.setDisable(false);
+                saveNote.setDisable(false);
+                btnSaveNewFile.setDisable(false);
+            }
 
         });
 

@@ -54,15 +54,6 @@ Button
 
 
 
-
-
-
-
-
-
-
-
-
 #lstTechniciansOnCase, #lstSalesPersons, #lstProjectManagers, #lstTechnicians
 {
     -fx-background-color: #f2f2f2;
@@ -120,6 +111,79 @@ Button
     -fx-border-insets: 0 0 0 0;
     -fx-border-radius: 0;
 }
+
+
+
+
+
+
+.table-view {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: transparent;
+
+}
+
+.table-view .column-header {
+    -fx-background-color: #90AED6;
+    -fx-text-background-color: #f2f2f2;
+
+}
+
+.table-view .table-cell{
+    -fx-border-color: transparent;
+    -fx-padding: 2 0 2 10px;
+}
+.table-row-cell:hover {
+    -fx-background-color: E84910;
+    -fx-text-background-color: #E84910;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: E84910;
+    -fx-text-background-color: #E84910;
+}
+
+.table-row-cell:odd{
+    -fx-background-color: #f2f2f2;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+.table-row-cell:even{
+    -fx-background-color: #f2f2f2;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+
+
+
+.list-cell:odd {
+    -fx-background-color: #f2f2f2;
+}
+
+.list-cell:even {
+    -fx-background-color: #f2f2f2;
+}
+
+.list-cell:filled:hover {
+    -fx-text-background-color: #E84910;
+}
+
+.list-cell:selected{
+    -fx-text-background-color: #E84910;
+
+}
+
 
 
 
