@@ -55,10 +55,8 @@ public class MainController extends BaseController {
     private VBox vbxCreateNewProject, vbxCreateNewCustomer, vbxCreateNewUser;
     @FXML
     private AnchorPane acpMainView;
-
     @FXML
     private TableColumn projectDateOpen, projectOpenCustomer, projectCloseDate, projectCloseCustomer, filesPictureColoum, filesFilenameColoum, filesDate, filesInReport;
-
     @FXML
     private Button closeProject,reOpenProject,openFile,btnSaveNewFile,saveNote,newProject,newUser,removeUser,newCustomer,addTechnician,removeTechnician, btnAddNewProject, btnCustomerInfo, btnAddNewCustomer, btnAddNewUser, draw;
     @FXML
@@ -75,10 +73,8 @@ public class MainController extends BaseController {
     private TextField txtfSearchField, txtfProjectName, txtfPhoneNumber, txtfEmail, txtfZipCode, txtfAddress, txtfcompanyName, txtfCustomerLastName, txtfCustomerFirstName, searchBox, txtfEmployeePassword, txtfEmployeeUsername, txtfEmployeeFirstName, txtfEmployeeLastName;
     @FXML
     private TextArea NotesTextArea;
-
     private Project selectedProject;
     private ProjectFiles selectedfile;
-
     private File file;
     private String filePath = "Resources/Pictures/ImagesSavedFromTechnicians";
     private Path target = Paths.get(filePath);
@@ -230,6 +226,8 @@ public class MainController extends BaseController {
                 saveNote.setDisable(false);
                 btnSaveNewFile.setDisable(false);
             }
+
+
 
         });
 
@@ -688,13 +686,16 @@ public class MainController extends BaseController {
     }
 
 
-    public void handleDraw(ActionEvent actionEvent) throws IOException {
-
+    public void handleDraw(ActionEvent actionEvent) throws Exception {
+        projectModel.setProjectTitle(openProjectsTable.getSelectionModel().getSelectedItem().getTitle());
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/Paint/PaintView.fxml"));
         Parent root = loader.load();
+        root.getStylesheets().add("/GUI/View/Paint/Paint.css");
 
         PaintController controller = loader.getController();
+        controller.setModel(super.getModel());
+        controller.setup();
 
         Stage stage = new Stage();
 

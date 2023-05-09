@@ -11,9 +11,9 @@ public class ProjectModel {
 
     private ObservableList<Project> projectsOpen;
     private ObservableList<Project> projectClose;
-
     private ProjectManager projectManager;
     private ObservableList<Project> searchedProjects;
+    private String projectTitle2;
 
     /**
      * Constructor for the class "ProjectModel".
@@ -69,5 +69,12 @@ public class ProjectModel {
     public ObservableList<Project> searchByQuery(String searchQuery) throws Exception {
         searchedProjects.addAll(projectManager.searchByQuery(searchQuery));
         return searchedProjects; }
+
+    public String getProjectTitle(){
+        return projectTitle2;
+    }
+    public void setProjectTitle(String projectTitle){
+        projectTitle2 = projectTitle;
+    }
 
 }

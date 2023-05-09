@@ -2,8 +2,6 @@ package GUI.Controller;
 
 import GUI.Model.FacadeModel;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.stage.Stage;
 
 public abstract class BaseController {
 
