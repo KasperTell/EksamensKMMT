@@ -8,10 +8,7 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.SolidBorder;
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.element.*;
 
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
@@ -27,47 +24,66 @@ public class CustomerPdf {
 
     ImageData data;
 
-public void makePdf() throws FileNotFoundException, MalformedURLException {
-    pdfWriter = new PdfWriter(path);
-    pdfDocument = new PdfDocument(pdfWriter);
-    document = new Document(pdfDocument);
 
-    pdfDocument.setDefaultPageSize(PageSize.A4);
+    public void makePdf() throws FileNotFoundException, MalformedURLException {
+        pdfWriter = new PdfWriter(path);
+        pdfDocument = new PdfDocument(pdfWriter);
+        document = new Document(pdfDocument);
+        pdfDocument.setDefaultPageSize(PageSize.A4);
+
+        pageThree();
+
+        document.close();
+
+    }
+
+    public void pageThree() throws MalformedURLException {
+
+        pdfDocument.addNewPage();
+        headerPicture();
+        headerSpace();
+        customerInfo();
+        createOneSpace();
+        createDivider();
+        createOneSpace();
+        note();
+        insertPicture();
 
 
-    data= ImageDataFactory.create("Resources/Pictures/WuavLogo.png");
-    com.itextpdf.layout.element.Image image = new Image(data);
-    image.setFixedPosition(1, 1);
-    document.add(image);
+    }
+
+    private void headerPicture() throws MalformedURLException {
+        data = ImageDataFactory.create("Resources/Pictures/WUAV4.png");
+        Image image = new Image(data);
+        image.setFixedPosition(100, 750);
+        image.setAutoScale(true);
+        document.add(image);
 
 
-
-   //createHeader();
-
-createDivider();
-
-
-
-    document.close();
-
-}
-
-
-    private void createHeader()
-    {
-        float oneColumnWidth[] = {600f}; //to kolonner sat i en array
-
-        Table header = new Table(oneColumnWidth);
-        header.addCell(new Cell().add(new Paragraph("Dato")).setFontSize(20f).setBold().setBorder(Border.NO_BORDER).setBackgroundColor(GRAY).setBold());
-        header.addCell(new Cell().add(new Paragraph("DDD")).setFontSize(20f).setBorder(Border.NO_BORDER).setBold());
-
-        document.add(header);
     }
 
 
-    private void createOneSpace()
-    {
+    private void customerInfo() {
+        float oneColumnWidth[] = {600f}; //to kolonner sat i en array
+
+        Table customerInfo = new Table(oneColumnWidth);
+        customerInfo.addCell(new Cell().add(new Paragraph("Projekt nr. A")).setFontSize(12f).setBorder(Border.NO_BORDER));
+        customerInfo.addCell(new Cell().add(new Paragraph("Klaus Søren")).setFontSize(12f).setBorder(Border.NO_BORDER));
+        customerInfo.addCell(new Cell().add(new Paragraph("Gade vej 5A")).setFontSize(12f).setBorder(Border.NO_BORDER));
+        customerInfo.addCell(new Cell().add(new Paragraph("6710" + " " + "Esbjerg V")).setBorder(Border.NO_BORDER));
+
+        document.add(customerInfo);
+    }
+
+
+    private void createOneSpace() {
         Paragraph oneSp = new Paragraph("\n").setFontSize(6);
+        document.add(oneSp); //tilføjer en linje med afstand
+    }
+
+
+    private void headerSpace() {
+        Paragraph oneSp = new Paragraph("\n").setFontSize(30);
         document.add(oneSp); //tilføjer en linje med afstand
     }
 
@@ -80,6 +96,39 @@ createDivider();
         Table divider = new Table(fullWidth);
         divider.setBorder(gBorder);
         document.add(divider);
+    }
+
+
+    private void note() {
+        float oneColumnWidth[] = {600f}; //to kolonner sat i en array
+
+        Table note = new Table(oneColumnWidth);
+        note.addCell(new Cell().add(new Paragraph("Her er der plads til at man kan skrive en hel del tekst." +
+                "Her er der plads til at man kan skrive en hel del tekst." +
+                "Her er der plads til at man kan skrive en hel del tekst." +
+                "Her er der plads til at man kan skrive en hel del tekst." +
+                "Her er der plads til at man kan skrive en hel del tekst." +
+                "Her er der plads til at man kan skrive en hel del tekst." +
+                "Her er der plads til at man kan skrive en hel del tekst." +
+                "Her er der plads til at man kan skrive en hel del tekst.")).setFontSize(12f).setBorder(Border.NO_BORDER));
+
+        document.add(note);
+    }
+
+    private void insertPicture() throws MalformedURLException {
+
+        document.add(new AreaBreak());
+
+        float oneColumnWidth[] = {600f}; //to kolonner sat i en array
+
+        Table insertPicture = new Table(oneColumnWidth);
+
+        data = ImageDataFactory.create("Resources/Pictures/ImagesSavedFromTechnicians/Flower0.jpg");
+        Image image = new Image(data);
+
+        insertPicture.addCell(new Cell().add(image.setHeight(700)).setBorder(Border.NO_BORDER));
+
+        document.add(insertPicture);
     }
 
 

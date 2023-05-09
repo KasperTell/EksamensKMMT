@@ -116,49 +116,71 @@ public class MainController extends BaseController {
         addTechnician.setDisable(true);
         removeTechnician.setDisable(true);
         btnSaveNewFile.setDisable(true);
-
+        pictureToButton();
 
         // new stuff
 
-        Image img = new Image("Pictures/Arrow.png");
-        ImageView view = new ImageView(img);
-        addTechnician.setGraphic(view);
 
-        Image img2 = new Image("Pictures/Arrow2.png");
-        ImageView view2 = new ImageView(img2);
-        removeTechnician.setGraphic(view2);
+    }
 
-        Image img3 = new Image("Pictures/Add Employee Button.png");
-        ImageView view3 = new ImageView(img3);
-        newUser.setGraphic(view3);
+    private void pictureToButton() {
+        String[] listOfFiles = {"Pictures/Arrow.png","Pictures/Arrow2.png","Pictures/Add Employee Button.png","Pictures/Remove Employee Button.png","Pictures/Add Project Button.png",
+                "Pictures/Add Customer Button.png","Pictures/Open PDF Button.png","Pictures/Close Project Button.png","Pictures/Open PDF Button.png","Pictures/Paint.png"};
 
-        Image img4 = new Image("Pictures/Remove Employee Button.png");
-        ImageView view4 = new ImageView(img4);
-        removeUser.setGraphic(view4);
+        Button[] listOfButtons ={addTechnician, removeTechnician,newUser,removeUser,newProject,newCustomer,reOpenProject,closeProject,btnCustomerInfo,draw};
 
-        Image img5 = new Image("Pictures/Add Project Button.png");
-        ImageView view5 = new ImageView(img5);
-        newProject.setGraphic(view5);
 
-        Image img6 = new Image("Pictures/Add Customer Button.png");
-        ImageView view6 = new ImageView(img6);
-        newCustomer.setGraphic(view6);
+        for (int i = 0; i < listOfFiles.length; i++) {
+            Image img = new Image(listOfFiles[i]);
+            ImageView view = new ImageView(img);
+            listOfButtons[i].setGraphic(view);
 
-        Image img7 = new Image("Pictures/Open PDF Button.png");
-        ImageView view7 = new ImageView(img7);
-        reOpenProject.setGraphic(view7);
+        }
 
-        Image img8 = new Image("Pictures/Close Project Button.png");
-        ImageView view8 = new ImageView(img8);
-        closeProject.setGraphic(view8);
 
-        Image img9 = new Image("Pictures/Open PDF Button.png");
-        ImageView view9 = new ImageView(img9);
-        btnCustomerInfo.setGraphic(view9);
 
-        Image img10 = new Image("Pictures/Paint.png");
-        ImageView view10 = new ImageView(img10);
-        draw.setGraphic(view10);
+
+
+//                Image img = new Image("Pictures/Arrow.png");
+//        ImageView view = new ImageView(img);
+//        addTechnician.setGraphic(view);
+//
+//        Image img2 = new Image("Pictures/Arrow2.png");
+//        ImageView view2 = new ImageView(img2);
+//        removeTechnician.setGraphic(view2);
+//
+//        Image img3 = new Image("Pictures/Add Employee Button.png");
+//        ImageView view3 = new ImageView(img3);
+//        newUser.setGraphic(view3);
+//
+//        Image img4 = new Image("Pictures/Remove Employee Button.png");
+//        ImageView view4 = new ImageView(img4);
+//        removeUser.setGraphic(view4);
+//
+//        Image img5 = new Image("Pictures/Add Project Button.png");
+//        ImageView view5 = new ImageView(img5);
+//        newProject.setGraphic(view5);
+//
+//        Image img6 = new Image("Pictures/Add Customer Button.png");
+//        ImageView view6 = new ImageView(img6);
+//        newCustomer.setGraphic(view6);
+//
+//        Image img7 = new Image("Pictures/Open PDF Button.png");
+//        ImageView view7 = new ImageView(img7);
+//        reOpenProject.setGraphic(view7);
+//
+//        Image img8 = new Image("Pictures/Close Project Button.png");
+//        ImageView view8 = new ImageView(img8);
+//        closeProject.setGraphic(view8);
+//
+//        Image img9 = new Image("Pictures/Open PDF Button.png");
+//        ImageView view9 = new ImageView(img9);
+//        btnCustomerInfo.setGraphic(view9);
+//
+//        Image img10 = new Image("Pictures/Paint.png");
+//        ImageView view10 = new ImageView(img10);
+//        draw.setGraphic(view10);
+
 
     }
 
@@ -213,19 +235,7 @@ public class MainController extends BaseController {
             }
             NotesTextArea.setWrapText(true);
             NotesTextArea.setText(selectedProject.getNote());
-            //setupCustomerHeadField();
-
-            if (selectedProject != null)
-            {
-                reOpenProject.setDisable(true);
-                closeProject.setDisable(false);
-                draw.setDisable(false);
-                btnCustomerInfo.setDisable(false);
-                addTechnician.setDisable(false);
-                removeTechnician.setDisable(false);
-                saveNote.setDisable(false);
-                btnSaveNewFile.setDisable(false);
-            }
+           enableDisableButton();
 
 
 
@@ -233,20 +243,21 @@ public class MainController extends BaseController {
 
     }
 
-
-    public void setupCustomerHeadField()
-    {
-        int customerID = selectedProject.getCustomerID();
-        Customer customer = null;
-        try {
-            customer = customerModel.loadCustomer(customerID);
-        } catch (Exception e) {
-            displayError(e);
-            e.printStackTrace();
+    private void enableDisableButton() {
+        if (selectedProject != null)
+        {
+            reOpenProject.setDisable(true);
+            closeProject.setDisable(false);
+            draw.setDisable(false);
+            btnCustomerInfo.setDisable(false);
+            addTechnician.setDisable(false);
+            removeTechnician.setDisable(false);
+            saveNote.setDisable(false);
+            btnSaveNewFile.setDisable(false);
         }
-
-        customerHeader.setText(customer.getFirstName());
     }
+
+
 
 
 
