@@ -28,6 +28,10 @@ Button
     -fx-border-radius: 5;
     -fx-background-radius: 5;
 }
+Button:pressed{
+    -fx-opacity: 0.50;
+}
+
 
 #addTechnician, #removeTechnician, #newUser, #removeUser, #newProject, #newCustomer, #reOpenProject, #closeProject, #btnCustomerInfo, #draw
 {

@@ -3,58 +3,40 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ColorPicker?>
-<?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.PaintController">
    <children>
       <Canvas fx:id="canvas" height="800.0" layoutX="200.0" width="800.0" />
-      <VBox prefHeight="800.0" prefWidth="200.0" spacing="10.0">
+      <VBox prefHeight="800.0" prefWidth="200.0" spacing="15.0">
          <children>
-            <Button fx:id="brush" mnemonicParsing="false" onAction="#handleBrush" text="Brush">
+            <Button fx:id="screen" mnemonicParsing="false" onAction="#handleScreen" prefWidth="100.0" text="Screen">
                <VBox.margin>
                   <Insets left="10.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="speaker" mnemonicParsing="false" onAction="#handleSpeaker" text="speaker">
+            <Button fx:id="projector" mnemonicParsing="false" onAction="#handleProjector" prefWidth="100.0" text="Projector">
                <VBox.margin>
                   <Insets left="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="screen" mnemonicParsing="false" onAction="#handleScreen" text="Screen">
+            <Button fx:id="speaker" mnemonicParsing="false" onAction="#handleSpeaker" prefWidth="100.0" text="speaker">
                <VBox.margin>
                   <Insets left="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="projector" mnemonicParsing="false" onAction="#handleProjector" text="Projector">
+            <Button fx:id="cable" mnemonicParsing="false" onAction="#handleCable" prefWidth="100.0" text="Cable">
                <VBox.margin>
                   <Insets left="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="erase" mnemonicParsing="false" onAction="#handleErase" text="Erase">
+            <Button fx:id="saveCanvas" mnemonicParsing="false" onAction="#handleSaveCanvas" prefWidth="100.0" text="Save Canvas">
                <VBox.margin>
-                  <Insets left="10.0" />
+                  <Insets left="10.0" top="50.0" />
                </VBox.margin>
             </Button>
-            <ColorPicker fx:id="colorPicker">
-               <VBox.margin>
-                  <Insets left="10.0" />
-               </VBox.margin>
-            </ColorPicker>
-            <Slider fx:id="sizeSlider" value="20.0" />
-            <Button fx:id="newCanvas" mnemonicParsing="false" onAction="#handleNewCanvas" text="New Canvas">
-               <VBox.margin>
-                  <Insets left="10.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="saveCanvas" mnemonicParsing="false" onAction="#handleSaveCanvas" text="Save Canvas">
-               <VBox.margin>
-                  <Insets left="10.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="back" mnemonicParsing="false" onAction="#handleBackToMainView" text="Close">
+            <Button fx:id="back" mnemonicParsing="false" onAction="#handleBackToMainView" prefWidth="100.0" text="Close">
                <VBox.margin>
                   <Insets left="10.0" />
                </VBox.margin>
