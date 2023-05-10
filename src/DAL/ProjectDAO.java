@@ -122,6 +122,43 @@ public class ProjectDAO implements IProjectDataAccess{
         }
     }
 
+
+    /**
+     * Changing the project note in the database.
+     * @param note
+     * @param id
+     * @throws Exception
+     */
+    public void changeNote(String note, int id) throws SQLException {
+        //SQL Query and getting database connection.
+        String sql = "UPDATE Project SET Note = ? WHERE ID = ?";
+        try(Connection conn = databaseConnector.getConnection()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            //Setting the parameters and executing the statement.
+            stmt.setString(1, note);
+            stmt.setInt(2, id);
+            stmt.execute();
+        } catch(SQLException ex){
+            ex.printStackTrace();
+            throw new SQLException("Could not edit project status");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Getting all the projects from the database based on a query.
      * @param query

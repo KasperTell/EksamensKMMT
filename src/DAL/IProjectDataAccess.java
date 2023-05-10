@@ -12,4 +12,9 @@ public interface IProjectDataAccess {
 
     Project createNewProject(Project project) throws SQLException;
     List<Project> searchByQuery(String query) throws SQLException;
+
+
+    void changeNote(String note, int id) throws SQLException;
+
+
 }

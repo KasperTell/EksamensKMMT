@@ -54,10 +54,7 @@ public class ProjectModel {
      */
     public void changeProjectStatus(int projectStatus, int id) throws Exception {
         projectManager.changeProjectStatus(projectStatus, id);
-        projectsOpen.clear();
-        projectClose.clear();
-        projectClose.addAll(projectManager.loadProjectOfAType(false));
-        projectsOpen.addAll(projectManager.loadProjectOfAType(true));
+        clearLists();
     }
 
     /**
@@ -76,5 +73,21 @@ public class ProjectModel {
     public void setProjectTitle(String projectTitle){
         projectTitle2 = projectTitle;
     }
+
+
+    public void changeNote(String note, int id) throws Exception {
+        projectManager.changeNote(note, id);
+        clearLists();
+
+    }
+
+public void clearLists() throws Exception {
+    projectsOpen.clear();
+    projectClose.clear();
+    projectClose.addAll(projectManager.loadProjectOfAType(false));
+    projectsOpen.addAll(projectManager.loadProjectOfAType(true));
+}
+
+
 
 }

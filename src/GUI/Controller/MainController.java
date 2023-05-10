@@ -74,7 +74,7 @@ public class MainController extends BaseController {
     private TextField txtfSearchField, txtfProjectName, txtfPhoneNumber, txtfEmail, txtfZipCode, txtfAddress, txtfcompanyName, txtfCustomerLastName, txtfCustomerFirstName, searchBox, txtfEmployeePassword, txtfEmployeeUsername, txtfEmployeeFirstName, txtfEmployeeLastName;
     @FXML
     private TextArea NotesTextArea;
-    private Project selectedProject;
+    private Project selectedProject, selectedProjectStorage;
     private ProjectFiles selectedfile;
     private File file;
     private String filePath = "Resources/Pictures/ImagesSavedFromTechnicians";
@@ -157,13 +157,14 @@ public class MainController extends BaseController {
                 e.printStackTrace();
             }
 
-            NotesTextArea.setWrapText(true); //Laver linjeskift i textArealet.
-            NotesTextArea.setText(selectedProject.getNote()); //Viser noten
+
 
             //setupCustomerHeadField();
 
             if (selectedProject != null)
             {
+                NotesTextArea.setWrapText(true); //Laver linjeskift i textArealet.
+                NotesTextArea.setText(selectedProject.getNote()); //Viser noten
                 reOpenProject.setDisable(false);
                 closeProject.setDisable(true);
             }
@@ -189,8 +190,13 @@ public class MainController extends BaseController {
                 displayError(e);
                 e.printStackTrace();
             }
-            NotesTextArea.setWrapText(true);
-            NotesTextArea.setText(selectedProject.getNote());
+
+            if (selectedProject!=null)
+            {
+                NotesTextArea.setWrapText(true);
+                NotesTextArea.setText(selectedProject.getNote());
+            }
+
            enableDisableButton();
 
 
@@ -332,19 +338,33 @@ public class MainController extends BaseController {
         //Setting the data for the variables and calls the method from the model.
         int reOpenProject = 0;
         int id = selectedProject.getId();
-        selectedProject = null;
+
         try {
             projectModel.changeProjectStatus(reOpenProject, id);
         } catch (Exception e) {
             displayError(e);
             e.printStackTrace();
         }
+
     }
 
     public void openFileAction(ActionEvent actionEvent) {
     }
 
     public void saveNoteAction(ActionEvent actionEvent) {
+
+        String note=NotesTextArea.getText();
+
+        selectedProjectStorage=selectedProject;
+
+
+        try {
+            projectModel.changeNote(note,selectedProject.getId());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+
+        }
+        selectedProject=selectedProjectStorage;
     }
     @FXML
     private void newUserAction() {
