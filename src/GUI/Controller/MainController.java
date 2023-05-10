@@ -4,6 +4,7 @@ import BE.*;
 import GUI.Model.*;
 import PersonsTypes.PersonTypeChooser;
 import UTIL.CustomerPdf;
+import UTIL.ShowFile;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -226,7 +227,9 @@ public class MainController extends BaseController {
              selectedfile = fileTable.getSelectionModel().getSelectedItem();
             if (event.getClickCount() == 2) { //Her vises filen, når man dobbeltklikker.
                 try {
-                   showFile();
+
+                    ShowFile showFile=new ShowFile();
+                    showFile.showFile(selectedfile.getFilePath());
                 } catch (Exception e) {
                     displayError(e);
                 }
@@ -238,21 +241,7 @@ public class MainController extends BaseController {
     /**
      * Open a file with the standard desktop program.
      */
-    private void showFile() {
-            boolean filesExits = Files.exists(Path.of(selectedfile.getFilePath())); //check om filen eksisterer
-            File file = new File(selectedfile.getFilePath());
-            try {
-                if (filesExits) {
-                    Desktop desktop = Desktop.getDesktop();
-                    if (file.exists()) desktop.open(file); //Her åbnes filen i computerens standard program til filtypen.
-                }
 
-
-            } catch (Exception e) {
-                displayError(e);
-                e.printStackTrace();
-            }
-    }
 
     /**
      * Set up the files information column in the tableview.
@@ -305,18 +294,12 @@ public class MainController extends BaseController {
             }
 
 
-
-
-
-
         HashMap<String, String> customerMap=makeCustomerMap();
-
-
         CustomerPdf customerPdf=new CustomerPdf(imagePath,customerMap, selectedProject.getNote());
-
         customerPdf.makePdf();
 
-
+        ShowFile showFile=new ShowFile();
+        showFile.showFile("installations dokumentation.pdf");
 
     }
 
