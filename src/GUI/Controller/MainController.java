@@ -5,6 +5,7 @@ import GUI.Model.*;
 import PersonsTypes.PersonTypeChooser;
 import UTIL.CustomerPdf;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -38,6 +39,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
@@ -136,50 +139,6 @@ public class MainController extends BaseController {
             listOfButtons[i].setGraphic(view);
 
         }
-
-
-
-
-
-//                Image img = new Image("Pictures/Arrow.png");
-//        ImageView view = new ImageView(img);
-//        addTechnician.setGraphic(view);
-//
-//        Image img2 = new Image("Pictures/Arrow2.png");
-//        ImageView view2 = new ImageView(img2);
-//        removeTechnician.setGraphic(view2);
-//
-//        Image img3 = new Image("Pictures/Add Employee Button.png");
-//        ImageView view3 = new ImageView(img3);
-//        newUser.setGraphic(view3);
-//
-//        Image img4 = new Image("Pictures/Remove Employee Button.png");
-//        ImageView view4 = new ImageView(img4);
-//        removeUser.setGraphic(view4);
-//
-//        Image img5 = new Image("Pictures/Add Project Button.png");
-//        ImageView view5 = new ImageView(img5);
-//        newProject.setGraphic(view5);
-//
-//        Image img6 = new Image("Pictures/Add Customer Button.png");
-//        ImageView view6 = new ImageView(img6);
-//        newCustomer.setGraphic(view6);
-//
-//        Image img7 = new Image("Pictures/Open PDF Button.png");
-//        ImageView view7 = new ImageView(img7);
-//        reOpenProject.setGraphic(view7);
-//
-//        Image img8 = new Image("Pictures/Close Project Button.png");
-//        ImageView view8 = new ImageView(img8);
-//        closeProject.setGraphic(view8);
-//
-//        Image img9 = new Image("Pictures/Open PDF Button.png");
-//        ImageView view9 = new ImageView(img9);
-//        btnCustomerInfo.setGraphic(view9);
-//
-//        Image img10 = new Image("Pictures/Paint.png");
-//        ImageView view10 = new ImageView(img10);
-//        draw.setGraphic(view10);
 
 
     }
@@ -339,8 +298,29 @@ public class MainController extends BaseController {
     }
 
     public void handleOpenCustomerDoc(ActionEvent actionEvent) throws FileNotFoundException, MalformedURLException {
-        CustomerPdf customerPdf=new CustomerPdf();
+
+        ArrayList<String> filePath=new ArrayList<>();
+
+        for(ProjectFiles projectFiles : fileTable.getItems()) {
+
+            if (projectFiles.getUsedBox().isSelected())
+            {
+                filePath.add(projectFiles.getFilePath());
+            }
+
+        }
+
+
+
+        HashMap<String,String> customerInfo = makeCustomerMap();
+
+        CustomerPdf customerPdf=new CustomerPdf(filePath,customerInfo);
         customerPdf.makePdf();
+
+
+
+
+
     }
 
     /**
@@ -542,7 +522,11 @@ public class MainController extends BaseController {
      * Set up the information about the customer in the main view when a project is selected.
      */
     @FXML
-    private void setUpCustomer() {
+    private HashMap<String,String> makeCustomerMap() {
+
+        HashMap<String,String> customerInfo = new HashMap<>();
+
+
         if (selectedProject != null) {
             //Setting the information in the labels.
             int customerID = selectedProject.getCustomerID();
@@ -554,13 +538,28 @@ public class MainController extends BaseController {
                 e.printStackTrace();
             }
 
-            name.setText(customer.getFirstName());
-            address.setText(customer.getAddress());
-            zipCode.setText(String.valueOf(customer.getZipCode()));
-            email.setText(customer.getMail());
-            telephone.setText(String.valueOf(customer.getPhoneNumber()));
-        }
+            customerInfo.put("FirstName",customer.getFirstName());
+            customerInfo.put("Address",customer.getAddress());
+            customerInfo.put("ZipCode",String.valueOf(customer.getZipCode()));
+            customerInfo.put("Email",customer.getMail());
+            customerInfo.put("PhoneNumber",String.valueOf(customer.getPhoneNumber()));
+
+                    }
+        return customerInfo;
     }
+
+    public void setUpCustomer()
+    {
+        HashMap<String,String> customerInfo = makeCustomerMap();
+        name.setText(customerInfo.get("FirstName"));
+        address.setText(customerInfo.get("Address"));
+        zipCode.setText(customerInfo.get("ZipCode"));
+        email.setText(customerInfo.get("Email"));
+        telephone.setText(customerInfo.get("PhoneNumber"));
+    }
+
+
+
 
     /**
      * Set up the information in the technician column in the table view, based on a selected project.
