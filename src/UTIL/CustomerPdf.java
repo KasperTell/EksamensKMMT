@@ -26,16 +26,20 @@ public class CustomerPdf {
 
     ImageData data;
 
+
     ArrayList<String> imagePath;
-    HashMap<String,String> customerList;
+    HashMap<String,String> customerInfo;
+
+     private String noteString;
 
 
-    public CustomerPdf(ArrayList<String> imagePath, HashMap<String,String> customerList)
-    {
-        this.imagePath=imagePath;
-        this.customerList=customerList;
+    public CustomerPdf(ArrayList<String> imagePath, HashMap<String,String> customerList, String noteString) {
+        this.imagePath = imagePath;
+        this.customerInfo = customerList;
+        this.noteString=noteString;
 
     }
+
 
 
 
@@ -61,7 +65,12 @@ public class CustomerPdf {
         createDivider();
         createOneSpace();
         note();
-        insertPicture();
+
+        for (int i = 0; i < imagePath.size(); i++) {
+            insertPicture(imagePath.get(i));
+        }
+
+
 
 
     }
@@ -71,6 +80,8 @@ public class CustomerPdf {
         Image image = new Image(data);
         image.setFixedPosition(100, 750);
         image.setAutoScale(true);
+
+
         document.add(image);
 
 
@@ -78,13 +89,25 @@ public class CustomerPdf {
 
 
     private void customerInfo() {
-        float oneColumnWidth[] = {600f}; //to kolonner sat i en array
+        float twoColumnWidth[] = {100f,400f}; //to kolonner sat i en array
 
-        Table customerInfo = new Table(oneColumnWidth);
-        customerInfo.addCell(new Cell().add(new Paragraph("Projekt nr. A")).setFontSize(12f).setBorder(Border.NO_BORDER));
-        customerInfo.addCell(new Cell().add(new Paragraph("Klaus Søren")).setFontSize(12f).setBorder(Border.NO_BORDER));
-        customerInfo.addCell(new Cell().add(new Paragraph("Gade vej 5A")).setFontSize(12f).setBorder(Border.NO_BORDER));
-        customerInfo.addCell(new Cell().add(new Paragraph("6710" + " " + "Esbjerg V")).setBorder(Border.NO_BORDER));
+        String firstName=customerInfo.get("FirstName");
+        String address=customerInfo.get("Address");
+        String ZipCode=customerInfo.get("ZipCode");
+        String email=customerInfo.get("Mail");
+        String phoneNumber=customerInfo.get("PhoneNumber");
+
+        Table customerInfo = new Table(twoColumnWidth);
+        customerInfo.addCell(new Cell().add(new Paragraph("Name:")).setFontSize(12f).setBorder(Border.NO_BORDER));
+        customerInfo.addCell(new Cell().add(new Paragraph(firstName)).setFontSize(12f).setBorder(Border.NO_BORDER));
+        customerInfo.addCell(new Cell().add(new Paragraph("Address:")).setFontSize(12f).setBorder(Border.NO_BORDER));
+        customerInfo.addCell(new Cell().add(new Paragraph(address)).setFontSize(12f).setBorder(Border.NO_BORDER));
+        customerInfo.addCell(new Cell().add(new Paragraph("ZipCode:")).setFontSize(12f).setBorder(Border.NO_BORDER));
+        customerInfo.addCell(new Cell().add(new Paragraph(ZipCode)).setFontSize(12f).setBorder(Border.NO_BORDER));
+        customerInfo.addCell(new Cell().add(new Paragraph("Email:")).setBorder(Border.NO_BORDER));
+        customerInfo.addCell(new Cell().add(new Paragraph(email)).setBorder(Border.NO_BORDER));
+        customerInfo.addCell(new Cell().add(new Paragraph("phoneNumber:")).setBorder(Border.NO_BORDER));
+        customerInfo.addCell(new Cell().add(new Paragraph(phoneNumber)).setBorder(Border.NO_BORDER));
 
         document.add(customerInfo);
     }
@@ -117,19 +140,13 @@ public class CustomerPdf {
         float oneColumnWidth[] = {600f}; //to kolonner sat i en array
 
         Table note = new Table(oneColumnWidth);
-        note.addCell(new Cell().add(new Paragraph("Her er der plads til at man kan skrive en hel del tekst." +
-                "Her er der plads til at man kan skrive en hel del tekst." +
-                "Her er der plads til at man kan skrive en hel del tekst." +
-                "Her er der plads til at man kan skrive en hel del tekst." +
-                "Her er der plads til at man kan skrive en hel del tekst." +
-                "Her er der plads til at man kan skrive en hel del tekst." +
-                "Her er der plads til at man kan skrive en hel del tekst." +
-                "Her er der plads til at man kan skrive en hel del tekst.")).setFontSize(12f).setBorder(Border.NO_BORDER));
+
+        note.addCell(new Cell().add(new Paragraph(noteString).setFontSize(12f)).setBorder(Border.NO_BORDER));
 
         document.add(note);
     }
 
-    private void insertPicture() throws MalformedURLException {
+    private void insertPicture(String imagePath) throws MalformedURLException {
 
         document.add(new AreaBreak());
 
@@ -137,7 +154,7 @@ public class CustomerPdf {
 
         Table insertPicture = new Table(oneColumnWidth);
 
-        data = ImageDataFactory.create("Resources/Pictures/ImagesSavedFromTechnicians/Flower0.jpg");
+        data = ImageDataFactory.create(imagePath);
         Image image = new Image(data);
 
         insertPicture.addCell(new Cell().add(image.setHeight(700)).setBorder(Border.NO_BORDER));

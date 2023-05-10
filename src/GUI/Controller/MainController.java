@@ -5,6 +5,7 @@ import GUI.Model.*;
 import PersonsTypes.PersonTypeChooser;
 import UTIL.CustomerPdf;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -135,6 +136,7 @@ public class MainController extends BaseController {
             listOfButtons[i].setGraphic(view);
             listOfButtons[i].setTooltip(tip);
         }
+
     }
 
     /**
@@ -293,6 +295,7 @@ public class MainController extends BaseController {
 
     public void handleOpenCustomerDoc(ActionEvent actionEvent) throws FileNotFoundException, MalformedURLException {
 
+
     ArrayList<String> imagePath=new ArrayList<>();
 
         for(ProjectFiles projectFiles : fileTable.getItems())
@@ -301,9 +304,16 @@ public class MainController extends BaseController {
                 imagePath.add(projectFiles.getFilePath());
             }
 
-        HashMap<String, String> customerList=getCustomerList();
 
-        CustomerPdf customerPdf=new CustomerPdf(imagePath,customerList);
+
+
+
+
+        HashMap<String, String> customerMap=makeCustomerMap();
+
+
+        CustomerPdf customerPdf=new CustomerPdf(imagePath,customerMap, selectedProject.getNote());
+
         customerPdf.makePdf();
 
 
@@ -508,9 +518,14 @@ public class MainController extends BaseController {
     /**
      * Set up the information about the customer in the main view when a project is selected.
      */
-    @FXML
-    private HashMap<String, String> getCustomerList() {
-        HashMap<String, String> customerMap = new HashMap<String, String>();
+
+
+
+    private HashMap<String,String> makeCustomerMap() {
+
+        HashMap<String,String> customerInfo = new HashMap<>();
+
+
 
         if (selectedProject != null) {
             //Setting the information in the labels.
@@ -523,26 +538,30 @@ public class MainController extends BaseController {
                 e.printStackTrace();
             }
 
-            customerMap.put("FirstName",customer.getFirstName());
-            customerMap.put("Address",customer.getAddress());
-            customerMap.put("Zipcode",String.valueOf(customer.getZipCode()));
-            customerMap.put("Mail",customer.getMail());
-            customerMap.put("Phone number",String.valueOf(customer.getPhoneNumber()));
+
+            customerInfo.put("FirstName",customer.getFirstName());
+            customerInfo.put("Address",customer.getAddress());
+            customerInfo.put("ZipCode",String.valueOf(customer.getZipCode()));
+            customerInfo.put("Mail",customer.getMail());
+            customerInfo.put("PhoneNumber",String.valueOf(customer.getPhoneNumber()));
 
         }
-                return customerMap;
+                return customerInfo;
     }
+
+
 
 
     public void setUpCustomer()
     {
-        HashMap<String, String> customerList=getCustomerList();
+        HashMap<String,String> customerInfo = makeCustomerMap();
 
-        name.setText(customerList.get("FirstName"));
-        address.setText(customerList.get("Address"));
-        zipCode.setText("Zipcode");
-        email.setText("Mail");
-        telephone.setText("Phone number");
+        name.setText(customerInfo.get("FirstName"));
+        address.setText(customerInfo.get("Address"));
+        zipCode.setText(customerInfo.get("ZipCode"));
+        email.setText(customerInfo.get("Mail"));
+        telephone.setText(customerInfo.get("PhoneNumber"));
+
     }
 
 
