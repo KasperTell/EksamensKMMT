@@ -85,6 +85,9 @@ public class MainController extends BaseController {
     private ProjectFilesModel projectFilesModel;
     private boolean isMenuOpen;
 
+    private int projectNumber;
+    private boolean onOpenProjectList;
+
     PersonTypeChooser personTypeChooser = new PersonTypeChooser();
 
     /**
@@ -117,7 +120,7 @@ public class MainController extends BaseController {
         removeTechnician.setDisable(true);
         btnSaveNewFile.setDisable(true);
         pictureToButton();
-    }
+            }
 
     private void pictureToButton() {
         String[] listOfFiles = {"Pictures/Arrow.png","Pictures/Arrow2.png","Pictures/Add Employee Button.png","Pictures/Remove Employee Button.png","Pictures/Add Project Button.png",
@@ -148,6 +151,7 @@ public class MainController extends BaseController {
         closeProjectsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
         {
             selectedProject = closeProjectsTable.getSelectionModel().getSelectedItem();
+            projectNumber=closeProjectsTable.getSelectionModel().getSelectedIndex();
             try {
                 setUpCustomer();
                 setupFiles();
@@ -163,12 +167,13 @@ public class MainController extends BaseController {
 
             if (selectedProject != null)
             {
-                NotesTextArea.setWrapText(true); //Laver linjeskift i textArealet.
-                NotesTextArea.setText(selectedProject.getNote()); //Viser noten
-                reOpenProject.setDisable(false);
-                closeProject.setDisable(true);
+                                reOpenProject.setDisable(false);
+                            closeProject.setDisable(true);
             }
 
+            NotesTextArea.setWrapText(true); //Laver linjeskift i textArealet.
+            NotesTextArea.setText(selectedProject.getNote()); //Viser noten
+            onOpenProjectList=false;
         });
     }
 
@@ -182,6 +187,7 @@ public class MainController extends BaseController {
         openProjectsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
         {
             selectedProject = openProjectsTable.getSelectionModel().getSelectedItem();
+            projectNumber=openProjectsTable.getSelectionModel().getFocusedIndex(); //Gemmer linjen for projektet. Så kan man komme tilbage til samme linje senere.
             try {
                 setUpCustomer();
                 setupFiles();
@@ -198,8 +204,7 @@ public class MainController extends BaseController {
             }
 
            enableDisableButton();
-
-
+            onOpenProjectList=true;
 
         });
 
@@ -347,16 +352,13 @@ public class MainController extends BaseController {
         }
 
     }
-
-    public void openFileAction(ActionEvent actionEvent) {
+    @FXML
+    private void openFileAction(ActionEvent actionEvent) {
     }
-
-    public void saveNoteAction(ActionEvent actionEvent) {
+    @FXML
+    private void saveNoteAction(ActionEvent actionEvent) {
 
         String note=NotesTextArea.getText();
-
-        selectedProjectStorage=selectedProject;
-
 
         try {
             projectModel.changeNote(note,selectedProject.getId());
@@ -364,8 +366,13 @@ public class MainController extends BaseController {
             throw new RuntimeException(e);
 
         }
-        selectedProject=selectedProjectStorage;
+        System.out.println(projectNumber);
+        if (onOpenProjectList)
+        selectedProject=openProjectsTable.getItems().get(projectNumber);
+        else
+            selectedProject=closeProjectsTable.getItems().get(projectNumber);
     }
+
     @FXML
     private void newUserAction() {
         //Initializing a new transition.
@@ -745,5 +752,8 @@ public class MainController extends BaseController {
             displayError(e);
             e.printStackTrace();
         }
+    }
+
+    public void handleDeleteFile(ActionEvent actionEvent) {
     }
 }
