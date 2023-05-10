@@ -31,9 +31,24 @@
                   <Insets left="10.0" />
                </VBox.margin>
             </Button>
+            <Button fx:id="techBox" mnemonicParsing="false" onAction="#handleTechBox" prefWidth="100.0" text="Tech Box">
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="eraser" mnemonicParsing="false" onAction="#handleEraser" prefWidth="100.0" text="Eraser">
+               <VBox.margin>
+                  <Insets left="10.0" top="30.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="clear" mnemonicParsing="false" onAction="#handleClear" prefWidth="100.0" text="Clear">
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
+            </Button>
             <Button fx:id="saveCanvas" mnemonicParsing="false" onAction="#handleSaveCanvas" prefWidth="100.0" text="Save Canvas">
                <VBox.margin>
-                  <Insets left="10.0" top="50.0" />
+                  <Insets left="10.0" top="70.0" />
                </VBox.margin>
             </Button>
             <Button fx:id="back" mnemonicParsing="false" onAction="#handleBackToMainView" prefWidth="100.0" text="Close">

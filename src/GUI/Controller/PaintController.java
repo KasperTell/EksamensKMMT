@@ -19,7 +19,7 @@ import java.nio.file.Paths;
 
 public class PaintController extends BaseController {
 
-    GraphicsContext brushTool;
+    GraphicsContext tool;
     private ProjectModel projectModel;
 
     @FXML private Button saveCanvas;
@@ -28,70 +28,101 @@ public class PaintController extends BaseController {
     boolean screenSelected = false;
     boolean projectorSelected = false;
     boolean cableSelected = false;
+    boolean eraserSelected = false;
+    boolean techBoxSelected = false;
     private double x;
     private double y;
 
     @Override
     public void setup() throws Exception {
         projectModel = getModel().getProjectModel();
-        toolSelect();
+        clickToolSelect();
+        dragToolSelect();
     }
 
-    public void toolSelect(){
+    public void clickToolSelect(){
 
-        brushTool = canvas.getGraphicsContext2D();
+        tool= canvas.getGraphicsContext2D();
         canvas.setOnMouseClicked(e -> {
 
              x = e.getX();
              y = e.getY();
 
-            switch (speakerSelected + "-" + screenSelected + "-" + projectorSelected + "-" + cableSelected){
+            switch (speakerSelected + "-" + screenSelected + "-" + projectorSelected + "-" + cableSelected + "-" + techBoxSelected){
 
-                case "true-false-false-false":
+                case "true-false-false-false-false":
                     setSpeakerTool();
                     break;
 
-                case "false-true-false-false":
+                case "false-true-false-false-false":
                     setScreenTool();
                     break;
 
-                case "false-false-true-false":
+                case "false-false-true-false-false":
                     setProjectorTool();
                     break;
 
-                case "false-false-false-true":
+                case "false-false-false-true-false":
                     setCableTool();
                     break;
 
+                case "false-false-false-false-true":
+                    setTechBoxTool();
+                    break;
+            }
+        });
+    }
+
+    public void dragToolSelect(){
+
+        tool = canvas.getGraphicsContext2D();
+        canvas.setOnMouseDragged(e -> {
+
+            x = e.getX();
+            y = e.getY();
+
+            if (eraserSelected){
+                setEraserTool();
             }
         });
     }
 
     public void setSpeakerTool(){
         Image speaker = new Image("/Paint/Speaker.png");
-        brushTool.drawImage(speaker, x - speaker.getWidth() / 2, y - speaker.getHeight() / 2);
+        tool.drawImage(speaker, x - speaker.getWidth() / 2, y - speaker.getHeight() / 2);
     }
 
     public void setProjectorTool(){
         Image projector = new Image("/Paint/Projector.png");
-        brushTool.drawImage(projector, x - projector.getWidth() / 2, y - projector.getHeight() / 2);
+        tool.drawImage(projector, x - projector.getWidth() / 2, y - projector.getHeight() / 2);
     }
 
     public void setScreenTool(){
         Image screen = new Image("/Paint/Screen.png");
-        brushTool.drawImage(screen, x - screen.getWidth() / 2, y - screen.getHeight() / 2);
+        tool.drawImage(screen, x - screen.getWidth() / 2, y - screen.getHeight() / 2);
     }
 
     public void setCableTool() {
-        brushTool.setFill(Color.BLACK);
-        brushTool.fillRoundRect(x,y,10,10,10,10);
-        }
+        tool.setFill(Color.BLACK);
+        tool.fillRoundRect(x,y,10,10,10,10);
+    }
 
+    private void setTechBoxTool() {
+        Image techBox = new Image("/Paint/TechBox.PNG");
+        tool.drawImage(techBox, x - techBox.getWidth() / 2, y - techBox.getHeight() / 2);
+    }
 
-    public void handleCable(ActionEvent actionEvent) {cableSelected = true; speakerSelected = false; screenSelected = false; projectorSelected = false;}
-    public void handleSpeaker(ActionEvent actionEvent) {cableSelected = false; speakerSelected = true; screenSelected = false; projectorSelected = false;}
-    public void handleScreen(ActionEvent actionEvent) {cableSelected = false; speakerSelected = false; screenSelected = true; projectorSelected = false;}
-    public void handleProjector(ActionEvent actionEvent) {cableSelected = false; speakerSelected = false; screenSelected = false; projectorSelected = true;}
+    public void setEraserTool(){
+        tool.clearRect(x - 25,y - 25,50,50);
+    }
+
+    public void handleCable(ActionEvent actionEvent) {cableSelected = true; speakerSelected = false; screenSelected = false; projectorSelected = false; eraserSelected = false; techBoxSelected = false;}
+    public void handleSpeaker(ActionEvent actionEvent) {cableSelected = false; speakerSelected = true; screenSelected = false; projectorSelected = false; eraserSelected = false; techBoxSelected = false;}
+    public void handleScreen(ActionEvent actionEvent) {cableSelected = false; speakerSelected = false; screenSelected = true; projectorSelected = false; eraserSelected = false; techBoxSelected = false;}
+    public void handleProjector(ActionEvent actionEvent) {cableSelected = false; speakerSelected = false; screenSelected = false; projectorSelected = true; eraserSelected = false; techBoxSelected = false;}
+    public void handleEraser(ActionEvent actionEvent) {cableSelected = false; speakerSelected = false; screenSelected = false; projectorSelected = false; eraserSelected = true; techBoxSelected = false;}
+    public void handleTechBox(ActionEvent actionEvent) {cableSelected = false; speakerSelected = false; screenSelected = false; projectorSelected = false; eraserSelected = false; techBoxSelected = true;}
+    public void handleClear(ActionEvent actionEvent) {tool.clearRect(0,0,canvas.getWidth(), canvas.getHeight());}
     public void handleSaveCanvas(ActionEvent actionEvent) throws IOException {saveCanvas(canvas);}
 
     public void saveCanvas(Canvas c) throws IOException {
@@ -108,6 +139,5 @@ public class PaintController extends BaseController {
         Stage stage = (Stage) saveCanvas.getScene().getWindow();
         stage.close();
     }
-
 }
 
