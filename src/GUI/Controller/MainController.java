@@ -36,6 +36,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
@@ -290,8 +292,22 @@ public class MainController extends BaseController {
     }
 
     public void handleOpenCustomerDoc(ActionEvent actionEvent) throws FileNotFoundException, MalformedURLException {
-        CustomerPdf customerPdf=new CustomerPdf();
+
+    ArrayList<String> imagePath=new ArrayList<>();
+
+        for(ProjectFiles projectFiles : fileTable.getItems())
+        {
+            if(projectFiles.getUsedBox().isSelected())
+                imagePath.add(projectFiles.getFilePath());
+            }
+
+        HashMap<String, String> customerList=getCustomerList();
+
+        CustomerPdf customerPdf=new CustomerPdf(imagePath,customerList);
         customerPdf.makePdf();
+
+
+
     }
 
     /**
@@ -493,7 +509,9 @@ public class MainController extends BaseController {
      * Set up the information about the customer in the main view when a project is selected.
      */
     @FXML
-    private void setUpCustomer() {
+    private HashMap<String, String> getCustomerList() {
+        HashMap<String, String> customerMap = new HashMap<String, String>();
+
         if (selectedProject != null) {
             //Setting the information in the labels.
             int customerID = selectedProject.getCustomerID();
@@ -505,13 +523,30 @@ public class MainController extends BaseController {
                 e.printStackTrace();
             }
 
-            name.setText(customer.getFirstName());
-            address.setText(customer.getAddress());
-            zipCode.setText(String.valueOf(customer.getZipCode()));
-            email.setText(customer.getMail());
-            telephone.setText(String.valueOf(customer.getPhoneNumber()));
+            customerMap.put("FirstName",customer.getFirstName());
+            customerMap.put("Address",customer.getAddress());
+            customerMap.put("Zipcode",String.valueOf(customer.getZipCode()));
+            customerMap.put("Mail",customer.getMail());
+            customerMap.put("Phone number",String.valueOf(customer.getPhoneNumber()));
+
         }
+                return customerMap;
     }
+
+
+    public void setUpCustomer()
+    {
+        HashMap<String, String> customerList=getCustomerList();
+
+        name.setText(customerList.get("FirstName"));
+        address.setText(customerList.get("Address"));
+        zipCode.setText("Zipcode");
+        email.setText("Mail");
+        telephone.setText("Phone number");
+    }
+
+
+
 
     /**
      * Set up the information in the technician column in the table view, based on a selected project.

@@ -12,6 +12,8 @@ import com.itextpdf.layout.element.*;
 
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import static com.itextpdf.kernel.colors.DeviceGray.GRAY;
 
@@ -23,6 +25,18 @@ public class CustomerPdf {
     Document document;
 
     ImageData data;
+
+    ArrayList<String> imagePath;
+    HashMap<String,String> customerList;
+
+
+    public CustomerPdf(ArrayList<String> imagePath, HashMap<String,String> customerList)
+    {
+        this.imagePath=imagePath;
+        this.customerList=customerList;
+
+    }
+
 
 
     public void makePdf() throws FileNotFoundException, MalformedURLException {
