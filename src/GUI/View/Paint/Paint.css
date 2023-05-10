@@ -3,3 +3,17 @@ VBox
 {
     -fx-background-color: #333333;
 }
+
+Button
+{
+    -fx-background-color: #333333;
+    -fx-text-fill: #f2f2f2;
+    -fx-border-width: 2px;
+    -fx-border-color: black;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+Button:pressed{
+    -fx-background-color: #18263A;
+}
