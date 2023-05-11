@@ -9,6 +9,7 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.*;
+import com.itextpdf.layout.properties.TextAlignment;
 
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
@@ -30,13 +31,15 @@ public class CustomerPdf {
     ArrayList<String> imagePath;
     HashMap<String,String> customerInfo;
 
-     private String noteString;
+     private String noteString,title;
 
 
-    public CustomerPdf(ArrayList<String> imagePath, HashMap<String,String> customerList, String noteString) {
+    public CustomerPdf(ArrayList<String> imagePath, HashMap<String,String> customerList, String noteString, String title) {
         this.imagePath = imagePath;
         this.customerInfo = customerList;
         this.noteString=noteString;
+        this.title=title;
+
 
     }
 
@@ -49,78 +52,86 @@ public class CustomerPdf {
         document = new Document(pdfDocument);
         pdfDocument.setDefaultPageSize(PageSize.A4);
 
-        pageThree();
-
+        page1();
+        page2();
+        page3();
+        page4();
         document.close();
 
     }
 
-    public void pageThree() throws MalformedURLException {
 
-        pdfDocument.addNewPage();
-        headerPicture();
-        headerSpace();
-        customerInfo();
-        createOneSpace();
+
+    private void page1() throws MalformedURLException {
+
+        insertPicture("Resources/Pictures/AV top billede2.png",350,0,500); //Top billedet
+        whiteSpace(350);
+
+        String[] tekst={"","Installations dokumentation","",title,"",customerInfo.get("FirstName")};
+        insertTable2Row(16,300,tekst,false);
+        insertPicture("Resources/Pictures/AV bund billede.png",0,0,120); //bund billedet
+
+    }
+
+    private void page2() throws MalformedURLException {
+
+        document.add(new AreaBreak());
+        insertPicture("Resources/Pictures/PDF side 2.png",120,10,680); //Hel skærms billede
+
+    }
+
+
+    public void page3() throws MalformedURLException {
+
+        document.add(new AreaBreak());
+
+        insertPicture("Resources/Pictures/WUAV4.png",730, 35,80); //Top billedet
+        whiteSpace(50);
+
+        String[] tekst={"Navn",customerInfo.get("FirstName"),"Adresse",customerInfo.get("Address"),"Postkode",customerInfo.get("ZipCode"),"Email",
+        customerInfo.get("Mail"),"Telefon",customerInfo.get("PhoneNumber")};
+
+        insertTable2Row(12,100,tekst,true);
+
+        whiteSpace(20);
         createDivider();
-        createOneSpace();
+        whiteSpace(6);
         note();
+        whiteSpace(6);
+        createDivider();
+    }
+
+
+    private void page4() throws MalformedURLException {
 
         for (int i = 0; i < imagePath.size(); i++) {
-            insertPicture(imagePath.get(i));
+            insertPictureOnNewPage(imagePath.get(i));
         }
+    }
 
 
+
+    private void insertTable2Row( int textSize, int firstCellWidth, String[] tekst, boolean textLeft) {
+
+        float twoColumnWidth[] = {firstCellWidth,600-firstCellWidth}; //to kolonner sat i en array
+        Table table2 = new Table(twoColumnWidth);
+
+        if (textLeft)
+            for (int i = 0; i < tekst.length; i++) {
+                table2.addCell(new Cell().add(new Paragraph(tekst[i])).setFontSize(textSize).setBorder(Border.NO_BORDER));
+            }
+        else
+            for (int i = 0; i < tekst.length; i++) {
+                table2.addCell(new Cell().add(new Paragraph(tekst[i])).setFontSize(textSize).setTextAlignment(TextAlignment.RIGHT).setBorder(Border.NO_BORDER));
+            }
+
+        document.add(table2);
 
 
     }
 
-    private void headerPicture() throws MalformedURLException {
-        data = ImageDataFactory.create("Resources/Pictures/WUAV4.png");
-        Image image = new Image(data);
-        image.setFixedPosition(100, 750);
-        image.setAutoScale(true);
-
-
-        document.add(image);
-
-
-    }
-
-
-    private void customerInfo() {
-        float twoColumnWidth[] = {100f,400f}; //to kolonner sat i en array
-
-        String firstName=customerInfo.get("FirstName");
-        String address=customerInfo.get("Address");
-        String ZipCode=customerInfo.get("ZipCode");
-        String email=customerInfo.get("Mail");
-        String phoneNumber=customerInfo.get("PhoneNumber");
-
-        Table customerInfo = new Table(twoColumnWidth);
-        customerInfo.addCell(new Cell().add(new Paragraph("Name:")).setFontSize(12f).setBorder(Border.NO_BORDER));
-        customerInfo.addCell(new Cell().add(new Paragraph(firstName)).setFontSize(12f).setBorder(Border.NO_BORDER));
-        customerInfo.addCell(new Cell().add(new Paragraph("Address:")).setFontSize(12f).setBorder(Border.NO_BORDER));
-        customerInfo.addCell(new Cell().add(new Paragraph(address)).setFontSize(12f).setBorder(Border.NO_BORDER));
-        customerInfo.addCell(new Cell().add(new Paragraph("ZipCode:")).setFontSize(12f).setBorder(Border.NO_BORDER));
-        customerInfo.addCell(new Cell().add(new Paragraph(ZipCode)).setFontSize(12f).setBorder(Border.NO_BORDER));
-        customerInfo.addCell(new Cell().add(new Paragraph("Email:")).setBorder(Border.NO_BORDER));
-        customerInfo.addCell(new Cell().add(new Paragraph(email)).setBorder(Border.NO_BORDER));
-        customerInfo.addCell(new Cell().add(new Paragraph("phoneNumber:")).setBorder(Border.NO_BORDER));
-        customerInfo.addCell(new Cell().add(new Paragraph(phoneNumber)).setBorder(Border.NO_BORDER));
-
-        document.add(customerInfo);
-    }
-
-
-    private void createOneSpace() {
-        Paragraph oneSp = new Paragraph("\n").setFontSize(6);
-        document.add(oneSp); //tilføjer en linje med afstand
-    }
-
-
-    private void headerSpace() {
-        Paragraph oneSp = new Paragraph("\n").setFontSize(30);
+    private void whiteSpace(int height) {
+        Paragraph oneSp = new Paragraph("\n").setFontSize(height);
         document.add(oneSp); //tilføjer en linje med afstand
     }
 
@@ -129,7 +140,7 @@ public class CustomerPdf {
 
         float fullWidth[] = {600};
 
-        Border gBorder = new SolidBorder(GRAY, 2f);
+        Border gBorder = new SolidBorder(GRAY, 1f);
         Table divider = new Table(fullWidth);
         divider.setBorder(gBorder);
         document.add(divider);
@@ -146,7 +157,7 @@ public class CustomerPdf {
         document.add(note);
     }
 
-    private void insertPicture(String imagePath) throws MalformedURLException {
+    private void insertPictureOnNewPage(String imagePath) throws MalformedURLException {
 
         document.add(new AreaBreak());
 
@@ -161,6 +172,18 @@ public class CustomerPdf {
 
         document.add(insertPicture);
     }
+
+    private void insertPicture(String imagePath, int bottom,int left,int height) throws MalformedURLException {
+
+
+        data = ImageDataFactory.create(imagePath);
+        Image image = new Image(data);
+        image.setFixedPosition(left, bottom);
+        image.setHeight(height);
+
+        document.add(image);
+    }
+
 
 
 

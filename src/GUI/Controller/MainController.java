@@ -306,7 +306,7 @@ public class MainController extends BaseController {
 
 
         HashMap<String, String> customerMap=makeCustomerMap();
-        CustomerPdf customerPdf=new CustomerPdf(imagePath,customerMap, selectedProject.getNote());
+        CustomerPdf customerPdf=new CustomerPdf(imagePath,customerMap, selectedProject.getNote(),selectedProject.getTitle());
         customerPdf.makePdf();
 
         ShowFile showFile=new ShowFile();
