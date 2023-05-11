@@ -169,12 +169,18 @@ public class ProjectDAO implements IProjectDataAccess{
 
         ArrayList<Project> projects = new ArrayList<>();
         //SQL Query.
-        String sql = "SELECT * FROM Project INNER JOIN Customers ON Project.customerID = Customers.ID WHERE Customers.Address LIKE ?";
+        String sql = "SELECT * FROM Project INNER JOIN Customers ON Project.customerID = Customers.ID WHERE Customers.First_Name LIKE ? OR Customers.Last_Name LIKE ? OR Customers.Company_Name LIKE ? OR Customers.Address LIKE ? OR Customers.Zip_Code LIKE ? OR Customers.Mail LIKE ? OR Customers.Phone_Number LIKE ?";
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             //Setting the parameters and executing the statement.
             stmt.setString(1, "%" + query + "%");
+            stmt.setString(2, "%" + query + "%");
+            stmt.setString(3, "%" + query + "%");
+            stmt.setString(4, "%" + query + "%");
+            stmt.setString(5, "%" + query + "%");
+            stmt.setString(6, "%" + query + "%");
+            stmt.setString(7, "%" + query + "%");
 
             ResultSet rs = stmt.executeQuery();
             // Loop through rows from the database result set
