@@ -61,7 +61,7 @@ public class MainController extends BaseController {
     @FXML
     private Button closeProject,reOpenProject,openFile,btnSaveNewFile,saveNote,newProject,newUser,removeUser,newCustomer,addTechnician,removeTechnician, btnAddNewProject, btnCustomerInfo, btnAddNewCustomer, btnAddNewUser, draw;
     @FXML
-    private Tab openProjects;
+    private Tab openProjects, closedProjects;
     @FXML
     private TableView<Project> openProjectsTable,closeProjectsTable;
     @FXML
@@ -646,9 +646,19 @@ public class MainController extends BaseController {
     @FXML
     private void searchProjectsByStringQuery(KeyEvent keyEvent) {
         String query = searchBox.getText();
-        openProjectsTable.getItems().clear();
+        TableView<Project> table;
+        if (openProjects.isSelected()) {
+            // Search for open projects
+            table = openProjectsTable;
+            table.getItems().clear();
+        } else {
+            // Search for closed projects
+            table = closeProjectsTable;
+            table.getItems().clear();
+        }
+        table.getItems().clear();
         try {
-            openProjectsTable.setItems(projectModel.searchByQuery(query));
+            table.setItems(projectModel.searchByQuery(query));
         } catch (Exception e) {
             displayError(e);
             e.printStackTrace();
