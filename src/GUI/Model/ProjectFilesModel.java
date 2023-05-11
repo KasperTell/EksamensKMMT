@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.SQLException;
 
 
 public class ProjectFilesModel {
@@ -17,6 +18,7 @@ public class ProjectFilesModel {
 
     private ProjectFilesManager projectFilesManager;
     private boolean isRunning = true;
+    private ProjectFiles createdFile;
 
     private int runs=0;
 private int number=0 ;
@@ -134,7 +136,16 @@ private int number=0 ;
         isRunning=false;
     }
 
+    public void createNewFile(ProjectFiles file) throws Exception {
+        createdFile = projectFilesManager.createNewFile(file);
+        projectFiles.clear();
+        projectFiles.set(FXCollections.observableArrayList(projectFilesManager.loadFilesFromAProject(createdFile.getProjectID())));
+    }
 
-
+    public void deleteFile(ProjectFiles file) throws Exception {
+        projectFiles.clear();
+        projectFiles.set(FXCollections.observableArrayList(projectFilesManager.loadFilesFromAProject(file.getProjectID())));
+        projectFilesManager.deleteFile(file);
+    }
 }
 

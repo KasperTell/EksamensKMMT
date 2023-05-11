@@ -23,12 +23,12 @@ private CheckBox usedBox;
      * @param picture
      * @param usedBox
      */
-    public ProjectFiles(int id, int projectID, String name, String filePath, LocalDate date,  ImageView picture,CheckBox usedBox) {
+    public ProjectFiles(int id, int projectID, String name, String filePath, LocalDate date,  ImageView picture, CheckBox usedBox) {
         this.id = id;
         this.projectID = projectID;
+        this.name=name;
         this.filePath = filePath;
         this.date = date;
-        this.name=name;
         this.picture = picture;
         this.usedBox = usedBox;
     }

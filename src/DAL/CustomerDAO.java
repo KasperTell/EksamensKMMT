@@ -114,7 +114,10 @@ public class CustomerDAO implements ICustomerDataAccess {
             if(rs.next()){
                 customer.setId(rs.getInt(1));
             }
+            return customer;
+        } catch(SQLException ex){
+            ex.printStackTrace();
+            throw new SQLException("Could not create customer", ex);
         }
-        return customer;
     }
 }

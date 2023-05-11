@@ -5,6 +5,7 @@ import DAL.FilesDAO;
 import DAL.iFileDataAccess;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class ProjectFilesManager {
@@ -33,5 +34,11 @@ public class ProjectFilesManager {
      */
     public void updateUsedInDoc(Boolean usedInDoc, int id) throws Exception {
         filesDAO.updateUsedInDoc(usedInDoc,id);
+    }
+    public ProjectFiles createNewFile(ProjectFiles file) throws SQLException{
+        return filesDAO.createNewFile(file);
+    }
+    public void deleteFile(ProjectFiles file) throws SQLException{
+        filesDAO.deleteFile(file);
     }
 }

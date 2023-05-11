@@ -5,6 +5,7 @@ import DAL.PictureClasses.ImageViewKlient;
 import DAL.PictureClasses.LilleJpeg;
 import DAL.PictureClasses.LilleJpg;
 import DAL.PictureClasses.LillePng;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.ImageView;
 
@@ -125,6 +126,45 @@ public class FilesDAO implements iFileDataAccess {
         catch (SQLException ex) {
             ex.printStackTrace();
             throw new Exception("Could not update fileList", ex);
+        }
+    }
+
+    public ProjectFiles createNewFile(ProjectFiles file) throws SQLException {
+        //SQL Query
+        String sql = "INSERT INTO ProjectFile(ProjectID, Name, FilePath, Date, UsedInDoc) VALUES (?,?,?,?,?)";
+        //Getting connection to the database.
+        try(Connection conn = databaseConnector.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            //Setting the parameters and executing the query.
+            stmt.setInt(1, file.getProjectID());
+            stmt.setString(2, file.getName());
+            stmt.setString(3, file.getFilePath());
+            stmt.setDate(4, Date.valueOf(file.getDate()));
+            stmt.setInt(5, 0);
+            stmt.execute();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+            if(rs.next()){
+                file.setId(rs.getInt(1));
+            }
+            return file;
+        } catch (SQLException ex){
+            ex.printStackTrace();
+            throw new SQLException("Could not add file to database", ex);
+        }
+    }
+    public void deleteFile(ProjectFiles file) throws SQLException {
+        //SQL query
+        String sql = "DELETE FROM ProjectFile WHERE ID = ?";
+        //Getting connection to the database.
+        try(Connection conn = databaseConnector.getConnection()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            //Setting the parameter and executing the query.
+            stmt.setInt(1, file.getId());
+            stmt.execute();
+        } catch (SQLException ex){
+            ex.printStackTrace();
+            throw new SQLException("Could not delete the file from the database", ex);
         }
     }
 }
