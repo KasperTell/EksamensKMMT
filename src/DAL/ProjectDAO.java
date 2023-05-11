@@ -8,9 +8,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 public class ProjectDAO implements IProjectDataAccess{
 
     private DatabaseConnector databaseConnector;
+    private Project project;
 
     /**
      * Constructor for the class "ProjectDAO".
@@ -26,6 +29,7 @@ public class ProjectDAO implements IProjectDataAccess{
      * @throws Exception
      */
     public List<Project> loadProjectOfAType(boolean open) throws Exception {
+
 
         ArrayList<Project> loadProjectofAType = new ArrayList<>();
         //SQL query.
@@ -47,12 +51,16 @@ public class ProjectDAO implements IProjectDataAccess{
 
             //Getting the information from the database.
             while (rs.next()) {
+
+
+
                 int id = rs.getInt("ID");
                 String title = rs.getString("title");
                 int customerID = rs.getInt("customerID");
                 LocalDate date = rs.getDate("date").toLocalDate();
                 openClose = rs.getByte("OpenClose");
                 String note=rs.getString("note");
+
 
                 boolean open1;
 
@@ -61,8 +69,14 @@ public class ProjectDAO implements IProjectDataAccess{
                             else
                     open1=false;
 
+                int days= (int) DAYS.between(date, LocalDate.now());
 
-                Project project = new Project(id, title, customerID, date, open1,note);
+
+                if (days<365*4)
+                {
+                    project = new Project(id, title, customerID, date, open1,note);
+                }
+
 
                 loadProjectofAType.add(project);
             }
