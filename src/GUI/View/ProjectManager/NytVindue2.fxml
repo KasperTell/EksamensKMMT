@@ -59,6 +59,6 @@
       </TabPane>
       <Button fx:id="openMainWindowButton" layoutX="920.0" layoutY="661.0" mnemonicParsing="false" onAction="#handleOpenMainWindow" text="OPEN WINDOW MAIN" />
       <Button fx:id="drawButton" layoutX="711.0" layoutY="686.0" mnemonicParsing="false" onAction="#handleDraw" text="DRAW" />
-      <ImageView fx:id="filesPreviewImageView" fitHeight="150.0" fitWidth="200.0" layoutX="839.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="filesPreviewImageView" fitHeight="357.0" fitWidth="421.0" layoutX="657.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

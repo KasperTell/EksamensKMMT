@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -29,7 +30,6 @@ import java.util.HashMap;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class ProjectController extends BaseController {
-
     public TextArea NotesTextArea;
     @FXML // Main view for this window
     private AnchorPane mainViewAnchorPane;
@@ -113,20 +113,33 @@ public class ProjectController extends BaseController {
     /**
      * Listener for the tableview containing files for opening files.
      */
-    public void listenerMouseClickPicture()
-    {
+    public void listenerMouseClickPicture() {
         fileTable.setOnMouseClicked(event -> {
-             selectedfile = fileTable.getSelectionModel().getSelectedItem();
-            if (event.getClickCount() == 2) { //Her vises filen, når man dobbeltklikker.
+            selectedfile = fileTable.getSelectionModel().getSelectedItem();
+            if (event.getClickCount() == 1) {
                 try {
+                    // Check if the selected file is an image file (JPEG, PNG, or JPG)
+                    String fileName = "/" + selectedfile.getFilePath().toLowerCase();
+                    if (fileName.endsWith(".jpeg") || fileName.endsWith(".png") || fileName.endsWith(".jpg")) {
+                        // Load the image file into the filesPreviewImageView
+                        /*
+                        ShowFile showFile  = new ShowFile();
+                        showFile.showFile(selectedfile.getFilePath());
 
-                    ShowFile showFile=new ShowFile();
-                    showFile.showFile(selectedfile.getFilePath());
+                         */
+                        String fileUrl = selectedfile.getFilePath();
+                        String imageUrl = fileUrl.substring(10);
+                        System.out.println(imageUrl);
+                        Image image = new Image(imageUrl);
+                        filesPreviewImageView.setImage(image);
+                        System.out.println(selectedfile.getFilePath());
+                    }
+
                 } catch (Exception e) {
                     displayError(e);
+                    e.printStackTrace();
                 }
             }
-
         });
     }
 
