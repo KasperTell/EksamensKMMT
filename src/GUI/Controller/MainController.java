@@ -6,7 +6,6 @@ import PersonsTypes.PersonTypeChooser;
 import UTIL.CustomerPdf;
 import UTIL.ShowFile;
 import javafx.animation.TranslateTransition;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -29,7 +28,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.mindrot.jbcrypt.BCrypt;
-import java.awt.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
@@ -124,12 +123,12 @@ public class MainController extends BaseController {
 
     private void pictureToButton() {
         String[] listOfFiles = {"Pictures/Arrow.png","Pictures/Arrow2.png","Pictures/Add Employee Button.png","Pictures/Remove Employee Button.png","Pictures/Add Project Button.png",
-                "Pictures/Add Customer Button.png","Pictures/Open PDF Button.png","Pictures/Close Project Button.png","Pictures/Open PDF Button.png","Pictures/Paint.png"};
+                "Pictures/Add Customer Button.png","Pictures/Open PDF Button.png","Pictures/Close Project Button.png","Pictures/Open PDF Button.png","Pictures/Paint.png", "Pictures/Add Employee Button.PNG"};
 
         String[] listOfToolTips = {"Add tech to project", "Remove tech from project", "Add new employee", "Remove current employee", "Add a new project", "Add a new customer",
-                "Re-open a project", "Close a project", "Open PDF file", "Create a new project sketch"};
+                "Re-open a project", "Close a project", "Open PDF file", "Create a new project sketch", "Opens up window for user editing"};
 
-        Button[] listOfButtons ={addTechnician,removeTechnician,newUser,removeUser,newProject,newCustomer,reOpenProject,closeProject,btnCustomerInfo,draw};
+        Button[] listOfButtons ={addTechnician,removeTechnician,newUser,removeUser,newProject,newCustomer,reOpenProject,closeProject,btnCustomerInfo,draw, };
 
         for (int i = 0; i < listOfFiles.length; i++) {
 
