@@ -30,6 +30,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class ProjectController extends BaseController {
 
+    public TextArea NotesTextArea;
     @FXML // Main view for this window
     private AnchorPane mainViewAnchorPane;
 
@@ -81,10 +82,13 @@ public class ProjectController extends BaseController {
         customerModel = getModel().getCustomerModel();
         projectFilesModel = getModel().getProjectFilesModel();
         projectModel = getModel().getProjectModel();
+        selectedProject = projectModel.getSelectedProject();
         //Setting the information of the listviews and combobox.
         listenerMouseClickPicture();
+        setupFiles();
         pictureToButton();
-        selectedProject = projectModel.getSelectedProject();
+        NotesTextArea.setText(selectedProject.getNote());
+        NotesTextArea.setWrapText(true);
     }
 
     private void pictureToButton() {
@@ -136,13 +140,11 @@ public class ProjectController extends BaseController {
      */
     @FXML
     private void setupFiles() {
-        if (selectedProject != null) {
             int projectNumber = selectedProject.getId();
             filesPictureColumn.setCellValueFactory(new PropertyValueFactory<>("picture"));
             filesNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
             filesDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
             filesIncludedColumn.setCellValueFactory(new PropertyValueFactory<>("usedBox"));
-
             try {
                 fileTable.setItems(projectFilesModel.getAllFilesFromProject(projectNumber));
             } catch (Exception e) {
@@ -151,7 +153,6 @@ public class ProjectController extends BaseController {
             }
             projectFilesModel.fileLoopStop(); //Stopper tidligere løkker i projectFiles inden ny startes
             projectFilesModel.observer(); //Her startes en løkke, der observere ændringer i CheckBox
-        }
     }
 
 
@@ -159,25 +160,19 @@ public class ProjectController extends BaseController {
     private void openFileAction(ActionEvent actionEvent) {
     }
 
-    /*
+
     @FXML
     private void saveNoteAction(ActionEvent actionEvent) {
 
-        String note=NotesTextArea.getText();
+        String note= NotesTextArea.getText();
 
         try {
             projectModel.changeNote(note,selectedProject.getId());
         } catch (Exception e) {
             throw new RuntimeException(e);
-
         }
-        System.out.println(projectNumber);
-        if (onOpenProjectList)
-        selectedProject=openProjectsTable.getItems().get(projectNumber);
-        else
-            selectedProject=closeProjectsTable.getItems().get(projectNumber);
     }
-    */
+
 
 
     /**
@@ -318,8 +313,6 @@ public class ProjectController extends BaseController {
     public void handleDeleteFile(ActionEvent actionEvent) {
     }
 
-    public void saveNoteAction(ActionEvent actionEvent) {
-    }
 
     public void handleOpenMainWindow(ActionEvent actionEvent) throws Exception {
 
@@ -335,7 +328,6 @@ public class ProjectController extends BaseController {
     }
 
     public void handleDraw(ActionEvent actionEvent) throws Exception {
-        //projectModel.setProjectTitle(openProjectsTable.getSelectionModel().getSelectedItem().getTitle());
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/Paint/PaintView.fxml"));
         Parent root = loader.load();

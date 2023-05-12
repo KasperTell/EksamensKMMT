@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
@@ -23,7 +24,7 @@
                               <TableColumn fx:id="filesPictureColumn" prefWidth="29.0428466796875" />
                             <TableColumn fx:id="filesNameColumn" prefWidth="103.45718383789062" text="Name" />
                             <TableColumn fx:id="filesDateColumn" prefWidth="124.0" text="Date" />
-                              <TableColumn fx:id="filesIncludedColumn" prefWidth="42.0" text="Include" />
+                              <TableColumn fx:id="filesIncludedColumn" prefWidth="245.5999755859375" text="Include" />
                           </columns>
                         </TableView>
                         <Button fx:id="saveFileButton" layoutX="250.0" layoutY="437.0" mnemonicParsing="false" onAction="#handleSaveNewFile" text="Save" />
@@ -37,6 +38,7 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="205.0" prefWidth="287.0">
                      <children>
                         <Button fx:id="saveNoteButton" layoutX="250.0" layoutY="437.0" mnemonicParsing="false" onAction="#saveNoteAction" text="Save" />
+                        <TextArea fx:id="NotesTextArea" layoutX="14.0" layoutY="14.0" prefHeight="410.0" prefWidth="472.0" />
                      </children>
                   </AnchorPane>
                </content>
