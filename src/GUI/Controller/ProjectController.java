@@ -45,14 +45,18 @@ public class ProjectController extends BaseController {
     @FXML //Table-View containing project files
     private TableView<ProjectFiles> fileTable;
 
+    @FXML // Image-View containing a preview of a selcted file
+    private ImageView filesPreviewImageView;
+
+    @FXML //Combo-Box containing all Techs.
+    private ComboBox<User> listTechsComboBox;
+
     @FXML //All columns within the filesTab
     private TableColumn  filesPictureColumn, filesNameColumn, filesDateColumn, filesIncludedColumn;
 
     @FXML //List-View containing Techs on project
     private ListView<User> techsOnProjectListView;
 
-    @FXML //All labels within the contactTab
-    private Label nameLabel, addressLabel, zipCodeLabel, mailLabel, city, phoneLabel;
     private Project selectedProject, selectedProjectStorage;
     private ProjectFiles selectedfile;
     private File file;
@@ -243,21 +247,7 @@ public class ProjectController extends BaseController {
     }
 
 
-
-
-    public void setUpCustomer()
-    {
-        HashMap<String,String> customerInfo = makeCustomerMap();
-
-        nameLabel.setText(customerInfo.get("FirstName"));
-        addressLabel.setText(customerInfo.get("Address"));
-        zipCodeLabel.setText(customerInfo.get("ZipCode"));
-        mailLabel.setText(customerInfo.get("Mail"));
-        phoneLabel.setText(customerInfo.get("PhoneNumber"));
-
-    }
-
-
+    
 
     /**
      * Set up the information in the technician column in the table view, based on a selected project.
@@ -300,6 +290,7 @@ public class ProjectController extends BaseController {
     }
 
 
+    /*
     public void handleOpenCustomerDoc(ActionEvent actionEvent) throws FileNotFoundException, MalformedURLException, MalformedURLException, FileNotFoundException {
 
         ArrayList<String> imagePath=new ArrayList<>();
@@ -320,7 +311,7 @@ public class ProjectController extends BaseController {
 
     }
 
-
+*/
     public void handleDeleteFile(ActionEvent actionEvent) {
     }
 
