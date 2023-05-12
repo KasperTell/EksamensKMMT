@@ -335,7 +335,7 @@ public class ProjectController extends BaseController {
         pane.getStylesheets().add("/GUI/View/ProjectManager/managerView.css");
         mainViewAnchorPane.getChildren().setAll(pane);
 
-        MainController controller = loader.getController();
+        NyController controller = loader.getController();
         controller.setModel(super.getModel());
         controller.setup();
     }

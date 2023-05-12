@@ -103,7 +103,7 @@ public class LoginController extends BaseController {
         pane.getStylesheets().add(personTypeChooser.getCSS());
         loginAnchorPane.getChildren().setAll(pane);
 
-        MainController controller = loader.getController();
+        NyController controller = loader.getController();
         controller.setModel(new FacadeModel());
         controller.setup();
 
