@@ -353,7 +353,7 @@ public class NyController extends BaseController {
     }
 
     public void handleOpenProjectWindow(ActionEvent actionEvent) throws Exception {
-
+        projectModel.setSelectedProject(openProjectsTable.getSelectionModel().getSelectedItem());
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindue2.fxml"));
         AnchorPane pane = loader.load();
@@ -366,7 +366,6 @@ public class NyController extends BaseController {
     }
 
     public void handleOpenUserWindow(ActionEvent actionEvent) throws Exception {
-
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindueUser.fxml"));
         AnchorPane pane = loader.load();

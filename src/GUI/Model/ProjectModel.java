@@ -14,6 +14,7 @@ public class ProjectModel {
     private ProjectManager projectManager;
     private ObservableList<Project> searchedProjects;
     private String projectTitle2;
+    private Project selectedProject;
 
     /**
      * Constructor for the class "ProjectModel".
@@ -73,6 +74,9 @@ public class ProjectModel {
     public void setProjectTitle(String projectTitle){
         projectTitle2 = projectTitle;
     }
+
+    public Project getSelectedProject(){return selectedProject;}
+    public void setSelectedProject(Project project){selectedProject = project;}
 
 
     public void changeNote(String note, int id) throws Exception {

@@ -65,6 +65,7 @@ public class ProjectController extends BaseController {
     private UserModel userModel;
     private CustomerModel customerModel;
     private ProjectFilesModel projectFilesModel;
+    private ProjectModel projectModel;
     private int projectNumber;
     private boolean onOpenProjectList;
 
@@ -79,9 +80,11 @@ public class ProjectController extends BaseController {
         userModel = getModel().getUserModel();
         customerModel = getModel().getCustomerModel();
         projectFilesModel = getModel().getProjectFilesModel();
+        projectModel = getModel().getProjectModel();
         //Setting the information of the listviews and combobox.
         listenerMouseClickPicture();
         pictureToButton();
+        selectedProject = projectModel.getSelectedProject();
     }
 
     private void pictureToButton() {
