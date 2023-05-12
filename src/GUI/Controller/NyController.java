@@ -22,6 +22,8 @@ import java.time.LocalDate;
 
 public class NyController extends BaseController {
 
+    @FXML
+    private Tab openProjectsTab, closedProjectsTab;
     @FXML //Main view anchor pane
     private AnchorPane mainViewAnchorPane;
 
@@ -221,6 +223,7 @@ public class NyController extends BaseController {
         transition.setNode(vbxCreateNewProject);
         transition.setDuration(Duration.millis(150));
 
+
         //If the Vbox is not shown, show it and set the background out of focus.
         if (!isMenuOpen) {
             isMenuOpen = true;
@@ -343,9 +346,19 @@ public class NyController extends BaseController {
     @FXML
     private void searchProjectsByStringQuery(KeyEvent keyEvent) {
         String query = searchBoxTextField.getText();
-        openProjectsTable.getItems().clear();
+        TableView<Project> table;
+        if (openProjectsTab.isSelected()) {
+            // Search for open projects
+            table = openProjectsTable;
+            table.getItems().clear();
+        } else {
+            // Search for closed projects
+            table = closedProjectsTable;
+            table.getItems().clear();
+        }
+        table.getItems().clear();
         try {
-            openProjectsTable.setItems(projectModel.searchByQuery(query));
+            table.setItems(projectModel.searchByQuery(query));
         } catch (Exception e) {
             displayError(e);
             e.printStackTrace();

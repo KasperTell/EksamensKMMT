@@ -20,7 +20,7 @@
          <children>
             <TabPane layoutX="50.0" layoutY="100.0" prefHeight="550.0" prefWidth="500.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab text="Open">
+                <Tab fx:id="openProjectsTab" text="Open">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -35,7 +35,7 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                <Tab text="Closed">
+                <Tab fx:id="closedProjectsTab" text="Closed">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
