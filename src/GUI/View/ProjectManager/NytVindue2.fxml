@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="mainViewAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ProjectController">
+   <children>
+      <TabPane fx:id="informationTabPane" layoutX="50.0" layoutY="150.0" prefHeight="500.0" prefWidth="300.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="contactTab" text="Contact">
+            <content>
+              <AnchorPane fx:id="contactInfoPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="20.0" layoutY="20.0" text="Name" />
+                        <Label fx:id="nameLabel" layoutX="100.0" layoutY="19.0" text="..." />
+                        <Label layoutX="20.0" layoutY="60.0" text="Address" />
+                        <Label fx:id="addressLabel" layoutX="100.0" layoutY="60.0" text="..." />
+                        <Label layoutX="20.0" layoutY="100.0" text="ZIP" />
+                        <Label fx:id="zipCodeLabel" layoutX="100.0" layoutY="100.0" text="..." />
+                        <Label layoutX="20.0" layoutY="140.0" text="Mail" />
+                        <Label fx:id="mailLabel" layoutX="100.0" layoutY="140.0" text="..." />
+                        <Label layoutX="20.0" layoutY="180.0" text="Phone " />
+                        <Label fx:id="phoneLabel" layoutX="100.0" layoutY="179.0" text="..." />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="filesTab" text="Files">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="fileTable" prefHeight="423.0" prefWidth="300.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                              <TableColumn fx:id="filesPictureColumn" prefWidth="29.0428466796875" />
+                            <TableColumn fx:id="filesNameColumn" prefWidth="103.45718383789062" text="Name" />
+                            <TableColumn fx:id="filesDateColumn" prefWidth="124.0" text="Date" />
+                              <TableColumn fx:id="filesIncludedColumn" prefWidth="42.0" text="Include" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="saveFileButton" layoutX="250.0" layoutY="437.0" mnemonicParsing="false" onAction="#handleSaveNewFile" text="Save" />
+                        <Button fx:id="deleteFileButton" layoutX="199.0" layoutY="437.0" mnemonicParsing="false" onAction="#handleDeleteFile" text="Delete" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab fx:id="notesTab" text="Notes">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="205.0" prefWidth="287.0">
+                     <children>
+                        <Button fx:id="saveNoteButton" layoutX="250.0" layoutY="437.0" mnemonicParsing="false" onAction="#saveNoteAction" text="Save" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="techsTab" text="Techs">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="205.0" prefWidth="287.0">
+                     <children>
+                        <ListView fx:id="techsOnProjectListView" layoutX="50.0" layoutY="113.0" prefHeight="468.5" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <Button fx:id="addTechButton" layoutX="600.0" layoutY="300.0" mnemonicParsing="false" onAction="#addTechnicianAction" />
+      <Button fx:id="removeTechButton" layoutX="600.0" layoutY="427.0" mnemonicParsing="false" onAction="#removeTechnicianAction" />
+      <Button fx:id="openMainWindowButton" layoutX="920.0" layoutY="661.0" mnemonicParsing="false" onAction="#handleOpenMainWindow" text="OPEN WINDOW MAIN" />
+      <Button fx:id="drawButton" layoutX="711.0" layoutY="686.0" mnemonicParsing="false" onAction="#handleDraw" text="DRAW" />
+   </children>
+</AnchorPane>

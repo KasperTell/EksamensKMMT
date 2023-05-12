@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="acpBackground" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.MainController">
+<AnchorPane fx:id="acpBackground" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.Zzzzzzz">
    <children>
       <AnchorPane fx:id="acpMainView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0">
          <children>
@@ -84,6 +84,7 @@
                                 </columns>
                               </TableView>
                               <Button fx:id="btnSaveNewFile" layoutX="250.0" layoutY="437.0" mnemonicParsing="false" onAction="#handleSaveNewFile" text="Save" />
+                              <Button fx:id="btnSaveNewFile1" layoutX="199.0" layoutY="437.0" mnemonicParsing="false" onAction="#handleDeleteFile" text="Delete" />
                            </children>
                         </AnchorPane>
                   </content>

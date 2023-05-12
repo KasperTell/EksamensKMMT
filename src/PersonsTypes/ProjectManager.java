@@ -1,12 +1,10 @@
 package PersonsTypes;
 
-import java.util.List;
-
 public class ProjectManager implements IPersonTypes{
 
     @Override
     public String getViewString() {
-        return "/GUI/View/ProjectManager/ManagerView.fxml";
+        return "/GUI/View/ProjectManager/NytVindue1.fxml";
     }
 
     @Override

@@ -1,12 +1,6 @@
-#acpMainView
+#mainViewAnchorPane
 {
     -fx-background-color: #333333;
-}
-
-#contactInfoPane
-
-{
-    -fx-background-color: #f2f2f2;
 }
 
 .text-field
@@ -33,38 +27,13 @@ Button:pressed{
 }
 
 
-#addTechnician, #removeTechnician, #newUser, #removeUser, #newProject, #newCustomer, #reOpenProject, #closeProject, #btnCustomerInfo, #draw
+#newProjectButton, #newCustomerButton, #reOpenProjectButton, #closeProjectButton, #openUserWindowButton, #openProjectWindowButton
 {
-    -fx-background-color: #333333;
+    -fx-background-color: transparent;
     -fx-border-width: 0px;
     -fx-border-radius: 0;
     -fx-background-radius: 0;
 }
-
-#openFile, #btnSaveNewFile, #saveNote
-{
-    -fx-background-color: #E84910;
-    -fx-text-fill: #f2f2f2;
-    -fx-border-width: 0px;
-    -fx-border-color: black;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-}
-
-#header1, #header2, #header3
-{
-    -fx-text-fill: #f2f2f2;
-}
-
-
-
-#lstTechniciansOnCase, #lstSalesPersons, #lstProjectManagers, #lstTechnicians
-{
-    -fx-background-color: #f2f2f2;
-
-}
-
-
 
 .tab-pane
 {
@@ -116,11 +85,6 @@ Button:pressed{
     -fx-border-radius: 0;
 }
 
-
-
-
-
-
 .table-view {
     -fx-background-color: transparent;
 }
@@ -141,6 +105,7 @@ Button:pressed{
 .table-view .column-header {
     -fx-background-color: #90AED6;
     -fx-text-background-color: #f2f2f2;
+    -fx-text-alignment: center-left;
 
 }
 
@@ -169,8 +134,6 @@ Button:pressed{
     -fx-padding: 0.0em;
 }
 
-
-
 .list-cell:odd {
     -fx-background-color: #f2f2f2;
 }
@@ -186,6 +149,10 @@ Button:pressed{
 .list-cell:selected{
     -fx-text-background-color: #E84910;
 
+}
+
+#vbxCreateNewProject, #vbxCreateNewCustomer{
+    -fx-background-color: #90AED6;
 }
 
 
