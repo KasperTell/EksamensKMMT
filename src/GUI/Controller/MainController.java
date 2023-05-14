@@ -56,7 +56,7 @@ public class MainController extends BaseController {
     @FXML
     private AnchorPane acpMainView;
     @FXML
-    private TableColumn projectDateOpen, projectOpenCustomer, projectCloseDate, projectCloseCustomer, filesPictureColoum, filesFilenameColoum, filesDate, filesInReport;
+    private TableColumn projectDateOpen, projectOpenCustomer, projectCloseDate, projectCloseCustomer, filesPictureColoum, filesFilenameColoum, filesDate, filesInReport,customerProjectOpen,customerNameClosed;
     @FXML
     private Button closeProject,reOpenProject,openFile,btnSaveNewFile,saveNote,newProject,newUser,removeUser,newCustomer,addTechnician,removeTechnician, btnAddNewProject, btnCustomerInfo, btnAddNewCustomer, btnAddNewUser, draw;
     @FXML
@@ -281,10 +281,17 @@ public class MainController extends BaseController {
      */
     private void setProjectColumns() {
 
-        projectDateOpen.setCellValueFactory(new PropertyValueFactory<>("date"));
-        projectOpenCustomer.setCellValueFactory(new PropertyValueFactory<>("title"));
-        projectCloseDate.setCellValueFactory(new PropertyValueFactory<>("date"));
-        projectCloseCustomer.setCellValueFactory(new PropertyValueFactory<>("title"));
+
+     //   projectDateOpen.setCellValueFactory(new PropertyValueFactory<>("date"));
+      //  projectOpenCustomer.setCellValueFactory(new PropertyValueFactory<>("title"));
+        //customerProjectOpen.setCellValueFactory(new PropertyValueFactory<>("open"));
+
+
+
+//        projectCloseDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+  //      projectCloseCustomer.setCellValueFactory(new PropertyValueFactory<>("title"));
+       // customerNameClosed.setCellValueFactory(new PropertyValueFactory<>("title"));
+
 
         openProjectsTable.setItems(projectModel.getAllProjectsOpen());
         closeProjectsTable.setItems(projectModel.getAllProjectsClose());
@@ -651,8 +658,9 @@ public class MainController extends BaseController {
         LocalDate date = LocalDate.now();
         boolean isOpen = true;
         String note="";
+        String company="";
         //Initializing the project.
-        Project project = new Project(id, title, customerID, date, isOpen, note);
+        Project project = new Project(id, title, customerID, date, isOpen, note,company);
         try {
             //Send the project to the database.
             projectModel.createNewProject(project);

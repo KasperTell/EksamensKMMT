@@ -33,7 +33,12 @@ public class ProjectDAO implements IProjectDataAccess{
 
         ArrayList<Project> loadProjectofAType = new ArrayList<>();
         //SQL query.
-        String sql = "SELECT * FROM Project WHERE OpenClose =?";
+        String sql = "SELECT  Project.ID, Project.title, Project.customerID,Project.[Date], Project.OpenClose, Project.Note,\n" +
+                "Customers.Company_Name from Project \n" +
+                "inner JOIN Customers\n" +
+                "on Project.customerID=Customers.ID\n" +
+                "WHERE OpenClose =?;\n";
+
         //Getting the connection to the database.
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -60,7 +65,7 @@ public class ProjectDAO implements IProjectDataAccess{
                 LocalDate date = rs.getDate("date").toLocalDate();
                 openClose = rs.getByte("OpenClose");
                 String note=rs.getString("note");
-
+                String companyName=rs.getString("Company_Name");
 
                 boolean open1;
 
@@ -74,7 +79,7 @@ public class ProjectDAO implements IProjectDataAccess{
 
                 if (days<365*4)
                 {
-                    project = new Project(id, title, customerID, date, open1,note);
+                    project = new Project(id, title, customerID, date, open1,note, companyName);
                 }
 
 
@@ -206,8 +211,11 @@ public class ProjectDAO implements IProjectDataAccess{
                 LocalDate date = rs.getDate("date").toLocalDate();
                 boolean openClose = rs.getBoolean("OpenClose");
                 String note=rs.getString("note");
+                String companyName=rs.getString("Company_Name");
 
-                Project project = new Project(id, title, customerID, date, openClose, note);
+
+                Project project = new Project(id, title, customerID, date, openClose, note,companyName);
+
 
                 projects.add(project);
 

@@ -22,6 +22,8 @@ import java.time.LocalDate;
 
 public class NyController extends BaseController {
 
+    public Button addNewProjectButton;
+    public Button btnAddNewCustomer;
     @FXML
     private Tab openProjectsTab, closedProjectsTab;
     @FXML //Main view anchor pane
@@ -155,11 +157,11 @@ public class NyController extends BaseController {
 
         projectDateOpen.setCellValueFactory(new PropertyValueFactory<>("Date"));
         projectNameOpen.setCellValueFactory(new PropertyValueFactory<>("Title"));
-        customerProjectOpen.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        customerProjectOpen.setCellValueFactory(new PropertyValueFactory<>("companyName"));
 
         projectDateClosed.setCellValueFactory(new PropertyValueFactory<>("Date"));
         projectNameClosed.setCellValueFactory(new PropertyValueFactory<>("Title"));
-        customerNameClosed.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        customerNameClosed.setCellValueFactory(new PropertyValueFactory<>("companyName"));
 
         customerNameClm.setCellValueFactory(new PropertyValueFactory<>("companyName"));
         customerAddressClm.setCellValueFactory(new PropertyValueFactory<>("Address"));
@@ -296,8 +298,9 @@ public class NyController extends BaseController {
         LocalDate date = LocalDate.now();
         boolean isOpen = true;
         String note="";
+        String company="";
         //Initializing the project.
-        Project project = new Project(id, title, customerID, date, isOpen, note);
+        Project project = new Project(id, title, customerID, date, isOpen, note,company);
         try {
             //Send the project to the database.
             projectModel.createNewProject(project);

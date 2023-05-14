@@ -4,9 +4,10 @@ import java.time.LocalDate;
 
 public class Project {
     private int id, customerID;
-    private String title,note;
+    private String title,note, companyName;
     private LocalDate date;
     private boolean open;
+
 
 
 
@@ -19,14 +20,26 @@ public class Project {
      * @param date
      * @param open
      * @param note
+     * @param companyName
      */
-    public Project(int id, String title, int customerID, LocalDate date, boolean open, String note) {
+    public Project(int id, String title, int customerID, LocalDate date, boolean open, String note, String companyName) {
+
+        this.companyName=companyName;
         this.id = id;
         this.title = title;
         this.customerID = customerID;
         this.date = date;
         this.open = open;
         this.note=note;
+
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     /**
@@ -82,18 +95,5 @@ public class Project {
     }
 
 
-    /**
-     * Overriding the default toString method.
-     * @return
-     */
-    @Override
-    public String toString() {
-        return "Project{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", customerId=" + customerID +
-                ", date=" + date +
-                ", open=" + open +
-                '}';
-    }
+
 }
