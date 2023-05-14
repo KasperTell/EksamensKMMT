@@ -20,10 +20,12 @@ import static com.itextpdf.kernel.colors.DeviceGray.GRAY;
 
 public class CustomerPdf {
 
-    String path = "installations dokumentation.pdf";
+    String path;
     PdfWriter pdfWriter;
     PdfDocument pdfDocument;
     Document document;
+
+    String[] tekst;
 
     ImageData data;
 
@@ -46,11 +48,19 @@ public class CustomerPdf {
 
 
 
-    public void makePdf() throws FileNotFoundException, MalformedURLException {
+    public String makePdf() throws FileNotFoundException, MalformedURLException {
+
+
+        if (customerInfo.get("Company")==null)
+        path = "Resources/PDF/"+customerInfo.get("FirstName")+" "+customerInfo.get("Lastname")+ " "+title+" installations dokumentation.pdf";
+        else
+            path = "Resources/PDF/"+customerInfo.get("Company")+ " "+title+ " installations dokumentation.pdf";
+
         pdfWriter = new PdfWriter(path);
         pdfDocument = new PdfDocument(pdfWriter);
         document = new Document(pdfDocument);
         pdfDocument.setDefaultPageSize(PageSize.A4);
+
 
         page1();
         page2();
@@ -58,6 +68,7 @@ public class CustomerPdf {
         page4();
         document.close();
 
+        return path;
     }
 
 
@@ -67,7 +78,13 @@ public class CustomerPdf {
         insertPicture("Resources/Pictures/AV top billede2.png",350,0,500); //Top billedet
         whiteSpace(350);
 
-        String[] tekst={"","Installations dokumentation","",title,"",customerInfo.get("FirstName")};
+
+        if (customerInfo.get("Company")==null)
+        tekst=new String[] {"","Installations dokumentation","",customerInfo.get("FirstName") + " "+customerInfo.get("Lastname"),"",title};
+        else
+            tekst=new String[] {"","Installations dokumentation","",customerInfo.get("Company"),"",title};
+
+
         insertTable2Row(16,300,tekst,false);
         insertPicture("Resources/Pictures/AV bund billede.png",0,0,120); //bund billedet
 
@@ -88,8 +105,16 @@ public class CustomerPdf {
         insertPicture("Resources/Pictures/WUAV4.png",730, 35,80); //Top billedet
         whiteSpace(50);
 
-        String[] tekst={"Navn",customerInfo.get("FirstName"),"Adresse",customerInfo.get("Address"),"Postkode",customerInfo.get("ZipCode"),"Email",
-        customerInfo.get("Mail"),"Telefon",customerInfo.get("PhoneNumber")};
+        if (customerInfo.get("Company")==null)
+            tekst = new String[]{"Navn", customerInfo.get("FirstName") + " " + customerInfo.get("Lastname")
+                    , "Adresse", customerInfo.get("Address"), "Postkode", customerInfo.get("ZipCode"), "Email"
+                    , customerInfo.get("Mail"), "Telefon", customerInfo.get("PhoneNumber")};
+        else
+        {
+            tekst=new  String[]{"Firma",customerInfo.get("Company"),"Adresse",customerInfo.get("Address"),"Postkode",customerInfo.get("ZipCode"),"Email"
+                    ,customerInfo.get("Mail"),"Telefon",customerInfo.get("PhoneNumber")};
+        }
+
 
         insertTable2Row(12,100,tekst,true);
 
@@ -123,6 +148,9 @@ public class CustomerPdf {
         else
             for (int i = 0; i < tekst.length; i++) {
                 table2.addCell(new Cell().add(new Paragraph(tekst[i])).setFontSize(textSize).setTextAlignment(TextAlignment.RIGHT).setBorder(Border.NO_BORDER));
+                System.out.println(tekst[i]);
+
+
             }
 
         document.add(table2);

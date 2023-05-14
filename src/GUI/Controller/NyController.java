@@ -3,6 +3,7 @@ package GUI.Controller;
 import BE.*;
 import GUI.Model.*;
 import PersonsTypes.PersonTypeChooser;
+import UTIL.ShowFile;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,6 +18,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+
+import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
@@ -60,6 +64,8 @@ public class NyController extends BaseController {
     private Project selectedProject;
     private ProjectModel projectModel;
     private CustomerModel customerModel;
+
+    private ProjectController controller;
     private boolean isMenuOpen;
     private int projectNumber;
     private boolean onOpenProjectList;
@@ -376,7 +382,7 @@ public class NyController extends BaseController {
         pane.getStylesheets().add("/GUI/View/ProjectManager/managerView.css");
         mainViewAnchorPane.getChildren().setAll(pane);
 
-        ProjectController controller = loader.getController();
+        controller = loader.getController();
         controller.setModel(super.getModel());
         controller.setup();
     }
@@ -391,5 +397,18 @@ public class NyController extends BaseController {
         UserController controller = loader.getController();
         controller.setModel(super.getModel());
         controller.setup();
+    }
+
+    public void getCustomerPDFAction() throws MalformedURLException, FileNotFoundException {
+
+
+        String path = "Resources/PDF/"+selectedProject.getCompanyName()+ " "+selectedProject.getTitle()+" installations dokumentation.pdf";
+        System.out.println(path);
+
+        ShowFile showFile=new ShowFile();
+        showFile.showFile(path);
+
+
+
     }
 }

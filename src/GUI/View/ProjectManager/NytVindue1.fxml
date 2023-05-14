@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="vBoxAnchorPane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.NyController">
+<AnchorPane fx:id="vBoxAnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.NyController">
    <children>
       <AnchorPane fx:id="mainViewAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0">
          <children>
@@ -79,6 +79,7 @@
             <Button fx:id="openProjectWindowButton" layoutX="995.0" layoutY="675.0" mnemonicParsing="false" onAction="#handleOpenProjectWindow" />
             <Button fx:id="openUserWindowButton" layoutX="1075.0" layoutY="675.0" mnemonicParsing="false" onAction="#handleOpenUserWindow" />
             <TextArea fx:id="NotesTextArea" layoutX="650.0" layoutY="200.0" prefHeight="450.0" prefWidth="500.0" />
+            <Button layoutX="650.0" layoutY="727.0" mnemonicParsing="false" onAction="#getCustomerPDFAction" />
          </children>
       </AnchorPane>
       <VBox fx:id="vbxCreateNewProject" prefHeight="800.0" prefWidth="345.0" spacing="30.0" translateX="-345.0">

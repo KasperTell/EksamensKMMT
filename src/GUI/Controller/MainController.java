@@ -299,7 +299,7 @@ public class MainController extends BaseController {
 
     }
 
-    public void handleOpenCustomerDoc(ActionEvent actionEvent) throws FileNotFoundException, MalformedURLException {
+    public void handleOpenCustomerDoc() throws FileNotFoundException, MalformedURLException {
 
 
     ArrayList<String> imagePath=new ArrayList<>();

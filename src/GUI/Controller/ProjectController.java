@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -169,10 +168,6 @@ public class ProjectController extends BaseController {
     }
 
 
-    @FXML
-    private void openFileAction(ActionEvent actionEvent) {
-    }
-
 
     @FXML
     private void saveNoteAction(ActionEvent actionEvent) {
@@ -246,8 +241,9 @@ public class ProjectController extends BaseController {
                 e.printStackTrace();
             }
 
-
+            customerInfo.put("Company",customer.getCompanyName());
             customerInfo.put("FirstName",customer.getFirstName());
+            customerInfo.put("Lastname",customer.getLastName());
             customerInfo.put("Address",customer.getAddress());
             customerInfo.put("ZipCode",String.valueOf(customer.getZipCode()));
             customerInfo.put("Mail",customer.getMail());
@@ -301,8 +297,10 @@ public class ProjectController extends BaseController {
     }
 
 
-    /*
-    public void handleOpenCustomerDoc(ActionEvent actionEvent) throws FileNotFoundException, MalformedURLException, MalformedURLException, FileNotFoundException {
+
+
+
+    public void handleOpenCustomerDoc() throws FileNotFoundException, MalformedURLException, MalformedURLException, FileNotFoundException {
 
         ArrayList<String> imagePath=new ArrayList<>();
 
@@ -314,15 +312,16 @@ public class ProjectController extends BaseController {
 
 
         HashMap<String, String> customerMap=makeCustomerMap();
-        CustomerPdf customerPdf=new CustomerPdf(imagePath,customerMap, selectedProject.getNote());
-        customerPdf.makePdf();
+        CustomerPdf customerPdf=new CustomerPdf(imagePath,customerMap, selectedProject.getNote(),selectedProject.getTitle());
+        String path=customerPdf.makePdf();
 
         ShowFile showFile=new ShowFile();
-        showFile.showFile("installations dokumentation.pdf");
+        showFile.showFile(path);
 
     }
 
-*/
+
+
     public void handleDeleteFile(ActionEvent actionEvent) {
     }
 

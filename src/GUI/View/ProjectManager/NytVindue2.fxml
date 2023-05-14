@@ -11,7 +11,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="mainViewAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ProjectController">
+<AnchorPane fx:id="mainViewAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ProjectController">
    <children>
       <TabPane fx:id="informationTabPane" layoutX="50.0" layoutY="150.0" prefHeight="500.0" prefWidth="504.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -60,5 +60,6 @@
       <Button fx:id="openMainWindowButton" layoutX="920.0" layoutY="661.0" mnemonicParsing="false" onAction="#handleOpenMainWindow" text="OPEN WINDOW MAIN" />
       <Button fx:id="drawButton" layoutX="711.0" layoutY="686.0" mnemonicParsing="false" onAction="#handleDraw" text="DRAW" />
       <ImageView fx:id="filesPreviewImageView" fitHeight="357.0" fitWidth="421.0" layoutX="657.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" />
+      <Button layoutX="602.0" layoutY="686.0" mnemonicParsing="false" onAction="#handleOpenCustomerDoc" text="Customer PDF" />
    </children>
 </AnchorPane>

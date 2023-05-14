@@ -34,10 +34,10 @@ public class ProjectDAO implements IProjectDataAccess{
         ArrayList<Project> loadProjectofAType = new ArrayList<>();
         //SQL query.
         String sql = "SELECT  Project.ID, Project.title, Project.customerID,Project.[Date], Project.OpenClose, Project.Note,\n" +
-                "Customers.Company_Name from Project \n" +
+                "Customers.Company_Name, Customers.First_Name, Customers.Last_Name from Project \n" +
                 "inner JOIN Customers\n" +
                 "on Project.customerID=Customers.ID\n" +
-                "WHERE OpenClose =?;\n";
+                "WHERE OpenClose =?";
 
         //Getting the connection to the database.
         try (Connection conn = databaseConnector.getConnection()) {
@@ -66,6 +66,8 @@ public class ProjectDAO implements IProjectDataAccess{
                 openClose = rs.getByte("OpenClose");
                 String note=rs.getString("note");
                 String companyName=rs.getString("Company_Name");
+                String firstName=rs.getString("First_Name");
+                String lastName=rs.getString("Last_Name");
 
                 boolean open1;
 
@@ -75,6 +77,10 @@ public class ProjectDAO implements IProjectDataAccess{
                     open1=false;
 
                 int days= (int) DAYS.between(date, LocalDate.now());
+
+                if (companyName==null)
+                    companyName=firstName+" "+lastName;
+
 
 
                 if (days<365*4)
