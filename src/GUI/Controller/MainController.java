@@ -261,7 +261,7 @@ public class MainController extends BaseController {
      * Set up the files information column in the tableview.
      */
     @FXML
-    private void setupFiles() {
+    private void setupFiles() throws InterruptedException {
         if (selectedProject != null) {
             int projectNumber = selectedProject.getId();
             filesPictureColoum.setCellValueFactory(new PropertyValueFactory<>("picture"));

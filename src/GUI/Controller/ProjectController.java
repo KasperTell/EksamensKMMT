@@ -72,7 +72,7 @@ public class ProjectController extends BaseController {
      * Set up the view when the view is getting shown.
      */
     @Override
-    public void setup() {
+    public void setup() throws InterruptedException {
         //Initializing all our models.
         userModel = getModel().getUserModel();
         customerModel = getModel().getCustomerModel();
@@ -148,7 +148,7 @@ public class ProjectController extends BaseController {
      * Set up the files information column in the tableview.
      */
     @FXML
-    private void setupFiles() {
+    private void setupFiles() throws InterruptedException {
         int projectNumber = selectedProject.getId();
         filesPictureColumn.setCellValueFactory(new PropertyValueFactory<>("picture"));
         filesNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -236,9 +236,13 @@ public class ProjectController extends BaseController {
             LocalDate saveDate= LocalDate.now();
 
 
-            ProjectFiles projectFiles=new ProjectFiles(1,selectedProject.getId(),filename ,"Resources/Pictures/ImagesSavedFromTechnicians/"+filename,saveDate,null,null);
 
+
+            projectFilesModel.fileLoopStop();
+
+            ProjectFiles projectFiles=new ProjectFiles(1,selectedProject.getId(),filename ,"Resources/Pictures/ImagesSavedFromTechnicians/"+filename,saveDate,null,null);
             projectFilesModel.createNewFile(projectFiles);
+            projectFilesModel.observer();
         }
     }
 

@@ -54,7 +54,7 @@ private int number=0 ;
     {
 
         boolean[] oldSelected= new boolean[projectFiles.getSize()];
-
+        System.out.println(projectFiles.getSize());
 
         Thread t = new Thread(() ->
         {
@@ -71,6 +71,7 @@ private int number=0 ;
                         {
                             if (runs==0)                    //Vi vil sammenligne data fra projectfiles med et oldselection arkiv. I første omgang gemmes i oldselection til sammenligning senere.
                                 oldSelected[number]=true;
+
 
                                 if ( oldSelected[number]==false)        //Hvis gamle værdi er false og ny er true. Så er der sket en ændring som skal gemmes.
                                 updateDataBase(true, tjek.getId()); //Kalder updateringsmetoden
@@ -109,6 +110,7 @@ private int number=0 ;
         t.setDaemon(true); //I mark the thread as a daemon thread, so  its terminated when I exit the app.
         t.start();
 
+        System.out.println("stop");
         }
 
     /**
@@ -131,9 +133,13 @@ private int number=0 ;
     /**
      * This method stop the observer loop.
      */
-    public void fileLoopStop()
-    {
+    public void fileLoopStop() throws InterruptedException {
+
         isRunning=false;
+        Thread.sleep(100);
+
+
+
     }
 
 
