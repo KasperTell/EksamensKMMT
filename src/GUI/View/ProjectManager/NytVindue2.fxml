@@ -11,7 +11,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="mainViewAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ProjectController">
+<AnchorPane fx:id="mainViewAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ProjectController">
    <children>
       <TabPane fx:id="informationTabPane" layoutX="50.0" layoutY="150.0" prefHeight="500.0" prefWidth="504.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -49,8 +49,8 @@
                      <children>
                         <ListView fx:id="techsOnProjectListView" layoutX="50.0" layoutY="113.0" prefHeight="352.0" prefWidth="443.0" AnchorPane.bottomAnchor="117.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                         <ComboBox fx:id="listTechsComboBox" layoutX="21.0" layoutY="372.0" prefWidth="150.0" />
-                        <Button fx:id="addTechButton" layoutX="194.0" layoutY="373.0" mnemonicParsing="false" text="Button" />
-                        <Button fx:id="removeTechButton" layoutX="194.0" layoutY="417.0" mnemonicParsing="false" text="Button" />
+                        <Button fx:id="addTechButton" layoutX="194.0" layoutY="373.0" mnemonicParsing="false" onAction="#handleAddTech" text="Button" />
+                        <Button fx:id="removeTechButton" layoutX="194.0" layoutY="417.0" mnemonicParsing="false" onAction="#handleRemoveTech" text="Button" />
                      </children>
                   </AnchorPane>
                </content>

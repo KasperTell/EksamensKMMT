@@ -35,7 +35,6 @@ public class UserDAO implements IUserDataAccess {
 
         ArrayList<User> allUserOfAType = new ArrayList<>();
 
-
         //SQL Query.
         String sql = "SELECT * FROM Users WHERE Role =? AND Is_Deleted IS NULL";
         //Getting the connection to the database.

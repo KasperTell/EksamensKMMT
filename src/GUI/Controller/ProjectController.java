@@ -2,7 +2,6 @@ package GUI.Controller;
 
 import BE.*;
 import GUI.Model.*;
-import PersonsTypes.PersonTypeChooser;
 import UTIL.CustomerPdf;
 import UTIL.ShowFile;
 import javafx.event.ActionEvent;
@@ -29,7 +28,8 @@ import java.util.HashMap;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class ProjectController extends BaseController {
-    public TextArea NotesTextArea;
+    @FXML
+    private TextArea NotesTextArea;
     @FXML // Main view for this window
     private AnchorPane mainViewAnchorPane;
 
@@ -66,10 +66,6 @@ public class ProjectController extends BaseController {
     private CustomerModel customerModel;
     private ProjectFilesModel projectFilesModel;
     private ProjectModel projectModel;
-    private int projectNumber;
-    private boolean onOpenProjectList;
-
-    PersonTypeChooser personTypeChooser = new PersonTypeChooser();
 
     /**
      * Set up the view when the view is getting shown.
@@ -86,8 +82,19 @@ public class ProjectController extends BaseController {
         listenerMouseClickPicture();
         setupFiles();
         pictureToButton();
+        setInformation();
+    }
+
+    private void setInformation(){
         NotesTextArea.setText(selectedProject.getNote());
         NotesTextArea.setWrapText(true);
+        listTechsComboBox.setItems(userModel.getAllTechnicians());
+        try {
+            techsOnProjectListView.setItems(userModel.getAllTechniciansOnProject(selectedProject.getId()));
+        } catch (Exception e) {
+            displayError(e);
+            e.printStackTrace();
+        }
     }
 
     private void pictureToButton() {
@@ -121,11 +128,6 @@ public class ProjectController extends BaseController {
                     String fileName = "/" + selectedfile.getFilePath().toLowerCase();
                     if (fileName.endsWith(".jpeg") || fileName.endsWith(".png") || fileName.endsWith(".jpg")) {
                         // Load the image file into the filesPreviewImageView
-                        /*
-                        ShowFile showFile  = new ShowFile();
-                        showFile.showFile(selectedfile.getFilePath());
-
-                         */
                         String fileUrl = selectedfile.getFilePath();
                         String imageUrl = fileUrl.substring(10);
                         System.out.println(imageUrl);
@@ -133,7 +135,6 @@ public class ProjectController extends BaseController {
                         filesPreviewImageView.setImage(image);
                         System.out.println(selectedfile.getFilePath());
                     }
-
                 } catch (Exception e) {
                     displayError(e);
                     e.printStackTrace();
@@ -141,11 +142,6 @@ public class ProjectController extends BaseController {
             }
         });
     }
-
-    /**
-     * Open a file with the standard desktop program.
-     */
-
 
     /**
      * Set up the files information column in the tableview.
@@ -168,58 +164,16 @@ public class ProjectController extends BaseController {
     }
 
 
-
     @FXML
     private void saveNoteAction(ActionEvent actionEvent) {
-
         String note= NotesTextArea.getText();
-
         try {
             projectModel.changeNote(note,selectedProject.getId());
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-
-    /**
-     * Handle what happens when the "Add technician" button is clicked.
-     * Adds a selected user/employee to a selected project.
-     * @param actionEvent
-     */
-    @FXML
-    private void addTechnicianAction(ActionEvent actionEvent) {
-        //Setting the data for the variables and calls the method from the model.
-        int projectID = selectedProject.getId();
-        //int technicanID = lstTechnicians.getSelectionModel().getSelectedItem().getId();
-        try {
-           // userModel.moveTechnician(technicanID, projectID);
-        } catch (Exception e) {
             displayError(e);
             e.printStackTrace();
         }
     }
-
-    /**
-     * Handle what happens when the "Remove technician" button is clicked.
-     * Removes a selected user/employee from a selected project.
-     * @param actionEvent
-     */
-    @FXML
-    private void removeTechnicianAction(ActionEvent actionEvent) {
-        //Setting the data for the variables and calls the method from the model.
-        User selectedTechnician = techsOnProjectListView.getSelectionModel().getSelectedItem();
-        int projectID = selectedProject.getId();
-        try {
-            userModel.removeTechnicianFromProject(selectedTechnician, projectID);
-        } catch (Exception e) {
-            displayError(e);
-            e.printStackTrace();
-        }
-    }
-
-
 
     /**
      * Set up the information about the customer in the main view when a project is selected.
@@ -252,22 +206,6 @@ public class ProjectController extends BaseController {
                 return customerInfo;
     }
 
-
-    /**
-     * Set up the information in the technician column in the table view, based on a selected project.
-     */
-    private void setupTechniciansOnProject() {
-        if (selectedProject != null) {
-            int projectId = selectedProject.getId();
-            try {
-                techsOnProjectListView.setItems(userModel.getAllTechniciansOnProject(projectId));
-            } catch (Exception e) {
-                displayError(e);
-                e.printStackTrace();
-            }
-        }
-    }
-
     /**
      * Save a new file from the users pc.
      * @param actionEvent
@@ -293,10 +231,6 @@ public class ProjectController extends BaseController {
         }
     }
 
-
-
-
-
     public void handleOpenCustomerDoc() throws FileNotFoundException, MalformedURLException, MalformedURLException, FileNotFoundException {
 
         ArrayList<String> imagePath=new ArrayList<>();
@@ -306,25 +240,19 @@ public class ProjectController extends BaseController {
             if(projectFiles.getUsedBox().isSelected())
                 imagePath.add(projectFiles.getFilePath());
         }
-
-
         HashMap<String, String> customerMap=makeCustomerMap();
         CustomerPdf customerPdf=new CustomerPdf(imagePath,customerMap, selectedProject.getNote(),selectedProject.getTitle());
         String path=customerPdf.makePdf();
 
         ShowFile showFile=new ShowFile();
         showFile.showFile(path);
-
     }
-
-
 
     public void handleDeleteFile(ActionEvent actionEvent) {
     }
 
 
     public void handleOpenMainWindow(ActionEvent actionEvent) throws Exception {
-
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindue1.fxml"));
         AnchorPane pane = loader.load();
@@ -350,5 +278,41 @@ public class ProjectController extends BaseController {
 
         stage.setScene(new Scene(root));
         stage.show();
+    }
+
+    /**
+     * Handle what happens when the "Add technician" button is clicked.
+     * Adds a selected user/employee to a selected project.
+     * @param actionEvent
+     */
+    @FXML
+    private void handleAddTech(ActionEvent actionEvent) {
+        //Setting the data for the variables and calls the method from the model.
+        int projectID = selectedProject.getId();
+        int technicianID = listTechsComboBox.getSelectionModel().getSelectedItem().getId();
+        try {
+            userModel.moveTechnician(technicianID, projectID);
+        } catch (Exception e) {
+            displayError(e);
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Handle what happens when the "Remove technician" button is clicked.
+     * Removes a selected user/employee from a selected project.
+     * @param actionEvent
+     */
+    @FXML
+    private void handleRemoveTech(ActionEvent actionEvent) {
+        //Setting the data for the variables and calls the method from the model.
+        User selectedTechnician = techsOnProjectListView.getSelectionModel().getSelectedItem();
+        int projectID = selectedProject.getId();
+        try {
+            userModel.removeTechnicianFromProject(selectedTechnician, projectID);
+        } catch (Exception e) {
+            displayError(e);
+            e.printStackTrace();
+        }
     }
 }
