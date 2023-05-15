@@ -234,7 +234,7 @@ public class ProjectController extends BaseController {
             int customerID = selectedProject.getCustomerID();
             Customer customer = null;
             try {
-                customer = customerModel.loadCustomer(customerID);
+                customer = (Customer) customerModel.loadCustomer(customerID);
             } catch (Exception e) {
                 displayError(e);
                 e.printStackTrace();

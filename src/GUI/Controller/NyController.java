@@ -84,11 +84,11 @@ public class NyController extends BaseController {
         customerComboBox.setItems(customerModel.getAllCustomers());
         projectDateOpen.setCellValueFactory(new PropertyValueFactory<>("Date"));
         projectNameOpen.setCellValueFactory(new PropertyValueFactory<>("Title"));
-        customerProjectOpen.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        customerProjectOpen.setCellValueFactory(new PropertyValueFactory<>("companyName"));
 
         projectDateClosed.setCellValueFactory(new PropertyValueFactory<>("Date"));
         projectNameClosed.setCellValueFactory(new PropertyValueFactory<>("Title"));
-        customerNameClosed.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        customerNameClosed.setCellValueFactory(new PropertyValueFactory<>("companyName"));
 
         openProjectsTable.setItems(projectModel.getAllProjectsOpen());
         closedProjectsTable.setItems(projectModel.getAllProjectsClose());
