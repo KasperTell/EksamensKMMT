@@ -167,6 +167,19 @@ public class FilesDAO implements iFileDataAccess {
             throw new SQLException("Could not delete the file from the database", ex);
         }
     }
+    public void updateFileOrder(int fileId, int newOrder) throws SQLException {
+            String sql = "UPDATE ProjectFiles SET FileOrder = ? WHERE ID = ?";
+        try (Connection conn = databaseConnector.getConnection()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, newOrder);
+            stmt.setInt(2, fileId);
+            stmt.executeUpdate();
+        } catch (SQLException ex){
+            ex.printStackTrace();
+            throw new SQLException("Could not delete the file from the database", ex);
+        }
+    }
+
 }
 
 

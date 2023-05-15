@@ -4,6 +4,8 @@ import BE.*;
 import GUI.Model.*;
 import UTIL.CustomerPdf;
 import UTIL.ShowFile;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +15,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -23,7 +29,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.function.Function;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
@@ -34,7 +42,7 @@ public class ProjectController extends BaseController {
     private AnchorPane mainViewAnchorPane;
 
     @FXML //All buttons within this window
-    private Button deleteFileButton, saveFileButton, saveNoteButton, addTechButton,removeTechButton, drawButton, openMainWindowButton;
+    private Button deleteFileButton, saveFileButton, saveNoteButton, addTechButton, removeTechButton, drawButton, openMainWindowButton, moveUpButton, moveDownButton;
 
     @FXML //Tab-Pane containing all the project information
     private TabPane informationTabPane;
@@ -45,6 +53,10 @@ public class ProjectController extends BaseController {
     @FXML //Table-View containing project files
     private TableView<ProjectFiles> fileTable;
 
+    //@FXML
+    //TableView<ProjectFiles> tableView = new TableView<>();
+    //private ArrayList<ProjectFiles> selections = new ArrayList<>();
+
     @FXML // Image-View containing a preview of a selcted file
     private ImageView filesPreviewImageView;
 
@@ -52,7 +64,7 @@ public class ProjectController extends BaseController {
     private ComboBox<User> listTechsComboBox;
 
     @FXML //All columns within the filesTab
-    private TableColumn  filesPictureColumn, filesNameColumn, filesDateColumn, filesIncludedColumn;
+    private TableColumn filesPictureColumn, filesNameColumn, filesDateColumn, filesIncludedColumn;
 
     @FXML //List-View containing Techs on project
     private ListView<User> techsOnProjectListView;
@@ -66,6 +78,7 @@ public class ProjectController extends BaseController {
     private CustomerModel customerModel;
     private ProjectFilesModel projectFilesModel;
     private ProjectModel projectModel;
+    private int dragStartIndex;
 
     /**
      * Set up the view when the view is getting shown.
@@ -85,7 +98,7 @@ public class ProjectController extends BaseController {
         setInformation();
     }
 
-    private void setInformation(){
+    private void setInformation() {
         NotesTextArea.setText(selectedProject.getNote());
         NotesTextArea.setWrapText(true);
         listTechsComboBox.setItems(userModel.getAllTechnicians());
@@ -98,11 +111,11 @@ public class ProjectController extends BaseController {
     }
 
     private void pictureToButton() {
-        String[] listOfFiles = {"Pictures/Arrow.png","Pictures/Arrow2.png"};
+        String[] listOfFiles = {"Pictures/Arrow.png", "Pictures/Arrow2.png"};
 
         String[] listOfToolTips = {"Add technician to project", "Remove technician from project"};
 
-        Button[] listOfButtons ={addTechButton, removeTechButton};
+        Button[] listOfButtons = {addTechButton, removeTechButton};
 
         for (int i = 0; i < listOfFiles.length; i++) {
 
@@ -148,27 +161,27 @@ public class ProjectController extends BaseController {
      */
     @FXML
     private void setupFiles() {
-            int projectNumber = selectedProject.getId();
-            filesPictureColumn.setCellValueFactory(new PropertyValueFactory<>("picture"));
-            filesNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-            filesDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-            filesIncludedColumn.setCellValueFactory(new PropertyValueFactory<>("usedBox"));
-            try {
-                fileTable.setItems(projectFilesModel.getAllFilesFromProject(projectNumber));
-            } catch (Exception e) {
-                displayError(e);
-                e.printStackTrace();
-            }
-            projectFilesModel.fileLoopStop(); //Stopper tidligere løkker i projectFiles inden ny startes
-            projectFilesModel.observer(); //Her startes en løkke, der observere ændringer i CheckBox
+        int projectNumber = selectedProject.getId();
+        filesPictureColumn.setCellValueFactory(new PropertyValueFactory<>("picture"));
+        filesNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        filesDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        filesIncludedColumn.setCellValueFactory(new PropertyValueFactory<>("usedBox"));
+        try {
+            fileTable.setItems(projectFilesModel.getAllFilesFromProject(projectNumber));
+        } catch (Exception e) {
+            displayError(e);
+            e.printStackTrace();
+        }
+        projectFilesModel.fileLoopStop(); //Stopper tidligere løkker i projectFiles inden ny startes
+        projectFilesModel.observer(); //Her startes en løkke, der observere ændringer i CheckBox
     }
 
 
     @FXML
     private void saveNoteAction(ActionEvent actionEvent) {
-        String note= NotesTextArea.getText();
+        String note = NotesTextArea.getText();
         try {
-            projectModel.changeNote(note,selectedProject.getId());
+            projectModel.changeNote(note, selectedProject.getId());
         } catch (Exception e) {
             displayError(e);
             e.printStackTrace();
@@ -179,9 +192,9 @@ public class ProjectController extends BaseController {
      * Set up the information about the customer in the main view when a project is selected.
      */
 
-    private HashMap<String,String> makeCustomerMap() {
+    private HashMap<String, String> makeCustomerMap() {
 
-        HashMap<String,String> customerInfo = new HashMap<>();
+        HashMap<String, String> customerInfo = new HashMap<>();
 
         if (selectedProject != null) {
             //Setting the information in the labels.
@@ -194,20 +207,21 @@ public class ProjectController extends BaseController {
                 e.printStackTrace();
             }
 
-            customerInfo.put("Company",customer.getCompanyName());
-            customerInfo.put("FirstName",customer.getFirstName());
-            customerInfo.put("Lastname",customer.getLastName());
-            customerInfo.put("Address",customer.getAddress());
-            customerInfo.put("ZipCode",String.valueOf(customer.getZipCode()));
-            customerInfo.put("Mail",customer.getMail());
-            customerInfo.put("PhoneNumber",String.valueOf(customer.getPhoneNumber()));
+            customerInfo.put("Company", customer.getCompanyName());
+            customerInfo.put("FirstName", customer.getFirstName());
+            customerInfo.put("Lastname", customer.getLastName());
+            customerInfo.put("Address", customer.getAddress());
+            customerInfo.put("ZipCode", String.valueOf(customer.getZipCode()));
+            customerInfo.put("Mail", customer.getMail());
+            customerInfo.put("PhoneNumber", String.valueOf(customer.getPhoneNumber()));
 
         }
-                return customerInfo;
+        return customerInfo;
     }
 
     /**
      * Save a new file from the users pc.
+     *
      * @param actionEvent
      */
     @FXML
@@ -233,18 +247,17 @@ public class ProjectController extends BaseController {
 
     public void handleOpenCustomerDoc() throws FileNotFoundException, MalformedURLException, MalformedURLException, FileNotFoundException {
 
-        ArrayList<String> imagePath=new ArrayList<>();
+        ArrayList<String> imagePath = new ArrayList<>();
 
-        for(ProjectFiles projectFiles : fileTable.getItems())
-        {
-            if(projectFiles.getUsedBox().isSelected())
+        for (ProjectFiles projectFiles : fileTable.getItems()) {
+            if (projectFiles.getUsedBox().isSelected())
                 imagePath.add(projectFiles.getFilePath());
         }
-        HashMap<String, String> customerMap=makeCustomerMap();
-        CustomerPdf customerPdf=new CustomerPdf(imagePath,customerMap, selectedProject.getNote(),selectedProject.getTitle());
-        String path=customerPdf.makePdf();
+        HashMap<String, String> customerMap = makeCustomerMap();
+        CustomerPdf customerPdf = new CustomerPdf(imagePath, customerMap, selectedProject.getNote(), selectedProject.getTitle());
+        String path = customerPdf.makePdf();
 
-        ShowFile showFile=new ShowFile();
+        ShowFile showFile = new ShowFile();
         showFile.showFile(path);
     }
 
@@ -283,6 +296,7 @@ public class ProjectController extends BaseController {
     /**
      * Handle what happens when the "Add technician" button is clicked.
      * Adds a selected user/employee to a selected project.
+     *
      * @param actionEvent
      */
     @FXML
@@ -301,6 +315,7 @@ public class ProjectController extends BaseController {
     /**
      * Handle what happens when the "Remove technician" button is clicked.
      * Removes a selected user/employee from a selected project.
+     *
      * @param actionEvent
      */
     @FXML
@@ -313,6 +328,36 @@ public class ProjectController extends BaseController {
         } catch (Exception e) {
             displayError(e);
             e.printStackTrace();
+        }
+    }
+    public void handleMoveUp(ActionEvent actionEvent) {
+        int currentIndex = projectFiles.indexOf(file);
+        if (currentIndex > 0) {
+            int newIndex = currentIndex - 1;
+            projectFiles.remove(currentIndex);
+            projectFiles.add(newIndex, file);
+            updateDataBaseWithNewOrder();
+        }
+    }
+
+    public void handleMoveDown(ActionEvent actionEvent) {
+        int currentIndex = projectFiles.indexOf(file);
+        if (currentIndex < projectFiles.size() - 1) {
+            int newIndex = currentIndex + 1;
+            projectFiles.remove(currentIndex);
+            projectFiles.add(newIndex, file);
+            updateDataBaseWithNewOrder();
+        }
+    }
+    private void updateDataBaseWithNewOrder() {
+        // Iterate through the projectFiles list and update the order of each file in the database
+        for (int i = 0; i < projectFiles.size(); i++) {
+            ProjectFiles file = projectFiles.get(i);
+            try {
+                projectFilesManager.updateFileOrder(file.getId(), i);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
