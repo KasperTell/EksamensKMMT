@@ -113,6 +113,14 @@ public class CustomerDAO implements ICustomerDataAccess {
                 String mail = rs.getString("Mail");
                 int phoneNumber = rs.getInt("Phone_Number");
 
+
+
+                if (companyName==null)
+                    companyName=firstName+ " "+lastName;
+
+
+
+
                 customer = new Customer(id, firstName, lastName, companyName, address, mail, phoneNumber, zipcode);
             }
             return customer;

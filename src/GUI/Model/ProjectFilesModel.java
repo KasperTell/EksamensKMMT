@@ -136,11 +136,18 @@ private int number=0 ;
         isRunning=false;
     }
 
+
+
     public void createNewFile(ProjectFiles file) throws Exception {
         createdFile = projectFilesManager.createNewFile(file);
         projectFiles.clear();
         projectFiles.set(FXCollections.observableArrayList(projectFilesManager.loadFilesFromAProject(createdFile.getProjectID())));
     }
+
+
+
+
+
 
     public void deleteFile(ProjectFiles file) throws Exception {
         projectFilesManager.deleteFile(file);

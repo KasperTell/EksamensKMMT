@@ -79,10 +79,7 @@ public class CustomerPdf {
         whiteSpace(350);
 
 
-        if (customerInfo.get("Company")==null)
-        tekst=new String[] {"","Installations dokumentation","",customerInfo.get("FirstName") + " "+customerInfo.get("Lastname"),"",title};
-        else
-            tekst=new String[] {"","Installations dokumentation","",customerInfo.get("Company"),"",title};
+        tekst=new String[] {"","Installations dokumentation","",customerInfo.get("Company"),"",title};
 
 
         insertTable2Row(16,300,tekst,false);
@@ -105,15 +102,11 @@ public class CustomerPdf {
         insertPicture("Resources/Pictures/WUAV4.png",730, 35,80); //Top billedet
         whiteSpace(50);
 
-        if (customerInfo.get("Company")==null)
-            tekst = new String[]{"Navn", customerInfo.get("FirstName") + " " + customerInfo.get("Lastname")
-                    , "Adresse", customerInfo.get("Address"), "Postkode", customerInfo.get("ZipCode"), "Email"
-                    , customerInfo.get("Mail"), "Telefon", customerInfo.get("PhoneNumber")};
-        else
-        {
+
+
             tekst=new  String[]{"Firma",customerInfo.get("Company"),"Adresse",customerInfo.get("Address"),"Postkode",customerInfo.get("ZipCode"),"Email"
                     ,customerInfo.get("Mail"),"Telefon",customerInfo.get("PhoneNumber")};
-        }
+
 
 
         insertTable2Row(12,100,tekst,true);

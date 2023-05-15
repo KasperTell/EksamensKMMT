@@ -22,6 +22,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -212,7 +213,7 @@ public class ProjectController extends BaseController {
      * @param actionEvent
      */
     @FXML
-    private void handleSaveNewFile(ActionEvent actionEvent) {
+    private void handleSaveNewFile(ActionEvent actionEvent) throws Exception {
         //Opens the default file explore
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
@@ -229,6 +230,15 @@ public class ProjectController extends BaseController {
                 displayError(e);
                 e.printStackTrace();
             }
+
+            String filename=file.toPath().getFileName().toString();
+            System.out.println(filename);
+            LocalDate saveDate= LocalDate.now();
+
+
+            ProjectFiles projectFiles=new ProjectFiles(1,selectedProject.getId(),filename ,"Resources/Pictures/ImagesSavedFromTechnicians/"+filename,saveDate,null,null);
+
+            projectFilesModel.createNewFile(projectFiles);
         }
     }
 
