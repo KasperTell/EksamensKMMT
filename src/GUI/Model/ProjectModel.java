@@ -13,7 +13,7 @@ public class ProjectModel {
     private ObservableList<Project> projectClose;
     private ProjectManager projectManager;
     private ObservableList<Project> searchedProjects;
-    private String projectTitle2;
+    private String projectTitle;
     private Project selectedProject;
 
     /**
@@ -68,12 +68,6 @@ public class ProjectModel {
         searchedProjects.addAll(projectManager.searchByQuery(searchQuery));
         return searchedProjects; }
 
-    public String getProjectTitle(){
-        return projectTitle2;
-    }
-    public void setProjectTitle(String projectTitle){
-        projectTitle2 = projectTitle;
-    }
 
     public Project getSelectedProject(){return selectedProject;}
     public void setSelectedProject(Project project){selectedProject = project;}

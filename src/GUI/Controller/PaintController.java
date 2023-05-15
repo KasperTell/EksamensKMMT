@@ -1,5 +1,8 @@
 package GUI.Controller;
 
+import BE.Project;
+import BE.ProjectFiles;
+import GUI.Model.ProjectFilesModel;
 import GUI.Model.ProjectModel;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -16,11 +19,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.Date;
 
 public class PaintController extends BaseController {
 
     GraphicsContext tool;
     private ProjectModel projectModel;
+    private ProjectFilesModel projectFilesModel;
 
     @FXML private Button saveCanvas;
     @FXML private Canvas canvas;
@@ -36,6 +42,7 @@ public class PaintController extends BaseController {
     @Override
     public void setup() throws Exception {
         projectModel = getModel().getProjectModel();
+        projectFilesModel = getModel().getProjectFilesModel();
         clickToolSelect();
         dragToolSelect();
     }
@@ -123,16 +130,26 @@ public class PaintController extends BaseController {
     public void handleEraser(ActionEvent actionEvent) {cableSelected = false; speakerSelected = false; screenSelected = false; projectorSelected = false; eraserSelected = true; techBoxSelected = false;}
     public void handleTechBox(ActionEvent actionEvent) {cableSelected = false; speakerSelected = false; screenSelected = false; projectorSelected = false; eraserSelected = false; techBoxSelected = true;}
     public void handleClear(ActionEvent actionEvent) {tool.clearRect(0,0,canvas.getWidth(), canvas.getHeight());}
-    public void handleSaveCanvas(ActionEvent actionEvent) throws IOException {saveCanvas(canvas);}
+    public void handleSaveCanvas(ActionEvent actionEvent) throws Exception {saveCanvas(canvas);}
 
-    public void saveCanvas(Canvas c) throws IOException {
+    public void saveCanvas(Canvas c) throws Exception {
 
-        String name = projectModel.getProjectTitle();
+        int id = projectModel.getSelectedProject().getId();
+
+        String name = projectModel.getSelectedProject().getTitle();
+
+        LocalDate date = LocalDate.now();
+
         String filepath =  "Resources/SavedProjectCanvas/" + "Prototype " +  name + ".PNG";
         Path path = Paths.get(filepath);
 
         WritableImage picture = c.snapshot(null, null);
         ImageIO.write(SwingFXUtils.fromFXImage(picture, null), "png", new File(path.toUri()));
+
+        ProjectFiles fileToSave = new ProjectFiles(1, id, name, filepath, date, null, null);
+
+        projectFilesModel.createNewFile(fileToSave);
+
     }
 
     public void handleBackToMainView(ActionEvent actionEvent) {

@@ -234,7 +234,7 @@ public class ProjectController extends BaseController {
             int customerID = selectedProject.getCustomerID();
             Customer customer = null;
             try {
-                customer = customerModel.loadCustomer(customerID);
+                customer = (Customer) customerModel.loadCustomer(customerID);
             } catch (Exception e) {
                 displayError(e);
                 e.printStackTrace();
@@ -319,7 +319,13 @@ public class ProjectController extends BaseController {
 
 
 
-    public void handleDeleteFile(ActionEvent actionEvent) {
+    public void handleDeleteFile(ActionEvent actionEvent) throws Exception {
+
+        ProjectFiles fileToDelete = fileTable.getSelectionModel().getSelectedItem();
+        projectFilesModel.deleteFile(fileToDelete);
+
+       File file = new File(fileToDelete.getFilePath());
+       file.delete();
     }
 
 
