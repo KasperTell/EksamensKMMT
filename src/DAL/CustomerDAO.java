@@ -53,46 +53,7 @@ public class CustomerDAO implements ICustomerDataAccess {
         }
     }
 
-    /**
-     * Gets a specific customer from the database based on an ID.
-     * @param customerID
-     * @return
-     * @throws Exception
-     */
-    public List<Customer> loadCustomer(int customerID) throws SQLException {
-
-        ArrayList<Customer> customerInfo = new ArrayList<>();
-
-        Customer customer = null;
-        //SQL Query
-        String sql = "SELECT * FROM Customers WHERE ID = ?";
-        // getting the connection to the database.
-        try (Connection conn = databaseConnector.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, customerID);
-            ResultSet rs = stmt.executeQuery();
-            //Getting the information from the database.
-            while (rs.next()) {
-                int id = rs.getInt("ID");
-                String firstName = rs.getString("First_Name");
-                String lastName = rs.getString("Last_Name");
-                String companyName = rs.getString("Company_Name");
-                String address = rs.getString("Address");
-                int zipcode = rs.getInt("Zip_Code");
-                String mail = rs.getString("Mail");
-                int phoneNumber = rs.getInt("Phone_Number");
-
-                customer = new Customer(id, firstName, lastName, companyName, address, mail, phoneNumber, zipcode);
-
-                customerInfo.add(customer);
-            }
-            return customerInfo;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw new SQLException("Failed to add Customer from the database", ex);
-        }
-    }
-
+   
     /**
      * Creating a new customer in the database.
      * @param customer
@@ -125,4 +86,41 @@ public class CustomerDAO implements ICustomerDataAccess {
             throw new SQLException("Could not create customer", ex);
         }
     }
+
+    /**
+     * Gets a specific customer from the database based on an ID.
+     * @param customerID
+     * @return
+     * @throws Exception
+     */
+    public Customer loadCustomer(int customerID) throws SQLException {
+        Customer customer = null;
+        //SQL Query
+        String sql = "SELECT * FROM Customers WHERE ID = ?";
+        // getting the connection to the database.
+        try (Connection conn = databaseConnector.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, customerID);
+            ResultSet rs = stmt.executeQuery();
+            //Getting the information from the database.
+            while (rs.next()) {
+                int id = rs.getInt("ID");
+                String firstName = rs.getString("First_Name");
+                String lastName = rs.getString("Last_Name");
+                String companyName = rs.getString("Company_Name");
+                String address = rs.getString("Address");
+                int zipcode = rs.getInt("Zip_Code");
+                String mail = rs.getString("Mail");
+                int phoneNumber = rs.getInt("Phone_Number");
+
+                customer = new Customer(id, firstName, lastName, companyName, address, mail, phoneNumber, zipcode);
+            }
+            return customer;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new SQLException("Failed to add Customer from the database", ex);
+        }
+    }
+
+
 }

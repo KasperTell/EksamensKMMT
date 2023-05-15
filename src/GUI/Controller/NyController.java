@@ -209,7 +209,7 @@ public class NyController extends BaseController {
 
       /**  openProjectsTable.setItems(projectModel.getAllProjectsOpen());
         closedProjectsTable.setItems(projectModel.getAllProjectsClose()); */
-        customerTable.setItems(customerModel.loadCustomer(selectedProject.getCustomerID()));
+        customerTable.setItems(customerModel.loadCustomerList(selectedProject.getCustomerID()));
     }
 
 

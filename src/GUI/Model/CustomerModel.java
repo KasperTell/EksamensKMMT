@@ -37,10 +37,22 @@ public class CustomerModel {
      * @return
      * @throws Exception
      */
-    public ObservableList<Customer> loadCustomer(int customerID) throws Exception {
+    public ObservableList<Customer> loadCustomerList(int customerID) throws Exception {
         customerInfo.clear();
-        customerInfo.addAll(customerManager.loadCustomer(customerID));
+        customerInfo.addAll(loadCustomer(customerID));
         return customerInfo;}
+
+
+    /**
+     * Sends the customer based on a specific ID through the model.
+     * @param customerID
+     * @return
+     * @throws Exception
+     */
+    public Customer loadCustomer(int customerID) throws Exception {return customerManager.loadCustomer(customerID);}
+
+
+
 
     /**
      * Sends the customer through the model and adds it to the list of all customers.
