@@ -734,7 +734,7 @@ public class MainController extends BaseController {
 
 
     public void handleDraw(ActionEvent actionEvent) throws Exception {
-        projectModel.setProjectTitle(openProjectsTable.getSelectionModel().getSelectedItem().getTitle());
+        //projectModel.setProjectTitle(openProjectsTable.getSelectionModel().getSelectedItem().getTitle());
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/Paint/PaintView.fxml"));
         Parent root = loader.load();
