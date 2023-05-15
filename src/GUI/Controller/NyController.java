@@ -76,18 +76,29 @@ public class NyController extends BaseController {
      * Set up the view when the view is getting shown.
      */
     @Override
-    public void setup() {
+    public void setup() throws Exception {
         //Initializing all our models.
         customerModel = getModel().getCustomerModel();
         projectModel = getModel().getProjectModel();
         //Setting the information of the listviews and combobox.
         customerComboBox.setItems(customerModel.getAllCustomers());
+        projectDateOpen.setCellValueFactory(new PropertyValueFactory<>("Date"));
+        projectNameOpen.setCellValueFactory(new PropertyValueFactory<>("Title"));
+        customerProjectOpen.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+
+        projectDateClosed.setCellValueFactory(new PropertyValueFactory<>("Date"));
+        projectNameClosed.setCellValueFactory(new PropertyValueFactory<>("Title"));
+        customerNameClosed.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+
+        openProjectsTable.setItems(projectModel.getAllProjectsOpen());
+        closedProjectsTable.setItems(projectModel.getAllProjectsClose());
         turnButtonONOrOff();
-        setProjectColumns();
         listenerLstAllCloseProjects();
         listenerLstAllOpenProjects();
         disableButtons();
         pictureToButton();
+        NotesTextArea.setWrapText(true);
+        NotesTextArea.setEditable(false);
     }
 
     private void pictureToButton() {
@@ -134,8 +145,15 @@ public class NyController extends BaseController {
 
             if (selectedProject != null)
             {
+                try {
+                    setProjectColumns();
+                } catch (Exception e) {
+                    displayError(e);
+                    e.printStackTrace();
+                }
                 reOpenProjectButton.setDisable(false);
                 closeProjectButton.setDisable(true);
+                NotesTextArea.setText(selectedProject.getNote());
             }
         });
     }
@@ -149,8 +167,15 @@ public class NyController extends BaseController {
 
             if (selectedProject!=null)
             {
+                try {
+                    setProjectColumns();
+                } catch (Exception e) {
+                    displayError(e);
+                    e.printStackTrace();
+                }
                 reOpenProjectButton.setDisable(true);
                 closeProjectButton.setDisable(false);
+                NotesTextArea.setText(selectedProject.getNote());
             }
         });
 
@@ -159,15 +184,22 @@ public class NyController extends BaseController {
     /**
      * Set the information in the project column in the tableview.
      */
-    private void setProjectColumns() {
+    private void setProjectColumns() throws Exception {
 
+
+/**
         projectDateOpen.setCellValueFactory(new PropertyValueFactory<>("Date"));
         projectNameOpen.setCellValueFactory(new PropertyValueFactory<>("Title"));
         customerProjectOpen.setCellValueFactory(new PropertyValueFactory<>("companyName"));
 
         projectDateClosed.setCellValueFactory(new PropertyValueFactory<>("Date"));
         projectNameClosed.setCellValueFactory(new PropertyValueFactory<>("Title"));
+ Updated upstream
         customerNameClosed.setCellValueFactory(new PropertyValueFactory<>("companyName"));
+
+
+        customerNameClosed.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+*/
 
         customerNameClm.setCellValueFactory(new PropertyValueFactory<>("companyName"));
         customerAddressClm.setCellValueFactory(new PropertyValueFactory<>("Address"));
@@ -175,9 +207,9 @@ public class NyController extends BaseController {
         customerMailClm.setCellValueFactory(new PropertyValueFactory<>("Mail"));
         customerPhoneClm.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
 
-        openProjectsTable.setItems(projectModel.getAllProjectsOpen());
-        closedProjectsTable.setItems(projectModel.getAllProjectsClose());
-        customerTable.setItems(customerModel.getAllCustomers());
+      /**  openProjectsTable.setItems(projectModel.getAllProjectsOpen());
+        closedProjectsTable.setItems(projectModel.getAllProjectsClose()); */
+        customerTable.setItems(customerModel.loadCustomer(selectedProject.getCustomerID()));
     }
 
 

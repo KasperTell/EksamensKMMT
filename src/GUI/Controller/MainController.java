@@ -89,6 +89,8 @@ public class MainController extends BaseController {
 
     PersonTypeChooser personTypeChooser = new PersonTypeChooser();
 
+
+
     /**
      * Set up the view when the view is getting shown.
      */
@@ -118,8 +120,10 @@ public class MainController extends BaseController {
         addTechnician.setDisable(true);
         removeTechnician.setDisable(true);
         btnSaveNewFile.setDisable(true);
-        pictureToButton();
+        //pictureToButton();
             }
+
+            /*
 
     private void pictureToButton() {
         String[] listOfFiles = {"Pictures/Arrow.png","Pictures/Arrow2.png","Pictures/Add Employee Button.png","Pictures/Remove Employee Button.png","Pictures/Add Project Button.png",
@@ -548,7 +552,7 @@ public class MainController extends BaseController {
             int customerID = selectedProject.getCustomerID();
             Customer customer = null;
             try {
-                customer = customerModel.loadCustomer(customerID);
+                //customer = customerModel.loadCustomer(customerID);
             } catch (Exception e) {
                 displayError(e);
                 e.printStackTrace();
@@ -773,4 +777,8 @@ public class MainController extends BaseController {
 
     public void handleDeleteFile(ActionEvent actionEvent) {
     }
+
+
+
+
 }

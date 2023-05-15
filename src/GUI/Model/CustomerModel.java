@@ -5,9 +5,12 @@ import BLL.CustomerManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.List;
+
 public class CustomerModel {
 
     private ObservableList<Customer> allCustomers;
+    private ObservableList<Customer> customerInfo;
     private CustomerManager customerManager;
     private Customer createdCustomer;
 
@@ -19,6 +22,7 @@ public class CustomerModel {
         customerManager = new CustomerManager();
         allCustomers = FXCollections.observableArrayList();
         allCustomers.addAll(customerManager.loadAllCustomers());
+        customerInfo = FXCollections.observableArrayList();
     }
 
     /**
@@ -33,7 +37,10 @@ public class CustomerModel {
      * @return
      * @throws Exception
      */
-    public Customer loadCustomer(int customerID) throws Exception {return customerManager.loadCustomer(customerID);}
+    public ObservableList<Customer> loadCustomer(int customerID) throws Exception {
+        customerInfo.clear();
+        customerInfo.addAll(customerManager.loadCustomer(customerID));
+        return customerInfo;}
 
     /**
      * Sends the customer through the model and adds it to the list of all customers.

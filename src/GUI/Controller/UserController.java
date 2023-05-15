@@ -94,7 +94,7 @@ public class UserController extends BaseController{
 
 
 
-    public void handleOpenMainWindow(ActionEvent actionEvent) throws IOException {
+    public void handleOpenMainWindow(ActionEvent actionEvent) throws Exception {
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindue1.fxml"));

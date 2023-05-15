@@ -221,7 +221,6 @@ public class ProjectController extends BaseController {
 
 
 
-
     /**
      * Set up the information about the customer in the main view when a project is selected.
      */
@@ -253,8 +252,6 @@ public class ProjectController extends BaseController {
                 return customerInfo;
     }
 
-
-    
 
     /**
      * Set up the information in the technician column in the table view, based on a selected project.

@@ -79,6 +79,8 @@ public class ProjectModel {
     public void setSelectedProject(Project project){selectedProject = project;}
 
 
+
+
     public void changeNote(String note, int id) throws Exception {
         projectManager.changeNote(note, id);
         clearLists();

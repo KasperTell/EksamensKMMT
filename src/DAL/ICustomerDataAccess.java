@@ -9,7 +9,7 @@ public interface ICustomerDataAccess {
 
     List<Customer> loadAllCustomers() throws SQLException;
 
-    Customer loadCustomer(int customerID) throws SQLException;
+    List<Customer> loadCustomer(int customerID) throws SQLException;
     
     Customer createNewCustomer(Customer customer) throws SQLException;
 }

@@ -59,7 +59,10 @@ public class CustomerDAO implements ICustomerDataAccess {
      * @return
      * @throws Exception
      */
-    public Customer loadCustomer(int customerID) throws SQLException {
+    public List<Customer> loadCustomer(int customerID) throws SQLException {
+
+        ArrayList<Customer> customerInfo = new ArrayList<>();
+
         Customer customer = null;
         //SQL Query
         String sql = "SELECT * FROM Customers WHERE ID = ?";
@@ -80,8 +83,10 @@ public class CustomerDAO implements ICustomerDataAccess {
                 int phoneNumber = rs.getInt("Phone_Number");
 
                 customer = new Customer(id, firstName, lastName, companyName, address, mail, phoneNumber, zipcode);
+
+                customerInfo.add(customer);
             }
-            return customer;
+            return customerInfo;
         } catch (Exception ex) {
             ex.printStackTrace();
             throw new SQLException("Failed to add Customer from the database", ex);

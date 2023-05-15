@@ -32,7 +32,7 @@ public class CustomerManager {
      * @return
      * @throws Exception
      */
-    public Customer loadCustomer(int customerID) throws Exception{return customerDAO.loadCustomer(customerID);}
+    public List<Customer> loadCustomer(int customerID) throws Exception{return customerDAO.loadCustomer(customerID);}
 
     /**
      * Sends a created user through the BLL.
