@@ -1,5 +1,7 @@
 package PersonsTypes;
 
+import java.util.HashMap;
+
 public class Salesman implements IPersonTypes{
     @Override
     public String getViewString() {
@@ -11,12 +13,21 @@ public class Salesman implements IPersonTypes{
         return "/GUI/View/Salesman/SalesView.css";
     }
 
-    public Boolean[] turnButtonOnOrOff() {
+    public HashMap<String, Boolean> turnButtonOnOrOff() {
+
+        HashMap<String, Boolean> buttonOnOrOff = new HashMap<>();
+
+        buttonOnOrOff.put("closeProjectButton", true);
+        buttonOnOrOff.put("reOpenProjectButton", true);
+        buttonOnOrOff.put("newProjectButton", true);
+        buttonOnOrOff.put("newCustomerButton", true);
+        buttonOnOrOff.put("openProjectWindowButton", true);
+        buttonOnOrOff.put("openUserWindowButton", true);
+        buttonOnOrOff.put("closedProjectsTable", false);
 
 
-        Boolean[] buttonOnOrOff={false,false,false,false,false,false,false,false,false,false,false};
+
 
         return buttonOnOrOff;
     }
-
 }

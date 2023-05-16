@@ -1,5 +1,6 @@
 package PersonsTypes;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface IPersonTypes {
@@ -9,7 +10,7 @@ public interface IPersonTypes {
 
     String getViewCss();
 
-    Boolean[] turnButtonOnOrOff();
+    HashMap<String, Boolean> turnButtonOnOrOff();
 
 
 }
