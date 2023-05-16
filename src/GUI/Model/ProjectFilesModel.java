@@ -8,8 +8,6 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.SQLException;
-
 
 public class ProjectFilesModel {
 
@@ -146,6 +144,11 @@ private int number=0 ;
         projectFiles.clear();
         projectFiles.set(FXCollections.observableArrayList(projectFilesManager.loadFilesFromAProject(file.getProjectID())));
         projectFilesManager.deleteFile(file);
+    }
+    public void updateFileOrder (int Order) throws Exception {
+       projectFiles.clear();
+       projectFilesManager.updateFileOrder(Order);
+
     }
 }
 

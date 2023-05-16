@@ -28,6 +28,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -78,7 +79,7 @@ public class ProjectController extends BaseController {
     private CustomerModel customerModel;
     private ProjectFilesModel projectFilesModel;
     private ProjectModel projectModel;
-    private int dragStartIndex;
+
 
     /**
      * Set up the view when the view is getting shown.
@@ -330,34 +331,28 @@ public class ProjectController extends BaseController {
             e.printStackTrace();
         }
     }
-    public void handleMoveUp(ActionEvent actionEvent) {
-        int currentIndex = projectFiles.indexOf(file);
-        if (currentIndex > 0) {
-            int newIndex = currentIndex - 1;
-            projectFiles.remove(currentIndex);
-            projectFiles.add(newIndex, file);
+    public void handleMoveUp(ActionEvent actionEvent) throws Exception {
+        int selectedIndex = fileTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex > 0) {
+            Collections.swap(fileTable.getItems(), selectedIndex, selectedIndex - 1);
+            fileTable.getSelectionModel().select(selectedIndex - 1);
             updateDataBaseWithNewOrder();
         }
     }
 
-    public void handleMoveDown(ActionEvent actionEvent) {
-        int currentIndex = projectFiles.indexOf(file);
-        if (currentIndex < projectFiles.size() - 1) {
-            int newIndex = currentIndex + 1;
-            projectFiles.remove(currentIndex);
-            projectFiles.add(newIndex, file);
+    public void handleMoveDown(ActionEvent actionEvent) throws Exception {
+        int selectedIndex = fileTable.getSelectionModel().getSelectedIndex();
+        if (selectedIndex < fileTable.getItems().size() - 1) {
+            Collections.swap(fileTable.getItems(), selectedIndex, selectedIndex + 1);
+            fileTable.getSelectionModel().select(selectedIndex + 1);
             updateDataBaseWithNewOrder();
         }
     }
-    private void updateDataBaseWithNewOrder() {
-        // Iterate through the projectFiles list and update the order of each file in the database
-        for (int i = 0; i < projectFiles.size(); i++) {
-            ProjectFiles file = projectFiles.get(i);
-            try {
-                projectFilesManager.updateFileOrder(file.getId(), i);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+    private void updateDataBaseWithNewOrder() throws Exception {
+        for (int i = 0; i < fileTable.getItems().size(); i++) {
+            ProjectFiles projectFiles = fileTable.getItems().get(i);
+            projectFiles.setOrder(i);
+            projectFilesModel.updateFileOrder(projectFiles.getOrder());
         }
     }
 }

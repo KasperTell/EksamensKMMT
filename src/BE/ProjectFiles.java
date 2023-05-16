@@ -12,6 +12,7 @@ private String filePath,name;
 private LocalDate date;
 private ImageView picture;
 private CheckBox usedBox;
+private int Order;
 
     /**
      * Constructor for the class "ProjectFiles".
@@ -23,7 +24,7 @@ private CheckBox usedBox;
      * @param picture
      * @param usedBox
      */
-    public ProjectFiles(int id, int projectID, String name, String filePath, LocalDate date,  ImageView picture, CheckBox usedBox) {
+    public ProjectFiles(int id, int projectID, String name, String filePath, LocalDate date,  ImageView picture, CheckBox usedBox, int Order) {
         this.id = id;
         this.projectID = projectID;
         this.name=name;
@@ -31,6 +32,7 @@ private CheckBox usedBox;
         this.date = date;
         this.picture = picture;
         this.usedBox = usedBox;
+        this.Order = Order;
     }
 
     /**
@@ -93,6 +95,14 @@ private CheckBox usedBox;
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getOrder() {
+        return Order;
+    }
+
+    public void setOrder(int order) {
+        Order = order;
     }
 
     /**
