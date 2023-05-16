@@ -123,7 +123,7 @@ public class ProjectController extends BaseController {
     public void listenerMouseClickPicture() {
         fileTable.setOnMouseClicked(event -> {
             selectedfile = fileTable.getSelectionModel().getSelectedItem();
-            if (event.getClickCount() == 1) {
+
                 try {
                     // Check if the selected file is an image file (JPEG, PNG, or JPG)
                     String fileName = "/" + selectedfile.getFilePath().toLowerCase();
@@ -140,9 +140,18 @@ public class ProjectController extends BaseController {
                     displayError(e);
                     e.printStackTrace();
                 }
-            }
+
+            if (event.getClickCount() == 2) {
+                ShowFile showFile=new ShowFile();
+                showFile.showFile(selectedfile.getFilePath());
+                    }
         });
     }
+
+
+
+
+
 
     /**
      * Set up the files information column in the tableview.

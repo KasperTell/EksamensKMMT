@@ -99,6 +99,8 @@ public class NyController extends BaseController {
         pictureToButton();
         NotesTextArea.setWrapText(true);
         NotesTextArea.setEditable(false);
+        listenerMouseClickOpenProject();
+        listenerMouseClickCloseProject();
     }
 
     private void pictureToButton() {
@@ -135,6 +137,50 @@ public class NyController extends BaseController {
         newProjectButton.setDisable(turnButtonOnOrOff[5]);
         newCustomerButton.setDisable(turnButtonOnOrOff[8]);
     }
+
+
+    /**
+     * Listener for the tableview containing files for opening files.
+     */
+    public void listenerMouseClickOpenProject() {
+        openProjectsTable.setOnMouseClicked(event -> {
+            selectedProject = openProjectsTable.getSelectionModel().getSelectedItem();
+
+            if (event.getClickCount() == 2) {
+                try {
+                    getCustomerPDFAction();
+                } catch (MalformedURLException e) {
+                    throw new RuntimeException(e);
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
+
+
+    public void listenerMouseClickCloseProject() {
+        closedProjectsTable.setOnMouseClicked(event -> {
+            selectedProject = closedProjectsTable.getSelectionModel().getSelectedItem();
+
+            if (event.getClickCount() == 2) {
+                try {
+                    getCustomerPDFAction();
+                } catch (MalformedURLException e) {
+                    throw new RuntimeException(e);
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+
+            }
+        });
+    }
+
+
+
+
+
+
 
     @FXML
     private void listenerLstAllCloseProjects() {
@@ -186,20 +232,6 @@ public class NyController extends BaseController {
      */
     private void setProjectColumns() throws Exception {
 
-
-/**
-        projectDateOpen.setCellValueFactory(new PropertyValueFactory<>("Date"));
-        projectNameOpen.setCellValueFactory(new PropertyValueFactory<>("Title"));
-        customerProjectOpen.setCellValueFactory(new PropertyValueFactory<>("companyName"));
-
-        projectDateClosed.setCellValueFactory(new PropertyValueFactory<>("Date"));
-        projectNameClosed.setCellValueFactory(new PropertyValueFactory<>("Title"));
- Updated upstream
-        customerNameClosed.setCellValueFactory(new PropertyValueFactory<>("companyName"));
-
-
-        customerNameClosed.setCellValueFactory(new PropertyValueFactory<>("customerID"));
-*/
 
         customerNameClm.setCellValueFactory(new PropertyValueFactory<>("companyName"));
         customerAddressClm.setCellValueFactory(new PropertyValueFactory<>("Address"));
@@ -435,7 +467,6 @@ public class NyController extends BaseController {
 
 
         String path = "Resources/PDF/"+selectedProject.getCompanyName()+ " "+selectedProject.getTitle()+" installations dokumentation.pdf";
-        System.out.println(path);
 
         ShowFile showFile=new ShowFile();
         showFile.showFile(path);
