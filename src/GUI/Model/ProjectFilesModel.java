@@ -145,10 +145,13 @@ private int number=0 ;
         projectFiles.set(FXCollections.observableArrayList(projectFilesManager.loadFilesFromAProject(file.getProjectID())));
         projectFilesManager.deleteFile(file);
     }
-    public void updateFileOrder (int Order) throws Exception {
-       projectFiles.clear();
-       projectFilesManager.updateFileOrder(Order);
+    public void updateFileOrder (int OrderFiles, ProjectFiles file, int id) throws Exception {
+        projectFiles.clear();
+        projectFiles.set(FXCollections.observableArrayList(projectFilesManager.loadFilesFromAProject(file.getProjectID())));
+       projectFilesManager.updateFileOrder(OrderFiles, file.getId());
 
     }
+
+
 }
 

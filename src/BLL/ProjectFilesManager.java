@@ -41,8 +41,8 @@ public class ProjectFilesManager {
     public void deleteFile(ProjectFiles file) throws SQLException{
         filesDAO.deleteFile(file);
     }
-    public void updateFileOrder (int Order) throws  SQLException {
-        filesDAO.updateFileOrder(Order);
+    public void updateFileOrder (int OrderFiles, int id) throws  SQLException {
+        filesDAO.updateFileOrder(OrderFiles, id);
     }
 
 }

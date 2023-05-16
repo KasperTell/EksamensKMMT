@@ -351,8 +351,8 @@ public class ProjectController extends BaseController {
     private void updateDataBaseWithNewOrder() throws Exception {
         for (int i = 0; i < fileTable.getItems().size(); i++) {
             ProjectFiles projectFiles = fileTable.getItems().get(i);
-            projectFiles.setOrder(i);
-            projectFilesModel.updateFileOrder(projectFiles.getOrder());
+            int orderfiles=projectFiles.getOrderFiles();
+            projectFilesModel.updateFileOrder(orderfiles,projectFiles, selectedfile.getId());
         }
     }
 }

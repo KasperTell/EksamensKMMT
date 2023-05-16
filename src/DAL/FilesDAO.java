@@ -41,7 +41,7 @@ public class FilesDAO implements iFileDataAccess {
         ImageView picture;
         ImageViewKlient pictureFrame = null;
         //SQL query
-        String sql = "SELECT * FROM ProjectFile WHERE ProjectID =?";
+        String sql = "SELECT * FROM ProjectFile WHERE ProjectID =? Order By OrderFiles";
 
 
         //Getting the connection to the database.
@@ -58,7 +58,7 @@ public class FilesDAO implements iFileDataAccess {
                 String filePath = rs.getString("FilePath");
                 LocalDate date = rs.getDate("Date").toLocalDate();
                 byte usedInDoc = rs.getByte("usedInDoc");
-                int Order = rs.getInt("Order");
+                int OrderFiles = rs.getInt("OrderFiles");
 
 
                 String filetype = filePath.substring(filePath.length() - 4, filePath.length());
@@ -88,7 +88,7 @@ public class FilesDAO implements iFileDataAccess {
                     checkBox.setSelected(true);
 
 
-                ProjectFiles files = new ProjectFiles(id, projectID1, name, filePath, date, picture, checkBox, Order);
+                ProjectFiles files = new ProjectFiles(id, projectID1, name, filePath, date, picture, checkBox, OrderFiles);
 
                 loadFilesFromAProject.add(files);
             }
@@ -174,11 +174,12 @@ public class FilesDAO implements iFileDataAccess {
         }
     }
 
-    public void updateFileOrder(int Order) throws SQLException {
-        String sql = "UPDATE ProjectFile SET Order = ? WHERE ID = ?";
+    public void updateFileOrder(int OrderFiles, int id) throws SQLException {
+        String sql = "UPDATE ProjectFile SET OrderFiles = ? WHERE ID = ?";
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, Order);
+            stmt.setInt(1, OrderFiles);
+            stmt.setInt(2, id);
             stmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

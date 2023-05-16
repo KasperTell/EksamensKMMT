@@ -12,5 +12,5 @@ public interface iFileDataAccess {
     ProjectFiles createNewFile(ProjectFiles file) throws SQLException;
     void deleteFile(ProjectFiles file) throws SQLException;
 
-    void updateFileOrder (int OrderBy) throws SQLException;
+    void updateFileOrder (int OrderFiles, int id) throws SQLException;
 }
