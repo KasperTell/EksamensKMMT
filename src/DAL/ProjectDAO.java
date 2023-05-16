@@ -51,14 +51,10 @@ public class ProjectDAO implements IProjectDataAccess{
                 openClose=1;
             //Setting the parameter and execute the statement.
             stmt.setInt(1, openClose);
-
             ResultSet rs = stmt.executeQuery();
 
             //Getting the information from the database.
             while (rs.next()) {
-
-
-
                 int id = rs.getInt("ID");
                 String title = rs.getString("title");
                 int customerID = rs.getInt("customerID");
@@ -81,14 +77,10 @@ public class ProjectDAO implements IProjectDataAccess{
                 if (companyName==null)
                     companyName=firstName+" "+lastName;
 
-
-
                 if (days<365*4)
                 {
                     project = new Project(id, title, customerID, date, open1,note, companyName);
                 }
-
-
                 loadProjectofAType.add(project);
             }
             return loadProjectofAType;
@@ -113,7 +105,6 @@ public class ProjectDAO implements IProjectDataAccess{
             //Setting the parameters and executing the query.
             stmt.setString(1, project.getTitle());
             stmt.setInt(2, project.getCustomerID());
-            System.out.println(project.getCustomerID());
             stmt.setDate(3, Date.valueOf(project.getDate()));
             stmt.setInt(4, 0);
             stmt.execute();
@@ -147,7 +138,6 @@ public class ProjectDAO implements IProjectDataAccess{
         }
     }
 
-
     /**
      * Changing the project note in the database.
      * @param note
@@ -169,20 +159,41 @@ public class ProjectDAO implements IProjectDataAccess{
         }
     }
 
+    /**
+     *
+     * @param technicianID
+     * @return
+     * @throws SQLException
+     */
+    public List<Project> allProjectsForTechnician(int technicianID) throws SQLException {
 
+        ArrayList<Project> projectsForTechnician = new ArrayList<>();
+        //SQL Query
+        String sql = "SELECT * FROM Project INNER JOIN ProjectTechnician ON Project.ID = ProjectTechnician.ProjectID INNER JOIN Customers ON Project.customerID = Customers.ID WHERE UserID = ? AND OpenClose = 0 AND Deleted IS NULL";
+        try(Connection conn = databaseConnector.getConnection()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            //Setting the parameter
+            stmt.setInt(1, technicianID);
+            //Getting the result from the database
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt("ID");
+                String title = rs.getString("title");
+                int customerID = rs.getInt("customerID");
+                LocalDate date = rs.getDate("date").toLocalDate();
+                boolean openClose = rs.getBoolean("OpenClose");
+                String note=rs.getString("note");
+                String companyName = rs.getString("Company_Name");
 
-
-
-
-
-
-
-
-
-
-
-
-
+                Project project = new Project(id, title, customerID, date, openClose, note, companyName);
+                projectsForTechnician.add(project);
+            }
+            return projectsForTechnician;
+        } catch (SQLException ex){
+            ex.printStackTrace();
+            throw new SQLException("Could not read all the projects for the logged in technician");
+        }
+    }
 
     /**
      * Getting all the projects from the database based on a query.
@@ -219,12 +230,8 @@ public class ProjectDAO implements IProjectDataAccess{
                 String note=rs.getString("note");
                 String companyName=rs.getString("Company_Name");
 
-
                 Project project = new Project(id, title, customerID, date, openClose, note,companyName);
-
-
                 projects.add(project);
-
             }
             return projects;
 

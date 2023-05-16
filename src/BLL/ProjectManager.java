@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ProjectManager {
-
     private IProjectDataAccess projectDAO;
 
     /**
@@ -75,4 +74,8 @@ public class ProjectManager {
         public List<Project> searchByQuery (String query) throws Exception {
             return projectDAO.searchByQuery(query);
         }
+
+    public List<Project> allProjectsForTechnician(int technicianID) throws SQLException {
+            return projectDAO.allProjectsForTechnician(technicianID);
     }
+}

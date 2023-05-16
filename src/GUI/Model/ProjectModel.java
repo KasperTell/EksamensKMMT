@@ -11,6 +11,7 @@ public class ProjectModel {
 
     private ObservableList<Project> projectsOpen;
     private ObservableList<Project> projectClose;
+    private ObservableList<Project> allTechniciansProject;
     private ProjectManager projectManager;
     private ObservableList<Project> searchedProjects;
     private String projectTitle;
@@ -27,6 +28,7 @@ public class ProjectModel {
         projectsOpen.addAll(projectManager.loadProjectOfAType(true));
         projectClose.addAll(projectManager.loadProjectOfAType(false));
         searchedProjects = FXCollections.observableArrayList();
+        allTechniciansProject = FXCollections.observableArrayList();
     }
 
     /**
@@ -88,6 +90,9 @@ public void clearLists() throws Exception {
     projectsOpen.addAll(projectManager.loadProjectOfAType(true));
 }
 
-
-
+    public ObservableList<Project> getAllTechniciansProject(int technicianID) throws SQLException {
+        allTechniciansProject.clear();
+        allTechniciansProject.addAll(projectManager.allProjectsForTechnician(technicianID));
+        return allTechniciansProject;
+    }
 }
