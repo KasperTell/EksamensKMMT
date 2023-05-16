@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 public class ProjectFiles {
 
-private int id, projectID;
+private int id, projectID,rank;
 private String filePath,name;
 private LocalDate date;
 private ImageView picture;
@@ -23,7 +23,7 @@ private CheckBox usedBox;
      * @param picture
      * @param usedBox
      */
-    public ProjectFiles(int id, int projectID, String name, String filePath, LocalDate date,  ImageView picture, CheckBox usedBox) {
+    public ProjectFiles(int id, int projectID, String name, String filePath, LocalDate date,  ImageView picture, CheckBox usedBox, int rank) {
         this.id = id;
         this.projectID = projectID;
         this.name=name;
@@ -31,12 +31,23 @@ private CheckBox usedBox;
         this.date = date;
         this.picture = picture;
         this.usedBox = usedBox;
+        this.rank=rank;
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 
     /**
      * Getters and setters for the entire class.
      * @return
      */
+
+
     public int getId() {
         return id;
     }

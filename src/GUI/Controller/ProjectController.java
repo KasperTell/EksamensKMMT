@@ -1,6 +1,7 @@
 package GUI.Controller;
 
 import BE.*;
+import DAL.FilesDAO;
 import GUI.Model.*;
 import UTIL.CustomerPdf;
 import UTIL.ShowFile;
@@ -131,10 +132,9 @@ public class ProjectController extends BaseController {
                         // Load the image file into the filesPreviewImageView
                         String fileUrl = selectedfile.getFilePath();
                         String imageUrl = fileUrl.substring(10);
-                        System.out.println(imageUrl);
                         Image image = new Image(imageUrl);
                         filesPreviewImageView.setImage(image);
-                        System.out.println(selectedfile.getFilePath());
+
                     }
                 } catch (Exception e) {
                     displayError(e);
@@ -241,17 +241,16 @@ public class ProjectController extends BaseController {
             }
 
             String filename=file.toPath().getFileName().toString();
-            System.out.println(filename);
             LocalDate saveDate= LocalDate.now();
 
 
 
+            FilesDAO filesDAO=new FilesDAO();
 
-            projectFilesModel.fileLoopStop();
 
-            ProjectFiles projectFiles=new ProjectFiles(1,selectedProject.getId(),filename ,"Resources/Pictures/ImagesSavedFromTechnicians/"+filename,saveDate,null,null);
+            ProjectFiles projectFiles=new ProjectFiles(1,selectedProject.getId(),filename ,"Resources/Pictures/ImagesSavedFromTechnicians/"+filename,saveDate,null,null,filesDAO.getFileAmount()+1);
             projectFilesModel.createNewFile(projectFiles);
-            projectFilesModel.observer();
+
         }
     }
 

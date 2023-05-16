@@ -2,6 +2,7 @@ package GUI.Controller;
 
 import BE.Project;
 import BE.ProjectFiles;
+import DAL.FilesDAO;
 import GUI.Model.ProjectFilesModel;
 import GUI.Model.ProjectModel;
 import javafx.embed.swing.SwingFXUtils;
@@ -146,7 +147,9 @@ public class PaintController extends BaseController {
         WritableImage picture = c.snapshot(null, null);
         ImageIO.write(SwingFXUtils.fromFXImage(picture, null), "png", new File(path.toUri()));
 
-        ProjectFiles fileToSave = new ProjectFiles(1, id, name, filepath, date, null, null);
+        FilesDAO filesDAO=new FilesDAO();
+
+        ProjectFiles fileToSave = new ProjectFiles(1, id, name, filepath, date, null, null,filesDAO.getFileAmount()+1);
 
         projectFilesModel.createNewFile(fileToSave);
 

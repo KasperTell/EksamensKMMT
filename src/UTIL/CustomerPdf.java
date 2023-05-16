@@ -13,6 +13,8 @@ import com.itextpdf.layout.properties.TextAlignment;
 
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -123,6 +125,8 @@ public class CustomerPdf {
     private void page4() throws MalformedURLException {
 
         for (int i = 0; i < imagePath.size(); i++) {
+
+            if (Files.exists(Path.of(imagePath.get(i)))) //check om filen eksisterer
             insertPictureOnNewPage(imagePath.get(i));
         }
     }
@@ -141,7 +145,7 @@ public class CustomerPdf {
         else
             for (int i = 0; i < tekst.length; i++) {
                 table2.addCell(new Cell().add(new Paragraph(tekst[i])).setFontSize(textSize).setTextAlignment(TextAlignment.RIGHT).setBorder(Border.NO_BORDER));
-                System.out.println(tekst[i]);
+
 
 
             }

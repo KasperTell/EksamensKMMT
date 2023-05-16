@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 
 public class ProjectFilesModel {
@@ -22,6 +23,8 @@ public class ProjectFilesModel {
 
     private int runs=0;
 private int number=0 ;
+
+
 
     /**
      * Constructor for the class "ProjectFilesModel".
@@ -52,9 +55,9 @@ private int number=0 ;
      */
     public void observer()
     {
+         ArrayList<Boolean> oldSelected= new ArrayList<>();
+        number=0;
 
-        boolean[] oldSelected= new boolean[projectFiles.getSize()];
-        System.out.println(projectFiles.getSize());
 
         Thread t = new Thread(() ->
         {
@@ -64,36 +67,62 @@ private int number=0 ;
                 while (isRunning) {
 
 
+                    if (projectFiles.size()!=oldSelected.size())
+                        {
+                            oldSelected.clear();
+                           runs=0;
+                        }
+
+
                     for (ProjectFiles tjek : projectFiles) { //Her gennemløbes hele projectFiles linje for linje
 
+
                         if (tjek.getUsedBox().isSelected())
-
                         {
+
+
                             if (runs==0)                    //Vi vil sammenligne data fra projectfiles med et oldselection arkiv. I første omgang gemmes i oldselection til sammenligning senere.
-                                oldSelected[number]=true;
+                            {
+                                oldSelected.add(number,true);
 
-
-                                if ( oldSelected[number]==false)        //Hvis gamle værdi er false og ny er true. Så er der sket en ændring som skal gemmes.
-                                updateDataBase(true, tjek.getId()); //Kalder updateringsmetoden
-
-                                oldSelected[number]=true;
                             }
-                         else {
+
+                                if ( oldSelected.get(number)==false)        //Hvis gamle værdi er false og ny er true. Så er der sket en ændring som skal gemmes.
+                                {
+                                    updateDataBase(true, tjek.getId()); //Kalder updateringsmetoden
+                                    oldSelected.set(number,true);
+                                }
+
+                            }
+
+                        else {
 
                             if (runs==0)
-                                oldSelected[number]=false;
 
-                            if ( oldSelected[number]==true)
-                            updateDataBase(false, tjek.getId());
+                            {
+                                oldSelected.add(number,false);
 
-                            oldSelected[number]=false;
+                            }
+
+                            if ( oldSelected.get(number)==true)
+                            {
+
+                                updateDataBase(false, tjek.getId());
+                                oldSelected.set(number,false);
+                            }
+
                             }
 
                             number++;
+
+
                          if (number==projectFiles.getSize())
-                             number=0;
-                             runs++;
+                             number = 0;
+
+
                     }
+                        runs++;
+
                     try {
                         Thread.sleep(1000);
 
@@ -110,7 +139,7 @@ private int number=0 ;
         t.setDaemon(true); //I mark the thread as a daemon thread, so  its terminated when I exit the app.
         t.start();
 
-        System.out.println("stop");
+
         }
 
     /**

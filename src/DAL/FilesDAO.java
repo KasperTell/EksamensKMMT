@@ -17,6 +17,8 @@ import java.util.List;
 
 public class FilesDAO implements iFileDataAccess {
 
+    static int fileAmount=0;
+
     private DatabaseConnector databaseConnector;
 
     /**
@@ -36,6 +38,7 @@ public class FilesDAO implements iFileDataAccess {
         ArrayList<ProjectFiles> loadFilesFromAProject = new ArrayList<>();
         ImageView picture;
         ImageViewKlient pictureFrame = null;
+
         //SQL query
         String sql = "SELECT * FROM ProjectFile WHERE ProjectID =?";
 
@@ -54,7 +57,10 @@ public class FilesDAO implements iFileDataAccess {
                 String filePath = rs.getString("FilePath");
                 LocalDate date = rs.getDate("Date").toLocalDate();
                 byte usedInDoc = rs.getByte("usedInDoc");
+                int rank = rs.getByte("OrderFiles");
 
+
+                fileAmount++;
 
                 String filetype = filePath.substring(filePath.length() - 4, filePath.length());
 
@@ -73,6 +79,7 @@ public class FilesDAO implements iFileDataAccess {
 
                 }
 
+
                 picture = pictureFrame.getImageView();
 
                 //Creating the checkbox and set it as empty.
@@ -83,7 +90,8 @@ public class FilesDAO implements iFileDataAccess {
                     checkBox.setSelected(true);
 
 
-                ProjectFiles files = new ProjectFiles(id, projectID1, name, filePath, date, picture, checkBox);
+
+                ProjectFiles files = new ProjectFiles(id, projectID1, name, filePath, date, picture, checkBox,rank);
 
                 loadFilesFromAProject.add(files);
             }
@@ -131,7 +139,7 @@ public class FilesDAO implements iFileDataAccess {
 
     public ProjectFiles createNewFile(ProjectFiles file) throws SQLException {
         //SQL Query
-        String sql = "INSERT INTO ProjectFile(ProjectID, Name, FilePath, Date, UsedInDoc) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO ProjectFile(ProjectID, Name, FilePath, Date, UsedInDoc,OrderFiles) VALUES (?,?,?,?,?,?)";
         //Getting connection to the database.
         try(Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -141,6 +149,7 @@ public class FilesDAO implements iFileDataAccess {
             stmt.setString(3, file.getFilePath());
             stmt.setDate(4, Date.valueOf(file.getDate()));
             stmt.setInt(5, 0);
+            stmt.setInt(6, file.getRank());
             stmt.execute();
 
             ResultSet rs = stmt.getGeneratedKeys();
@@ -166,6 +175,10 @@ public class FilesDAO implements iFileDataAccess {
             ex.printStackTrace();
             throw new SQLException("Could not delete the file from the database", ex);
         }
+    }
+
+    public int getFileAmount() {
+        return fileAmount;
     }
 }
 
