@@ -1,5 +1,7 @@
 package PersonsTypes;
 
+import java.util.HashMap;
+
 public class ProjectManager implements IPersonTypes{
 
     @Override
@@ -13,10 +15,24 @@ public class ProjectManager implements IPersonTypes{
     }
 
     @Override
-    public Boolean[] turnButtonOnOrOff() {
+    public HashMap<String, Boolean> turnButtonOnOrOff() {
+
+        HashMap<String, Boolean> buttonOnOrOff = new HashMap<>();
+
+        buttonOnOrOff.put("closeProjectButton", false);
+        buttonOnOrOff.put("reOpenProjectButton", false);
+        buttonOnOrOff.put("newProjectButton", false);
+        buttonOnOrOff.put("newCustomerButton", false);
+        buttonOnOrOff.put("openProjectWindowButton", false);
+        buttonOnOrOff.put("openUserWindowButton", false);
+        buttonOnOrOff.put("closedProjectsTable", false);
 
 
-        Boolean[] buttonOnOrOff={false,false,false,false,false,false,false,false,false,false,false};
+
+
+
+
+
 
         return buttonOnOrOff;
     }

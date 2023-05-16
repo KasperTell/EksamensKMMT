@@ -23,6 +23,7 @@ import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.HashMap;
 
 public class NyController extends BaseController {
 
@@ -130,15 +131,18 @@ public class NyController extends BaseController {
 
     private void turnButtonONOrOff() {
 
-        Boolean[] turnButtonOnOrOff = personTypeChooser.turnButtonOnOrOff();
+        HashMap<String, Boolean> turnButtonOnOrOff = personTypeChooser.turnButtonOnOrOff();
 
-        closeProjectButton.setDisable(turnButtonOnOrOff[0]);
-        reOpenProjectButton.setDisable(turnButtonOnOrOff[1]);
-        newProjectButton.setDisable(turnButtonOnOrOff[5]);
-        newCustomerButton.setDisable(turnButtonOnOrOff[8]);
+
+        closeProjectButton.setDisable(turnButtonOnOrOff.get("closeProjectButton"));
+        reOpenProjectButton.setDisable(turnButtonOnOrOff.get("reOpenProjectButton"));
+        newProjectButton.setDisable(turnButtonOnOrOff.get("newProjectButton"));
+        newCustomerButton.setDisable(turnButtonOnOrOff.get("newCustomerButton"));
+        openProjectWindowButton.setDisable(turnButtonOnOrOff.get("openProjectWindowButton"));
+        openUserWindowButton.setDisable(turnButtonOnOrOff.get("openUserWindowButton"));
+        closedProjectsTable.setDisable(turnButtonOnOrOff.get("closedProjectsTable"));
+       
     }
-
-
     /**
      * Listener for the tableview containing files for opening files.
      */

@@ -107,7 +107,7 @@ public class MainController extends BaseController {
         lstSalesPersons.setItems(userModel.getallSalesmen());
         cbxCustomer.setItems(customerModel.getAllCustomers());
         cbxRoles.setItems(userModel.getAllRoles());
-        turnButtonONOrOff();
+        //turnButtonONOrOff();
         setProjectColumns();
         listenerLstAllCloseProjects();
         listenerLstAllOpenProjects();
@@ -630,23 +630,23 @@ public class MainController extends BaseController {
     /**
      *
      */
-    private void turnButtonONOrOff() {
-
-        Boolean[] turnButtonOnOrOff = personTypeChooser.turnButtonOnOrOff();
-
-        closeProject.setDisable(turnButtonOnOrOff[0]);
-        reOpenProject.setDisable(turnButtonOnOrOff[1]);
-        //openFile.setDisable(turnButtonOnOrOff[2]);
-        btnSaveNewFile.setDisable(turnButtonOnOrOff[3]);
-        saveNote.setDisable(turnButtonOnOrOff[4]);
-        newProject.setDisable(turnButtonOnOrOff[5]);
-        newUser.setDisable(turnButtonOnOrOff[6]);
-        removeUser.setDisable(turnButtonOnOrOff[7]);
-        newCustomer.setDisable(turnButtonOnOrOff[8]);
-        addTechnician.setDisable(turnButtonOnOrOff[9]);
-        removeTechnician.setDisable(turnButtonOnOrOff[10]);
-
-    }
+//    private void turnButtonONOrOff() {
+//
+//        Boolean[] turnButtonOnOrOff = personTypeChooser.turnButtonOnOrOff();
+//
+//        closeProject.setDisable(turnButtonOnOrOff[0]);
+//        reOpenProject.setDisable(turnButtonOnOrOff[1]);
+//        //openFile.setDisable(turnButtonOnOrOff[2]);
+//        btnSaveNewFile.setDisable(turnButtonOnOrOff[3]);
+//        saveNote.setDisable(turnButtonOnOrOff[4]);
+//        newProject.setDisable(turnButtonOnOrOff[5]);
+//        newUser.setDisable(turnButtonOnOrOff[6]);
+//        removeUser.setDisable(turnButtonOnOrOff[7]);
+//        newCustomer.setDisable(turnButtonOnOrOff[8]);
+//        addTechnician.setDisable(turnButtonOnOrOff[9]);
+//        removeTechnician.setDisable(turnButtonOnOrOff[10]);
+//
+//    }
 
     /**
      * Handle what happens when the "Add new project" button is clicked.

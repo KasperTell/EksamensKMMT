@@ -1,6 +1,8 @@
 package PersonsTypes;
 
 
+import java.util.HashMap;
+
 public class PersonTypeChooser {
 
     public static PersonTypesKlient personTypes;
@@ -39,9 +41,13 @@ public class PersonTypeChooser {
 
     }
 
-    public Boolean[] turnButtonOnOrOff()
+    public HashMap<String, Boolean> turnButtonOnOrOff()
     {
+
+        HashMap<String, Boolean> sss=personTypes.turnButtonOnOrOff();
+
         return personTypes.turnButtonOnOrOff();
+
 
     }
 }
