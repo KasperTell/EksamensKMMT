@@ -21,6 +21,8 @@ import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -70,6 +72,8 @@ public class NyController extends BaseController {
     private boolean isMenuOpen;
     private int projectNumber;
     private boolean onOpenProjectList;
+
+    ShowFile showFile=new ShowFile();
 
     PersonTypeChooser personTypeChooser = new PersonTypeChooser();
 
@@ -442,17 +446,23 @@ public class NyController extends BaseController {
         }
     }
 
-    public void handleOpenProjectWindow(ActionEvent actionEvent) throws Exception {
-        projectModel.setSelectedProject(openProjectsTable.getSelectionModel().getSelectedItem());
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindue2.fxml"));
-        AnchorPane pane = loader.load();
-        pane.getStylesheets().add("/GUI/View/ProjectManager/managerView.css");
-        mainViewAnchorPane.getChildren().setAll(pane);
+    public void handleOpenProjectWindow() throws Exception {
 
-        controller = loader.getController();
-        controller.setModel(super.getModel());
-        controller.setup();
+        if (selectedProject!=null)
+        {
+            projectModel.setSelectedProject(openProjectsTable.getSelectionModel().getSelectedItem());
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindue2.fxml"));
+            AnchorPane pane = loader.load();
+            pane.getStylesheets().add("/GUI/View/ProjectManager/managerView.css");
+            mainViewAnchorPane.getChildren().setAll(pane);
+
+            controller = loader.getController();
+            controller.setModel(super.getModel());
+            controller.setup();
+        }
+
+
     }
 
     public void handleOpenUserWindow(ActionEvent actionEvent) throws Exception {
@@ -472,8 +482,17 @@ public class NyController extends BaseController {
 
         String path = "Resources/PDF/"+selectedProject.getCompanyName()+ " "+selectedProject.getTitle()+" installations dokumentation.pdf";
 
-        ShowFile showFile=new ShowFile();
-        showFile.showFile(path);
+        if (Files.exists(Path.of(path)))
+        {
+
+            showFile.showFile(path);
+        }
+        else
+        {
+
+            showFile.showErrorBox("PDF does not exit", "File message");
+        }
+
 
 
 

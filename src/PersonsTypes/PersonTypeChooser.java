@@ -50,4 +50,17 @@ public class PersonTypeChooser {
 
 
     }
+
+    public Boolean enableTab()
+    {
+        return personTypes.enableTab();
+
+    }
+
+
+
+
+
+
+
 }

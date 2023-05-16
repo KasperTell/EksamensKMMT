@@ -13,4 +13,7 @@ public interface IPersonTypes {
     HashMap<String, Boolean> turnButtonOnOrOff();
 
 
+     Boolean enableTab();
+
+
 }

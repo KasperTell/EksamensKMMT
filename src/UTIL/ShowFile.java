@@ -1,5 +1,7 @@
 package UTIL;
 
+import javafx.scene.control.Alert;
+
 import java.awt.*;
 import java.io.File;
 import java.nio.file.Files;
@@ -20,6 +22,22 @@ public class ShowFile {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void showErrorBox(String errorMessage, String title)
+    {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setTitle(title);
+        info.setHeaderText(errorMessage);
+        info.showAndWait();
+
+    }
+
+    private void alertUser(String errorMessage,String title){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(errorMessage);
+        alert.showAndWait();
     }
 
 

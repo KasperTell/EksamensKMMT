@@ -1,5 +1,9 @@
 package PersonsTypes;
 
+import GUI.Controller.NyController;
+
+import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 
 public class Technician implements IPersonTypes{
@@ -11,7 +15,7 @@ public class Technician implements IPersonTypes{
 
     @Override
     public String getViewCss() {
-        return "/GUI/View/technician/TechView.css";
+        return "/GUI/View/technician/TechView1.css";
     }
 
     public HashMap<String, Boolean> turnButtonOnOrOff() {
@@ -29,4 +33,12 @@ public class Technician implements IPersonTypes{
         return buttonOnOrOff;
     }
 
-}
+    public Boolean enableTab() {
+        return true;
+    }
+
+
+    }
+
+
+

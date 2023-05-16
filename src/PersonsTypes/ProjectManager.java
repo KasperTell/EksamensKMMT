@@ -27,13 +27,15 @@ public class ProjectManager implements IPersonTypes{
         buttonOnOrOff.put("openUserWindowButton", false);
         buttonOnOrOff.put("closedProjectsTable", false);
 
-
-
-
-
-
-
-
         return buttonOnOrOff;
     }
+
+    public Boolean enableTab() {
+        return false;
+    }
+
+
+
+
+
 }

@@ -177,6 +177,7 @@ public class CustomerPdf {
 
         Table note = new Table(oneColumnWidth);
 
+       if (noteString!=null)
         note.addCell(new Cell().add(new Paragraph(noteString).setFontSize(12f)).setBorder(Border.NO_BORDER));
 
         document.add(note);

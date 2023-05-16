@@ -3,6 +3,7 @@ package GUI.Controller;
 import BE.*;
 import DAL.FilesDAO;
 import GUI.Model.*;
+import PersonsTypes.PersonTypeChooser;
 import UTIL.CustomerPdf;
 import UTIL.ShowFile;
 import javafx.event.ActionEvent;
@@ -69,6 +70,8 @@ public class ProjectController extends BaseController {
     private ProjectFilesModel projectFilesModel;
     private ProjectModel projectModel;
 
+    private ShowFile showFile=new ShowFile();
+
     /**
      * Set up the view when the view is getting shown.
      */
@@ -85,6 +88,7 @@ public class ProjectController extends BaseController {
         setupFiles();
         pictureToButton();
         setInformation();
+        enableDisableTab();
     }
 
     private void setInformation() {
@@ -117,6 +121,13 @@ public class ProjectController extends BaseController {
         }
     }
 
+    private void enableDisableTab()
+    {
+        PersonTypeChooser personTypeChooser=new PersonTypeChooser();
+        techsTab.setDisable(personTypeChooser.enableTab());
+    }
+
+
 
     /**
      * Listener for the tableview containing files for opening files.
@@ -132,8 +143,17 @@ public class ProjectController extends BaseController {
                         // Load the image file into the filesPreviewImageView
                         String fileUrl = selectedfile.getFilePath();
                         String imageUrl = fileUrl.substring(10);
-                        Image image = new Image(imageUrl);
-                        filesPreviewImageView.setImage(image);
+
+                        if (Files.exists(Path.of(fileUrl))) //check om filen eksisterer
+                        {
+                            Image image = new Image(imageUrl);
+                            filesPreviewImageView.setImage(image);
+                        }
+                        else
+                        {
+                        showFile.showErrorBox("File does not exits","File message");
+                        }
+
 
                     }
                 } catch (Exception e) {
@@ -142,7 +162,6 @@ public class ProjectController extends BaseController {
                 }
 
             if (event.getClickCount() == 2) {
-                ShowFile showFile=new ShowFile();
                 showFile.showFile(selectedfile.getFilePath());
                     }
         });

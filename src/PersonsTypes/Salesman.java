@@ -1,5 +1,7 @@
 package PersonsTypes;
 
+import GUI.Controller.NyController;
+
 import java.util.HashMap;
 
 public class Salesman implements IPersonTypes{
@@ -10,7 +12,7 @@ public class Salesman implements IPersonTypes{
 
     @Override
     public String getViewCss() {
-        return "/GUI/View/Salesman/SalesView.css";
+        return "/GUI/View/Salesman/SalesView1.css";
     }
 
     public HashMap<String, Boolean> turnButtonOnOrOff() {
@@ -26,8 +28,14 @@ public class Salesman implements IPersonTypes{
         buttonOnOrOff.put("closedProjectsTable", false);
 
 
-
-
         return buttonOnOrOff;
     }
+
+    public Boolean enableTab() {
+        return true;
+    }
+
+
+
+
 }

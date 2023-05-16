@@ -30,13 +30,16 @@ public class PersonTypesKlient {
 
 
     public HashMap<String, Boolean> turnButtonOnOrOff() {
-
-
-
-
-
         return iPersonTypes.turnButtonOnOrOff();
     }
+
+
+    public Boolean enableTab()
+    {
+        return iPersonTypes.enableTab();
+
+    }
+
 
 
 }
