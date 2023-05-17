@@ -44,10 +44,9 @@ public class ProjectFilesManager {
     public void updateFileOrder (int OrderFiles, int id) throws  SQLException {
         filesDAO.updateFileOrder(OrderFiles, id);
     }
-    /*
+
     public void updateFileOrders(int selectedFileId, int fileToMoveId, int selectedFileNewOrder, int fileToMoveNewOrder) throws SQLException {
         filesDAO.updateFileOrders(selectedFileId, fileToMoveId, selectedFileNewOrder, fileToMoveNewOrder);
-        filesDAO.updateFileOrders(selectedFileId, fileToMoveId, selectedFileNewOrder, fileToMoveNewOrder);
     }
-    */
+
 }

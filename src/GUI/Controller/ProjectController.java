@@ -6,6 +6,7 @@ import GUI.Model.*;
 import UTIL.CustomerPdf;
 import UTIL.ShowFile;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,6 +33,7 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.function.Function;
 
@@ -193,9 +195,9 @@ public class ProjectController extends BaseController {
             e.printStackTrace();
         }
     }
-    public ProjectController(ProjectFilesModel projectFilesModel) {
-        this.projectFilesModel = projectFilesModel;
-    }
+
+
+
     /**
      * Set up the information about the customer in the main view when a project is selected.
      */
@@ -339,7 +341,7 @@ public class ProjectController extends BaseController {
         }
     }
 
-/*
+
     public void handleMoveUp(ActionEvent actionEvent) throws Exception {
         int selectedIndex = fileTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex > 0) {
@@ -350,6 +352,7 @@ public class ProjectController extends BaseController {
             selectedFileNewOrder = fileTable.getItems().get(selectedIndex - 1).getOrderFiles();
             fileToMoveNewOrder = fileTable.getItems().get(selectedIndex).getOrderFiles();
             updateDataBaseWithNewOrder();
+            fileTable.refresh(); // update the UI
         }
     }
 
@@ -363,17 +366,16 @@ public class ProjectController extends BaseController {
             selectedFileNewOrder = fileTable.getItems().get(selectedIndex + 1).getOrderFiles();
             fileToMoveNewOrder = fileTable.getItems().get(selectedIndex).getOrderFiles();
             updateDataBaseWithNewOrder();
+
+            fileTable.refresh(); // update the UI
         }
     }
-
     private void updateDataBaseWithNewOrder() throws Exception {
-        projectFilesModel.updateFileOrders(selectedFileId, fileToMoveId, selectedFileNewOrder, fileToMoveNewOrder);
+        // Update the order of the selected file with the order of the file to move
+        projectFilesModel.updateFileOrders(selectedFileId,fileToMoveId,selectedFileNewOrder,fileToMoveNewOrder);
+        // Update the order of the file to move with the order of the selected file
+        projectFilesModel.updateFileOrders(selectedFileId,fileToMoveId,selectedFileNewOrder,fileToMoveNewOrder);
+
     }
-
- */
-
-
-
-
 
 }

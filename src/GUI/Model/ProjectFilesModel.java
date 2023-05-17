@@ -9,6 +9,8 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.Comparator;
+
 
 public class ProjectFilesModel {
 
@@ -20,8 +22,9 @@ public class ProjectFilesModel {
     private ProjectFiles createdFile;
 
     private int runs=0;
-private int number=0 ;
-    //private iFileDataAccess fileDataAccess;
+    private int number=0 ;
+
+    private iFileDataAccess fileDataAccess;
     /**
      * Constructor for the class "ProjectFilesModel".
      * @throws Exception
@@ -38,14 +41,15 @@ private int number=0 ;
 
     /**
      * get the list of ProjectFiles.
-     * @param projectID
+     * @param projectId
      * @return
      * @throws Exception
      */
-    public ObservableList<ProjectFiles> getAllFilesFromProject(int projectID) throws Exception {
 
+
+    public ObservableList<ProjectFiles> getAllFilesFromProject(int projectId) throws Exception {
         projectFiles.clear();
-        projectFiles.set(FXCollections.observableArrayList(projectFilesManager.loadFilesFromAProject(projectID)));
+        projectFiles.set(FXCollections.observableArrayList(projectFilesManager.loadFilesFromAProject(projectId)));
         return projectFiles;
     }
 
@@ -153,18 +157,15 @@ private int number=0 ;
     public void updateFileOrder (int OrderFiles, ProjectFiles file, int id) throws Exception {
         projectFiles.clear();
         projectFiles.set(FXCollections.observableArrayList(projectFilesManager.loadFilesFromAProject(file.getProjectID())));
-       projectFilesManager.updateFileOrder(OrderFiles, file.getId());
+        projectFilesManager.updateFileOrder(OrderFiles, file.getId());
 
     }
-/*
+
     public void updateFileOrders(int selectedFileId, int fileToMoveId, int selectedFileNewOrder, int fileToMoveNewOrder) throws Exception{
-        fileDataAccess.updateFileOrder(selectedFileId, selectedFileNewOrder);
-        fileDataAccess.updateFileOrder(fileToMoveId, fileToMoveNewOrder);
+        projectFiles.clear();
+        projectFiles.set(FXCollections.observableArrayList(projectFilesManager.loadFilesFromAProject(selectedFileId)));
+        projectFilesManager.updateFileOrders(selectedFileId, fileToMoveId,  selectedFileNewOrder, fileToMoveNewOrder);
+        //projectFilesManager.updateFileOrders(selectedFileId, fileToMoveId, selectedFileNewOrder, fileToMoveNewOrder);
     }
-
- */
-
-
-
 }
 

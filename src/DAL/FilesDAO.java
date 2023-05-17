@@ -186,7 +186,7 @@ public class FilesDAO implements iFileDataAccess {
             throw new SQLException("Could not update the file order in the database", ex);
         }
     }
-/*
+
     public void updateFileOrders(int selectedFileId, int fileToMoveId, int selectedFileNewOrder, int fileToMoveNewOrder) throws SQLException {
         String sql = ("UPDATE ProjectFile SET OrderFiles = ? WHERE ID = ?");
         try (Connection conn = databaseConnector.getConnection()) {
@@ -205,7 +205,7 @@ public class FilesDAO implements iFileDataAccess {
 
     }
 
- */
+
 }
 
 
