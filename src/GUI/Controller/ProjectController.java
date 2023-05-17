@@ -343,6 +343,15 @@ public class ProjectController extends BaseController {
 
 
     public void handleMoveUp(ActionEvent actionEvent) throws Exception {
+        try {
+            projectFilesModel.moveFile(true);
+            // Refresh the UI to reflect the new file order
+            fileTable.refresh();
+        } catch (Exception e) {
+            displayError(e);
+            e.printStackTrace();
+        }
+        /*
         int selectedIndex = fileTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex > 0) {
             Collections.swap(fileTable.getItems(), selectedIndex, selectedIndex - 1);
@@ -351,12 +360,24 @@ public class ProjectController extends BaseController {
             fileToMoveId = fileTable.getItems().get(selectedIndex).getId();
             selectedFileNewOrder = fileTable.getItems().get(selectedIndex - 1).getOrderFiles();
             fileToMoveNewOrder = fileTable.getItems().get(selectedIndex).getOrderFiles();
+
             updateDataBaseWithNewOrder();
             fileTable.refresh(); // update the UI
         }
+
+         */
     }
 
     public void handleMoveDown(ActionEvent actionEvent) throws Exception {
+        try {
+            projectFilesModel.moveFile(false);
+            // Refresh the UI to reflect the new file order
+            fileTable.refresh();
+        } catch (Exception e) {
+            displayError(e);
+            e.printStackTrace();
+        }
+        /*
         int selectedIndex = fileTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex < fileTable.getItems().size() - 1) {
             Collections.swap(fileTable.getItems(), selectedIndex, selectedIndex + 1);
@@ -369,7 +390,10 @@ public class ProjectController extends BaseController {
 
             fileTable.refresh(); // update the UI
         }
+
+         */
     }
+    /*
     private void updateDataBaseWithNewOrder() throws Exception {
         // Update the order of the selected file with the order of the file to move
         projectFilesModel.updateFileOrders(selectedFileId,fileToMoveId,selectedFileNewOrder,fileToMoveNewOrder);
@@ -377,5 +401,7 @@ public class ProjectController extends BaseController {
         projectFilesModel.updateFileOrders(selectedFileId,fileToMoveId,selectedFileNewOrder,fileToMoveNewOrder);
 
     }
+
+     */
 
 }

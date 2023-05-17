@@ -25,6 +25,9 @@ public class ProjectFilesModel {
     private int number=0 ;
 
     private iFileDataAccess fileDataAccess;
+    private static int selectedProjectId;
+    private static ProjectFiles selectedFile;
+
     /**
      * Constructor for the class "ProjectFilesModel".
      * @throws Exception
@@ -154,6 +157,7 @@ public class ProjectFilesModel {
         projectFiles.set(FXCollections.observableArrayList(projectFilesManager.loadFilesFromAProject(file.getProjectID())));
         projectFilesManager.deleteFile(file);
     }
+    /*
     public void updateFileOrder (int OrderFiles, ProjectFiles file, int id) throws Exception {
         projectFiles.clear();
         projectFiles.set(FXCollections.observableArrayList(projectFilesManager.loadFilesFromAProject(file.getProjectID())));
@@ -167,5 +171,14 @@ public class ProjectFilesModel {
         projectFilesManager.updateFileOrders(selectedFileId, fileToMoveId,  selectedFileNewOrder, fileToMoveNewOrder);
         //projectFilesManager.updateFileOrders(selectedFileId, fileToMoveId, selectedFileNewOrder, fileToMoveNewOrder);
     }
+     */
+    public void moveFile(Boolean moveUp) throws Exception {
+        projectFilesManager.moveFile(selectedProjectId, selectedFile, moveUp);
+        projectFiles.clear();
+        projectFiles.addAll(projectFilesManager.loadFilesFromAProject(selectedProjectId));
+    }
+
+
+
 }
 

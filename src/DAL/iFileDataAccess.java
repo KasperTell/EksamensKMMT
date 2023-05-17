@@ -12,7 +12,9 @@ public interface iFileDataAccess {
     ProjectFiles createNewFile(ProjectFiles file) throws SQLException;
     void deleteFile(ProjectFiles file) throws SQLException;
 
-    void updateFileOrder (int OrderFiles, int id) throws SQLException;
+    //void updateFileOrder (int OrderFiles, int id) throws SQLException;
 
-    void updateFileOrders(int selectedFileId, int fileToMoveId, int selectedFileNewOrder, int fileToMoveNewOrder) throws SQLException;
+    //void updateFileOrders(int selectedFileId, int fileToMoveId, int selectedFileNewOrder, int fileToMoveNewOrder) throws SQLException;
+
+    void moveFile(int projectId, ProjectFiles file, Boolean moveUp) throws Exception;
 }

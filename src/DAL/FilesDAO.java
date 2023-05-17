@@ -6,9 +6,10 @@ import DAL.PictureClasses.LilleJpeg;
 import DAL.PictureClasses.LilleJpg;
 import DAL.PictureClasses.LillePng;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import javafx.collections.FXCollections;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.ImageView;
-
+import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
@@ -173,7 +174,7 @@ public class FilesDAO implements iFileDataAccess {
             throw new SQLException("Could not delete the file from the database", ex);
         }
     }
-
+/*
     public void updateFileOrder(int OrderFiles, int id) throws SQLException {
         String sql = "UPDATE ProjectFile SET OrderFiles = ? WHERE ID = ?";
         try (Connection conn = databaseConnector.getConnection()) {
@@ -187,22 +188,76 @@ public class FilesDAO implements iFileDataAccess {
         }
     }
 
-    public void updateFileOrders(int selectedFileId, int fileToMoveId, int selectedFileNewOrder, int fileToMoveNewOrder) throws SQLException {
-        String sql = ("UPDATE ProjectFile SET OrderFiles = ? WHERE ID = ?");
+ */
+
+    public void moveFile(int projectId, ProjectFiles file, Boolean moveUp) throws Exception {
+        List<ProjectFiles> fileList = loadFilesFromAProject(projectId);
+        int fileIndex = fileList.indexOf(file);
+        // Add null check for file object
+        if (file == null) {
+            throw new Exception("File object is null");
+        }
+        int fileId = file.getId();
+        // Get the File object
+        File fileObj = new File(file.getFilePath());
+        // The chosen file gets moved up
+        if (moveUp && fileIndex != 0) {
+            int previousFileIndex = fileIndex - 1;
+            ProjectFiles previousFile = fileList.get(previousFileIndex);
+            int previousFileId = previousFile.getId();
+            // Get the previous file's File object
+            File previousFileObj = new File(previousFile.getFilePath());
+            swapFilePlacement(projectId, fileId, previousFileId, file.getOrderFiles(), previousFile.getOrderFiles() + 1);
+            fileList.set(fileIndex, previousFile);
+            fileList.set(previousFileIndex, file);
+        }
+        // The chosen file gets moved down
+        if (!moveUp && (fileIndex + 1) != fileList.size()) {
+            int nextFileIndex = fileIndex + 1;
+            ProjectFiles nextFile = fileList.get(nextFileIndex);
+            int nextFileId = nextFile.getId();
+            // Get the next file's File object
+            File nextFileObj = new File(nextFile.getFilePath());
+            swapFilePlacement(projectId, fileId, nextFileId, file.getOrderFiles(), nextFile.getOrderFiles() - 1);
+            fileList.set(fileIndex, nextFile);
+            fileList.set(nextFileIndex, file);
+        }
+    }
+
+    public void swapFilePlacement1(int projectId, int selectedFileId, int fileToMoveId, int selectedFileNewOrder, int fileToMoveNewOrder) throws SQLException {
+        String sql = "UPDATE ProjectFile SET OrderFiles = ? WHERE ProjectID = ? AND ID = ?;";
+        try (Connection connection = databaseConnector.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            // Update the order of the selected file with the order of the file to move
+            statement.setInt(1, selectedFileNewOrder);
+            statement.setInt(2, projectId);
+            statement.setInt(3, selectedFileId);
+            statement.executeUpdate();
+            // Update the order of the file to move with the order of the selected file
+            statement.setInt(1, fileToMoveNewOrder);
+            statement.setInt(2, projectId);
+            statement.setInt(3, fileToMoveId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Failed to swap file", e);
+        }
+    }
+    public void swapFilePlacement(int projectId, int fileId, int targetFileId, int fileOrder, int targetFileOrder) throws Exception {
+       String sql = "UPDATE ProjectFile SET OrderFiles = ?, updated_at = NOW() WHERE ProjectID = ? AND ID = ?";
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, selectedFileNewOrder);
-            stmt.setInt(2, selectedFileId);
+            stmt.setInt(1, targetFileOrder);
+            stmt.setInt(2, projectId);
+            stmt.setInt(3, fileId);
             stmt.executeUpdate();
-            stmt.setInt(1, fileToMoveNewOrder);
-            stmt.setInt(2, fileToMoveId);
+            stmt.setInt(1, fileOrder);
+            stmt.setInt(2, projectId);
+            stmt.setInt(3, targetFileId);
             stmt.executeUpdate();
-            conn.commit();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            throw new SQLException("Could not update the file order in the database", ex);
+        } catch (SQLException e) {
+            throw new Exception("Error updating file order", e);
         }
-
     }
 
 
