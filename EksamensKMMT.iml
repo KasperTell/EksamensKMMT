@@ -12,5 +12,6 @@
     <orderEntry type="library" name="mindrot.jbcrypt" level="project" />
     <orderEntry type="library" name="itextpdf.layout" level="project" />
     <orderEntry type="library" name="itextpdf.kernel" level="project" />
+    <orderEntry type="library" name="itextpdf.io" level="project" />
   </component>
 </module>

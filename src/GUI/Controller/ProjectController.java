@@ -1,6 +1,7 @@
 package GUI.Controller;
 
 import BE.*;
+import DAL.iFileDataAccess;
 import GUI.Model.*;
 import UTIL.CustomerPdf;
 import UTIL.ShowFile;
@@ -84,7 +85,6 @@ public class ProjectController extends BaseController {
     private int fileToMoveId;
     private int selectedFileNewOrder;
     private int fileToMoveNewOrder;
-
 
     /**
      * Set up the view when the view is getting shown.
@@ -338,6 +338,8 @@ public class ProjectController extends BaseController {
             e.printStackTrace();
         }
     }
+
+/*
     public void handleMoveUp(ActionEvent actionEvent) throws Exception {
         int selectedIndex = fileTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex > 0) {
@@ -347,7 +349,7 @@ public class ProjectController extends BaseController {
             fileToMoveId = fileTable.getItems().get(selectedIndex).getId();
             selectedFileNewOrder = fileTable.getItems().get(selectedIndex - 1).getOrderFiles();
             fileToMoveNewOrder = fileTable.getItems().get(selectedIndex).getOrderFiles();
-            //updateDataBaseWithNewOrder();
+            updateDataBaseWithNewOrder();
         }
     }
 
@@ -360,15 +362,18 @@ public class ProjectController extends BaseController {
             fileToMoveId = fileTable.getItems().get(selectedIndex).getId();
             selectedFileNewOrder = fileTable.getItems().get(selectedIndex + 1).getOrderFiles();
             fileToMoveNewOrder = fileTable.getItems().get(selectedIndex).getOrderFiles();
-            //updateDataBaseWithNewOrder();
+            updateDataBaseWithNewOrder();
         }
     }
-/*
+
     private void updateDataBaseWithNewOrder() throws Exception {
         projectFilesModel.updateFileOrders(selectedFileId, fileToMoveId, selectedFileNewOrder, fileToMoveNewOrder);
     }
 
  */
+
+
+
 
 
 }

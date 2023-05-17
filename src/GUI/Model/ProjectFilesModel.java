@@ -21,7 +21,7 @@ public class ProjectFilesModel {
 
     private int runs=0;
 private int number=0 ;
-    private iFileDataAccess fileDataAccess;
+    //private iFileDataAccess fileDataAccess;
     /**
      * Constructor for the class "ProjectFilesModel".
      * @throws Exception
@@ -33,9 +33,7 @@ private int number=0 ;
     }
 
 
-    public ProjectFilesModel(iFileDataAccess fileDataAccess) {
-        this.fileDataAccess = fileDataAccess;
-    }
+    //public ProjectFilesModel(iFileDataAccess fileDataAccess) {this.fileDataAccess = fileDataAccess;}
 
 
     /**
@@ -158,13 +156,14 @@ private int number=0 ;
        projectFilesManager.updateFileOrder(OrderFiles, file.getId());
 
     }
-    /*
+/*
     public void updateFileOrders(int selectedFileId, int fileToMoveId, int selectedFileNewOrder, int fileToMoveNewOrder) throws Exception{
         fileDataAccess.updateFileOrder(selectedFileId, selectedFileNewOrder);
         fileDataAccess.updateFileOrder(fileToMoveId, fileToMoveNewOrder);
     }
 
-     */
+ */
+
 
 
 }
