@@ -15,9 +15,7 @@ public class CustomerDAO implements ICustomerDataAccess {
      * Constructor for the class "CustomerDAO".
      * @throws IOException
      */
-    public CustomerDAO() throws IOException {
-        databaseConnector = DatabaseConnector.getInstance();
-    }
+    public CustomerDAO() throws IOException {databaseConnector = DatabaseConnector.getInstance();}
 
     /**
      * Gets a list of all customers from the database.
@@ -53,7 +51,6 @@ public class CustomerDAO implements ICustomerDataAccess {
         }
     }
 
-   
     /**
      * Creating a new customer in the database.
      * @param customer
@@ -113,19 +110,13 @@ public class CustomerDAO implements ICustomerDataAccess {
                 String mail = rs.getString("Mail");
                 int phoneNumber = rs.getInt("Phone_Number");
 
-
-
                 if (companyName==null)
                     companyName=firstName+ " "+lastName;
-
-
-
 
                 customer = new Customer(id, firstName, lastName, companyName, address, mail, phoneNumber, zipcode);
             }
             return customer;
         } catch (Exception ex) {
-            ex.printStackTrace();
             throw new SQLException("Failed to add Customer from the database", ex);
         }
     }

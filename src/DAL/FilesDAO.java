@@ -5,7 +5,6 @@ import DAL.PictureClasses.ImageViewKlient;
 import DAL.PictureClasses.LilleJpeg;
 import DAL.PictureClasses.LilleJpg;
 import DAL.PictureClasses.LillePng;
-import com.microsoft.sqlserver.jdbc.SQLServerException;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.ImageView;
 
@@ -34,15 +33,12 @@ public class FilesDAO implements iFileDataAccess {
      * @throws Exception
      */
     public List<ProjectFiles> loadFilesFromAProject(int projectID) throws Exception {
-
         ArrayList<ProjectFiles> loadFilesFromAProject = new ArrayList<>();
         ImageView picture;
         ImageViewKlient pictureFrame = null;
 
         //SQL query
         String sql = "SELECT * FROM ProjectFile WHERE ProjectID =?";
-
-
         //Getting the connection to the database.
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -58,7 +54,6 @@ public class FilesDAO implements iFileDataAccess {
                 LocalDate date = rs.getDate("Date").toLocalDate();
                 byte usedInDoc = rs.getByte("usedInDoc");
                 int rank = rs.getByte("OrderFiles");
-
 
                 fileAmount++;
 
@@ -76,7 +71,6 @@ public class FilesDAO implements iFileDataAccess {
                     case "jpeg":
                         pictureFrame = new ImageViewKlient(new LilleJpeg());
                         break;
-
                 }
 
 
@@ -84,23 +78,16 @@ public class FilesDAO implements iFileDataAccess {
 
                 //Creating the checkbox and set it as empty.
                 CheckBox checkBox = new CheckBox();
-
-
                 if (usedInDoc == 0)
                     checkBox.setSelected(true);
 
-
-
                 ProjectFiles files = new ProjectFiles(id, projectID1, name, filePath, date, picture, checkBox,rank);
-
                 loadFilesFromAProject.add(files);
             }
             return loadFilesFromAProject;
         } catch (Exception ex) {
-            ex.printStackTrace();
             throw new Exception("Failed to retrieve files from database", ex);
         }
-
     }
 
     /**
@@ -110,11 +97,9 @@ public class FilesDAO implements iFileDataAccess {
      * @throws Exception
      */
     public void updateUsedInDoc(Boolean usedInDoc, int id) throws Exception {
-
         byte used;
         //SQL query and getting connection to the database.
         String sql = "UPDATE ProjectFile SET usedInDoc = ? WHERE ID = ?";
-
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
 
@@ -125,18 +110,22 @@ public class FilesDAO implements iFileDataAccess {
             }
 
             // Bind parameters
-
             stmt.setByte(1, used);
             stmt.setInt(2, id);
 
             stmt.executeUpdate();
         }
         catch (SQLException ex) {
-            ex.printStackTrace();
             throw new Exception("Could not update fileList", ex);
         }
     }
 
+    /**
+     * Creates a new entry in the database containing information about a specific file.
+     * @param file
+     * @return
+     * @throws SQLException
+     */
     public ProjectFiles createNewFile(ProjectFiles file) throws SQLException {
         //SQL Query
         String sql = "INSERT INTO ProjectFile(ProjectID, Name, FilePath, Date, UsedInDoc,OrderFiles) VALUES (?,?,?,?,?,?)";
@@ -158,10 +147,15 @@ public class FilesDAO implements iFileDataAccess {
             }
             return file;
         } catch (SQLException ex){
-            ex.printStackTrace();
             throw new SQLException("Could not add file to database", ex);
         }
     }
+
+    /**
+     * Delete a specific entry from the database based on a selected file.
+     * @param file
+     * @throws SQLException
+     */
     public void deleteFile(ProjectFiles file) throws SQLException {
         //SQL query
         String sql = "DELETE FROM ProjectFile WHERE ID = ?";
@@ -172,7 +166,6 @@ public class FilesDAO implements iFileDataAccess {
             stmt.setInt(1, file.getId());
             stmt.execute();
         } catch (SQLException ex){
-            ex.printStackTrace();
             throw new SQLException("Could not delete the file from the database", ex);
         }
     }

@@ -26,8 +26,12 @@ public class CustomerManager {
      */
     public List<Customer> loadAllCustomers() throws SQLException {return customerDAO.loadAllCustomers();}
 
-
-
+    /**
+     * Sends a specific customer through the BLL for creation in the database.
+     * @param customer
+     * @return
+     * @throws Exception
+     */
     public Customer createNewCustomer(Customer customer) throws Exception {return customerDAO.createNewCustomer(customer);}
 
     /**
@@ -37,6 +41,4 @@ public class CustomerManager {
      * @throws Exception
      */
     public Customer loadCustomer(int customerID) throws Exception{return customerDAO.loadCustomer(customerID);}
-
-
 }

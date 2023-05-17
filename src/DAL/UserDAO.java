@@ -1,6 +1,5 @@
 package DAL;
 
-import BE.Customer;
 import BE.ProjectTechnician;
 import BE.Role;
 import BE.User;
@@ -16,25 +15,19 @@ public class UserDAO implements IUserDataAccess {
     private DatabaseConnector databaseConnector;
 
     /**
-     * Constructor for the class "UserDAO"
-     *
+     * Constructor for the class "UserDAO".
      * @throws IOException
      */
-    public UserDAO() throws IOException {
-        databaseConnector = DatabaseConnector.getInstance();
-    }
+    public UserDAO() throws IOException {databaseConnector = DatabaseConnector.getInstance();}
 
     /**
-     * Getting a list of users/employees
-     *
+     * Getting a list of users/employees.
      * @param roleType
      * @return
      * @throws SQLException
      */
     public List<User> loadUserOfAType(int roleType) throws SQLException {
-
         ArrayList<User> allUserOfAType = new ArrayList<>();
-
         //SQL Query.
         String sql = "SELECT * FROM Users WHERE Role =? AND Is_Deleted IS NULL";
         //Getting the connection to the database.
@@ -42,9 +35,7 @@ public class UserDAO implements IUserDataAccess {
             PreparedStatement stmt = conn.prepareStatement(sql);
 
             stmt.setInt(1, roleType);
-
             ResultSet rs = stmt.executeQuery();
-
             while (rs.next()) {
                 //Getting the info from the database.
                 int id = rs.getInt("ID");
@@ -55,19 +46,16 @@ public class UserDAO implements IUserDataAccess {
                 int role = rs.getInt("Role");
 
                 User technician = new User(id, firstName, lastName, username, password, role);
-
                 allUserOfAType.add(technician);
             }
             return allUserOfAType;
         } catch (Exception ex) {
-            ex.printStackTrace();
             throw new SQLException("Failed to retrieve Technicians from database", ex);
         }
     }
 
     /**
      * Getting a specific user from the database based on a username.
-     *
      * @param name
      * @return
      * @throws SQLException
@@ -95,16 +83,13 @@ public class UserDAO implements IUserDataAccess {
                 user = new User(id, firstName, lastName, username, password, role);
             }
             return user;
-
         } catch (SQLException ex) {
-            ex.printStackTrace();
             throw new SQLException("Could not get the user from the database", ex);
         }
     }
 
     /**
-     * Checking if the database has a entry matching the username from the application.
-     *
+     * Checking if the database has an entry matching the username from the application.
      * @param username
      * @return
      * @throws SQLException
@@ -122,7 +107,6 @@ public class UserDAO implements IUserDataAccess {
                 return true;
             }
         } catch (Exception e) {
-            e.printStackTrace();
             throw new SQLException("Failed to validate", e);
         }
         return false;
@@ -130,7 +114,6 @@ public class UserDAO implements IUserDataAccess {
 
     /**
      * Creating a new user/employee in the database.
-     *
      * @param user
      * @return
      * @throws Exception
@@ -155,7 +138,6 @@ public class UserDAO implements IUserDataAccess {
             }
             return user;
         } catch (SQLException ex) {
-            ex.printStackTrace();
             throw new SQLException("Could not create User", ex);
         }
     }
@@ -163,7 +145,6 @@ public class UserDAO implements IUserDataAccess {
 
     /**
      * Soft deleting a user/employee from the database.
-     *
      * @param selectedUser
      * @throws Exception
      */
@@ -186,7 +167,6 @@ public class UserDAO implements IUserDataAccess {
 
     /**
      * Remove a user/employee from a project.
-     *
      * @param selectedTechnician
      * @param projectID
      * @throws Exception
@@ -207,7 +187,6 @@ public class UserDAO implements IUserDataAccess {
 
     /**
      * Get a list of all users/employees working on a specific project.
-     *
      * @param projectID
      * @return
      * @throws SQLException
@@ -233,14 +212,12 @@ public class UserDAO implements IUserDataAccess {
             }
             return allUsers;
         } catch (SQLException ex) {
-            ex.printStackTrace();
             throw new SQLException("Could not move Technician", ex);
         }
     }
 
     /**
      * Assign a user/employee to a project through the database.
-     *
      * @param technicianID
      * @param projectID
      * @return
@@ -265,7 +242,6 @@ public class UserDAO implements IUserDataAccess {
             ProjectTechnician projectTechnician = new ProjectTechnician(id, technicianID, projectID);
             return projectTechnician;
         } catch (SQLException ex) {
-            ex.printStackTrace();
             throw new SQLException("Could not move Technician", ex);
         }
     }

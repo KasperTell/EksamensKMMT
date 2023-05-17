@@ -19,31 +19,29 @@ public class DatabaseConnector {
      * Constructor for the singleton class "DatabaseConnector".
      * @throws IOException
      */
-   private DatabaseConnector() throws IOException
-    {
-        Properties databaseProperties = new Properties();
-        databaseProperties.load(new FileInputStream(new File(PROP_FILE)));
+   private DatabaseConnector() throws IOException {
+       Properties databaseProperties = new Properties();
+       databaseProperties.load(new FileInputStream(PROP_FILE));
 
-        String server = databaseProperties.getProperty("Server");
-        String database = databaseProperties.getProperty("Database");
-        String user = databaseProperties.getProperty("User");
-        String password = databaseProperties.getProperty("Password");
+       String server = databaseProperties.getProperty("Server");
+       String database = databaseProperties.getProperty("Database");
+       String user = databaseProperties.getProperty("User");
+       String password = databaseProperties.getProperty("Password");
 
-        ds = new SQLServerDataSource();
-        ds.setServerName(server);
-        ds.setDatabaseName(database);
-        ds.setUser(user);
-        ds.setPassword(password);
-        ds.setTrustServerCertificate(true);
-    }
+       ds = new SQLServerDataSource();
+       ds.setServerName(server);
+       ds.setDatabaseName(database);
+       ds.setUser(user);
+       ds.setPassword(password);
+       ds.setTrustServerCertificate(true);
+   }
 
-    /**
-     * Creating or getting the instance of the class.
-     * @return
-     * @throws IOException
-     */
-    public static DatabaseConnector getInstance() throws IOException
-    {
+   /**
+    * Creating or getting the instance of the class.
+    * @return
+    * @throws IOException
+    */
+    public static DatabaseConnector getInstance() throws IOException {
         if (instance == null){
             instance = new DatabaseConnector();
         }

@@ -84,5 +84,10 @@ public class UserManager {
      */
     public ProjectTechnician moveTechnician(int technicianID, int projectID) throws Exception {return userDAO.moveTechnician(technicianID, projectID);}
 
+    /**
+     * Gets a list of all available employee roles.
+     * @return
+     * @throws SQLException
+     */
     public List<Role> AllRoles() throws SQLException {return userDAO.allRoles();}
 }

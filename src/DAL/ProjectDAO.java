@@ -21,7 +21,6 @@ public class ProjectDAO implements IProjectDataAccess{
      */
     public ProjectDAO() throws IOException {databaseConnector = DatabaseConnector.getInstance();}
 
-
     /**
      * Gets all projects marked as open from the database.
      * @param open
@@ -29,8 +28,6 @@ public class ProjectDAO implements IProjectDataAccess{
      * @throws Exception
      */
     public List<Project> loadProjectOfAType(boolean open) throws Exception {
-
-
         ArrayList<Project> loadProjectofAType = new ArrayList<>();
         //SQL query.
         String sql = "SELECT  Project.ID, Project.title, Project.customerID,Project.[Date], Project.OpenClose, Project.Note,\n" +
@@ -49,10 +46,10 @@ public class ProjectDAO implements IProjectDataAccess{
                 openClose=0;
             else
                 openClose=1;
+
             //Setting the parameter and execute the statement.
             stmt.setInt(1, openClose);
             ResultSet rs = stmt.executeQuery();
-
             //Getting the information from the database.
             while (rs.next()) {
                 int id = rs.getInt("ID");
@@ -69,7 +66,7 @@ public class ProjectDAO implements IProjectDataAccess{
 
                 if (openClose==0)
                     open1=true;
-                            else
+                else
                     open1=false;
 
                 int days= (int) DAYS.between(date, LocalDate.now());
@@ -77,15 +74,13 @@ public class ProjectDAO implements IProjectDataAccess{
                 if (companyName==null)
                     companyName=firstName+" "+lastName;
 
-                if (days<365*4)
-                {
+                if (days<365*4) {
                     project = new Project(id, title, customerID, date, open1,note, companyName);
                 }
                 loadProjectofAType.add(project);
             }
             return loadProjectofAType;
         } catch (Exception ex) {
-            ex.printStackTrace();
             throw new Exception("Failed to retrieve all Projects from database", ex);
         }
     }
@@ -113,8 +108,10 @@ public class ProjectDAO implements IProjectDataAccess{
             if(rs.next()){
                 project.setId(rs.getInt(1));
             }
+            return project;
+        } catch (SQLException ex){
+            throw new SQLException("Could not create new project in the database", ex);
         }
-        return project;
     }
 
     /**
@@ -132,9 +129,8 @@ public class ProjectDAO implements IProjectDataAccess{
         stmt.setInt(1, projectStatus);
         stmt.setInt(2, id);
         stmt.execute();
-    } catch(SQLException ex){
-        ex.printStackTrace();
-        throw new SQLException("Could not edit project status");
+        } catch(SQLException ex){
+            throw new SQLException("Could not edit project status");
         }
     }
 
@@ -154,19 +150,17 @@ public class ProjectDAO implements IProjectDataAccess{
             stmt.setInt(2, id);
             stmt.execute();
         } catch(SQLException ex){
-            ex.printStackTrace();
             throw new SQLException("Could not edit project status");
         }
     }
 
     /**
-     *
+     * Gets a list of all projects assigned to a specific user.
      * @param technicianID
      * @return
      * @throws SQLException
      */
     public List<Project> allProjectsForTechnician(int technicianID) throws SQLException {
-
         ArrayList<Project> projectsForTechnician = new ArrayList<>();
         //SQL Query
         String sql = "SELECT * FROM Project INNER JOIN ProjectTechnician ON Project.ID = ProjectTechnician.ProjectID INNER JOIN Customers ON Project.customerID = Customers.ID WHERE UserID = ? AND OpenClose = 0 AND Deleted IS NULL";
@@ -190,7 +184,6 @@ public class ProjectDAO implements IProjectDataAccess{
             }
             return projectsForTechnician;
         } catch (SQLException ex){
-            ex.printStackTrace();
             throw new SQLException("Could not read all the projects for the logged in technician");
         }
     }
@@ -202,7 +195,6 @@ public class ProjectDAO implements IProjectDataAccess{
      * @throws Exception
      */
     public List<Project> searchByQuery(String query) throws SQLException {
-
         ArrayList<Project> projects = new ArrayList<>();
         //SQL Query.
         String sql = "SELECT * FROM Project INNER JOIN Customers ON Project.customerID = Customers.ID WHERE Customers.First_Name LIKE ? OR Customers.Last_Name LIKE ? OR Customers.Company_Name LIKE ? OR Customers.Address LIKE ? OR Customers.Zip_Code LIKE ? OR Customers.Mail LIKE ? OR Customers.Phone_Number LIKE ?";
@@ -234,9 +226,7 @@ public class ProjectDAO implements IProjectDataAccess{
                 projects.add(project);
             }
             return projects;
-
         } catch (Exception ex) {
-            ex.printStackTrace();
             throw new SQLException("Failed to return the list of projects based on search query", ex);
         }
     }

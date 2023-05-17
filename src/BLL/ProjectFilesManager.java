@@ -32,13 +32,20 @@ public class ProjectFilesManager {
      * @param id
      * @throws Exception
      */
-    public void updateUsedInDoc(Boolean usedInDoc, int id) throws Exception {
-        filesDAO.updateUsedInDoc(usedInDoc,id);
-    }
-    public ProjectFiles createNewFile(ProjectFiles file) throws SQLException{
-        return filesDAO.createNewFile(file);
-    }
-    public void deleteFile(ProjectFiles file) throws SQLException{
-        filesDAO.deleteFile(file);
-    }
+    public void updateUsedInDoc(Boolean usedInDoc, int id) throws Exception {filesDAO.updateUsedInDoc(usedInDoc,id);}
+
+    /**
+     * Sends a new file through the BLL.
+     * @param file
+     * @return
+     * @throws SQLException
+     */
+    public ProjectFiles createNewFile(ProjectFiles file) throws SQLException{return filesDAO.createNewFile(file);}
+
+    /**
+     * Sends a file marked for deletion trough the BLL.
+     * @param file
+     * @throws SQLException
+     */
+    public void deleteFile(ProjectFiles file) throws SQLException{filesDAO.deleteFile(file);}
 }
