@@ -67,7 +67,7 @@ public class NyController extends BaseController {
     private Project selectedProject;
     private ProjectModel projectModel;
     private CustomerModel customerModel;
-
+    private UserModel userModel;
     private ProjectController controller;
     private boolean isMenuOpen;
     private int projectNumber;
@@ -81,10 +81,11 @@ public class NyController extends BaseController {
      * Set up the view when the view is getting shown.
      */
     @Override
-    public void setup() throws Exception {
+    public void setup() {
         //Initializing all our models.
         customerModel = getModel().getCustomerModel();
         projectModel = getModel().getProjectModel();
+        userModel = getModel().getUserModel();
         //Setting the information of the listviews and combobox.
         customerComboBox.setItems(customerModel.getAllCustomers());
         projectDateOpen.setCellValueFactory(new PropertyValueFactory<>("Date"));
@@ -94,8 +95,12 @@ public class NyController extends BaseController {
         projectDateClosed.setCellValueFactory(new PropertyValueFactory<>("Date"));
         projectNameClosed.setCellValueFactory(new PropertyValueFactory<>("Title"));
         customerNameClosed.setCellValueFactory(new PropertyValueFactory<>("companyName"));
-
-        openProjectsTable.setItems(projectModel.getAllProjectsOpen());
+        try {
+            openProjectsTable.setItems(projectModel.getAllProjectsOpen(userModel.getLoggedinUser().getId()));
+        } catch (Exception e){
+            e.printStackTrace();
+            displayError(e);
+        }
         closedProjectsTable.setItems(projectModel.getAllProjectsClose());
         turnButtonONOrOff();
         listenerLstAllCloseProjects();

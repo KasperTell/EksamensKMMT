@@ -296,8 +296,12 @@ public class MainController extends BaseController {
   //      projectCloseCustomer.setCellValueFactory(new PropertyValueFactory<>("title"));
        // customerNameClosed.setCellValueFactory(new PropertyValueFactory<>("title"));
 
-
-        openProjectsTable.setItems(projectModel.getAllProjectsOpen());
+        try {
+            //openProjectsTable.setItems(projectModel.getAllProjectsOpen());
+        } catch (Exception e){
+            e.printStackTrace();
+            displayError(e);
+        }
         closeProjectsTable.setItems(projectModel.getAllProjectsClose());
 
 

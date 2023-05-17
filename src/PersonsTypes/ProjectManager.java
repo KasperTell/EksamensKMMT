@@ -34,8 +34,10 @@ public class ProjectManager implements IPersonTypes{
         return false;
     }
 
-
-
+    @Override
+    public boolean setListInfo() {
+        return false;
+    }
 
 
 }

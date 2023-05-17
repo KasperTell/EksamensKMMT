@@ -14,6 +14,5 @@ public interface IPersonTypes {
 
 
      Boolean enableTab();
-
-
+     boolean setListInfo();
 }

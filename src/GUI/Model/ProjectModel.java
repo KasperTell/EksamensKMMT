@@ -2,6 +2,7 @@ package GUI.Model;
 
 import BE.Project;
 import BLL.ProjectManager;
+import PersonsTypes.PersonTypeChooser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -16,7 +17,7 @@ public class ProjectModel {
     private ObservableList<Project> searchedProjects;
     private String projectTitle;
     private Project selectedProject;
-
+    private PersonTypeChooser personTypeChooser = new PersonTypeChooser();
     /**
      * Constructor for the class "ProjectModel".
      * @throws Exception
@@ -35,7 +36,11 @@ public class ProjectModel {
      * Getters for the Lists.
      * @return
      */
-    public ObservableList<Project> getAllProjectsOpen() {return projectsOpen;}
+    public ObservableList<Project> getAllProjectsOpen(int technicianID) throws SQLException {
+        if(personTypeChooser.setListInfo()){
+            getAllTechniciansProject(technicianID);
+        }
+        return projectsOpen;}
 
     public ObservableList<Project> getAllProjectsClose() {return projectClose;}
 
@@ -91,8 +96,8 @@ public void clearLists() throws Exception {
 }
 
     public ObservableList<Project> getAllTechniciansProject(int technicianID) throws SQLException {
-        allTechniciansProject.clear();
-        allTechniciansProject.addAll(projectManager.allProjectsForTechnician(technicianID));
-        return allTechniciansProject;
+        projectsOpen.clear();
+        projectsOpen.addAll(projectManager.allProjectsForTechnician(technicianID));
+        return projectsOpen;
     }
 }

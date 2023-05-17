@@ -1,9 +1,6 @@
 package PersonsTypes;
 
-import GUI.Controller.NyController;
 
-import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
 import java.util.HashMap;
 
 public class Technician implements IPersonTypes{
@@ -37,7 +34,8 @@ public class Technician implements IPersonTypes{
         return true;
     }
 
-
+    @Override
+    public boolean setListInfo(){return true;}
     }
 
 

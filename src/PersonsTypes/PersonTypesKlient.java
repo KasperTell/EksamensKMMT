@@ -28,11 +28,13 @@ public class PersonTypesKlient {
         return iPersonTypes.getViewCss();
     }
 
-
     public HashMap<String, Boolean> turnButtonOnOrOff() {
         return iPersonTypes.turnButtonOnOrOff();
     }
 
+    public boolean setListInfo(){
+        return iPersonTypes.setListInfo();
+    }
 
     public Boolean enableTab()
     {

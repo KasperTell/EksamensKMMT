@@ -47,8 +47,10 @@ public class PersonTypeChooser {
         HashMap<String, Boolean> sss=personTypes.turnButtonOnOrOff();
 
         return personTypes.turnButtonOnOrOff();
+    }
 
-
+    public boolean setListInfo(){
+        return personTypes.setListInfo();
     }
 
     public Boolean enableTab()

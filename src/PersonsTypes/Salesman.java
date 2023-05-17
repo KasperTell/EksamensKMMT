@@ -35,7 +35,10 @@ public class Salesman implements IPersonTypes{
         return true;
     }
 
-
+    @Override
+    public boolean setListInfo() {
+        return false;
+    }
 
 
 }
