@@ -134,7 +134,7 @@ public class NyController extends BaseController {
         customerNameClosed.setCellValueFactory(new PropertyValueFactory<>("companyName"));
 
         try {
-            openProjectsTable.setItems(projectModel.getAllProjectsOpen(1));
+            openProjectsTable.setItems(projectModel.getAllProjectsOpen(1)); //Jeg har sat ham til 1.
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -498,7 +498,7 @@ public class NyController extends BaseController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            pane.getStylesheets().add("/GUI/View/Salesman/managerView.css");
+            pane.getStylesheets().add(personTypeChooser.getCSS());
             mainViewAnchorPane.getChildren().setAll(pane);
 
             controller = loader.getController();
@@ -522,7 +522,7 @@ public class NyController extends BaseController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        pane.getStylesheets().add("/GUI/View/Salesman/managerView.css");
+        pane.getStylesheets().add("/GUI/View/Salesman/SalesView.css");
         mainViewAnchorPane.getChildren().setAll(pane);
 
         UserController controller = loader.getController();
