@@ -116,7 +116,6 @@ public class ProjectController extends BaseController {
         }
     }
 
-
     /**
      * Listener for the tableview containing files for opening files.
      */
@@ -147,11 +146,6 @@ public class ProjectController extends BaseController {
                     }
         });
     }
-
-
-
-
-
 
     /**
      * Set up the files information column in the tableview.
@@ -271,84 +265,77 @@ public class ProjectController extends BaseController {
         showFile.showFile(path);
     }
 
+    public void handleDeleteFile (ActionEvent actionEvent) throws Exception {
+        ProjectFiles fileToDelete = fileTable.getSelectionModel().getSelectedItem();
+        projectFilesModel.deleteFile(fileToDelete);
 
+        File file = new File(fileToDelete.getFilePath());
+        file.delete();
+    }
 
+    public void handleOpenMainWindow (ActionEvent actionEvent) throws Exception {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindue1.fxml"));
+        AnchorPane pane = loader.load();
+        pane.getStylesheets().add("/GUI/View/ProjectManager/managerView.css");
+        mainViewAnchorPane.getChildren().setAll(pane);
 
+        NyController controller = loader.getController();
+        controller.setModel(super.getModel());
+        controller.setup();
+    }
 
-        public void handleDeleteFile (ActionEvent actionEvent) throws Exception {
+    public void handleDraw (ActionEvent actionEvent) throws Exception {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/GUI/View/Paint/PaintView.fxml"));
+        Parent root = loader.load();
+        root.getStylesheets().add("/GUI/View/Paint/Paint.css");
 
-            ProjectFiles fileToDelete = fileTable.getSelectionModel().getSelectedItem();
-            projectFilesModel.deleteFile(fileToDelete);
+        PaintController controller = loader.getController();
+        controller.setModel(super.getModel());
+        controller.setup();
 
-            File file = new File(fileToDelete.getFilePath());
-            file.delete();
+        Stage stage = new Stage();
 
-        }
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
 
-
-        public void handleOpenMainWindow (ActionEvent actionEvent) throws Exception {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindue1.fxml"));
-            AnchorPane pane = loader.load();
-            pane.getStylesheets().add("/GUI/View/ProjectManager/managerView.css");
-            mainViewAnchorPane.getChildren().setAll(pane);
-
-            NyController controller = loader.getController();
-            controller.setModel(super.getModel());
-            controller.setup();
-        }
-
-        public void handleDraw (ActionEvent actionEvent) throws Exception {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/GUI/View/Paint/PaintView.fxml"));
-            Parent root = loader.load();
-            root.getStylesheets().add("/GUI/View/Paint/Paint.css");
-
-            PaintController controller = loader.getController();
-            controller.setModel(super.getModel());
-            controller.setup();
-
-            Stage stage = new Stage();
-
-            stage.setScene(new Scene(root));
-            stage.show();
-        }
-
-        /**
-         * Handle what happens when the "Add technician" button is clicked.
-         * Adds a selected user/employee to a selected project.
-         * @param actionEvent
-         */
-        @FXML
-        private void handleAddTech (ActionEvent actionEvent){
-            //Setting the data for the variables and calls the method from the model.
-            int projectID = selectedProject.getId();
-            int technicianID = listTechsComboBox.getSelectionModel().getSelectedItem().getId();
-            try {
-                userModel.moveTechnician(technicianID, projectID);
-            } catch (Exception e) {
-                displayError(e);
-                e.printStackTrace();
-            }
-        }
-
-        /**
-         * Handle what happens when the "Remove technician" button is clicked.
-         * Removes a selected user/employee from a selected project.
-         * @param actionEvent
-         */
-        @FXML
-        private void handleRemoveTech (ActionEvent actionEvent){
-            //Setting the data for the variables and calls the method from the model.
-            User selectedTechnician = techsOnProjectListView.getSelectionModel().getSelectedItem();
-            int projectID = selectedProject.getId();
-            try {
-                userModel.removeTechnicianFromProject(selectedTechnician, projectID);
-            } catch (Exception e) {
-                displayError(e);
-                e.printStackTrace();
-            }
+    /**
+     * Handle what happens when the "Add technician" button is clicked.
+     * Adds a selected user/employee to a selected project.
+     * @param actionEvent
+     */
+    @FXML
+    private void handleAddTech (ActionEvent actionEvent){
+        //Setting the data for the variables and calls the method from the model.
+        int projectID = selectedProject.getId();
+        int technicianID = listTechsComboBox.getSelectionModel().getSelectedItem().getId();
+        try {
+            userModel.moveTechnician(technicianID, projectID);
+        } catch (Exception e) {
+            displayError(e);
+            e.printStackTrace();
         }
     }
+
+    /**
+     * Handle what happens when the "Remove technician" button is clicked.
+     * Removes a selected user/employee from a selected project.
+     * @param actionEvent
+     */
+    @FXML
+    private void handleRemoveTech (ActionEvent actionEvent){
+        //Setting the data for the variables and calls the method from the model.
+        User selectedTechnician = techsOnProjectListView.getSelectionModel().getSelectedItem();
+        int projectID = selectedProject.getId();
+        try {
+            userModel.removeTechnicianFromProject(selectedTechnician, projectID);
+        } catch (Exception e) {
+            displayError(e);
+            e.printStackTrace();
+        }
+    }
+}
 
 
