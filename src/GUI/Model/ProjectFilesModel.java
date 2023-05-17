@@ -165,9 +165,6 @@ private int number=0 ;
     public void fileLoopStop() throws InterruptedException {
 
         isRunning=false;
-        Thread.sleep(100);
-
-
 
     }
 

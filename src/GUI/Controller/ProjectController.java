@@ -20,6 +20,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -72,6 +73,8 @@ public class ProjectController extends BaseController {
 
     private ShowFile showFile=new ShowFile();
 
+    private PersonTypeChooser personTypeChooser;
+
     /**
      * Set up the view when the view is getting shown.
      */
@@ -83,6 +86,7 @@ public class ProjectController extends BaseController {
         projectFilesModel = getModel().getProjectFilesModel();
         projectModel = getModel().getProjectModel();
         selectedProject = projectModel.getSelectedProject();
+        personTypeChooser=new PersonTypeChooser();
         //Setting the information of the listviews and combobox.
         listenerMouseClickPicture();
         setupFiles();
@@ -123,7 +127,7 @@ public class ProjectController extends BaseController {
 
     private void enableDisableTab()
     {
-        PersonTypeChooser personTypeChooser=new PersonTypeChooser();
+
         techsTab.setDisable(personTypeChooser.enableTab());
     }
 
@@ -138,21 +142,27 @@ public class ProjectController extends BaseController {
 
                 try {
                     // Check if the selected file is an image file (JPEG, PNG, or JPG)
-                    String fileName = "/" + selectedfile.getFilePath().toLowerCase();
-                    if (fileName.endsWith(".jpeg") || fileName.endsWith(".png") || fileName.endsWith(".jpg")) {
-                        // Load the image file into the filesPreviewImageView
-                        String fileUrl = selectedfile.getFilePath();
-                        String imageUrl = fileUrl.substring(10);
 
-                        if (Files.exists(Path.of(fileUrl))) //check om filen eksisterer
-                        {
-                            Image image = new Image(imageUrl);
-                            filesPreviewImageView.setImage(image);
-                        }
-                        else
-                        {
-                        showFile.showErrorBox("File does not exits","File message");
-                        }
+                    if (selectedfile!=null)
+                    {
+                        String fileName = "/" + selectedfile.getFilePath().toLowerCase();
+                        if (fileName.endsWith(".jpeg") || fileName.endsWith(".png") || fileName.endsWith(".jpg")) {
+                            // Load the image file into the filesPreviewImageView
+                            String fileUrl = selectedfile.getFilePath();
+                            String imageUrl = fileUrl.substring(10);
+
+                            if (Files.exists(Path.of(fileUrl))) //check om filen eksisterer
+                            {
+                                Image image = new Image(imageUrl);
+                                filesPreviewImageView.setImage(image);
+                            }
+                            else
+                            {
+                                showFile.showErrorBox("File does not exits","File message");
+                            }
+
+                    }
+
 
 
                     }
@@ -176,7 +186,7 @@ public class ProjectController extends BaseController {
      * Set up the files information column in the tableview.
      */
     @FXML
-    private void setupFiles() throws InterruptedException {
+    private void setupFiles()  {
         int projectNumber = selectedProject.getId();
         filesPictureColumn.setCellValueFactory(new PropertyValueFactory<>("picture"));
         filesNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -188,7 +198,11 @@ public class ProjectController extends BaseController {
             displayError(e);
             e.printStackTrace();
         }
-        projectFilesModel.fileLoopStop(); //Stopper tidligere løkker i projectFiles inden ny startes
+        try {
+            projectFilesModel.fileLoopStop(); //Stopper tidligere løkker i projectFiles inden ny startes
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         projectFilesModel.observer(); //Her startes en løkke, der observere ændringer i CheckBox
     }
 
@@ -241,7 +255,7 @@ public class ProjectController extends BaseController {
      * @param actionEvent
      */
     @FXML
-    private void handleSaveNewFile(ActionEvent actionEvent) throws Exception {
+    private void handleSaveNewFile(ActionEvent actionEvent)  {
         //Opens the default file explore
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
@@ -263,17 +277,29 @@ public class ProjectController extends BaseController {
             LocalDate saveDate= LocalDate.now();
 
 
-
-            FilesDAO filesDAO=new FilesDAO();
+            FilesDAO filesDAO= null;
+            try {
+                filesDAO = new FilesDAO();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
 
             ProjectFiles projectFiles=new ProjectFiles(1,selectedProject.getId(),filename ,"Resources/Pictures/ImagesSavedFromTechnicians/"+filename,saveDate,null,null,filesDAO.getFileAmount()+1);
-            projectFilesModel.createNewFile(projectFiles);
+            try {
+                projectFilesModel.createNewFile(projectFiles);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
 
         }
     }
 
-    public void handleOpenCustomerDoc() throws FileNotFoundException, MalformedURLException, MalformedURLException, FileNotFoundException {
+    /**
+     * Create a new PDF file with the note and selected image files.
+     * @throws  MalformedURLException
+     */
+    public void handleOpenCustomerDoc()  {
 
         ArrayList<String> imagePath = new ArrayList<>();
 
@@ -283,7 +309,14 @@ public class ProjectController extends BaseController {
         }
         HashMap<String, String> customerMap = makeCustomerMap();
         CustomerPdf customerPdf = new CustomerPdf(imagePath, customerMap, selectedProject.getNote(), selectedProject.getTitle());
-        String path = customerPdf.makePdf();
+        String path = null;
+        try {
+            path = customerPdf.makePdf();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         ShowFile showFile = new ShowFile();
         showFile.showFile(path);
@@ -292,8 +325,12 @@ public class ProjectController extends BaseController {
 
 
 
-
-        public void handleDeleteFile (ActionEvent actionEvent) throws Exception {
+    /**
+     * Delete a selected image files from the list.
+     * @param actionEvent
+     *
+     */
+        public void handleDeleteFile (ActionEvent actionEvent)  {
 
 
             if (selectedfile != null) {
@@ -320,11 +357,16 @@ public class ProjectController extends BaseController {
             }
         }
 
-        public void handleOpenMainWindow (ActionEvent actionEvent) throws Exception {
+
+    /**
+     * Return to main view
+     * @param actionEvent
+     */
+            public void handleOpenMainWindow (ActionEvent actionEvent) throws Exception {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindue1.fxml"));
             AnchorPane pane = loader.load();
-            pane.getStylesheets().add("/GUI/View/ProjectManager/managerView.css");
+            pane.getStylesheets().add(personTypeChooser.getCSS());
             mainViewAnchorPane.getChildren().setAll(pane);
 
             NyController controller = loader.getController();
@@ -332,6 +374,11 @@ public class ProjectController extends BaseController {
             controller.setup();
         }
 
+
+    /**
+     * Start the drawing tool
+     * @param actionEvent
+     */
         public void handleDraw (ActionEvent actionEvent) throws Exception {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/GUI/View/Paint/PaintView.fxml"));
