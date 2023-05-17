@@ -79,7 +79,7 @@ public class ProjectController extends BaseController {
      * Set up the view when the view is getting shown.
      */
     @Override
-    public void setup() throws InterruptedException {
+    public void setup()  {
         //Initializing all our models.
         userModel = getModel().getUserModel();
         customerModel = getModel().getCustomerModel();
@@ -163,8 +163,6 @@ public class ProjectController extends BaseController {
 
                     }
 
-
-
                     }
                 } catch (Exception e) {
                     displayError(e);
@@ -176,10 +174,6 @@ public class ProjectController extends BaseController {
                     }
         });
     }
-
-
-
-
 
 
     /**
@@ -198,6 +192,7 @@ public class ProjectController extends BaseController {
             displayError(e);
             e.printStackTrace();
         }
+
         try {
             projectFilesModel.fileLoopStop(); //Stopper tidligere løkker i projectFiles inden ny startes
         } catch (InterruptedException e) {
@@ -323,8 +318,6 @@ public class ProjectController extends BaseController {
     }
 
 
-
-
     /**
      * Delete a selected image files from the list.
      * @param actionEvent
@@ -352,8 +345,6 @@ public class ProjectController extends BaseController {
                     }
 
                 });
-
-
             }
         }
 

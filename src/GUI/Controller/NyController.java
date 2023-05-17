@@ -19,8 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
-import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.SQLException;
@@ -81,7 +80,7 @@ public class NyController extends BaseController {
      * Set up the view when the view is getting shown.
      */
     @Override
-    public void setup() throws Exception {
+    public void setup()  {
         //Initializing all our models.
         customerModel = getModel().getCustomerModel();
         projectModel = getModel().getProjectModel();
@@ -167,13 +166,7 @@ public class NyController extends BaseController {
             selectedProject = openProjectsTable.getSelectionModel().getSelectedItem();
 
             if (event.getClickCount() == 2) {
-                try {
-                    getCustomerPDFAction();
-                } catch (MalformedURLException e) {
-                    throw new RuntimeException(e);
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                getCustomerPDFAction();
             }
         });
     }
@@ -186,13 +179,7 @@ public class NyController extends BaseController {
             selectedProject = closedProjectsTable.getSelectionModel().getSelectedItem();
 
             if (event.getClickCount() == 2) {
-                try {
-                    getCustomerPDFAction();
-                } catch (MalformedURLException e) {
-                    throw new RuntimeException(e);
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                getCustomerPDFAction();
 
             }
         });
@@ -256,7 +243,7 @@ public class NyController extends BaseController {
     /**
      * Set the information in the project column in the tableview.
      */
-    private void setProjectColumns() throws Exception {
+    private void setProjectColumns()  {
 
 
         customerNameClm.setCellValueFactory(new PropertyValueFactory<>("companyName"));
@@ -267,7 +254,11 @@ public class NyController extends BaseController {
 
       /**  openProjectsTable.setItems(projectModel.getAllProjectsOpen());
         closedProjectsTable.setItems(projectModel.getAllProjectsClose()); */
-        customerTable.setItems(customerModel.loadCustomerList(selectedProject.getCustomerID()));
+        try {
+            customerTable.setItems(customerModel.loadCustomerList(selectedProject.getCustomerID()));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -468,15 +459,20 @@ public class NyController extends BaseController {
     /**
      * This will open a new window for editing the project regarding files, PDF and technician.
     */
-    public void handleOpenProjectWindow() throws Exception {
+    public void handleOpenProjectWindow()  {
 
         if (selectedProject!=null)
         {
             projectModel.setSelectedProject(openProjectsTable.getSelectionModel().getSelectedItem());
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindue2.fxml"));
-            AnchorPane pane = loader.load();
-            pane.getStylesheets().add("/GUI/View/ProjectManager/managerView.css");
+            AnchorPane pane = null;
+            try {
+                pane = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            pane.getStylesheets().add("/GUI/View/Salesman/managerView.css");
             mainViewAnchorPane.getChildren().setAll(pane);
 
             controller = loader.getController();
@@ -491,39 +487,43 @@ public class NyController extends BaseController {
      * This will open a menu that can add new users.
      */
 
-    public void handleOpenUserWindow(ActionEvent actionEvent) throws Exception {
+    public void handleOpenUserWindow(ActionEvent actionEvent)  {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindueUser.fxml"));
-        AnchorPane pane = loader.load();
-        pane.getStylesheets().add("/GUI/View/ProjectManager/managerView.css");
+        AnchorPane pane = null;
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        pane.getStylesheets().add("/GUI/View/Salesman/managerView.css");
         mainViewAnchorPane.getChildren().setAll(pane);
 
         UserController controller = loader.getController();
         controller.setModel(super.getModel());
-        controller.setup();
+        try {
+            controller.setup();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
      * This will open a PDF file that is attached to the given Project.
      */
-    public void getCustomerPDFAction() throws MalformedURLException, FileNotFoundException {
+    public void getCustomerPDFAction()  {
 
 
-        String path = "Resources/PDF/"+selectedProject.getCompanyName()+ " "+selectedProject.getTitle()+" installations dokumentation.pdf";
-
-        if (Files.exists(Path.of(path)))
+        if (selectedProject!=null)
         {
+            String path = "Resources/PDF/"+selectedProject.getCompanyName()+ " "+selectedProject.getTitle()+" installations dokumentation.pdf";
 
-            showFile.showFile(path);
+            if (Files.exists(Path.of(path)))
+                showFile.showFile(path);
+            else
+                showFile.showErrorBox("PDF does not exit", "File message");
+
         }
-        else
-        {
-
-            showFile.showErrorBox("PDF does not exit", "File message");
-        }
-
-
-
 
     }
 }

@@ -14,7 +14,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.mindrot.jbcrypt.BCrypt;
-import java.io.IOException;
 
 public class UserController extends BaseController{
 
@@ -99,7 +98,7 @@ public class UserController extends BaseController{
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindue1.fxml"));
         AnchorPane pane = loader.load();
-        pane.getStylesheets().add("/GUI/View/ProjectManager/managerView.css");
+        pane.getStylesheets().add("/GUI/View/Salesman/managerView.css");
         mainViewAnchorPane.getChildren().setAll(pane);
 
         NyController controller = loader.getController();
