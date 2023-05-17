@@ -156,7 +156,10 @@ Button:pressed{
 }
 
 
-
+#techsTab
+{
+    -fx-opacity: 0;
+}
 
 
 

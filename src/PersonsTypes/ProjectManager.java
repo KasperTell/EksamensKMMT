@@ -11,7 +11,7 @@ public class ProjectManager implements IPersonTypes{
 
     @Override
     public String getViewCss() {
-        return "/GUI/View/ProjectManager/managerView.css";
+        return "/GUI/View/Salesman/managerView.css";
     }
 
     @Override

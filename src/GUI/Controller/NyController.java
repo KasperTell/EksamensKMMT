@@ -19,8 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
-import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.SQLException;
@@ -81,13 +80,18 @@ public class NyController extends BaseController {
      * Set up the view when the view is getting shown.
      */
     @Override
-    public void setup() {
+
+
+
+    public void setup()  {
+
         //Initializing all our models.
         customerModel = getModel().getCustomerModel();
         projectModel = getModel().getProjectModel();
         userModel = getModel().getUserModel();
         //Setting the information of the listviews and combobox.
         customerComboBox.setItems(customerModel.getAllCustomers());
+
         projectDateOpen.setCellValueFactory(new PropertyValueFactory<>("Date"));
         projectNameOpen.setCellValueFactory(new PropertyValueFactory<>("Title"));
         customerProjectOpen.setCellValueFactory(new PropertyValueFactory<>("companyName"));
@@ -102,6 +106,9 @@ public class NyController extends BaseController {
             displayError(e);
         }
         closedProjectsTable.setItems(projectModel.getAllProjectsClose());
+
+        setUpTableView();
+
         turnButtonONOrOff();
         listenerLstAllCloseProjects();
         listenerLstAllOpenProjects();
@@ -112,6 +119,31 @@ public class NyController extends BaseController {
         listenerMouseClickOpenProject();
         listenerMouseClickCloseProject();
     }
+
+    /**
+     * Setup columns to two tableViews and initiated them. It is openProjectTable and closeProjectTable.
+     *
+     */
+    private void setUpTableView() {
+        projectDateOpen.setCellValueFactory(new PropertyValueFactory<>("Date"));
+        projectNameOpen.setCellValueFactory(new PropertyValueFactory<>("Title"));
+        customerProjectOpen.setCellValueFactory(new PropertyValueFactory<>("companyName"));
+
+        projectDateClosed.setCellValueFactory(new PropertyValueFactory<>("Date"));
+        projectNameClosed.setCellValueFactory(new PropertyValueFactory<>("Title"));
+        customerNameClosed.setCellValueFactory(new PropertyValueFactory<>("companyName"));
+
+        try {
+            openProjectsTable.setItems(projectModel.getAllProjectsOpen(1));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        closedProjectsTable.setItems(projectModel.getAllProjectsClose());
+    }
+
+    /**
+     * Setup pictures to button in the GUI.
+     */
 
     private void pictureToButton() {
         String[] listOfFiles = {"Pictures/Add Project Button.png", "Pictures/Add Customer Button.png",
@@ -153,37 +185,27 @@ public class NyController extends BaseController {
        
     }
     /**
-     * Listener for the tableview containing files for opening files.
+     * Mouse listener for the tableview containing files for opening projects.
      */
     public void listenerMouseClickOpenProject() {
         openProjectsTable.setOnMouseClicked(event -> {
             selectedProject = openProjectsTable.getSelectionModel().getSelectedItem();
 
             if (event.getClickCount() == 2) {
-                try {
-                    getCustomerPDFAction();
-                } catch (MalformedURLException e) {
-                    throw new RuntimeException(e);
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                getCustomerPDFAction();
             }
         });
     }
 
-
+    /**
+     * Mouse Listener for the tableview containing files for closed projects.
+     */
     public void listenerMouseClickCloseProject() {
         closedProjectsTable.setOnMouseClicked(event -> {
             selectedProject = closedProjectsTable.getSelectionModel().getSelectedItem();
 
             if (event.getClickCount() == 2) {
-                try {
-                    getCustomerPDFAction();
-                } catch (MalformedURLException e) {
-                    throw new RuntimeException(e);
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                getCustomerPDFAction();
 
             }
         });
@@ -192,8 +214,9 @@ public class NyController extends BaseController {
 
 
 
-
-
+    /**
+     * Listener for the tableview containing files for closed projects.
+     */
 
     @FXML
     private void listenerLstAllCloseProjects() {
@@ -217,6 +240,9 @@ public class NyController extends BaseController {
         });
     }
 
+    /**
+     * Listener for the tableview containing files for open projects.
+     */
     @FXML
     private void listenerLstAllOpenProjects() {
         openProjectsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
@@ -243,7 +269,7 @@ public class NyController extends BaseController {
     /**
      * Set the information in the project column in the tableview.
      */
-    private void setProjectColumns() throws Exception {
+    private void setProjectColumns()  {
 
 
         customerNameClm.setCellValueFactory(new PropertyValueFactory<>("companyName"));
@@ -254,7 +280,11 @@ public class NyController extends BaseController {
 
       /**  openProjectsTable.setItems(projectModel.getAllProjectsOpen());
         closedProjectsTable.setItems(projectModel.getAllProjectsClose()); */
-        customerTable.setItems(customerModel.loadCustomerList(selectedProject.getCustomerID()));
+        try {
+            customerTable.setItems(customerModel.loadCustomerList(selectedProject.getCustomerID()));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -451,15 +481,24 @@ public class NyController extends BaseController {
         }
     }
 
-    public void handleOpenProjectWindow() throws Exception {
+
+    /**
+     * This will open a new window for editing the project regarding files, PDF and technician.
+    */
+    public void handleOpenProjectWindow()  {
 
         if (selectedProject!=null)
         {
             projectModel.setSelectedProject(openProjectsTable.getSelectionModel().getSelectedItem());
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindue2.fxml"));
-            AnchorPane pane = loader.load();
-            pane.getStylesheets().add("/GUI/View/ProjectManager/managerView.css");
+            AnchorPane pane = null;
+            try {
+                pane = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            pane.getStylesheets().add("/GUI/View/Salesman/managerView.css");
             mainViewAnchorPane.getChildren().setAll(pane);
 
             controller = loader.getController();
@@ -470,36 +509,47 @@ public class NyController extends BaseController {
 
     }
 
-    public void handleOpenUserWindow(ActionEvent actionEvent) throws Exception {
+    /**
+     * This will open a menu that can add new users.
+     */
+
+    public void handleOpenUserWindow(ActionEvent actionEvent)  {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindueUser.fxml"));
-        AnchorPane pane = loader.load();
-        pane.getStylesheets().add("/GUI/View/ProjectManager/managerView.css");
+        AnchorPane pane = null;
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        pane.getStylesheets().add("/GUI/View/Salesman/managerView.css");
         mainViewAnchorPane.getChildren().setAll(pane);
 
         UserController controller = loader.getController();
         controller.setModel(super.getModel());
-        controller.setup();
+        try {
+            controller.setup();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void getCustomerPDFAction() throws MalformedURLException, FileNotFoundException {
+    /**
+     * This will open a PDF file that is attached to the given Project.
+     */
+    public void getCustomerPDFAction()  {
 
 
-        String path = "Resources/PDF/"+selectedProject.getCompanyName()+ " "+selectedProject.getTitle()+" installations dokumentation.pdf";
-
-        if (Files.exists(Path.of(path)))
+        if (selectedProject!=null)
         {
+            String path = "Resources/PDF/"+selectedProject.getCompanyName()+ " "+selectedProject.getTitle()+" installations dokumentation.pdf";
 
-            showFile.showFile(path);
+            if (Files.exists(Path.of(path)))
+                showFile.showFile(path);
+            else
+                showFile.showErrorBox("PDF does not exit", "File message");
+
         }
-        else
-        {
-
-            showFile.showErrorBox("PDF does not exit", "File message");
-        }
-
-
-
 
     }
 }

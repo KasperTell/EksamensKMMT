@@ -20,6 +20,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -70,19 +71,22 @@ public class ProjectController extends BaseController {
     private ProjectFilesModel projectFilesModel;
     private ProjectModel projectModel;
 
-    private ShowFile showFile=new ShowFile();
+    private ShowFile showFile = new ShowFile();
+
+    private PersonTypeChooser personTypeChooser;
 
     /**
      * Set up the view when the view is getting shown.
      */
     @Override
-    public void setup() throws InterruptedException {
+    public void setup() {
         //Initializing all our models.
         userModel = getModel().getUserModel();
         customerModel = getModel().getCustomerModel();
         projectFilesModel = getModel().getProjectFilesModel();
         projectModel = getModel().getProjectModel();
         selectedProject = projectModel.getSelectedProject();
+        personTypeChooser = new PersonTypeChooser();
         //Setting the information of the listviews and combobox.
         listenerMouseClickPicture();
         setupFiles();
@@ -122,9 +126,8 @@ public class ProjectController extends BaseController {
     }
 
 
-    private void enableDisableTab()
-    {
-        PersonTypeChooser personTypeChooser=new PersonTypeChooser();
+    private void enableDisableTab() {
+
         techsTab.setDisable(personTypeChooser.enableTab());
     }
 
@@ -135,8 +138,10 @@ public class ProjectController extends BaseController {
         fileTable.setOnMouseClicked(event -> {
             selectedfile = fileTable.getSelectionModel().getSelectedItem();
 
-                try {
-                    // Check if the selected file is an image file (JPEG, PNG, or JPG)
+            try {
+                // Check if the selected file is an image file (JPEG, PNG, or JPG)
+
+                if (selectedfile != null) {
                     String fileName = "/" + selectedfile.getFilePath().toLowerCase();
                     if (fileName.endsWith(".jpeg") || fileName.endsWith(".png") || fileName.endsWith(".jpg")) {
                         // Load the image file into the filesPreviewImageView
@@ -147,22 +152,21 @@ public class ProjectController extends BaseController {
                         {
                             Image image = new Image(imageUrl);
                             filesPreviewImageView.setImage(image);
+                        } else {
+                            showFile.showErrorBox("File does not exits", "File message");
                         }
-                        else
-                        {
-                        showFile.showErrorBox("File does not exits","File message");
-                        }
-
 
                     }
-                } catch (Exception e) {
-                    displayError(e);
-                    e.printStackTrace();
+
                 }
+            } catch (Exception e) {
+                displayError(e);
+                e.printStackTrace();
+            }
 
             if (event.getClickCount() == 2) {
                 showFile.showFile(selectedfile.getFilePath());
-                    }
+            }
         });
     }
 
@@ -170,7 +174,7 @@ public class ProjectController extends BaseController {
      * Set up the files information column in the tableview.
      */
     @FXML
-    private void setupFiles() throws InterruptedException {
+    private void setupFiles() {
         int projectNumber = selectedProject.getId();
         filesPictureColumn.setCellValueFactory(new PropertyValueFactory<>("picture"));
         filesNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -182,7 +186,12 @@ public class ProjectController extends BaseController {
             displayError(e);
             e.printStackTrace();
         }
-        projectFilesModel.fileLoopStop(); //Stopper tidligere løkker i projectFiles inden ny startes
+
+        try {
+            projectFilesModel.fileLoopStop(); //Stopper tidligere løkker i projectFiles inden ny startes
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         projectFilesModel.observer(); //Her startes en løkke, der observere ændringer i CheckBox
     }
 
@@ -235,7 +244,7 @@ public class ProjectController extends BaseController {
      * @param actionEvent
      */
     @FXML
-    private void handleSaveNewFile(ActionEvent actionEvent) throws Exception {
+    private void handleSaveNewFile(ActionEvent actionEvent) {
         //Opens the default file explore
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
@@ -253,21 +262,34 @@ public class ProjectController extends BaseController {
                 e.printStackTrace();
             }
 
-            String filename=file.toPath().getFileName().toString();
-            LocalDate saveDate= LocalDate.now();
+            String filename = file.toPath().getFileName().toString();
+            LocalDate saveDate = LocalDate.now();
 
 
+            FilesDAO filesDAO = null;
+            try {
+                filesDAO = new FilesDAO();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
-            FilesDAO filesDAO=new FilesDAO();
 
-
-            ProjectFiles projectFiles=new ProjectFiles(1,selectedProject.getId(),filename ,"Resources/Pictures/ImagesSavedFromTechnicians/"+filename,saveDate,null,null,filesDAO.getFileAmount()+1);
-            projectFilesModel.createNewFile(projectFiles);
+            ProjectFiles projectFiles = new ProjectFiles(1, selectedProject.getId(), filename, "Resources/Pictures/ImagesSavedFromTechnicians/" + filename, saveDate, null, null, filesDAO.getFileAmount() + 1);
+            try {
+                projectFilesModel.createNewFile(projectFiles);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
 
         }
     }
 
-    public void handleOpenCustomerDoc() throws FileNotFoundException, MalformedURLException, MalformedURLException, FileNotFoundException {
+    /**
+     * Create a new PDF file with the note and selected image files.
+     *
+     * @throws MalformedURLException
+     */
+    public void handleOpenCustomerDoc() {
 
         ArrayList<String> imagePath = new ArrayList<>();
 
@@ -277,33 +299,53 @@ public class ProjectController extends BaseController {
         }
         HashMap<String, String> customerMap = makeCustomerMap();
         CustomerPdf customerPdf = new CustomerPdf(imagePath, customerMap, selectedProject.getNote(), selectedProject.getTitle());
-        String path = customerPdf.makePdf();
+        String path = null;
+        try {
+            path = customerPdf.makePdf();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         ShowFile showFile = new ShowFile();
         showFile.showFile(path);
     }
 
-    public void handleDeleteFile (ActionEvent actionEvent) throws Exception {
+    public void handleDeleteFile() throws Exception {
         ProjectFiles fileToDelete = fileTable.getSelectionModel().getSelectedItem();
         projectFilesModel.deleteFile(fileToDelete);
+
 
         File file = new File(fileToDelete.getFilePath());
         file.delete();
     }
 
-    public void handleOpenMainWindow (ActionEvent actionEvent) throws Exception {
+    /**
+     * Delete a selected image files from the list.
+     *
+     * @param actionEvent
+     */
+    public void handleDeleteFile(ActionEvent actionEvent) {
+
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindue1.fxml"));
-        AnchorPane pane = loader.load();
+        AnchorPane pane = null;
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         pane.getStylesheets().add("/GUI/View/ProjectManager/managerView.css");
         mainViewAnchorPane.getChildren().setAll(pane);
+
 
         NyController controller = loader.getController();
         controller.setModel(super.getModel());
         controller.setup();
     }
 
-    public void handleDraw (ActionEvent actionEvent) throws Exception {
+    public void handleDraw(ActionEvent actionEvent) throws Exception {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/Paint/PaintView.fxml"));
         Parent root = loader.load();
@@ -322,10 +364,11 @@ public class ProjectController extends BaseController {
     /**
      * Handle what happens when the "Add technician" button is clicked.
      * Adds a selected user/employee to a selected project.
+     *
      * @param actionEvent
      */
     @FXML
-    private void handleAddTech (ActionEvent actionEvent){
+    private void handleAddTech(ActionEvent actionEvent) {
         //Setting the data for the variables and calls the method from the model.
         int projectID = selectedProject.getId();
         int technicianID = listTechsComboBox.getSelectionModel().getSelectedItem().getId();
@@ -334,8 +377,125 @@ public class ProjectController extends BaseController {
         } catch (Exception e) {
             displayError(e);
             e.printStackTrace();
+
+            if (selectedfile != null) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Delete File");
+                //alert.setContentText("Delete?");
+                ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+                ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+                alert.getButtonTypes().setAll(okButton, noButton);
+                alert.showAndWait().ifPresent(type -> {
+                    if (type == okButton) {
+
+                        try {
+                            projectFilesModel.deleteFile(selectedfile);
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+
+
+                        File file = new File(selectedfile.getFilePath());
+                        file.delete();
+                    }
+
+                });
+            }
         }
     }
+
+    /**
+     * Return to main view
+     *
+     * @param actionEvent
+     */
+    public void handleOpenMainWindow(ActionEvent actionEvent) {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindue1.fxml"));
+        AnchorPane pane = null;
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        pane.getStylesheets().add(personTypeChooser.getCSS());
+        mainViewAnchorPane.getChildren().setAll(pane);
+
+        NyController controller = loader.getController();
+        controller.setModel(super.getModel());
+        controller.setup();
+    }
+
+
+
+
+
+    /**
+     * Start the drawing tool
+     *
+     */
+        public void handleDraw ()  {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/GUI/View/Paint/PaintView.fxml"));
+            Parent root = null;
+            try {
+                root = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            root.getStylesheets().add("/GUI/View/Paint/Paint.css");
+
+            PaintController controller = loader.getController();
+            controller.setModel(super.getModel());
+            try {
+                controller.setup();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+            Stage stage = new Stage();
+
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+
+        /**
+         * Handle what happens when the "Add technician" button is clicked.
+         * Adds a selected user/employee to a selected project.
+         * @param
+         */
+        @FXML
+        private void handleAddTech (){
+            //Setting the data for the variables and calls the method from the model.
+            int projectID = selectedProject.getId();
+            int technicianID = listTechsComboBox.getSelectionModel().getSelectedItem().getId();
+            try {
+                userModel.moveTechnician(technicianID, projectID);
+            } catch (Exception e) {
+                displayError(e);
+                e.printStackTrace();
+            }
+        }
+
+        /**
+         * Handle what happens when the "Remove technician" button is clicked.
+         * Removes a selected user/employee from a selected project.
+         * @param
+         */
+        @FXML
+        private void handleRemoveTech (){
+            //Setting the data for the variables and calls the method from the model.
+            User selectedTechnician = techsOnProjectListView.getSelectionModel().getSelectedItem();
+            int projectID = selectedProject.getId();
+            try {
+                userModel.removeTechnicianFromProject(selectedTechnician, projectID);
+            } catch (Exception e) {
+                displayError(e);
+                e.printStackTrace();
+            }
+
+        }
+
 
     /**
      * Handle what happens when the "Remove technician" button is clicked.
