@@ -87,16 +87,7 @@ public class NyController extends BaseController {
         projectModel = getModel().getProjectModel();
         //Setting the information of the listviews and combobox.
         customerComboBox.setItems(customerModel.getAllCustomers());
-        projectDateOpen.setCellValueFactory(new PropertyValueFactory<>("Date"));
-        projectNameOpen.setCellValueFactory(new PropertyValueFactory<>("Title"));
-        customerProjectOpen.setCellValueFactory(new PropertyValueFactory<>("companyName"));
-
-        projectDateClosed.setCellValueFactory(new PropertyValueFactory<>("Date"));
-        projectNameClosed.setCellValueFactory(new PropertyValueFactory<>("Title"));
-        customerNameClosed.setCellValueFactory(new PropertyValueFactory<>("companyName"));
-
-        openProjectsTable.setItems(projectModel.getAllProjectsOpen());
-        closedProjectsTable.setItems(projectModel.getAllProjectsClose());
+        setUpTableView();
         turnButtonONOrOff();
         listenerLstAllCloseProjects();
         listenerLstAllOpenProjects();
@@ -107,6 +98,27 @@ public class NyController extends BaseController {
         listenerMouseClickOpenProject();
         listenerMouseClickCloseProject();
     }
+
+    /**
+     * Setup columns to two tableViews and initiated them. It is openProjectTable and closeProjectTable.
+     *
+     */
+    private void setUpTableView() {
+        projectDateOpen.setCellValueFactory(new PropertyValueFactory<>("Date"));
+        projectNameOpen.setCellValueFactory(new PropertyValueFactory<>("Title"));
+        customerProjectOpen.setCellValueFactory(new PropertyValueFactory<>("companyName"));
+
+        projectDateClosed.setCellValueFactory(new PropertyValueFactory<>("Date"));
+        projectNameClosed.setCellValueFactory(new PropertyValueFactory<>("Title"));
+        customerNameClosed.setCellValueFactory(new PropertyValueFactory<>("companyName"));
+
+        openProjectsTable.setItems(projectModel.getAllProjectsOpen());
+        closedProjectsTable.setItems(projectModel.getAllProjectsClose());
+    }
+
+    /**
+     * Setup pictures to button in the GUI.
+     */
 
     private void pictureToButton() {
         String[] listOfFiles = {"Pictures/Add Project Button.png", "Pictures/Add Customer Button.png",
@@ -148,7 +160,7 @@ public class NyController extends BaseController {
        
     }
     /**
-     * Listener for the tableview containing files for opening files.
+     * Mouse listener for the tableview containing files for opening projects.
      */
     public void listenerMouseClickOpenProject() {
         openProjectsTable.setOnMouseClicked(event -> {
@@ -166,7 +178,9 @@ public class NyController extends BaseController {
         });
     }
 
-
+    /**
+     * Mouse Listener for the tableview containing files for closed projects.
+     */
     public void listenerMouseClickCloseProject() {
         closedProjectsTable.setOnMouseClicked(event -> {
             selectedProject = closedProjectsTable.getSelectionModel().getSelectedItem();
@@ -187,8 +201,9 @@ public class NyController extends BaseController {
 
 
 
-
-
+    /**
+     * Listener for the tableview containing files for closed projects.
+     */
 
     @FXML
     private void listenerLstAllCloseProjects() {
@@ -212,6 +227,9 @@ public class NyController extends BaseController {
         });
     }
 
+    /**
+     * Listener for the tableview containing files for open projects.
+     */
     @FXML
     private void listenerLstAllOpenProjects() {
         openProjectsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
@@ -446,6 +464,10 @@ public class NyController extends BaseController {
         }
     }
 
+
+    /**
+     * This will open a new window for editing the project regarding files, PDF and technician.
+    */
     public void handleOpenProjectWindow() throws Exception {
 
         if (selectedProject!=null)
@@ -465,6 +487,10 @@ public class NyController extends BaseController {
 
     }
 
+    /**
+     * This will open a menu that can add new users.
+     */
+
     public void handleOpenUserWindow(ActionEvent actionEvent) throws Exception {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindueUser.fxml"));
@@ -477,6 +503,9 @@ public class NyController extends BaseController {
         controller.setup();
     }
 
+    /**
+     * This will open a PDF file that is attached to the given Project.
+     */
     public void getCustomerPDFAction() throws MalformedURLException, FileNotFoundException {
 
 
