@@ -98,7 +98,7 @@ public class UserController extends BaseController{
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindue1.fxml"));
         AnchorPane pane = loader.load();
-        pane.getStylesheets().add("/GUI/View/Salesman/SalesView.css");
+        pane.getStylesheets().add("/GUI/View/Salesman/managerView.css");
         mainViewAnchorPane.getChildren().setAll(pane);
 
         NyController controller = loader.getController();
