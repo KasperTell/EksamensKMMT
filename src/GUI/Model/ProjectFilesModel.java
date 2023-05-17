@@ -2,6 +2,7 @@ package GUI.Model;
 
 import BE.ProjectFiles;
 import BLL.ProjectFilesManager;
+import DAL.iFileDataAccess;
 import javafx.application.Platform;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -20,7 +21,7 @@ public class ProjectFilesModel {
 
     private int runs=0;
 private int number=0 ;
-
+    private iFileDataAccess fileDataAccess;
     /**
      * Constructor for the class "ProjectFilesModel".
      * @throws Exception
@@ -30,6 +31,12 @@ private int number=0 ;
         projectFilesManager = new ProjectFilesManager();
         projectFiles=new SimpleListProperty<>();
     }
+
+
+    public ProjectFilesModel(iFileDataAccess fileDataAccess) {
+        this.fileDataAccess = fileDataAccess;
+    }
+
 
     /**
      * get the list of ProjectFiles.
@@ -151,6 +158,13 @@ private int number=0 ;
        projectFilesManager.updateFileOrder(OrderFiles, file.getId());
 
     }
+    /*
+    public void updateFileOrders(int selectedFileId, int fileToMoveId, int selectedFileNewOrder, int fileToMoveNewOrder) throws Exception{
+        fileDataAccess.updateFileOrder(selectedFileId, selectedFileNewOrder);
+        fileDataAccess.updateFileOrder(fileToMoveId, fileToMoveNewOrder);
+    }
+
+     */
 
 
 }

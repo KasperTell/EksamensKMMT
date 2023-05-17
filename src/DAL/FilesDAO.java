@@ -186,6 +186,24 @@ public class FilesDAO implements iFileDataAccess {
             throw new SQLException("Could not update the file order in the database", ex);
         }
     }
+
+    public void updateFileOrders(int selectedFileId, int fileToMoveId, int selectedFileNewOrder, int fileToMoveNewOrder) throws SQLException {
+        String sql = ("UPDATE ProjectFile SET OrderFiles = ? WHERE ID = ?");
+        try (Connection conn = databaseConnector.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, selectedFileNewOrder);
+            stmt.setInt(2, selectedFileId);
+            stmt.executeUpdate();
+            stmt.setInt(1, fileToMoveNewOrder);
+            stmt.setInt(2, fileToMoveId);
+            stmt.executeUpdate();
+            conn.commit();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new SQLException("Could not update the file order in the database", ex);
+        }
+
+    }
 }
 
 

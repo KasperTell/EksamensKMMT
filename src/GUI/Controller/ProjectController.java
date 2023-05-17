@@ -80,6 +80,11 @@ public class ProjectController extends BaseController {
     private ProjectFilesModel projectFilesModel;
     private ProjectModel projectModel;
 
+    private int selectedFileId;
+    private int fileToMoveId;
+    private int selectedFileNewOrder;
+    private int fileToMoveNewOrder;
+
 
     /**
      * Set up the view when the view is getting shown.
@@ -188,7 +193,9 @@ public class ProjectController extends BaseController {
             e.printStackTrace();
         }
     }
-
+    public ProjectController(ProjectFilesModel projectFilesModel) {
+        this.projectFilesModel = projectFilesModel;
+    }
     /**
      * Set up the information about the customer in the main view when a project is selected.
      */
@@ -336,7 +343,11 @@ public class ProjectController extends BaseController {
         if (selectedIndex > 0) {
             Collections.swap(fileTable.getItems(), selectedIndex, selectedIndex - 1);
             fileTable.getSelectionModel().select(selectedIndex - 1);
-            updateDataBaseWithNewOrder();
+            selectedFileId = fileTable.getItems().get(selectedIndex - 1).getId();
+            fileToMoveId = fileTable.getItems().get(selectedIndex).getId();
+            selectedFileNewOrder = fileTable.getItems().get(selectedIndex - 1).getOrderFiles();
+            fileToMoveNewOrder = fileTable.getItems().get(selectedIndex).getOrderFiles();
+            //updateDataBaseWithNewOrder();
         }
     }
 
@@ -345,14 +356,19 @@ public class ProjectController extends BaseController {
         if (selectedIndex < fileTable.getItems().size() - 1) {
             Collections.swap(fileTable.getItems(), selectedIndex, selectedIndex + 1);
             fileTable.getSelectionModel().select(selectedIndex + 1);
-            updateDataBaseWithNewOrder();
+            selectedFileId = fileTable.getItems().get(selectedIndex + 1).getId();
+            fileToMoveId = fileTable.getItems().get(selectedIndex).getId();
+            selectedFileNewOrder = fileTable.getItems().get(selectedIndex + 1).getOrderFiles();
+            fileToMoveNewOrder = fileTable.getItems().get(selectedIndex).getOrderFiles();
+            //updateDataBaseWithNewOrder();
         }
     }
+/*
     private void updateDataBaseWithNewOrder() throws Exception {
-        for (int i = 0; i < fileTable.getItems().size(); i++) {
-            ProjectFiles projectFiles = fileTable.getItems().get(i);
-            int orderfiles=projectFiles.getOrderFiles();
-            projectFilesModel.updateFileOrder(orderfiles,projectFiles, selectedfile.getId());
-        }
+        projectFilesModel.updateFileOrders(selectedFileId, fileToMoveId, selectedFileNewOrder, fileToMoveNewOrder);
     }
+
+ */
+
+
 }
