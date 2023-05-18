@@ -154,6 +154,8 @@ public class ProjectController extends BaseController {
                         }
 
 
+
+
                     }
                 } catch (Exception e) {
                     displayError(e);
@@ -165,6 +167,10 @@ public class ProjectController extends BaseController {
                     }
         });
     }
+
+
+
+
 
     /**
      * Set up the files information column in the tableview.
@@ -182,7 +188,15 @@ public class ProjectController extends BaseController {
             displayError(e);
             e.printStackTrace();
         }
+
         projectFilesModel.fileLoopStop(); //Stopper tidligere løkker i projectFiles inden ny startes
+
+        try {
+            projectFilesModel.fileLoopStop(); //Stopper tidligere løkker i projectFiles inden ny startes
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         projectFilesModel.observer(); //Her startes en løkke, der observere ændringer i CheckBox
     }
 
@@ -283,7 +297,7 @@ public class ProjectController extends BaseController {
         showFile.showFile(path);
     }
 
-    public void handleDeleteFile (ActionEvent actionEvent) throws Exception {
+    public void handleDeleteFile () throws Exception {
         ProjectFiles fileToDelete = fileTable.getSelectionModel().getSelectedItem();
         projectFilesModel.deleteFile(fileToDelete);
 
@@ -319,9 +333,48 @@ public class ProjectController extends BaseController {
         stage.show();
     }
 
+
+
     /**
+<<<<<<< HEAD
      * Handle what happens when the "Add technician" button is clicked.
      * Adds a selected user/employee to a selected project.
+=======
+     * Delete a selected image files from the list.
+     * @param actionEvent
+     *
+     */
+        public void handleDeleteFile (ActionEvent actionEvent)  {
+
+
+            if (selectedfile != null) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Delete File");
+                //alert.setContentText("Delete?");
+                ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+                ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+                alert.getButtonTypes().setAll(okButton, noButton);
+                alert.showAndWait().ifPresent(type -> {
+                    if (type == okButton) {
+                        try {
+                            projectFilesModel.deleteFile(selectedfile);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                        File file = new File(selectedfile.getFilePath());
+                        file.delete();
+                    }
+
+                });
+
+
+            }
+        }
+
+
+    /**
+     * Return to main view
+>>>>>>> parent of cd9406b (Update)
      * @param actionEvent
      */
     @FXML

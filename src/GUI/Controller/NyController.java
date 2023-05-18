@@ -81,7 +81,11 @@ public class NyController extends BaseController {
      * Set up the view when the view is getting shown.
      */
     @Override
-    public void setup() {
+
+
+
+    public void setup() throws Exception {
+
         //Initializing all our models.
         customerModel = getModel().getCustomerModel();
         projectModel = getModel().getProjectModel();
@@ -451,6 +455,13 @@ public class NyController extends BaseController {
         }
     }
 
+
+
+
+    /**
+     * This will open a new window for editing the project regarding files, PDF and technician.
+    */
+
     public void handleOpenProjectWindow() throws Exception {
 
         if (selectedProject!=null)
@@ -470,6 +481,12 @@ public class NyController extends BaseController {
 
     }
 
+
+    /**
+     * This will open a menu that can add new users.
+     */
+
+
     public void handleOpenUserWindow(ActionEvent actionEvent) throws Exception {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindueUser.fxml"));
@@ -481,6 +498,11 @@ public class NyController extends BaseController {
         controller.setModel(super.getModel());
         controller.setup();
     }
+
+
+    /**
+     * This will open a PDF file that is attached to the given Project.
+     */
 
     public void getCustomerPDFAction() throws MalformedURLException, FileNotFoundException {
 
