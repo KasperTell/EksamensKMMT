@@ -137,21 +137,25 @@ public class ProjectController extends BaseController {
 
                 try {
                     // Check if the selected file is an image file (JPEG, PNG, or JPG)
-                    String fileName = "/" + selectedfile.getFilePath().toLowerCase();
-                    if (fileName.endsWith(".jpeg") || fileName.endsWith(".png") || fileName.endsWith(".jpg")) {
-                        // Load the image file into the filesPreviewImageView
-                        String fileUrl = selectedfile.getFilePath();
-                        String imageUrl = fileUrl.substring(10);
+                    if (selectedfile!=null)
+                    {
+                        String fileName = "/" + selectedfile.getFilePath().toLowerCase();
+                        if (fileName.endsWith(".jpeg") || fileName.endsWith(".png") || fileName.endsWith(".jpg")) {
+                            // Load the image file into the filesPreviewImageView
+                            String fileUrl = selectedfile.getFilePath();
+                            String imageUrl = fileUrl.substring(10);
 
-                        if (Files.exists(Path.of(fileUrl))) //check om filen eksisterer
-                        {
-                            Image image = new Image(imageUrl);
-                            filesPreviewImageView.setImage(image);
-                        }
-                        else
-                        {
-                        showFile.showErrorBox("File does not exits","File message");
-                        }
+                            if (Files.exists(Path.of(fileUrl))) //check om filen eksisterer
+                            {
+                                Image image = new Image(imageUrl);
+                                filesPreviewImageView.setImage(image);
+                            }
+                            else
+                            {
+                                showFile.showErrorBox("File does not exits","File message");
+                            }
+                    }
+
 
 
 
@@ -167,9 +171,6 @@ public class ProjectController extends BaseController {
                     }
         });
     }
-
-
-
 
 
     /**
@@ -309,7 +310,7 @@ public class ProjectController extends BaseController {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindue1.fxml"));
         AnchorPane pane = loader.load();
-        pane.getStylesheets().add("/GUI/View/ProjectManager/managerView.css");
+        pane.getStylesheets().add(PersonTypeChooser.personTypes.getCSS());
         mainViewAnchorPane.getChildren().setAll(pane);
 
         NyController controller = loader.getController();
@@ -336,10 +337,6 @@ public class ProjectController extends BaseController {
 
 
     /**
-<<<<<<< HEAD
-     * Handle what happens when the "Add technician" button is clicked.
-     * Adds a selected user/employee to a selected project.
-=======
      * Delete a selected image files from the list.
      * @param actionEvent
      *
@@ -374,7 +371,6 @@ public class ProjectController extends BaseController {
 
     /**
      * Return to main view
->>>>>>> parent of cd9406b (Update)
      * @param actionEvent
      */
     @FXML

@@ -18,17 +18,17 @@
    <children>
       <AnchorPane fx:id="mainViewAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0">
          <children>
-            <TabPane layoutX="50.0" layoutY="100.0" prefHeight="550.0" prefWidth="500.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane layoutX="50.0" layoutY="100.0" prefHeight="550.0" prefWidth="558.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab fx:id="openProjectsTab" text="Open">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TableView fx:id="openProjectsTable" prefHeight="468.5" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <TableView fx:id="openProjectsTable" prefHeight="522.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columns>
-                                    <TableColumn fx:id="customerProjectOpen" prefWidth="200.0" resizable="false" text="Customer" />
-                                  <TableColumn fx:id="projectNameOpen" prefWidth="200.0" resizable="false" text="Project" />
-                                  <TableColumn fx:id="projectDateOpen" prefWidth="100.0" resizable="false" text="Date" />
+                                    <TableColumn fx:id="customerProjectOpen" prefWidth="248.00007247924805" resizable="false" text="Customer" />
+                                  <TableColumn fx:id="projectNameOpen" prefWidth="193.59991455078125" resizable="false" text="Project" />
+                                  <TableColumn fx:id="projectDateOpen" prefWidth="116.800048828125" resizable="false" text="Date" />
                                 </columns>
                               </TableView>
                            </children>
@@ -39,11 +39,11 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TableView fx:id="closedProjectsTable" layoutY="7.0" prefHeight="468.5" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <TableView fx:id="closedProjectsTable" layoutY="7.0" prefHeight="522.0" prefWidth="558.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <columns>
-                                    <TableColumn fx:id="customerNameClosed" prefWidth="200.0" resizable="false" text="Customer" />
-                                    <TableColumn fx:id="projectNameClosed" prefWidth="200.0" resizable="false" text="Project" />
-                                    <TableColumn fx:id="projectDateClosed" prefWidth="100.0" resizable="false" text="Date" />
+                                    <TableColumn fx:id="customerNameClosed" prefWidth="245.60004806518555" resizable="false" text="Customer" />
+                                    <TableColumn fx:id="projectNameClosed" prefWidth="197.60003662109375" resizable="false" text="Project" />
+                                    <TableColumn fx:id="projectDateClosed" prefWidth="112.79996337890623" resizable="false" text="Date" />
                                  </columns>
                               </TableView>
                            </children>
@@ -52,13 +52,13 @@
                 </Tab>
               </tabs>
             </TabPane>
-            <TableView fx:id="customerTable" layoutX="650.0" layoutY="130.0" prefHeight="66.0" prefWidth="500.0">
+            <TableView fx:id="customerTable" layoutX="650.0" layoutY="130.0" prefHeight="74.0" prefWidth="516.0">
               <columns>
                 <TableColumn fx:id="customerNameClm" prefWidth="100.0" resizable="false" text="Name" />
                   <TableColumn fx:id="customerMailClm" prefWidth="100.0" resizable="false" text="Mail" />
                   <TableColumn fx:id="customerPhoneClm" prefWidth="100.0" resizable="false" text="Phone" />
-                <TableColumn fx:id="customerAddressClm" prefWidth="100.0" resizable="false" text="Adress" />
-                  <TableColumn fx:id="customerZipClm" prefWidth="100.0" resizable="false" text="Zip" />
+                <TableColumn fx:id="customerAddressClm" prefWidth="107.199951171875" resizable="false" text="Adress" />
+                  <TableColumn fx:id="customerZipClm" prefWidth="108.0" resizable="false" text="Zip" />
               </columns>
             </TableView>
             <TextField fx:id="searchBoxTextField" layoutX="650.0" layoutY="100.0" onKeyReleased="#searchProjectsByStringQuery" prefWidth="200.0" promptText="Søg..." />
@@ -78,7 +78,7 @@
             <Button fx:id="reOpenProjectButton" layoutX="330.0" layoutY="675.0" mnemonicParsing="false" onAction="#reopenProjectAction" />
             <Button fx:id="openProjectWindowButton" layoutX="995.0" layoutY="675.0" mnemonicParsing="false" onAction="#handleOpenProjectWindow" />
             <Button fx:id="openUserWindowButton" layoutX="1075.0" layoutY="675.0" mnemonicParsing="false" onAction="#handleOpenUserWindow" />
-            <TextArea fx:id="NotesTextArea" layoutX="650.0" layoutY="200.0" prefHeight="450.0" prefWidth="500.0" />
+            <TextArea fx:id="NotesTextArea" layoutX="650.0" layoutY="205.0" prefHeight="446.0" prefWidth="516.0" />
             <Button layoutX="650.0" layoutY="727.0" mnemonicParsing="false" onAction="#getCustomerPDFAction" />
          </children>
       </AnchorPane>

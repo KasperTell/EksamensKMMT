@@ -11,7 +11,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="mainViewAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ProjectController">
+<AnchorPane fx:id="mainViewAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ProjectController">
    <children>
       <TabPane fx:id="informationTabPane" layoutX="50.0" layoutY="150.0" prefHeight="500.0" prefWidth="504.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -19,12 +19,12 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="fileTable" prefHeight="423.0" prefWidth="300.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="fileTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="423.0" prefWidth="300.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
-                              <TableColumn fx:id="filesPictureColumn" prefWidth="29.0428466796875" />
-                            <TableColumn fx:id="filesNameColumn" prefWidth="103.45718383789062" text="Name" />
-                            <TableColumn fx:id="filesDateColumn" prefWidth="124.0" text="Date" />
-                              <TableColumn fx:id="filesIncludedColumn" prefWidth="245.5999755859375" text="Include" />
+                              <TableColumn fx:id="filesPictureColumn" prefWidth="40.0" />
+                            <TableColumn fx:id="filesNameColumn" prefWidth="139.20001220703125" text="Name" />
+                            <TableColumn fx:id="filesDateColumn" prefWidth="175.20001220703125" text="Date" />
+                              <TableColumn fx:id="filesIncludedColumn" prefWidth="151.20001220703125" text="Include in PDF" />
                           </columns>
                         </TableView>
                         <Button fx:id="saveFileButton" layoutX="250.0" layoutY="437.0" mnemonicParsing="false" onAction="#handleSaveNewFile" text="Save" />
@@ -59,7 +59,7 @@
       </TabPane>
       <Button fx:id="openMainWindowButton" layoutX="920.0" layoutY="661.0" mnemonicParsing="false" onAction="#handleOpenMainWindow" text="OPEN WINDOW MAIN" />
       <Button fx:id="drawButton" layoutX="711.0" layoutY="686.0" mnemonicParsing="false" onAction="#handleDraw" text="DRAW" />
-      <ImageView fx:id="filesPreviewImageView" fitHeight="357.0" fitWidth="421.0" layoutX="657.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="filesPreviewImageView" fitHeight="444.0" fitWidth="421.0" layoutX="657.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" />
       <Button layoutX="602.0" layoutY="686.0" mnemonicParsing="false" onAction="#handleOpenCustomerDoc" text="Customer PDF" />
    </children>
 </AnchorPane>
