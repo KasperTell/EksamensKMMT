@@ -27,6 +27,8 @@ Button:pressed{
 }
 
 
+
+
 #newProjectButton, #newCustomerButton, #reOpenProjectButton, #closeProjectButton, #openUserWindowButton, #openProjectWindowButton
 {
     -fx-background-color: transparent;
@@ -169,6 +171,9 @@ Button:pressed{
 }
 
 
+#filesIncludedColumn, #filesDateColumn {
+    -fx-alignment: CENTER;
+}
 
 
 

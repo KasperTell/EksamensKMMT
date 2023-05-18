@@ -19,12 +19,12 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="fileTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="423.0" prefWidth="300.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="fileTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="504.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                               <TableColumn fx:id="filesPictureColumn" prefWidth="40.0" />
-                            <TableColumn fx:id="filesNameColumn" prefWidth="139.20001220703125" text="Name" />
-                            <TableColumn fx:id="filesDateColumn" prefWidth="175.20001220703125" text="Date" />
-                              <TableColumn fx:id="filesIncludedColumn" prefWidth="151.20001220703125" text="Include in PDF" />
+                            <TableColumn fx:id="filesNameColumn" prefWidth="172.800048828125" text="Name" />
+                            <TableColumn fx:id="filesDateColumn" prefWidth="143.199951171875" text="Date" />
+                              <TableColumn fx:id="filesIncludedColumn" prefWidth="147.20001220703125" text="Include in PDF" />
                           </columns>
                         </TableView>
                         <Button fx:id="saveFileButton" layoutX="250.0" layoutY="437.0" mnemonicParsing="false" onAction="#handleSaveNewFile" text="Save" />
@@ -38,7 +38,7 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="205.0" prefWidth="287.0">
                      <children>
                         <Button fx:id="saveNoteButton" layoutX="250.0" layoutY="437.0" mnemonicParsing="false" onAction="#saveNoteAction" text="Save" />
-                        <TextArea fx:id="NotesTextArea" layoutX="14.0" layoutY="14.0" prefHeight="410.0" prefWidth="472.0" />
+                        <TextArea fx:id="NotesTextArea" layoutY="1.0" prefHeight="423.0" prefWidth="504.0" />
                      </children>
                   </AnchorPane>
                </content>

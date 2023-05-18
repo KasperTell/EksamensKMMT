@@ -18,8 +18,8 @@ public class LilleJpeg implements IImageViewKlient {
 
         //Her laves billederamme objekterne med indhold
         ImageView png= new ImageView(png1);
-        png.setFitWidth(20);
-        png.setFitHeight(20);
+        png.setFitWidth(25);
+        png.setFitHeight(25);
 
         return png;
 

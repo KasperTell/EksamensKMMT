@@ -169,6 +169,9 @@ Button:pressed{
 
 
 
+#filesIncludedColumn, #filesDateColumn {
+    -fx-alignment: CENTER;
+}
 
 
 
