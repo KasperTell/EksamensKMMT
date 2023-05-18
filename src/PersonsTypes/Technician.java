@@ -12,7 +12,7 @@ public class Technician implements IPersonTypes{
 
     @Override
     public String getViewCss() {
-        return "/GUI/View/technician/TechView1.css";
+        return "/GUI/View/technician/TechView.css";
     }
 
     public HashMap<String, Boolean> turnButtonOnOrOff() {

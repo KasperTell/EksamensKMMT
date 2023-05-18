@@ -156,7 +156,10 @@ Button:pressed{
 }
 
 
-
+#newProjectButton,#closeProjectButton,#reOpenProjectButton,#newCustomerButton,#openProjectWindowButton,#openUserWindowButton
+{
+    -fx-opacity: 0;
+}
 
 
 

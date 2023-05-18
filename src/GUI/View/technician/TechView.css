@@ -156,7 +156,10 @@ Button:pressed{
 }
 
 
-
+#newProjectButton,#reOpenProjectButton,#newCustomerButton,#openUserWindowButton, #techsTab
+{
+    -fx-opacity: 0;
+}
 
 
 
