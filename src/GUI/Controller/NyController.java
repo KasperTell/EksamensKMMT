@@ -458,8 +458,6 @@ public class NyController extends BaseController {
     }
 
 
-
-
     /**
      * This will open a new window for editing the project regarding files, PDF and technician.
     */
@@ -509,18 +507,23 @@ public class NyController extends BaseController {
     public void getCustomerPDFAction() throws MalformedURLException, FileNotFoundException {
 
 
-        String path = "Resources/PDF/"+selectedProject.getCompanyName()+ " "+selectedProject.getTitle()+" installations dokumentation.pdf";
-
-        if (Files.exists(Path.of(path)))
+        if (selectedProject!=null)
         {
 
-            showFile.showFile(path);
-        }
-        else
-        {
+            String path = "Resources/PDF/"+selectedProject.getCompanyName()+ " "+selectedProject.getTitle()+" installations dokumentation.pdf";
 
-            showFile.showErrorBox("PDF does not exit", "File message");
+            if (Files.exists(Path.of(path)))
+            {
+
+                showFile.showFile(path);
+            }
+            else
+            {
+
+                showFile.showErrorBox("PDF does not exit", "File message");
+            }
         }
+
 
 
 
