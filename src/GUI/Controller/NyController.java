@@ -382,24 +382,34 @@ public class NyController extends BaseController {
     private void handleAddNewProject(ActionEvent actionEvent) {
         //Setting the data in the variables.
         int id = 1;
-        String title = projectNameTextField.getText();
-        int customerID = customerComboBox.getSelectionModel().getSelectedItem().getId();
-        LocalDate date = LocalDate.now();
-        boolean isOpen = true;
-        String note="";
-        String company="";
-        //Initializing the project.
-        Project project = new Project(id, title, customerID, date, isOpen, note,company);
-        try {
-            //Send the project to the database.
-            projectModel.createNewProject(project);
+        String title;
+        int customerID;
+
+        if (projectNameTextField.getText()!=null && customerComboBox.getSelectionModel().getSelectedItem()!=null)
+        {
+            title = projectNameTextField.getText();
+            customerID = customerComboBox.getSelectionModel().getSelectedItem().getId();
+            LocalDate date = LocalDate.now();
+            boolean isOpen = true;
+            String note="";
+            String company="";
+            //Initializing the project.
+
+            Project project = new Project(id, title, customerID, date, isOpen, note,company);
+            try {
+                //Send the project to the database.
+                projectModel.createNewProject(project);
+                newProjectAction();
+            } catch (SQLException e) {
+                displayError(e);
+                e.printStackTrace();
+            }
+            //Close the vbox.
             newProjectAction();
-        } catch (SQLException e) {
-            displayError(e);
-            e.printStackTrace();
         }
-        //Close the vbox.
-        newProjectAction();
+
+
+
     }
 
     /**
