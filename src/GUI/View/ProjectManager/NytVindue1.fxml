@@ -122,12 +122,12 @@
                   <Font name="System Bold" size="34.0" />
                </font>
             </Label>
-            <TextField fx:id="customerFirstNameTextField" promptText="Fornavn på kunden">
+            <TextField fx:id="customerFirstNameTextField" promptText="Fornavn på kunden*">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="customerLastNameTextField" promptText="Efternavn på kunden">
+            <TextField fx:id="customerLastNameTextField" promptText="Efternavn på kunden*">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
@@ -137,12 +137,12 @@
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="customerAddressTextField" promptText="Adresse">
+            <TextField fx:id="customerAddressTextField" promptText="Adresse*">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="customerZipCodeTextField" promptText="Postnummer">
+            <TextField fx:id="customerZipCodeTextField" promptText="Postnummer*">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
@@ -152,7 +152,7 @@
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="customerPhoneNumberTextField" promptText="Telefonnummer">
+            <TextField fx:id="customerPhoneNumberTextField" promptText="Telefonnummer*">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>

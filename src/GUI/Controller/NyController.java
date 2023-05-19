@@ -70,7 +70,7 @@ public class NyController extends BaseController {
     private UserModel userModel;
     private ProjectController controller;
     private boolean isMenuOpen;
-    private int projectNumber;
+    private int projectNumber,phoneNumber;
     private boolean onOpenProjectList;
 
     ShowFile showFile=new ShowFile();
@@ -419,26 +419,44 @@ public class NyController extends BaseController {
      */
     public void handleAddNewCustomer(ActionEvent actionEvent) {
         //Setting the data in the variables.
-        int id = 1;
-        String firstName = customerFirstNameTextField.getText();
-        String lastName = customerLastNameTextField.getText();
-        String companyName = companyNameTextField.getText();
-        String customerAddress = customerAddressTextField.getText();
-        String mail = customerEmailTextField.getText();
-        int phoneNumber = Integer.parseInt(customerPhoneNumberTextField.getText());
-        int customerZipCode = Integer.parseInt(customerZipCodeTextField.getText());
-        //Initializing the customer.
-        Customer customer = new Customer(id, firstName, lastName, companyName, customerAddress, mail, phoneNumber, customerZipCode);
-        try {
-            //Sending the customer to the database.
-            customerModel.createNewCustomer(customer);
+
+
+
+        if (!customerFirstNameTextField.getText().equals("") && !customerLastNameTextField.getText().equals(""))
+        if (!customerAddressTextField.getText().equals("") && !customerPhoneNumberTextField.getText().equals(""))
+        if (!customerZipCodeTextField.getText().equals(""))
+
+        {
+
+            int id = 1;
+            String firstName = customerFirstNameTextField.getText();
+            String lastName = customerLastNameTextField.getText();
+            String companyName = companyNameTextField.getText();
+            String customerAddress = customerAddressTextField.getText();
+            String mail = customerEmailTextField.getText();
+
+            if (customerPhoneNumberTextField.getText()!="")
+            {
+                phoneNumber = Integer.parseInt(customerPhoneNumberTextField.getText());
+            }
+
+            int customerZipCode = Integer.parseInt(customerZipCodeTextField.getText());
+            //Initializing the customer.
+            Customer customer = new Customer(id, firstName, lastName, companyName, customerAddress, mail, phoneNumber, customerZipCode);
+
+            try {
+                //Sending the customer to the database.
+                customerModel.createNewCustomer(customer);
+                newCustomerAction();
+            } catch (Exception e) {
+                displayError(e);
+                e.printStackTrace();
+
+            }
+            //Close the vbox.
             newCustomerAction();
-        } catch (Exception e) {
-            displayError(e);
-            e.printStackTrace();
         }
-        //Close the vbox.
-        newCustomerAction();
+
     }
 
     /**
