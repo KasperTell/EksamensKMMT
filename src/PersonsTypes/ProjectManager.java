@@ -26,6 +26,7 @@ public class ProjectManager implements IPersonTypes{
         buttonOnOrOff.put("openProjectWindowButton", false);
         buttonOnOrOff.put("openUserWindowButton", false);
         buttonOnOrOff.put("closedProjectsTable", false);
+        buttonOnOrOff.put("searchBoxTextField", false);
 
         return buttonOnOrOff;
     }

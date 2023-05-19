@@ -240,6 +240,9 @@ public class ProjectController extends BaseController {
             customerInfo.put("Mail", customer.getMail());
             customerInfo.put("PhoneNumber", String.valueOf(customer.getPhoneNumber()));
 
+
+
+
         }
         return customerInfo;
     }

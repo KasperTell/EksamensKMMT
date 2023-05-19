@@ -26,7 +26,7 @@ public class Salesman implements IPersonTypes{
         buttonOnOrOff.put("openProjectWindowButton", true);
         buttonOnOrOff.put("openUserWindowButton", true);
         buttonOnOrOff.put("closedProjectsTable", false);
-
+        buttonOnOrOff.put("searchBoxTextField", false);
 
         return buttonOnOrOff;
     }

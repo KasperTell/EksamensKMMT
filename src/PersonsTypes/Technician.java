@@ -26,6 +26,7 @@ public class Technician implements IPersonTypes{
         buttonOnOrOff.put("openProjectWindowButton", false);
         buttonOnOrOff.put("openUserWindowButton", true);
         buttonOnOrOff.put("closedProjectsTable", true);
+        buttonOnOrOff.put("searchBoxTextField", true);
 
         return buttonOnOrOff;
     }

@@ -154,7 +154,9 @@ public class NyController extends BaseController {
         openProjectWindowButton.setDisable(turnButtonOnOrOff.get("openProjectWindowButton"));
         openUserWindowButton.setDisable(turnButtonOnOrOff.get("openUserWindowButton"));
         closedProjectsTable.setDisable(turnButtonOnOrOff.get("closedProjectsTable"));
-       
+        searchBoxTextField.setDisable(turnButtonOnOrOff.get("searchBoxTextField"));
+
+
     }
     /**
      * Listener for the tableview containing files for opening files.
