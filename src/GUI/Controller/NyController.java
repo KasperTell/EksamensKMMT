@@ -423,8 +423,9 @@ public class NyController extends BaseController {
 
 
         if (!customerFirstNameTextField.getText().equals("") && !customerLastNameTextField.getText().equals(""))
-        if (!customerAddressTextField.getText().equals("") && !customerPhoneNumberTextField.getText().equals(""))
-        if (!customerZipCodeTextField.getText().equals(""))
+        if (!customerAddressTextField.getText().equals("") && customerPhoneNumberTextField.getText().chars().allMatch( Character::isDigit ) )
+        if (customerZipCodeTextField.getText().chars().allMatch( Character::isDigit ) )
+            if (customerZipCodeTextField.getText().chars().allMatch( Character::isDigit ) )
 
         {
 
@@ -435,7 +436,7 @@ public class NyController extends BaseController {
             String customerAddress = customerAddressTextField.getText();
             String mail = customerEmailTextField.getText();
 
-            if (customerPhoneNumberTextField.getText()!="")
+
             {
                 phoneNumber = Integer.parseInt(customerPhoneNumberTextField.getText());
             }
