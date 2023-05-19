@@ -41,8 +41,10 @@ public class UserController extends BaseController{
     private UserModel userModel;
     private boolean isMenuOpen;
 
+    private User selectedUser;
+
     @Override
-    public void setup() throws Exception {
+    public void setup()  {
         //Initializing all our models.
         userModel = getModel().getUserModel();
         //Setting the information of the listviews and combobox.
@@ -50,7 +52,48 @@ public class UserController extends BaseController{
         managersListView.setItems(userModel.getallProjectManagers());
         salesListView.setItems(userModel.getallSalesmen());
         rolesComboBox.setItems(userModel.getAllRoles());
+        listenerSalesList();
+        listenerManagersList();
+        listenerTechsList();
     }
+
+
+
+    @FXML
+    private void listenerTechsList() {
+        TechsListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+        {
+            selectedUser=TechsListView.getSelectionModel().getSelectedItem();
+
+        });
+
+    }
+
+    @FXML
+    private void listenerSalesList() {
+        salesListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+        {
+            selectedUser=salesListView.getSelectionModel().getSelectedItem();
+
+        });
+
+    }
+
+
+    @FXML
+    private void listenerManagersList() {
+        managersListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+        {
+            selectedUser=managersListView.getSelectionModel().getSelectedItem();
+
+
+        });
+
+    }
+
+
+
+
 
 
     public void handleAddEmployee(ActionEvent actionEvent) {
@@ -75,21 +118,25 @@ public class UserController extends BaseController{
 
     public void handleRemoveEmployee(ActionEvent actionEvent) {
 
-        User selectedUser = null;
-        if(TechsListView.getSelectionModel().getSelectedItem() != null){
-            selectedUser = TechsListView.getSelectionModel().getSelectedItem();}
-        else if(managersListView.getSelectionModel().getSelectedItem() != null){
-            selectedUser = managersListView.getSelectionModel().getSelectedItem();}
-        else if(salesListView.getSelectionModel().getSelectedItem() != null){
-            selectedUser = salesListView.getSelectionModel().getSelectedItem();}
-        try {
-            userModel.deleteUser(selectedUser);
-        } catch (Exception e){
-            displayError(e);
-            e.printStackTrace();
-        }
-    }
 
+        if (selectedUser!=null)
+        {
+
+            if(TechsListView.getSelectionModel().getSelectedItem() != null){
+                selectedUser = TechsListView.getSelectionModel().getSelectedItem();}
+            else if(managersListView.getSelectionModel().getSelectedItem() != null){
+                selectedUser = managersListView.getSelectionModel().getSelectedItem();}
+            else if(salesListView.getSelectionModel().getSelectedItem() != null){
+                selectedUser = salesListView.getSelectionModel().getSelectedItem();}
+            try {
+                userModel.deleteUser(selectedUser);
+            } catch (Exception e){
+                displayError(e);
+                e.printStackTrace();
+            }
+        }
+
+    }
 
 
 
