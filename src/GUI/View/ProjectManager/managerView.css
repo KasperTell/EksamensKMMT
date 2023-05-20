@@ -114,6 +114,7 @@ Button:pressed{
     -fx-text-alignment: center-left;
     -fx-font-size: 18;
 
+
 }
 
 .table-view .table-cell{
@@ -170,7 +171,11 @@ Button:pressed{
 }
 
 
+#newCustomerErrorText {
+    -fx-font-size: 18;
+    -fx-background-color: red;
 
+}
 
 
 

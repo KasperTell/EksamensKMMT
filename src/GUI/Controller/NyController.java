@@ -17,6 +17,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
@@ -31,6 +32,7 @@ public class NyController extends BaseController {
 
     public Button addNewProjectButton;
     public Button btnAddNewCustomer;
+    public Text newCustomerErrorText;
     @FXML
     private Tab openProjectsTab, closedProjectsTab;
     @FXML //Main view anchor pane
@@ -73,10 +75,13 @@ public class NyController extends BaseController {
     private int projectNumber,phoneNumber;
     private boolean onOpenProjectList;
 
-    ShowFile showFile=new ShowFile();
+    private ShowFile showFile=new ShowFile();
 
-    PersonTypeChooser personTypeChooser = new PersonTypeChooser();
+    private PersonTypeChooser personTypeChooser = new PersonTypeChooser();
 
+    String firstName,lastName,customerAddress;
+    int customerZipCode;
+    Customer customer;
     /**
      * Set up the view when the view is getting shown.
      */
@@ -419,46 +424,68 @@ public class NyController extends BaseController {
      */
     public void handleAddNewCustomer(ActionEvent actionEvent) {
         //Setting the data in the variables.
+        boolean save=true;
+
+        TextField[] textFields={customerFirstNameTextField,customerLastNameTextField,customerAddressTextField,
+                customerPhoneNumberTextField,customerZipCodeTextField,companyNameTextField,customerEmailTextField};
+
+        String[] field={firstName,lastName,customerAddress};
+        int[] numbers={phoneNumber,customerZipCode};
+        String[] errorText={"Error in first Name","Error in Last Name","Error in Address","Error in phone number","Error in zip code"};
 
 
+        for (int i = 0; i < 3; i++) {
+            if (!textFields[i].getText().equals(""))
+                field[i] = textFields[i].getText();
 
-        if (!customerFirstNameTextField.getText().equals("") && !customerLastNameTextField.getText().equals(""))
-        if (!customerAddressTextField.getText().equals("") && customerPhoneNumberTextField.getText().chars().allMatch( Character::isDigit ) )
-        if (customerZipCodeTextField.getText().chars().allMatch( Character::isDigit ) )
-            if (customerZipCodeTextField.getText().chars().allMatch( Character::isDigit ) )
+            else
+            {
+                save=false;
+                newCustomerErrorText.setText(errorText[i]);
+            }
 
-        {
+        }
 
-            int id = 1;
-            String firstName = customerFirstNameTextField.getText();
-            String lastName = customerLastNameTextField.getText();
+        for (int i = 3; i < 5; i++) {
+            if (!textFields[i].getText().equals("") && textFields[i].getText().chars().allMatch( Character::isDigit ))
+                numbers[i-3]=Integer.parseInt(textFields[i].getText());
+            else
+            {
+                save=false;
+                newCustomerErrorText.setText(errorText[i]);
+            }
+
+        }
+
             String companyName = companyNameTextField.getText();
-            String customerAddress = customerAddressTextField.getText();
             String mail = customerEmailTextField.getText();
 
 
-            {
-                phoneNumber = Integer.parseInt(customerPhoneNumberTextField.getText());
+                        //Initializing the customer.
+                        if (save)
+                        {
+                            int id = 1;
+                            customer = new Customer(id, field[0], field[1], companyName, field[2], mail, numbers[0], numbers[1]);
+
+                            try {
+                                //Sending the customer to the database.
+                                customerModel.createNewCustomer(customer);
+                                newCustomerAction(); //Close the vbox.
+                            } catch (Exception e) {
+                                displayError(e);
+                                e.printStackTrace();
+
+                        }
+
+                            for (int i = 0; i <7 ; i++)
+                                textFields[i].clear();
+
+                            newCustomerErrorText.setText("");
+
             }
-
-            int customerZipCode = Integer.parseInt(customerZipCodeTextField.getText());
-            //Initializing the customer.
-            Customer customer = new Customer(id, firstName, lastName, companyName, customerAddress, mail, phoneNumber, customerZipCode);
-
-            try {
-                //Sending the customer to the database.
-                customerModel.createNewCustomer(customer);
-                newCustomerAction();
-            } catch (Exception e) {
-                displayError(e);
-                e.printStackTrace();
-
-            }
-            //Close the vbox.
-            newCustomerAction();
         }
 
-    }
+
 
     /**
      * When a key is pressed in the search text-field, update the listview showing projects.
