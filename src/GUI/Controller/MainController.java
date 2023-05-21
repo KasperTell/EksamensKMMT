@@ -126,8 +126,8 @@ public class MainController extends BaseController {
             /*
 
     private void pictureToButton() {
-        String[] listOfFiles = {"Pictures/Arrow.png","Pictures/Arrow2.png","Pictures/Add Employee Button.png","Pictures/Remove Employee Button.png","Pictures/Add Project Button.png",
-                "Pictures/Add Customer Button.png","Pictures/Open PDF Button.png","Pictures/Close Project Button.png","Pictures/Open PDF Button.png","Pictures/Paint.png", "Pictures/Add Employee Button.PNG"};
+        String[] listOfFiles = {"Pictures/Arrow.png","Pictures/Arrow2.png","Pictures/AddUser.png","Pictures/Remove Employee Button.png","Pictures/AddProject.png",
+                "Pictures/AddCustomer.png","Pictures/ReOpenProject.png","Pictures/CloseProject.png","Pictures/ReOpenProject.png","Pictures/Paint.png", "Pictures/Add Employee Button.PNG"};
 
         String[] listOfToolTips = {"Add tech to project", "Remove tech from project", "Add new employee", "Remove current employee", "Add a new project", "Add a new customer",
                 "Re-open a project", "Close a project", "Open PDF file", "Create a new project sketch", "Opens up window for user editing"};

@@ -11,24 +11,24 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="mainViewAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ProjectController">
+<AnchorPane fx:id="mainViewAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ProjectController">
    <children>
-      <TabPane fx:id="informationTabPane" layoutX="50.0" layoutY="150.0" prefHeight="500.0" prefWidth="504.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="informationTabPane" layoutX="50.0" layoutY="100.0" prefHeight="575.0" prefWidth="558.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="filesTab" text="Files">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="fileTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="504.0" AnchorPane.bottomAnchor="46.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="fileTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="493.0" prefWidth="558.0" AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
-                              <TableColumn fx:id="filesPictureColumn" prefWidth="40.0" />
-                            <TableColumn fx:id="filesNameColumn" prefWidth="172.800048828125" text="Name" />
-                            <TableColumn fx:id="filesDateColumn" prefWidth="143.199951171875" text="Date" />
-                              <TableColumn fx:id="filesIncludedColumn" prefWidth="147.20001220703125" text="Include in PDF" />
+                              <TableColumn fx:id="filesPictureColumn" prefWidth="62.0" />
+                            <TableColumn fx:id="filesNameColumn" prefWidth="239.0" text="Name" />
+                            <TableColumn fx:id="filesDateColumn" prefWidth="160.0" text="Date" />
+                              <TableColumn fx:id="filesIncludedColumn" prefWidth="96.0" text="Include in PDF" />
                           </columns>
                         </TableView>
-                        <Button fx:id="saveFileButton" layoutX="250.0" layoutY="437.0" mnemonicParsing="false" onAction="#handleSaveNewFile" text="Save" />
-                        <Button fx:id="deleteFileButton" layoutX="199.0" layoutY="437.0" mnemonicParsing="false" onAction="#handleDeleteFile" text="Delete" />
+                        <Button fx:id="saveFileButton" layoutX="474.0" layoutY="505.0" mnemonicParsing="false" onAction="#handleSaveNewFile" prefWidth="70.0" text="Save" />
+                        <Button fx:id="deleteFileButton" layoutX="396.0" layoutY="505.0" mnemonicParsing="false" onAction="#handleDeleteFile" prefWidth="70.0" text="Delete" />
                      </children>
                   </AnchorPane>
             </content>
@@ -37,8 +37,8 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="205.0" prefWidth="287.0">
                      <children>
-                        <Button fx:id="saveNoteButton" layoutX="250.0" layoutY="437.0" mnemonicParsing="false" onAction="#saveNoteAction" text="Save" />
-                        <TextArea fx:id="NotesTextArea" layoutY="1.0" prefHeight="423.0" prefWidth="504.0" />
+                        <Button fx:id="saveNoteButton" layoutX="474.0" layoutY="505.0" mnemonicParsing="false" onAction="#saveNoteAction" prefWidth="70.0" text="Save" />
+                        <TextArea fx:id="NotesTextArea" layoutY="1.0" prefHeight="493.0" prefWidth="558.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </content>
@@ -47,19 +47,19 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="205.0" prefWidth="287.0">
                      <children>
-                        <ListView fx:id="techsOnProjectListView" layoutX="50.0" layoutY="113.0" prefHeight="352.0" prefWidth="443.0" AnchorPane.bottomAnchor="117.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                        <ComboBox fx:id="listTechsComboBox" layoutX="21.0" layoutY="372.0" prefWidth="150.0" />
-                        <Button fx:id="addTechButton" layoutX="194.0" layoutY="373.0" mnemonicParsing="false" onAction="#handleAddTech" text="Button" />
-                        <Button fx:id="removeTechButton" layoutX="194.0" layoutY="417.0" mnemonicParsing="false" onAction="#handleRemoveTech" text="Button" />
+                        <ListView fx:id="techsOnProjectListView" layoutX="50.0" layoutY="113.0" prefHeight="493.0" prefWidth="558.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ComboBox fx:id="listTechsComboBox" layoutX="238.0" layoutY="505.0" prefWidth="150.0" promptText="Techs" />
+                        <Button fx:id="addTechButton" layoutX="396.0" layoutY="505.0" mnemonicParsing="false" onAction="#handleAddTech" prefWidth="70.0" text="Add" />
+                        <Button fx:id="removeTechButton" layoutX="474.0" layoutY="505.0" mnemonicParsing="false" onAction="#handleRemoveTech" prefWidth="70.0" text="Remove" />
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
         </tabs>
       </TabPane>
-      <Button fx:id="openMainWindowButton" layoutX="920.0" layoutY="661.0" mnemonicParsing="false" onAction="#handleOpenMainWindow" text="OPEN WINDOW MAIN" />
-      <Button fx:id="drawButton" layoutX="711.0" layoutY="686.0" mnemonicParsing="false" onAction="#handleDraw" text="DRAW" />
-      <ImageView fx:id="filesPreviewImageView" fitHeight="444.0" fitWidth="421.0" layoutX="657.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="602.0" layoutY="686.0" mnemonicParsing="false" onAction="#handleOpenCustomerDoc" text="Customer PDF" />
+      <Button fx:id="openMainWindowButton" layoutX="1090.0" layoutY="705.0" mnemonicParsing="false" onAction="#handleOpenMainWindow" />
+      <Button fx:id="drawButton" layoutX="130.0" layoutY="705.0" mnemonicParsing="false" onAction="#handleDraw" />
+      <ImageView fx:id="filesPreviewImageView" fitHeight="462.0" fitWidth="516.0" layoutX="650.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="openPDFButton" layoutX="53.0" layoutY="705.0" mnemonicParsing="false" onAction="#handleOpenCustomerDoc" />
    </children>
 </AnchorPane>

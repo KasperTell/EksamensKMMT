@@ -37,7 +37,7 @@ public class ProjectController extends BaseController {
     private AnchorPane mainViewAnchorPane;
 
     @FXML //All buttons within this window
-    private Button deleteFileButton, saveFileButton, saveNoteButton, addTechButton, removeTechButton, drawButton, openMainWindowButton;
+    private Button deleteFileButton, saveFileButton, saveNoteButton, addTechButton, removeTechButton, drawButton, openMainWindowButton, openPDFButton;
 
     @FXML //Tab-Pane containing all the project information
     private TabPane informationTabPane;
@@ -104,20 +104,21 @@ public class ProjectController extends BaseController {
     }
 
     private void pictureToButton() {
-        String[] listOfFiles = {"Pictures/Arrow.png", "Pictures/Arrow2.png"};
 
-        String[] listOfToolTips = {"Add technician to project", "Remove technician from project"};
+        String[] listOfToolTips = {"Go back to previous window", "Open project PDF", "Draw up a technical drawing"};
 
-        Button[] listOfButtons = {addTechButton, removeTechButton};
+        Button[] listOfButtons = {openMainWindowButton, openPDFButton, drawButton};
 
-        for (int i = 0; i < listOfFiles.length; i++) {
+        String[] listOfFiles = {"Pictures/ButtonImages/GoBack.png", "Pictures/ButtonImages/OpenPDF.png", "Pictures/ButtonImages/Paint.png"};
+
+        for (int i = 0; i < listOfToolTips.length; i++) {
 
             Image img = new Image(listOfFiles[i]);
             ImageView view = new ImageView(img);
             Tooltip tip = new Tooltip(listOfToolTips[i]);
 
-            listOfButtons[i].setGraphic(view);
             listOfButtons[i].setTooltip(tip);
+            listOfButtons[i].setGraphic(view);
         }
     }
 
@@ -139,7 +140,7 @@ public class ProjectController extends BaseController {
                     // Check if the selected file is an image file (JPEG, PNG, or JPG)
                     if (selectedfile!=null)
                     {
-                        String fileName = "/" + selectedfile.getFilePath().toLowerCase();
+                        String fileName = selectedfile.getFilePath().toLowerCase();
                         if (fileName.endsWith(".jpeg") || fileName.endsWith(".png") || fileName.endsWith(".jpg")) {
                             // Load the image file into the filesPreviewImageView
                             String fileUrl = selectedfile.getFilePath();

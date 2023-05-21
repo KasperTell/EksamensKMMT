@@ -1,7 +1,6 @@
 package GUI.Controller;
 
 import BE.User;
-import GUI.Model.FacadeModel;
 import GUI.Model.UserModel;
 import PersonsTypes.*;
 import javafx.event.ActionEvent;
@@ -113,7 +112,7 @@ public class LoginController extends BaseController {
     public void setup() {
         userModel = getModel().getUserModel();
         imageViewLogin.setImage(new Image("Pictures/LoginBackgroundBlur.jpg"));
-        loginIcon.setImage(new Image("Pictures/LoginLogo.png"));
+        loginIcon.setImage(new Image("Pictures/ButtonImages/LoginLogo.png"));
 
         imageViewLogin.setOpacity(0.40);
     }

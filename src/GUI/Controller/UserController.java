@@ -9,12 +9,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.mindrot.jbcrypt.BCrypt;
-import java.io.IOException;
 
 public class UserController extends BaseController{
 
@@ -55,8 +56,26 @@ public class UserController extends BaseController{
         listenerSalesList();
         listenerManagersList();
         listenerTechsList();
+        pictureToButton();
     }
 
+    private void pictureToButton() {
+        String[] listOfFiles = {"Pictures/ButtonImages/GoBack.png", "Pictures/ButtonImages/AddProject.png", "Pictures/ButtonImages/DeleteUser.png"};
+
+        String[] listOfToolTips = {"Go back to previous window", "Add a new User", "Delete selected User"};
+
+        Button[] listOfButtons ={openMainWindowButton, openNewEmployeeWindow, removeEmployeeButton};
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+
+            Image img = new Image(listOfFiles[i]);
+            ImageView view = new ImageView(img);
+            Tooltip tip = new Tooltip(listOfToolTips[i]);
+
+            listOfButtons[i].setGraphic(view);
+            listOfButtons[i].setTooltip(tip);
+        }
+    }
 
 
     @FXML
