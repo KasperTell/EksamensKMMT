@@ -173,6 +173,29 @@ public class FilesDAO implements iFileDataAccess {
     public int getFileAmount() {
         return fileAmount;
     }
+
+    /**
+     * Checking if the database has an entry matching the FilePath from the project.
+     * @param filepath
+     * @return
+     */
+    public boolean doesFileExist(String filepath) throws SQLException {
+        //SQL Query.
+        String sql = "SELECT * FROM ProjectFile WHERE Filepath = ?";
+        //Getting the connection to the database.
+        try (Connection conn = databaseConnector.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            //Setting the parameters and executing the query.
+            stmt.setString(1, filepath);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            throw new SQLException("Failed to check", e);
+        }
+        return false;
+    }
 }
 
 

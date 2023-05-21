@@ -190,5 +190,13 @@ private int number=0 ;
         projectFiles.set(FXCollections.observableArrayList(projectFilesManager.loadFilesFromAProject(file.getProjectID())));
         
     }
+
+    /**
+     * Sending the filepath through the model.
+     * @param filepath
+     * @return
+     * @throws Exception
+     */
+    public boolean doesFileExist(String filepath) throws Exception{return projectFilesManager.doesFileExist(filepath);}
 }
 

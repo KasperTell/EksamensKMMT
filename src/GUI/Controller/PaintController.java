@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
@@ -141,17 +142,28 @@ public class PaintController extends BaseController {
 
         LocalDate date = LocalDate.now();
 
-        String filepath =  "Resources/SavedProjectCanvas/" + "Prototype " +  name + ".PNG";
+        String filepath =  "Resources/Pictures/SavedProjectCanvas/" + "Prototype " +  name + ".png";
         Path path = Paths.get(filepath);
 
-        WritableImage picture = c.snapshot(null, null);
-        ImageIO.write(SwingFXUtils.fromFXImage(picture, null), "png", new File(path.toUri()));
 
-        FilesDAO filesDAO=new FilesDAO();
+        if (!projectFilesModel.doesFileExist(filepath)) {
 
-        ProjectFiles fileToSave = new ProjectFiles(1, id, name, filepath, date, null, null,filesDAO.getFileAmount()+1);
+            WritableImage picture = c.snapshot(null, null);
+            ImageIO.write(SwingFXUtils.fromFXImage(picture, null), "png", new File(path.toUri()));
 
-        projectFilesModel.createNewFile(fileToSave);
+            FilesDAO filesDAO = new FilesDAO();
+
+            ProjectFiles fileToSave = new ProjectFiles(1, id, name, filepath, date, null, null, filesDAO.getFileAmount() + 1);
+
+            projectFilesModel.createNewFile(fileToSave);
+        }
+        else {
+            System.out.println("File already exist");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Something went wrong");
+            alert.setHeaderText("Delete previous drawings before adding a new drawing.");
+            alert.showAndWait();
+        }
 
     }
 
