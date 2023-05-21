@@ -97,6 +97,19 @@ public class NyController extends BaseController {
         userModel = getModel().getUserModel();
         //Setting the information of the listviews and combobox.
         customerComboBox.setItems(customerModel.getAllCustomers());
+       setupTableForProject();
+        turnButtonONOrOff();
+        listenerLstAllCloseProjects();
+        listenerLstAllOpenProjects();
+        disableButtons();
+        pictureToButton();
+        NotesTextArea.setWrapText(true);
+        NotesTextArea.setEditable(false);
+        listenerMouseClickOpenProject();
+        listenerMouseClickCloseProject();
+    }
+
+    private void setupTableForProject() {
         projectDateOpen.setCellValueFactory(new PropertyValueFactory<>("Date"));
         projectNameOpen.setCellValueFactory(new PropertyValueFactory<>("Title"));
         customerProjectOpen.setCellValueFactory(new PropertyValueFactory<>("companyName"));
@@ -111,15 +124,6 @@ public class NyController extends BaseController {
             displayError(e);
         }
         closedProjectsTable.setItems(projectModel.getAllProjectsClose());
-        turnButtonONOrOff();
-        listenerLstAllCloseProjects();
-        listenerLstAllOpenProjects();
-        disableButtons();
-        pictureToButton();
-        NotesTextArea.setWrapText(true);
-        NotesTextArea.setEditable(false);
-        listenerMouseClickOpenProject();
-        listenerMouseClickCloseProject();
     }
 
     private void pictureToButton() {
@@ -203,9 +207,6 @@ public class NyController extends BaseController {
 
 
 
-
-
-
     @FXML
     private void listenerLstAllCloseProjects() {
         closedProjectsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
@@ -281,15 +282,20 @@ public class NyController extends BaseController {
     @FXML
     private void closeProjectAction(ActionEvent actionEvent) {
         //Setting the data for the variables and calls the method from the model.
-        int closeProject = 1;
-        int id = selectedProject.getId();
-        selectedProject = null;
-        try {
-            projectModel.changeProjectStatus(closeProject, id);
-        } catch (Exception e) {
-            displayError(e);
-            e.printStackTrace();
+
+        if (selectedProject!=null)
+        {
+            int closeProject = 1;
+            int id = selectedProject.getId();
+            selectedProject = null;
+            try {
+                projectModel.changeProjectStatus(closeProject, id);
+            } catch (Exception e) {
+                displayError(e);
+                e.printStackTrace();
+            }
         }
+
     }
 
     /**
@@ -300,15 +306,20 @@ public class NyController extends BaseController {
     @FXML
     private void reopenProjectAction(ActionEvent actionEvent) {
         //Setting the data for the variables and calls the method from the model.
-        int reOpenProject = 0;
-        int id = selectedProject.getId();
 
-        try {
-            projectModel.changeProjectStatus(reOpenProject, id);
-        } catch (Exception e) {
-            displayError(e);
-            e.printStackTrace();
+        if (selectedProject!=null)
+        {
+            int reOpenProject = 0;
+            int id = selectedProject.getId();
+
+            try {
+                projectModel.changeProjectStatus(reOpenProject, id);
+            } catch (Exception e) {
+                displayError(e);
+                e.printStackTrace();
+            }
         }
+
     }
 
     /**
@@ -473,7 +484,7 @@ public class NyController extends BaseController {
                 throw new RuntimeException(e);
 
             }
-            System.out.println(town+"dd");
+
             if (town==null)
             {
                 save=false;
@@ -554,7 +565,8 @@ public class NyController extends BaseController {
 
         if (selectedProject!=null)
         {
-            projectModel.setSelectedProject(openProjectsTable.getSelectionModel().getSelectedItem());
+            projectModel.setSelectedProject(selectedProject);
+            
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindue2.fxml"));
             AnchorPane pane = loader.load();

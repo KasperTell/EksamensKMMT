@@ -36,6 +36,7 @@ public class FilesDAO implements iFileDataAccess {
         ArrayList<ProjectFiles> loadFilesFromAProject = new ArrayList<>();
         ImageView picture;
         ImageViewKlient pictureFrame = null;
+        CheckBox checkBox = null;
 
         //SQL query
         String sql = "SELECT * FROM ProjectFile WHERE ProjectID =?";
@@ -74,15 +75,20 @@ public class FilesDAO implements iFileDataAccess {
                 }
 
 
+
                 picture = pictureFrame.getImageView();
 
+
+
                 //Creating the checkbox and set it as empty.
-                CheckBox checkBox = new CheckBox();
+                 checkBox = new CheckBox();
                 if (usedInDoc == 0)
                     checkBox.setSelected(true);
 
-                ProjectFiles files = new ProjectFiles(id, projectID1, name, filePath, date, picture, checkBox,rank);
-                loadFilesFromAProject.add(files);
+
+                    ProjectFiles files = new ProjectFiles(id, projectID1, name, filePath, date, picture, checkBox, rank);
+                    loadFilesFromAProject.add(files);
+
             }
             return loadFilesFromAProject;
         } catch (Exception ex) {

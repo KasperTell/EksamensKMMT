@@ -83,6 +83,9 @@ public class ProjectController extends BaseController {
         projectFilesModel = getModel().getProjectFilesModel();
         projectModel = getModel().getProjectModel();
         selectedProject = projectModel.getSelectedProject();
+
+
+
         //Setting the information of the listviews and combobox.
         listenerMouseClickPicture();
         setupFiles();
@@ -178,13 +181,17 @@ public class ProjectController extends BaseController {
      */
     @FXML
     private void setupFiles() throws InterruptedException {
+
+
         int projectNumber = selectedProject.getId();
         filesPictureColumn.setCellValueFactory(new PropertyValueFactory<>("picture"));
         filesNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         filesDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         filesIncludedColumn.setCellValueFactory(new PropertyValueFactory<>("usedBox"));
+
+
         try {
-            fileTable.setItems(projectFilesModel.getAllFilesFromProject(projectNumber));
+           fileTable.setItems(projectFilesModel.getAllFilesFromProject(projectNumber));
         } catch (Exception e) {
             displayError(e);
             e.printStackTrace();
