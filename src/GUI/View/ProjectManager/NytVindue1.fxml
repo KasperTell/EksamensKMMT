@@ -13,23 +13,22 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="vBoxAnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.NyController">
    <children>
-      <AnchorPane fx:id="mainViewAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0">
+      <AnchorPane fx:id="mainViewAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1369.0">
          <children>
-            <TabPane layoutX="50.0" layoutY="100.0" prefHeight="550.0" prefWidth="558.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane layoutX="50.0" layoutY="100.0" prefHeight="550.0" prefWidth="585.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab fx:id="openProjectsTab" text="Open">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TableView fx:id="openProjectsTable" prefHeight="522.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <TableView fx:id="openProjectsTable" prefHeight="522.0" prefWidth="586.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columns>
                                     <TableColumn fx:id="customerProjectOpen" prefWidth="248.00007247924805" resizable="false" text="Customer" />
                                   <TableColumn fx:id="projectNameOpen" prefWidth="193.59991455078125" resizable="false" text="Project" />
-                                  <TableColumn fx:id="projectDateOpen" prefWidth="116.800048828125" resizable="false" text="Date" />
+                                  <TableColumn fx:id="projectDateOpen" prefWidth="142.39998779296877" resizable="false" text="Date" />
                                 </columns>
                               </TableView>
                            </children>
@@ -53,13 +52,14 @@
                 </Tab>
               </tabs>
             </TabPane>
-            <TableView fx:id="customerTable" layoutX="650.0" layoutY="130.0" prefHeight="74.0" prefWidth="516.0">
+            <TableView fx:id="customerTable" layoutX="650.0" layoutY="129.0" prefHeight="84.0" prefWidth="698.0">
               <columns>
-                <TableColumn fx:id="customerNameClm" prefWidth="100.0" resizable="false" text="Name" />
-                  <TableColumn fx:id="customerMailClm" prefWidth="100.0" resizable="false" text="Mail" />
-                  <TableColumn fx:id="customerPhoneClm" prefWidth="100.0" resizable="false" text="Phone" />
-                <TableColumn fx:id="customerAddressClm" prefWidth="107.199951171875" resizable="false" text="Adress" />
-                  <TableColumn fx:id="customerZipClm" prefWidth="108.0" resizable="false" text="Zip" />
+                <TableColumn fx:id="customerNameClm" prefWidth="124.79998779296875" resizable="false" text="Name" />
+                  <TableColumn fx:id="customerMailClm" prefWidth="119.20001220703125" resizable="false" text="Mail" />
+                  <TableColumn fx:id="customerPhoneClm" prefWidth="79.20001220703125" resizable="false" text="Phone" />
+                <TableColumn fx:id="customerAddressClm" prefWidth="143.99993896484375" resizable="false" text="Adress" />
+                  <TableColumn fx:id="customerZipClm" prefWidth="86.39990234375" resizable="false" text="Zip" />
+                  <TableColumn fx:id="customerZipToTown" prefWidth="139.2000732421875" resizable="false" text="Town" />
               </columns>
             </TableView>
             <TextField fx:id="searchBoxTextField" layoutX="650.0" layoutY="100.0" onKeyReleased="#searchProjectsByStringQuery" prefWidth="200.0" promptText="Søg..." />
@@ -79,7 +79,7 @@
             <Button fx:id="reOpenProjectButton" layoutX="330.0" layoutY="675.0" mnemonicParsing="false" onAction="#reopenProjectAction" />
             <Button fx:id="openProjectWindowButton" layoutX="995.0" layoutY="675.0" mnemonicParsing="false" onAction="#handleOpenProjectWindow" />
             <Button fx:id="openUserWindowButton" layoutX="1075.0" layoutY="675.0" mnemonicParsing="false" onAction="#handleOpenUserWindow" />
-            <TextArea fx:id="NotesTextArea" layoutX="650.0" layoutY="205.0" prefHeight="446.0" prefWidth="516.0" />
+            <TextArea fx:id="NotesTextArea" layoutX="650.0" layoutY="213.0" prefHeight="437.0" prefWidth="698.0" />
             <Button layoutX="650.0" layoutY="727.0" mnemonicParsing="false" onAction="#getCustomerPDFAction" />
          </children>
       </AnchorPane>
@@ -113,37 +113,37 @@
             <Insets top="20.0" />
          </padding>
       </VBox>
-      <VBox fx:id="vbxCreateNewCustomer" prefHeight="800.0" prefWidth="345.0" spacing="30.0" translateX="1200.0">
+      <VBox fx:id="vbxCreateNewCustomer" layoutX="170.0" prefHeight="800.0" prefWidth="345.0" spacing="30.0" translateX="1200.0">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="355.0" text="Opret en ny kunde">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="355.0" text="New Customer">
                <font>
                   <Font name="System Bold" size="34.0" />
                </font>
             </Label>
-            <TextField fx:id="customerFirstNameTextField" promptText="Fornavn på kunden*">
+            <TextField fx:id="customerFirstNameTextField" promptText="First Name*">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="customerLastNameTextField" promptText="Efternavn på kunden*">
+            <TextField fx:id="customerLastNameTextField" promptText="Last Name*">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="companyNameTextField" promptText="Virksomhedsnavn">
+            <TextField fx:id="companyNameTextField" promptText="Company name">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="customerAddressTextField" promptText="Adresse*">
+            <TextField fx:id="customerAddressTextField" promptText="Address*">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="customerZipCodeTextField" promptText="Postnummer*">
+            <TextField fx:id="customerZipCodeTextField" promptText="Zip code*">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
@@ -153,21 +153,21 @@
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
             </TextField>
-            <TextField fx:id="customerPhoneNumberTextField" promptText="Telefonnummer*">
+            <TextField fx:id="customerPhoneNumberTextField" promptText="Telefon number*">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
             </TextField>
-            <Button fx:id="btnAddNewCustomer" mnemonicParsing="false" onAction="#handleAddNewCustomer" text="Tilføj kunde">
+            <Button fx:id="btnAddNewCustomer" mnemonicParsing="false" onAction="#handleAddNewCustomer" text="Make  Customer">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
             </Button>
-            <Text fx:id="newCustomerErrorText" strokeType="OUTSIDE" strokeWidth="0.0">
+            <Label fx:id="newCustomerErrorText">
                <VBox.margin>
                   <Insets left="15.0" right="15.0" />
                </VBox.margin>
-            </Text>
+            </Label>
          </children>
          <padding>
             <Insets top="20.0" />

@@ -32,7 +32,7 @@ public class NyController extends BaseController {
 
     public Button addNewProjectButton;
     public Button btnAddNewCustomer;
-    public Text newCustomerErrorText;
+    public Label newCustomerErrorText;
     @FXML
     private Tab openProjectsTab, closedProjectsTab;
     @FXML //Main view anchor pane
@@ -50,7 +50,7 @@ public class NyController extends BaseController {
     public TableView<Customer> customerTable;
 
     @FXML //All columns for the customer table
-    private TableColumn customerMailClm, customerPhoneClm, customerZipClm, customerAddressClm, customerNameClm;
+    private TableColumn customerMailClm, customerPhoneClm, customerZipClm, customerAddressClm, customerNameClm,customerZipToTown;
 
     @FXML //All buttons for the main view
     private Button newProjectButton, reOpenProjectButton, closeProjectButton, newCustomerButton, openProjectWindowButton, openUserWindowButton;
@@ -262,6 +262,10 @@ public class NyController extends BaseController {
         customerZipClm.setCellValueFactory(new PropertyValueFactory<>("zipCode"));
         customerMailClm.setCellValueFactory(new PropertyValueFactory<>("Mail"));
         customerPhoneClm.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        customerZipToTown.setCellValueFactory(new PropertyValueFactory<>("town"));
+
+
+
 
       /**  openProjectsTable.setItems(projectModel.getAllProjectsOpen());
         closedProjectsTable.setItems(projectModel.getAllProjectsClose()); */
@@ -425,13 +429,14 @@ public class NyController extends BaseController {
     public void handleAddNewCustomer(ActionEvent actionEvent) {
         //Setting the data in the variables.
         boolean save=true;
+        String town;
 
         TextField[] textFields={customerFirstNameTextField,customerLastNameTextField,customerAddressTextField,
                 customerPhoneNumberTextField,customerZipCodeTextField,companyNameTextField,customerEmailTextField};
 
         String[] field={firstName,lastName,customerAddress};
-        int[] numbers={phoneNumber,customerZipCode};
-        String[] errorText={"Error in first Name","Error in Last Name","Error in Address","Error in phone number","Error in zip code"};
+
+        String[] errorText={"Error in first Name","Error in Last Name","Error in Address"};
 
 
         for (int i = 0; i < 3; i++) {
@@ -446,16 +451,43 @@ public class NyController extends BaseController {
 
         }
 
-        for (int i = 3; i < 5; i++) {
-            if (!textFields[i].getText().equals("") && textFields[i].getText().chars().allMatch( Character::isDigit ))
-                numbers[i-3]=Integer.parseInt(textFields[i].getText());
+
+
+            if (!customerPhoneNumberTextField.getText().equals("") && customerPhoneNumberTextField.getText().chars().allMatch( Character::isDigit ))
+            phoneNumber=Integer.parseInt(customerPhoneNumberTextField.getText());
+
             else
             {
                 save=false;
-                newCustomerErrorText.setText(errorText[i]);
+                newCustomerErrorText.setText("Error in phone number");
             }
 
+
+        if (!customerZipCodeTextField.getText().equals("") && customerZipCodeTextField.getText().chars().allMatch( Character::isDigit ))
+        {
+
+            customerZipCode=Integer.parseInt(customerZipCodeTextField.getText());
+            try {
+                 town=customerModel.TownToZipCode(customerZipCode);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+
+            }
+            System.out.println(town+"dd");
+            if (town==null)
+            {
+                save=false;
+                newCustomerErrorText.setText("Error in zip code");
+             }
+
         }
+        else
+        {
+            save=false;
+            newCustomerErrorText.setText("Error in zip code");
+        }
+
+
 
             String companyName = companyNameTextField.getText();
             String mail = customerEmailTextField.getText();
@@ -465,7 +497,7 @@ public class NyController extends BaseController {
                         if (save)
                         {
                             int id = 1;
-                            customer = new Customer(id, field[0], field[1], companyName, field[2], mail, numbers[0], numbers[1]);
+                            customer = new Customer(id, field[0], field[1], companyName, field[2], mail, phoneNumber, customerZipCode,"");
 
                             try {
                                 //Sending the customer to the database.

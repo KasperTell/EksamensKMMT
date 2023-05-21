@@ -11,4 +11,7 @@ public interface ICustomerDataAccess {
     Customer createNewCustomer(Customer customer) throws SQLException;
     Customer loadCustomer(int customerID) throws Exception;
 
+
+    public String TownToZipCode(int zipCode) throws SQLException;
+
 }

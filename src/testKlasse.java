@@ -14,8 +14,8 @@ public class testKlasse {
     public static void main(String[] args) throws Exception {
 
 
-//        CustomerPdf customerPdf=new CustomerPdf();
-//        customerPdf.makePdf();
+        //CustomerModel customerModel=new CustomerModel();
+        //System.out.println(customerModel.TownToZipCode(6700));
 
 
 

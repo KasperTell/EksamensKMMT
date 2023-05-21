@@ -5,6 +5,7 @@ import BLL.CustomerManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class CustomerModel {
@@ -64,6 +65,11 @@ public class CustomerModel {
         allCustomers.add(createdCustomer);
     }
 
+
+    public String TownToZipCode(int zipCode) throws SQLException
+    {
+        return customerManager.TownToZipCode(zipCode);
+    }
 
 
 

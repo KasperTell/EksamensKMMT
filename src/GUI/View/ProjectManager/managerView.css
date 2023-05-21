@@ -173,7 +173,7 @@ Button:pressed{
 
 #newCustomerErrorText {
     -fx-font-size: 18;
-    -fx-background-color: red;
+    -fx-text-background-color: red;
 
 }
 

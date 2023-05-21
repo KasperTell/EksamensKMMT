@@ -723,7 +723,7 @@ public class MainController extends BaseController {
         int phoneNumber = Integer.parseInt(txtfPhoneNumber.getText());
         int customerZipCode = Integer.parseInt(txtfZipCode.getText());
         //Initializing the customer.
-        Customer customer = new Customer(id, firstName, lastName, companyName, customerAddress, mail, phoneNumber, customerZipCode);
+        Customer customer = new Customer(id, firstName, lastName, companyName, customerAddress, mail, phoneNumber, customerZipCode,"");
         try {
             //Sending the customer to the database.
             customerModel.createNewCustomer(customer);

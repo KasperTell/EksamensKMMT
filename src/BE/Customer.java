@@ -2,7 +2,7 @@ package BE;
 
 public class Customer {
     private int id, phoneNumber, zipCode;
-    private String firstName, lastName, companyName, address, mail;
+    private String firstName, lastName, companyName, address, mail,town;
 
     /**
      * Constructor for the class "Customer"
@@ -14,8 +14,9 @@ public class Customer {
      * @param mail
      * @param phoneNumber
      * @param zipCode
+     * @param town
      */
-    public Customer(int id, String firstName, String lastName, String companyName, String address, String mail, int phoneNumber, int zipCode) {
+    public Customer(int id, String firstName, String lastName, String companyName, String address, String mail, int phoneNumber, int zipCode, String town) {
         this.id = id;
         this.address = address;
         this.phoneNumber = phoneNumber;
@@ -24,6 +25,16 @@ public class Customer {
         this.mail = mail;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.town=town;
+    }
+
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
     }
 
     /**

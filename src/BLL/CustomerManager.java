@@ -41,4 +41,13 @@ public class CustomerManager {
      * @throws Exception
      */
     public Customer loadCustomer(int customerID) throws Exception{return customerDAO.loadCustomer(customerID);}
+
+
+    public String TownToZipCode(int zipCode) throws SQLException
+    {
+        return customerDAO.TownToZipCode(zipCode);
+    }
+
+
+
 }

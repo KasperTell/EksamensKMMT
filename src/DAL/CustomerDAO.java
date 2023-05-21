@@ -41,7 +41,10 @@ public class CustomerDAO implements ICustomerDataAccess {
                 String mail = rs.getString("Mail");
                 int phoneNumber = rs.getInt("Phone_Number");
 
-                Customer customer = new Customer(id, firstName, lastName, companyName, address, mail, phoneNumber, zipcode);
+
+                String town=TownToZipCode( zipcode);
+
+                Customer customer = new Customer(id, firstName, lastName, companyName, address, mail, phoneNumber, zipcode,town);
                 allCustomers.add(customer);
             }
             return allCustomers;
@@ -113,13 +116,63 @@ public class CustomerDAO implements ICustomerDataAccess {
                 if (companyName==null)
                     companyName=firstName+ " "+lastName;
 
-                customer = new Customer(id, firstName, lastName, companyName, address, mail, phoneNumber, zipcode);
+                String town=TownToZipCode( zipcode);
+
+
+                customer = new Customer(id, firstName, lastName, companyName, address, mail, phoneNumber, zipcode,town);
             }
             return customer;
         } catch (Exception ex) {
             throw new SQLException("Failed to add Customer from the database", ex);
         }
     }
+
+
+    public String TownToZipCode(int zipCode) throws SQLException {
+
+        String town = null;
+
+        //SQL Query
+        String sql = "Select  ZipCodeToTown.Town FROM ZipCodeToTown\n" +
+                "INNER JOIN Customers on\n" +
+                "Customers.Zip_Code = ZipCodeToTown.ZipCode\n" +
+                "Where Customers.Zip_Code=?";
+        // getting the connection to the database.
+        try (Connection conn = databaseConnector.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, zipCode);
+            ResultSet rs = stmt.executeQuery();
+            //Getting the information from the database.
+            while (rs.next()) {
+
+                town = rs.getString("Town");
+
+
+
+            }
+            return town;
+        } catch (Exception ex) {
+            throw new SQLException("Failed to town associated to zipCode from the database", ex);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
