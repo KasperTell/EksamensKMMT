@@ -48,4 +48,12 @@ public class ProjectFilesManager {
      * @throws SQLException
      */
     public void deleteFile(ProjectFiles file) throws SQLException{filesDAO.deleteFile(file);}
+
+    /**
+     * Sends a filepath for validation through the BLL.
+     * @param filepath
+     * @return
+     * @throws Exception
+     */
+    public boolean doesFileExist(String filepath) throws Exception{return filesDAO.doesFileExist(filepath);}
 }

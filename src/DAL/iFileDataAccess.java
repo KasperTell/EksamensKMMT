@@ -11,4 +11,5 @@ public interface iFileDataAccess {
     void updateUsedInDoc(Boolean usedInDoc, int id) throws Exception;
     ProjectFiles createNewFile(ProjectFiles file) throws SQLException;
     void deleteFile(ProjectFiles file) throws SQLException;
+    boolean doesFileExist(String filepath) throws SQLException;
 }
