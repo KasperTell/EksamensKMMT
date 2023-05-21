@@ -32,7 +32,7 @@ public class NyController extends BaseController {
 
     public Button addNewProjectButton;
     public Button btnAddNewCustomer;
-    public Label newCustomerErrorText;
+    public Text newCustomerErrorText;
     @FXML
     private Tab openProjectsTab, closedProjectsTab;
     @FXML //Main view anchor pane
@@ -50,7 +50,7 @@ public class NyController extends BaseController {
     public TableView<Customer> customerTable;
 
     @FXML //All columns for the customer table
-    private TableColumn customerMailClm, customerPhoneClm, customerZipClm, customerAddressClm, customerNameClm,customerZipToTown;
+    private TableColumn customerMailClm, customerPhoneClm, customerZipClm, customerAddressClm, customerNameClm;
 
     @FXML //All buttons for the main view
     private Button newProjectButton, reOpenProjectButton, closeProjectButton, newCustomerButton, openProjectWindowButton, openUserWindowButton, openPDFButton;
@@ -97,19 +97,6 @@ public class NyController extends BaseController {
         userModel = getModel().getUserModel();
         //Setting the information of the listviews and combobox.
         customerComboBox.setItems(customerModel.getAllCustomers());
-       setupTableForProject();
-        turnButtonONOrOff();
-        listenerLstAllCloseProjects();
-        listenerLstAllOpenProjects();
-        disableButtons();
-        pictureToButton();
-        NotesTextArea.setWrapText(true);
-        NotesTextArea.setEditable(false);
-        listenerMouseClickOpenProject();
-        listenerMouseClickCloseProject();
-    }
-
-    private void setupTableForProject() {
         projectDateOpen.setCellValueFactory(new PropertyValueFactory<>("Date"));
         projectNameOpen.setCellValueFactory(new PropertyValueFactory<>("Title"));
         customerProjectOpen.setCellValueFactory(new PropertyValueFactory<>("companyName"));
@@ -124,6 +111,16 @@ public class NyController extends BaseController {
             displayError(e);
         }
         closedProjectsTable.setItems(projectModel.getAllProjectsClose());
+        turnButtonONOrOff();
+        listenerLstAllCloseProjects();
+        listenerLstAllOpenProjects();
+        disableButtons();
+        pictureToButton();
+        NotesTextArea.setWrapText(true);
+        NotesTextArea.setEditable(false);
+        listenerMouseClickOpenProject();
+        listenerMouseClickCloseProject();
+        System.out.println("lol");
     }
 
     private void pictureToButton() {
@@ -209,6 +206,9 @@ public class NyController extends BaseController {
 
 
 
+
+
+
     @FXML
     private void listenerLstAllCloseProjects() {
         closedProjectsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
@@ -269,10 +269,6 @@ public class NyController extends BaseController {
         customerZipClm.setCellValueFactory(new PropertyValueFactory<>("zipCode"));
         customerMailClm.setCellValueFactory(new PropertyValueFactory<>("Mail"));
         customerPhoneClm.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-        customerZipToTown.setCellValueFactory(new PropertyValueFactory<>("town"));
-
-
-
 
       /**  openProjectsTable.setItems(projectModel.getAllProjectsOpen());
         closedProjectsTable.setItems(projectModel.getAllProjectsClose()); */
@@ -288,20 +284,15 @@ public class NyController extends BaseController {
     @FXML
     private void closeProjectAction(ActionEvent actionEvent) {
         //Setting the data for the variables and calls the method from the model.
-
-        if (selectedProject!=null)
-        {
-            int closeProject = 1;
-            int id = selectedProject.getId();
-            selectedProject = null;
-            try {
-                projectModel.changeProjectStatus(closeProject, id);
-            } catch (Exception e) {
-                displayError(e);
-                e.printStackTrace();
-            }
+        int closeProject = 1;
+        int id = selectedProject.getId();
+        selectedProject = null;
+        try {
+            projectModel.changeProjectStatus(closeProject, id);
+        } catch (Exception e) {
+            displayError(e);
+            e.printStackTrace();
         }
-
     }
 
     /**
@@ -312,20 +303,15 @@ public class NyController extends BaseController {
     @FXML
     private void reopenProjectAction(ActionEvent actionEvent) {
         //Setting the data for the variables and calls the method from the model.
+        int reOpenProject = 0;
+        int id = selectedProject.getId();
 
-        if (selectedProject!=null)
-        {
-            int reOpenProject = 0;
-            int id = selectedProject.getId();
-
-            try {
-                projectModel.changeProjectStatus(reOpenProject, id);
-            } catch (Exception e) {
-                displayError(e);
-                e.printStackTrace();
-            }
+        try {
+            projectModel.changeProjectStatus(reOpenProject, id);
+        } catch (Exception e) {
+            displayError(e);
+            e.printStackTrace();
         }
-
     }
 
     /**
@@ -446,14 +432,13 @@ public class NyController extends BaseController {
     public void handleAddNewCustomer(ActionEvent actionEvent) {
         //Setting the data in the variables.
         boolean save=true;
-        String town;
 
         TextField[] textFields={customerFirstNameTextField,customerLastNameTextField,customerAddressTextField,
                 customerPhoneNumberTextField,customerZipCodeTextField,companyNameTextField,customerEmailTextField};
 
         String[] field={firstName,lastName,customerAddress};
-
-        String[] errorText={"Error in first Name","Error in Last Name","Error in Address"};
+        int[] numbers={phoneNumber,customerZipCode};
+        String[] errorText={"Error in first Name","Error in Last Name","Error in Address","Error in phone number","Error in zip code"};
 
 
         for (int i = 0; i < 3; i++) {
@@ -468,43 +453,16 @@ public class NyController extends BaseController {
 
         }
 
-
-
-            if (!customerPhoneNumberTextField.getText().equals("") && customerPhoneNumberTextField.getText().chars().allMatch( Character::isDigit ))
-            phoneNumber=Integer.parseInt(customerPhoneNumberTextField.getText());
-
+        for (int i = 3; i < 5; i++) {
+            if (!textFields[i].getText().equals("") && textFields[i].getText().chars().allMatch( Character::isDigit ))
+                numbers[i-3]=Integer.parseInt(textFields[i].getText());
             else
             {
                 save=false;
-                newCustomerErrorText.setText("Error in phone number");
+                newCustomerErrorText.setText(errorText[i]);
             }
 
-
-        if (!customerZipCodeTextField.getText().equals("") && customerZipCodeTextField.getText().chars().allMatch( Character::isDigit ))
-        {
-
-            customerZipCode=Integer.parseInt(customerZipCodeTextField.getText());
-            try {
-                 town=customerModel.TownToZipCode(customerZipCode);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-
-            }
-
-            if (town==null)
-            {
-                save=false;
-                newCustomerErrorText.setText("Error in zip code");
-             }
-
         }
-        else
-        {
-            save=false;
-            newCustomerErrorText.setText("Error in zip code");
-        }
-
-
 
             String companyName = companyNameTextField.getText();
             String mail = customerEmailTextField.getText();
@@ -514,7 +472,7 @@ public class NyController extends BaseController {
                         if (save)
                         {
                             int id = 1;
-                            customer = new Customer(id, field[0], field[1], companyName, field[2], mail, phoneNumber, customerZipCode,"");
+                            customer = new Customer(id, field[0], field[1], companyName, field[2], mail, numbers[0], numbers[1]);
 
                             try {
                                 //Sending the customer to the database.
@@ -571,8 +529,7 @@ public class NyController extends BaseController {
 
         if (selectedProject!=null)
         {
-            projectModel.setSelectedProject(selectedProject);
-            
+            projectModel.setSelectedProject(openProjectsTable.getSelectionModel().getSelectedItem());
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindue2.fxml"));
             AnchorPane pane = loader.load();
