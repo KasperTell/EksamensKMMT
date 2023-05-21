@@ -120,6 +120,7 @@ public class NyController extends BaseController {
         NotesTextArea.setEditable(false);
         listenerMouseClickOpenProject();
         listenerMouseClickCloseProject();
+        System.out.println("lol");
     }
 
     private void pictureToButton() {
