@@ -134,9 +134,7 @@ public class CustomerDAO implements ICustomerDataAccess {
 
         //SQL Query
         String sql = "Select  ZipCodeToTown.Town FROM ZipCodeToTown\n" +
-                "INNER JOIN Customers on\n" +
-                "Customers.Zip_Code = ZipCodeToTown.ZipCode\n" +
-                "Where Customers.Zip_Code=?";
+                "                Where ZipCode=?";
         // getting the connection to the database.
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
