@@ -53,7 +53,7 @@ public class NyController extends BaseController {
     private TableColumn customerMailClm, customerPhoneClm, customerZipClm, customerAddressClm, customerNameClm,customerZipToTown;
 
     @FXML //All buttons for the main view
-    private Button newProjectButton, reOpenProjectButton, closeProjectButton, newCustomerButton, openProjectWindowButton, openUserWindowButton;
+    private Button newProjectButton, reOpenProjectButton, closeProjectButton, newCustomerButton, openProjectWindowButton, openUserWindowButton, openPDFButton;
 
     @FXML //Slide in windows for creating a project or customer
     private VBox vbxCreateNewProject, vbxCreateNewCustomer;
@@ -127,13 +127,13 @@ public class NyController extends BaseController {
     }
 
     private void pictureToButton() {
-        String[] listOfFiles = {"Pictures/Add Project Button.png", "Pictures/Add Customer Button.png",
-                "Pictures/Close Project Button.png","Pictures/Open PDF Button.png", "Pictures/Add Employee Button.PNG", "Pictures/Close Project Button.PNG"};
+        String[] listOfFiles = {"Pictures/ButtonImages/AddProject.png", "Pictures/ButtonImages/AddCustomer.png",
+                "Pictures/ButtonImages/CloseProject.png", "Pictures/ButtonImages/ReOpenProject.png", "Pictures/ButtonImages/OpenUserWindow.png", "Pictures/ButtonImages/EditProject.png", "Pictures/ButtonImages/OpenPDF.png"};
 
         String[] listOfToolTips = {"Add a new project", "Add a new customer",
-                "Close a project", "Re-Open a project", "Opens up window for User editing", "Opens up window for project editing"};
+                "Close a project", "Re-Open a project", "Opens up window for User editing", "Opens up window for project editing", "Opens PDF for associated Project"};
 
-        Button[] listOfButtons ={newProjectButton,newCustomerButton, closeProjectButton, reOpenProjectButton, openUserWindowButton, openProjectWindowButton};
+        Button[] listOfButtons ={newProjectButton,newCustomerButton, closeProjectButton, reOpenProjectButton, openUserWindowButton, openProjectWindowButton, openPDFButton};
 
         for (int i = 0; i < listOfFiles.length; i++) {
 
@@ -149,6 +149,8 @@ public class NyController extends BaseController {
     private void disableButtons() {
         reOpenProjectButton.setDisable(true);
         closeProjectButton.setDisable(true);
+        openProjectWindowButton.setDisable(true);
+        openPDFButton.setDisable(true);
     }
 
     private void turnButtonONOrOff() {
@@ -224,6 +226,8 @@ public class NyController extends BaseController {
                 }
                 reOpenProjectButton.setDisable(false);
                 closeProjectButton.setDisable(true);
+                openProjectWindowButton.setDisable(true);
+                openPDFButton.setDisable(false);
                 NotesTextArea.setText(selectedProject.getNote());
             }
         });
@@ -246,6 +250,8 @@ public class NyController extends BaseController {
                 }
                 reOpenProjectButton.setDisable(true);
                 closeProjectButton.setDisable(false);
+                openProjectWindowButton.setDisable(false);
+                openPDFButton.setDisable(false);
                 NotesTextArea.setText(selectedProject.getNote());
             }
         });
