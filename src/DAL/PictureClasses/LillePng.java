@@ -13,7 +13,7 @@ public class LillePng implements IImageViewKlient {
 
     @Override
     public ImageView getImageView() throws FileNotFoundException {
-        Image png1 = new Image(new FileInputStream("Resources/Pictures/pictureIcons/png-file-.png"));
+        Image png1 = new Image(new FileInputStream("Resources/Pictures/FileTypeIcons/png-file-.png"));
 
 
         //Her laves billederamme objekterne med indhold

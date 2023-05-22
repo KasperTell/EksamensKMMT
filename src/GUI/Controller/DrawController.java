@@ -1,6 +1,5 @@
 package GUI.Controller;
 
-import BE.Project;
 import BE.ProjectFiles;
 import DAL.FilesDAO;
 import GUI.Model.ProjectFilesModel;
@@ -18,13 +17,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.Date;
 
-public class PaintController extends BaseController {
+public class DrawController extends BaseController {
 
     GraphicsContext tool;
     private ProjectModel projectModel;
@@ -97,17 +94,17 @@ public class PaintController extends BaseController {
     }
 
     public void setSpeakerTool(){
-        Image speaker = new Image("/Paint/Speaker.png");
+        Image speaker = new Image("/Pictures/PaintIcons/Speaker.png");
         tool.drawImage(speaker, x - speaker.getWidth() / 2, y - speaker.getHeight() / 2);
     }
 
     public void setProjectorTool(){
-        Image projector = new Image("/Paint/Projector.png");
+        Image projector = new Image("/Pictures/PaintIcons/Projector.png");
         tool.drawImage(projector, x - projector.getWidth() / 2, y - projector.getHeight() / 2);
     }
 
     public void setScreenTool(){
-        Image screen = new Image("/Paint/Screen.png");
+        Image screen = new Image("/Pictures/PaintIcons/Screen.png");
         tool.drawImage(screen, x - screen.getWidth() / 2, y - screen.getHeight() / 2);
     }
 
@@ -117,7 +114,7 @@ public class PaintController extends BaseController {
     }
 
     private void setTechBoxTool() {
-        Image techBox = new Image("/Paint/TechBox.PNG");
+        Image techBox = new Image("/Pictures/PaintIcons/TechBox.PNG");
         tool.drawImage(techBox, x - techBox.getWidth() / 2, y - techBox.getHeight() / 2);
     }
 

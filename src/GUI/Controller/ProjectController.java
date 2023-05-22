@@ -319,23 +319,23 @@ public class ProjectController extends BaseController {
 
     public void handleOpenMainWindow (ActionEvent actionEvent) throws Exception {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindue1.fxml"));
+        loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/Mainwindow.fxml"));
         AnchorPane pane = loader.load();
         pane.getStylesheets().add(PersonTypeChooser.personTypes.getCSS());
         mainViewAnchorPane.getChildren().setAll(pane);
 
-        NyController controller = loader.getController();
+        MainController controller = loader.getController();
         controller.setModel(super.getModel());
         controller.setup();
     }
 
     public void handleDraw (ActionEvent actionEvent) throws Exception {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/GUI/View/Paint/PaintView.fxml"));
+        loader.setLocation(getClass().getResource("/GUI/View/Draw/DrawWindow.fxml"));
         Parent root = loader.load();
-        root.getStylesheets().add("/GUI/View/Paint/Paint.css");
+        root.getStylesheets().add("/GUI/View/Draw/DrawWindow.css");
 
-        PaintController controller = loader.getController();
+        DrawController controller = loader.getController();
         controller.setModel(super.getModel());
         controller.setup();
 

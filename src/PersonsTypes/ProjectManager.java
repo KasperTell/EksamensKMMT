@@ -6,12 +6,12 @@ public class ProjectManager implements IPersonTypes{
 
     @Override
     public String getViewString() {
-        return "/GUI/View/ProjectManager/NytVindue1.fxml";
+        return "/GUI/View/ProjectManager/Mainwindow.fxml";
     }
 
     @Override
     public String getViewCss() {
-        return "/GUI/View/ProjectManager/managerView.css";
+        return "/GUI/View/ProjectManager/MainWindow.css";
     }
 
     @Override

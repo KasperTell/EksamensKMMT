@@ -163,12 +163,12 @@ public class UserController extends BaseController{
     public void handleOpenMainWindow(ActionEvent actionEvent) throws Exception {
 
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindue1.fxml"));
+        loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/Mainwindow.fxml"));
         AnchorPane pane = loader.load();
-        pane.getStylesheets().add("/GUI/View/ProjectManager/managerView.css");
+        pane.getStylesheets().add("/GUI/View/ProjectManager/MainWindow.css");
         mainViewAnchorPane.getChildren().setAll(pane);
 
-        NyController controller = loader.getController();
+        MainController controller = loader.getController();
         controller.setModel(super.getModel());
         controller.setup();
     }

@@ -1,7 +1,5 @@
 package PersonsTypes;
 
-import GUI.Controller.NyController;
-
 import java.util.HashMap;
 
 public class Salesman implements IPersonTypes{
