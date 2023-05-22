@@ -81,6 +81,8 @@ public class MainController extends BaseController {
     String firstName,lastName,customerAddress;
     int customerZipCode;
     Customer customer;
+
+    boolean save=true;
     /**
      * Set up the view when the view is getting shown.
      */
@@ -449,15 +451,24 @@ public class MainController extends BaseController {
     public void handleAddNewCustomer(ActionEvent actionEvent) {
         //Setting the data in the variables.
 
+        save=true;
+        String[] field=tjekNameAndAddressFields();
+        tjekPhoneNumber();
+        tjekZipCode();
 
-        boolean save=true;
-        String town;
+            String companyName = companyNameTextField.getText();
+            String mail = customerEmailTextField.getText();
 
-        TextField[] textFields={customerFirstNameTextField,customerLastNameTextField,customerAddressTextField,
-                customerPhoneNumberTextField,customerZipCodeTextField,companyNameTextField,customerEmailTextField};
+            saveCustomer(field, companyName, mail);
 
+
+            }
+
+
+
+    private String[] tjekNameAndAddressFields() {
+        TextField[] textFields={customerFirstNameTextField,customerLastNameTextField,customerAddressTextField};
         String[] field={firstName,lastName,customerAddress};
-
         String[] errorText={"Error in first Name","Error in Last Name","Error in Address"};
 
 
@@ -473,24 +484,32 @@ public class MainController extends BaseController {
 
         }
 
+return field;
+
+    }
 
 
-            if (!customerPhoneNumberTextField.getText().equals("") && customerPhoneNumberTextField.getText().chars().allMatch( Character::isDigit ))
+    private void tjekPhoneNumber() {
+        if (!customerPhoneNumberTextField.getText().equals("") && customerPhoneNumberTextField.getText().chars().allMatch( Character::isDigit ))
             phoneNumber=Integer.parseInt(customerPhoneNumberTextField.getText());
 
-            else
-            {
-                save=false;
-                newCustomerErrorText.setText("Error in phone number");
-            }
+        else
+        {
+            save=false;
+            newCustomerErrorText.setText("Error in phone number");
+        }
 
+    }
+
+    private void tjekZipCode() {
+        String town = null;
 
         if (!customerZipCodeTextField.getText().equals("") && customerZipCodeTextField.getText().chars().allMatch( Character::isDigit ))
         {
 
             customerZipCode=Integer.parseInt(customerZipCodeTextField.getText());
             try {
-                 town=customerModel.TownToZipCode(customerZipCode);
+                town=customerModel.TownToZipCode(customerZipCode);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
 
@@ -500,7 +519,7 @@ public class MainController extends BaseController {
             {
                 save=false;
                 newCustomerErrorText.setText("Error in zip code");
-             }
+            }
 
         }
         else
@@ -509,36 +528,39 @@ public class MainController extends BaseController {
             newCustomerErrorText.setText("Error in zip code");
         }
 
+    }
 
 
-            String companyName = companyNameTextField.getText();
-            String mail = customerEmailTextField.getText();
+    private void saveCustomer(String[] field, String companyName,String mail) {
 
+        if (save) {
+            int id = 1;
+            customer = new Customer(id, field[0], field[1], companyName, field[2], mail, phoneNumber, customerZipCode, "");
 
-                        //Initializing the customer.
-                        if (save)
-                        {
-                            int id = 1;
-                            customer = new Customer(id, field[0], field[1], companyName, field[2], mail, phoneNumber, customerZipCode,"");
-
-                            try {
-                                //Sending the customer to the database.
-                                customerModel.createNewCustomer(customer);
-                                newCustomerAction(); //Close the vbox.
-                            } catch (Exception e) {
-                                displayError(e);
-                                e.printStackTrace();
-
-                        }
-
-                            for (int i = 0; i <7 ; i++)
-                                textFields[i].clear();
-
-                            newCustomerErrorText.setText("");
+            try {
+                //Sending the customer to the database.
+                customerModel.createNewCustomer(customer);
+                newCustomerAction(); //Close the vbox.
+            } catch (Exception e) {
+                displayError(e);
+                e.printStackTrace();
 
             }
+
+            TextField[] textFields={customerFirstNameTextField,customerLastNameTextField,customerAddressTextField,
+                    customerPhoneNumberTextField,customerZipCodeTextField,companyNameTextField,customerEmailTextField};
+
+
+            for (int i = 0; i <7 ; i++)
+                textFields[i].clear();
+
+            newCustomerErrorText.setText("");
+
         }
 
+
+
+    }
 
 
 
