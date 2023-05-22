@@ -148,10 +148,12 @@ public class ProjectController extends BaseController {
                             // Load the image file into the filesPreviewImageView
                             String fileUrl = selectedfile.getFilePath();
                             String imageUrl = fileUrl.substring(10);
+                            System.out.println(imageUrl);
 
                             if (Files.exists(Path.of(fileUrl))) //check om filen eksisterer
                             {
                                 Image image = new Image(imageUrl);
+
                                 filesPreviewImageView.setImage(image);
                             }
                             else

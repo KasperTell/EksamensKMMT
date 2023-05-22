@@ -571,7 +571,7 @@ public class MainController extends BaseController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/ProjectWindow.fxml"));
             AnchorPane pane = loader.load();
-            pane.getStylesheets().add("/GUI/View/ProjectManager/managerView.css");
+            pane.getStylesheets().add("/GUI/View/ProjectManager/MainWindow.css");
             mainViewAnchorPane.getChildren().setAll(pane);
 
             controller = loader.getController();
@@ -592,7 +592,7 @@ public class MainController extends BaseController {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/UserWindow.fxml"));
         AnchorPane pane = loader.load();
-        pane.getStylesheets().add("/GUI/View/ProjectManager/managerView.css");
+        pane.getStylesheets().add("/GUI/View/ProjectManager/MainWindow.css");
         mainViewAnchorPane.getChildren().setAll(pane);
 
         UserController controller = loader.getController();
