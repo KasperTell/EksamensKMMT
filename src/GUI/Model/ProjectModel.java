@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class ProjectModel {
 
@@ -72,8 +73,14 @@ public class ProjectModel {
      * @throws Exception
      */
     public ObservableList<Project> searchByQuery(String searchQuery) throws Exception {
-        searchedProjects.addAll(projectManager.searchByQuery(searchQuery));
-        return searchedProjects; }
+        if(Objects.equals(searchQuery, "")){
+            searchedProjects.addAll(projectManager.loadProjectOfAType(true));
+        } else {
+            searchedProjects.clear();
+            searchedProjects.addAll(projectManager.searchByQuery(searchQuery));
+        }
+        return searchedProjects;
+    }
 
 
     public Project getSelectedProject(){return selectedProject;}

@@ -6,12 +6,12 @@ public class ProjectManager implements IPersonTypes{
 
     @Override
     public String getViewString() {
-        return "/GUI/View/ProjectManager/MainWindow.fxml";
+        return "/GUI/View/MainWindow.fxml";
     }
 
     @Override
     public String getViewCss() {
-        return "/GUI/View/ProjectManager/MainWindow.css";
+        return "/GUI/View/MainWindow.css";
     }
 
     @Override
@@ -23,7 +23,7 @@ public class ProjectManager implements IPersonTypes{
         buttonOnOrOff.put("reOpenProjectButton", false);
         buttonOnOrOff.put("newProjectButton", false);
         buttonOnOrOff.put("newCustomerButton", false);
-        buttonOnOrOff.put("openProjectWindowButton", false);
+        buttonOnOrOff.put("openProjectWindowButton", true);
         buttonOnOrOff.put("openUserWindowButton", false);
         buttonOnOrOff.put("closedProjectsTable", false);
         buttonOnOrOff.put("searchBoxTextField", false);

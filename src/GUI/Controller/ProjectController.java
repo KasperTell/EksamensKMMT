@@ -249,10 +249,6 @@ public class ProjectController extends BaseController {
             customerInfo.put("ZipCode", String.valueOf(customer.getZipCode()));
             customerInfo.put("Mail", customer.getMail());
             customerInfo.put("PhoneNumber", String.valueOf(customer.getPhoneNumber()));
-
-
-
-
         }
         return customerInfo;
     }
@@ -321,7 +317,7 @@ public class ProjectController extends BaseController {
 
     public void handleOpenMainWindow (ActionEvent actionEvent) throws Exception {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/MainWindow.fxml"));
+        loader.setLocation(getClass().getResource("/GUI/View/MainWindow.fxml"));
         AnchorPane pane = loader.load();
         pane.getStylesheets().add(PersonTypeChooser.personTypes.getCSS());
         mainViewAnchorPane.getChildren().setAll(pane);

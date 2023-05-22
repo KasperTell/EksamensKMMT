@@ -5,12 +5,12 @@ import java.util.HashMap;
 public class Salesman implements IPersonTypes{
     @Override
     public String getViewString() {
-        return "/GUI/View/Salesman/SalesView.fxml";
+        return "/GUI/View/MainWindow.fxml";
     }
 
     @Override
     public String getViewCss() {
-        return "/GUI/View/Salesman/SalesView.css";
+        return "/GUI/View/MainWindow.css";
     }
 
     public HashMap<String, Boolean> turnButtonOnOrOff() {
