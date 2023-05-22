@@ -18,7 +18,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -723,7 +722,7 @@ public class MainController extends BaseController {
         int phoneNumber = Integer.parseInt(txtfPhoneNumber.getText());
         int customerZipCode = Integer.parseInt(txtfZipCode.getText());
         //Initializing the customer.
-        Customer customer = new Customer(id, firstName, lastName, companyName, customerAddress, mail, phoneNumber, customerZipCode,"");
+        Customer customer = new Customer(id, firstName, lastName, companyName, customerAddress, mail, phoneNumber, customerZipCode);
         try {
             //Sending the customer to the database.
             customerModel.createNewCustomer(customer);
