@@ -13,7 +13,7 @@ public class LilleJpg implements IImageViewKlient {
 
     @Override
     public ImageView getImageView() throws FileNotFoundException {
-        Image png1 = new Image(new FileInputStream("Resources/Pictures/pictureIcons/jpg-file.png"));
+        Image png1 = new Image(new FileInputStream("Resources/Pictures/FileTypeIcons/jpg-file.png"));
 
 
         //Her laves billederamme objekterne med indhold

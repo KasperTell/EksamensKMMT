@@ -114,7 +114,7 @@ public class DrawController extends BaseController {
     }
 
     private void setTechBoxTool() {
-        Image techBox = new Image("/Pictures/PaintIcons/TechBox.PNG");
+        Image techBox = new Image("/Pictures/PaintIcons/TechBox.png");
         tool.drawImage(techBox, x - techBox.getWidth() / 2, y - techBox.getHeight() / 2);
     }
 
