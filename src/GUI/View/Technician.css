@@ -1,0 +1,231 @@
+#mainViewAnchorPane
+{
+
+    -fx-background-color: linear-gradient(to bottom, #333333 75%, black);
+}
+
+.text-field
+{
+    -fx-background-color: #f2f2f2;
+    -fx-text-fill: black;
+    -fx-border-width: 1px;
+    -fx-border-color: #f2f2f2;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+#filesIncludedColumn, #filesDateColumn {
+    -fx-alignment: CENTER;
+}
+
+
+
+Button
+{
+    -fx-background-color: #333333;
+    -fx-text-fill: #f2f2f2;
+    -fx-border-width: 1px;
+    -fx-border-color: black;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+Button:pressed{
+    -fx-opacity: 0.50;
+}
+
+
+#newProjectButton, #newCustomerButton, #reOpenProjectButton, #closeProjectButton, #openUserWindowButton, #openProjectWindowButton, #openPDFButton,
+#openMainWindowButton, #openNewEmployeeWindow, #removeEmployeeButton, #drawButton
+{
+    -fx-background-color: transparent;
+    -fx-border-width: 0px;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+}
+
+#addNewProjectButton, #btnAddNewCustomer
+{
+    -fx-background-color: #f2f2f2;
+    -fx-text-fill: black;
+    -fx-border-width: 1px;
+    -fx-border-color: #f2f2f2;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+
+}
+
+#customerComboBox{
+    -fx-background-color: #f2f2f2;
+    -fx-text-fill: black;
+}
+
+#projectNameTextField{
+    -fx-background-color: #f2f2f2;
+    -fx-text-fill: black;
+}
+
+.tab-pane
+{
+    -fx-focus-color: #18263A;
+}
+
+.tab-header-area .tab-header-background
+{
+    -fx-background-color: #90AED6;
+}
+
+.tab-pane .tab:selected
+{
+    -fx-background-color: #18263A ;
+    -fx-background-insets: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #f2f2f2;
+    -fx-font-weight: bold;
+    -fx-padding: 0 10 0 10;
+}
+
+.tab-pane:top *.tab-header-area
+{
+    -fx-padding: 0 0 0 0;
+
+    /* NO SPACE LEFT OF FIRST TAB */
+    /* -fx-padding: 0 0 0 30; */
+}
+
+.tab-pane
+{
+    -fx-background-color: transparent;
+
+}
+
+.tab-pane .tab
+{
+    -fx-background-color: transparent;
+}
+
+.tab-pane:focused .tab-header-area .headers-region .tab:selected .focus-indicator
+{
+    -fx-border-width: 0;
+    -fx-border-insets: 0 0 0 0;
+    -fx-border-radius: 0;
+}
+
+.table-view {
+    -fx-background-color: #90AED6;
+}
+
+.table-view .scroll-bar * {
+    -fx-min-width: 0;
+    -fx-pref-width: 0;
+    -fx-max-width: 0;
+
+    -fx-min-height: 0;
+    -fx-pref-height: 0;
+    -fx-max-height: 0;
+}
+
+.table-view .column-header-background .filler {
+    -fx-background-color: transparent;
+}
+
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: transparent;
+
+}
+
+.table-view .column-header {
+    -fx-background-color: #90AED6;
+    -fx-text-background-color: #f2f2f2;
+    -fx-text-alignment: center-left;
+    -fx-font-size: 18;
+
+
+}
+
+.table-view .table-cell{
+    -fx-border-color: transparent;
+    -fx-padding: 2 0 2 10px;
+    -fx-font-size: 18;
+}
+.table-row-cell:hover {
+    -fx-text-background-color: #E84910;
+}
+
+.table-row-cell:selected {
+    -fx-text-background-color: #E84910;
+}
+
+.table-row-cell:odd{
+    -fx-background-color: #90AED6;
+    -fx-text-background-color: #f2f2f2;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+.table-row-cell:even{
+    -fx-background-color: #90AED6;
+    -fx-text-background-color: #f2f2f2;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+
+.list-cell:odd {
+    -fx-background-color: #90AED6;
+}
+
+.list-cell:even {
+    -fx-background-color: #90AED6;
+}
+
+.list-cell:filled:hover {
+    -fx-text-background-color: #E84910;
+}
+
+.list-cell:selected{
+    -fx-text-background-color: #E84910;
+
+}
+
+#vbxCreateNewProject, #vbxCreateNewCustomer{
+    -fx-background-color: #90AED6;
+}
+
+
+#NotesTextArea, #techsOnProjectListView
+{
+    -fx-font-size: 18;
+}
+
+
+#newCustomerErrorText {
+    -fx-font-size: 18;
+    -fx-text-background-color: red;
+}
+
+
+
+
+
+
+
+
+/*
+Add extra to the technician
+ */
+
+#newProjectButton,#reOpenProjectButton,#newCustomerButton,#openUserWindowButton, #closedProjectsTab,#searchBoxTextField, #techsTab
+{
+    -fx-opacity: 0;
+}
+
+
+
+
+

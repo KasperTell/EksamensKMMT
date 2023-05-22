@@ -385,14 +385,19 @@ public class ProjectController extends BaseController {
     @FXML
     private void handleAddTech (ActionEvent actionEvent){
         //Setting the data for the variables and calls the method from the model.
-        int projectID = selectedProject.getId();
-        int technicianID = listTechsComboBox.getSelectionModel().getSelectedItem().getId();
-        try {
-            userModel.moveTechnician(technicianID, projectID);
-        } catch (Exception e) {
-            displayError(e);
-            e.printStackTrace();
+
+        if (listTechsComboBox.getSelectionModel().getSelectedItem()!=null)
+        {
+            int projectID = selectedProject.getId();
+            int technicianID = listTechsComboBox.getSelectionModel().getSelectedItem().getId();
+            try {
+                userModel.moveTechnician(technicianID, projectID);
+            } catch (Exception e) {
+                displayError(e);
+                e.printStackTrace();
+            }
         }
+
     }
 
     /**
@@ -403,15 +408,20 @@ public class ProjectController extends BaseController {
     @FXML
     private void handleRemoveTech (ActionEvent actionEvent){
         //Setting the data for the variables and calls the method from the model.
-        User selectedTechnician = techsOnProjectListView.getSelectionModel().getSelectedItem();
-        int projectID = selectedProject.getId();
-        try {
-            userModel.removeTechnicianFromProject(selectedTechnician, projectID);
-        } catch (Exception e) {
-            displayError(e);
-            e.printStackTrace();
+
+        if (techsOnProjectListView.getSelectionModel().getSelectedItem()!=null)
+        {
+            User selectedTechnician = techsOnProjectListView.getSelectionModel().getSelectedItem();
+            int projectID = selectedProject.getId();
+            try {
+                userModel.removeTechnicianFromProject(selectedTechnician, projectID);
+            } catch (Exception e) {
+                displayError(e);
+                e.printStackTrace();
+            }
         }
-    }
+        }
+
 }
 
 

@@ -10,7 +10,7 @@ public class Salesman implements IPersonTypes{
 
     @Override
     public String getViewCss() {
-        return "/GUI/View/MainWindow.css";
+        return "GUI/View/Salesman.css";
     }
 
     public HashMap<String, Boolean> turnButtonOnOrOff() {
