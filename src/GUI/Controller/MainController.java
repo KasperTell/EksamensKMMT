@@ -127,9 +127,9 @@ public class MainController extends BaseController {
 
     private void pictureToButton() {
         String[] listOfFiles = new String[]{"Pictures/ButtonImages/AddProject.png", "Pictures/ButtonImages/AddCustomer.png", "Pictures/ButtonImages/CloseProject.png", "Pictures/ButtonImages/ReOpenProject.png", "Pictures/ButtonImages/OpenUserWindow.png",
-        "Pictures/ButtonImages/EditProject.png"};
-        String[] listOfToolTips = new String[]{"Add a new project", "Add a new customer", "Close a project", "Re-Open a project", "Opens up window for User editing", "Opens up window for project editing"};
-        Button[] listOfButtons = new Button[]{newProjectButton, newCustomerButton, closeProjectButton, reOpenProjectButton, openUserWindowButton, openProjectWindowButton};
+        "Pictures/ButtonImages/EditProject.png", "Pictures/ButtonImages/OpenPDF.png"};
+        String[] listOfToolTips = new String[]{"Add a new project", "Add a new customer", "Close a project", "Re-Open a project", "Opens up window for User editing", "Opens up window for project editing", "Open up PDF file"};
+        Button[] listOfButtons = new Button[]{newProjectButton, newCustomerButton, closeProjectButton, reOpenProjectButton, openUserWindowButton, openProjectWindowButton, openPDFButton};
 
         for(int i = 0; i < listOfFiles.length; ++i) {
             Image img = new Image(listOfFiles[i]);
