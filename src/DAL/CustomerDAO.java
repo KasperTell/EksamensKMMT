@@ -44,7 +44,7 @@ public class CustomerDAO implements ICustomerDataAccess {
 
                 String town=TownToZipCode( zipcode);
 
-                Customer customer = new Customer(id, firstName, lastName, companyName, address, mail, phoneNumber, zipcode);
+                Customer customer = new Customer(id, firstName, lastName, companyName, address, mail, phoneNumber, zipcode,town);
                 allCustomers.add(customer);
             }
             return allCustomers;
@@ -119,7 +119,7 @@ public class CustomerDAO implements ICustomerDataAccess {
                 String town=TownToZipCode( zipcode);
 
 
-                customer = new Customer(id, firstName, lastName, companyName, address, mail, phoneNumber, zipcode);
+                customer = new Customer(id, firstName, lastName, companyName, address, mail, phoneNumber, zipcode,town);
             }
             return customer;
         } catch (Exception ex) {

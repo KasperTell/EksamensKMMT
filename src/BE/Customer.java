@@ -6,7 +6,6 @@ public class Customer {
 
     /**
      * Constructor for the class "Customer"
-     *
      * @param id
      * @param firstName
      * @param lastName
@@ -15,8 +14,9 @@ public class Customer {
      * @param mail
      * @param phoneNumber
      * @param zipCode
+     * @param town
      */
-    public Customer(int id, String firstName, String lastName, String companyName, String address, String mail, int phoneNumber, int zipCode) {
+    public Customer(int id, String firstName, String lastName, String companyName, String address, String mail, int phoneNumber, int zipCode, String town) {
         this.id = id;
         this.address = address;
         this.phoneNumber = phoneNumber;

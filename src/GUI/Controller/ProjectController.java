@@ -319,7 +319,7 @@ public class ProjectController extends BaseController {
 
     public void handleOpenMainWindow (ActionEvent actionEvent) throws Exception {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/Mainwindow.fxml"));
+        loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/MainWindow.fxml"));
         AnchorPane pane = loader.load();
         pane.getStylesheets().add(PersonTypeChooser.personTypes.getCSS());
         mainViewAnchorPane.getChildren().setAll(pane);
