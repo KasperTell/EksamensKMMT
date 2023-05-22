@@ -2,6 +2,7 @@ package GUI.Controller;
 
 import BE.*;
 import GUI.Model.*;
+import PersonsTypes.PersonType;
 import PersonsTypes.PersonTypeChooser;
 import UTIL.ShowFile;
 import javafx.animation.TranslateTransition;
@@ -154,7 +155,6 @@ public class MainController extends BaseController {
 
         HashMap<String, Boolean> turnButtonOnOrOff = personTypeChooser.turnButtonOnOrOff();
 
-
         closeProjectButton.setDisable(turnButtonOnOrOff.get("closeProjectButton"));
         reOpenProjectButton.setDisable(turnButtonOnOrOff.get("reOpenProjectButton"));
         newProjectButton.setDisable(turnButtonOnOrOff.get("newProjectButton"));
@@ -224,11 +224,15 @@ public class MainController extends BaseController {
                     displayError(e);
                     e.printStackTrace();
                 }
-                reOpenProjectButton.setDisable(false);
-                closeProjectButton.setDisable(true);
-                openProjectWindowButton.setDisable(true);
-                openPDFButton.setDisable(false);
-                NotesTextArea.setText(selectedProject.getNote());
+                if(userModel.getLoggedinUser().getRole() == 2) {
+                    reOpenProjectButton.setDisable(false);
+                    closeProjectButton.setDisable(true);
+                }
+                if(userModel.getLoggedinUser().getRole() == 2 || userModel.getLoggedinUser().getRole() == 4) {
+                    openProjectWindowButton.setDisable(true);
+                    openPDFButton.setDisable(false);
+                    NotesTextArea.setText(selectedProject.getNote());
+                }
             }
         });
     }
@@ -248,11 +252,15 @@ public class MainController extends BaseController {
                     displayError(e);
                     e.printStackTrace();
                 }
-                reOpenProjectButton.setDisable(true);
-                closeProjectButton.setDisable(false);
-                openProjectWindowButton.setDisable(false);
-                openPDFButton.setDisable(false);
-                NotesTextArea.setText(selectedProject.getNote());
+                if(userModel.getLoggedinUser().getRole() == 2 ) {
+                    reOpenProjectButton.setDisable(true);
+                    closeProjectButton.setDisable(false);
+                }
+                if(userModel.getLoggedinUser().getRole() == 2 || userModel.getLoggedinUser().getRole() == 4){
+                    openProjectWindowButton.setDisable(false);
+                    openPDFButton.setDisable(false);
+                    NotesTextArea.setText(selectedProject.getNote());
+                }
             }
         });
 
@@ -531,9 +539,9 @@ public class MainController extends BaseController {
         {
             projectModel.setSelectedProject(openProjectsTable.getSelectionModel().getSelectedItem());
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/ProjectWindow.fxml"));
+            loader.setLocation(getClass().getResource("/GUI/View/ProjectWindow.fxml"));
             AnchorPane pane = loader.load();
-            pane.getStylesheets().add("/GUI/View/ProjectManager/MainWindow.css");
+            pane.getStylesheets().add("/GUI/View/MainWindow.css");
             mainViewAnchorPane.getChildren().setAll(pane);
 
             controller = loader.getController();
@@ -552,9 +560,9 @@ public class MainController extends BaseController {
 
     public void handleOpenUserWindow(ActionEvent actionEvent) throws Exception {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/UserWindow.fxml"));
+        loader.setLocation(getClass().getResource("/GUI/View/UserWindow.fxml"));
         AnchorPane pane = loader.load();
-        pane.getStylesheets().add("/GUI/View/ProjectManager/MainWindow.css");
+        pane.getStylesheets().add("/GUI/View/MainWindow.css");
         mainViewAnchorPane.getChildren().setAll(pane);
 
         UserController controller = loader.getController();

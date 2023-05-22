@@ -7,12 +7,12 @@ public class Technician implements IPersonTypes{
 
     @Override
     public String getViewString() {
-        return "/GUI/View/technician/TechView.fxml";
+        return "/GUI/View/MainWindow.fxml";
     }
 
     @Override
     public String getViewCss() {
-        return "/GUI/View/technician/TechView.css";
+        return "/GUI/View/MainWindow.css";
     }
 
     public HashMap<String, Boolean> turnButtonOnOrOff() {

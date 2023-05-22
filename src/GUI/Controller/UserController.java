@@ -163,9 +163,9 @@ public class UserController extends BaseController{
     public void handleOpenMainWindow(ActionEvent actionEvent) throws Exception {
 
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/Mainwindow.fxml"));
+        loader.setLocation(getClass().getResource("/GUI/View/MainWindow.fxml"));
         AnchorPane pane = loader.load();
-        pane.getStylesheets().add("/GUI/View/ProjectManager/MainWindow.css");
+        pane.getStylesheets().add("/GUI/View/MainWindow.css");
         mainViewAnchorPane.getChildren().setAll(pane);
 
         MainController controller = loader.getController();
