@@ -569,7 +569,7 @@ public class MainController extends BaseController {
             projectModel.setSelectedProject(selectedProject);
             
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/NytVindue2.fxml"));
+            loader.setLocation(getClass().getResource("/GUI/View/ProjectManager/ProjectWindow.fxml"));
             AnchorPane pane = loader.load();
             pane.getStylesheets().add("/GUI/View/ProjectManager/managerView.css");
             mainViewAnchorPane.getChildren().setAll(pane);

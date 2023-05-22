@@ -56,10 +56,10 @@
                <columns>
                   <TableColumn fx:id="customerNameClm" maxWidth="1.7976931348623157E308" prefWidth="100.0" text="Name" />
                   <TableColumn fx:id="customerMailClm" maxWidth="1.7976931348623157E308" prefWidth="100.0" text="Mail" />
-                  <TableColumn fx:id="customerPhoneClm" maxWidth="1.7976931348623157E308" prefWidth="100.0" text="Phone" />
-                  <TableColumn fx:id="customerAddressClm" maxWidth="1.7976931348623157E308" prefWidth="107.199951171875" text="Adress" />
-                  <TableColumn fx:id="customerZipClm" maxWidth="1.7976931348623157E308" prefWidth="108.0" text="Zip" />
-                  <TableColumn fx:id="customerZipToTowncustomerZipToTown" prefWidth="75.0" text="Column X" />
+                  <TableColumn fx:id="customerPhoneClm" maxWidth="1.7976931348623157E308" prefWidth="72.0" text="Phone" />
+                  <TableColumn fx:id="customerAddressClm" maxWidth="1.7976931348623157E308" prefWidth="83.5" text="Adress" />
+                  <TableColumn fx:id="customerZipClm" maxWidth="1.7976931348623157E308" prefWidth="58.0" text="Zip" />
+                  <TableColumn fx:id="customerZipToTown" prefWidth="95.0" text="Town" />
                </columns>
             </TableView>
             <TextField fx:id="searchBoxTextField" layoutX="966.0" layoutY="100.0" onKeyReleased="#searchProjectsByStringQuery" prefWidth="200.0" promptText="Search..." />
