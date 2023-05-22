@@ -38,33 +38,21 @@ public class User {
         return lastName;
     }
 
-    public void setLastName(String last_name) {
-        this.lastName = last_name;
-    }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String first_name) {
-        this.firstName = first_name;
-    }
 
     public String getUserName() {
         return username;
     }
 
-    public void setUserName(String user_name) {
-        this.username = user_name;
-    }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public int getRole(){return role;}
 

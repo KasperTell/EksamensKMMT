@@ -658,10 +658,5 @@ return field;
                 showFile.showErrorBox("PDF does not exit", "File message");
             }
         }
-
-
-
-
-
     }
 }

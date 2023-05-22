@@ -31,10 +31,6 @@ public class ProjectTechnician {
         return technicianID;
     }
 
-    public void setTechnicianID(int technicianID) {
-        this.technicianID = technicianID;
-    }
-
     public int getProjectID() {
         return projectID;
     }
