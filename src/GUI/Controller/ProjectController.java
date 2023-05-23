@@ -411,14 +411,27 @@ public class ProjectController extends BaseController {
 
         if (techsOnProjectListView.getSelectionModel().getSelectedItem()!=null)
         {
-            User selectedTechnician = techsOnProjectListView.getSelectionModel().getSelectedItem();
-            int projectID = selectedProject.getId();
-            try {
-                userModel.removeTechnicianFromProject(selectedTechnician, projectID);
-            } catch (Exception e) {
-                displayError(e);
-                e.printStackTrace();
-            }
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete Technician");
+            //alert.setContentText("Delete?");
+            ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+            ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+            alert.getButtonTypes().setAll(okButton, noButton);
+            alert.showAndWait().ifPresent(type -> {
+                if (type == okButton) {
+                    User selectedTechnician = techsOnProjectListView.getSelectionModel().getSelectedItem();
+                    int projectID = selectedProject.getId();
+                    try {
+                        userModel.removeTechnicianFromProject(selectedTechnician, projectID);
+                    } catch (Exception e) {
+                        displayError(e);
+                        e.printStackTrace();
+                    }
+
+
+                }
+            });
+
         }
         }
 

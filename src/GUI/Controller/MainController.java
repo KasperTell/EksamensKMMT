@@ -430,7 +430,7 @@ public class MainController extends BaseController {
        else
        {
            save=false;
-           errorMessageNewProject.setText("Error Select from selection box");
+           errorMessageNewProject.setText("Error select from selection box");
        }
 
             LocalDate date = LocalDate.now();
