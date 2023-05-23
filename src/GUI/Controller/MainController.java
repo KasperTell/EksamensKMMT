@@ -129,6 +129,8 @@ public class MainController extends BaseController {
 
                             }
                             NotesTextArea.setText("");
+                            openProjectsTable.getSelectionModel().clearSelection();
+                            closedProjectsTable.getSelectionModel().clearSelection();
 
                         }
                     }
@@ -327,6 +329,14 @@ public class MainController extends BaseController {
                 displayError(e);
                 e.printStackTrace();
             }
+
+            try {
+                customerTable.setItems(customerModel.loadCustomerList(0));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+
+            }
+            NotesTextArea.setText("");
         }
 
     }
@@ -351,6 +361,16 @@ public class MainController extends BaseController {
                 displayError(e);
                 e.printStackTrace();
             }
+
+            try {
+                customerTable.setItems(customerModel.loadCustomerList(0));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+
+            }
+            NotesTextArea.setText("");
+
+
         }
 
     }
