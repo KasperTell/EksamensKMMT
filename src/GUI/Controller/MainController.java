@@ -444,11 +444,19 @@ public class MainController extends BaseController {
             } catch (SQLException e) {
                 displayError(e);
                 e.printStackTrace();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-            //Close the vbox.
-            newProjectAction();
-        }
 
+            projectNameTextField.setText("");
+            customerComboBox.getSelectionModel().clearSelection();
+
+            //Close the vbox.
+
+            newProjectAction();
+            newProjectAction();
+
+        }
 
 
     }

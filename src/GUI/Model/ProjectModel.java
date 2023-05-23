@@ -50,9 +50,11 @@ public class ProjectModel {
      * @param project
      * @throws SQLException
      */
-    public void createNewProject(Project project) throws SQLException{
+    public void createNewProject(Project project) throws Exception {
     projectManager.createNewProject(project);
-    projectsOpen.add(project);
+    clearLists();
+
+
     }
 
     /**
