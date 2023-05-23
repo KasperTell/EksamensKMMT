@@ -24,7 +24,7 @@ public class User {
     }
 
     /**
-     * Getters and setters for the entire class.
+     * Getters and setter for the entire class.
      */
     public int getId() {
         return id;
@@ -38,24 +38,19 @@ public class User {
         return lastName;
     }
 
-
     public String getFirstName() {
         return firstName;
     }
-
 
     public String getUserName() {
         return username;
     }
 
-
     public String getPassword() {
         return password;
     }
 
-
-    public int getRole(){return role;}
-
+    public int getRole() { return role;}
 
     /**
      * Overriding the default toString method, so it returns the user/employees firstname and lastname.

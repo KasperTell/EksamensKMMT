@@ -33,16 +33,9 @@ private CheckBox usedBox;
         this.rank=rank;
     }
 
-    public int getRank() {
-        return rank;
-    }
-
     /**
      * Getters and setters for the entire class.
-     * @return
      */
-
-
     public int getId() {
         return id;
     }
@@ -63,7 +56,6 @@ private CheckBox usedBox;
         return filePath;
     }
 
-
     public LocalDate getDate() {
         return date;
     }
@@ -71,7 +63,6 @@ private CheckBox usedBox;
     public ImageView getPicture() {
         return picture;
     }
-
 
     public CheckBox getUsedBox() {
         return usedBox;
@@ -85,19 +76,21 @@ private CheckBox usedBox;
         this.name = name;
     }
 
+    public int getRank() {
+        return rank;
+    }
+
     /**
      * Overriding the default toString method.
      * @return
      */
     @Override
     public String toString() {
-
         boolean newBox=true;
         if (usedBox.isSelected())
             newBox=true;
             else
                 newBox=false;
-
 
         return newBox+"";
     }
