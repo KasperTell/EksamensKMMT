@@ -487,7 +487,8 @@ public class MainController extends BaseController {
             else
             {
                 save=false;
-                newCustomerErrorText.setText(errorText[i]);
+                String error = textFields[i].getText();
+                newCustomerErrorText.setText(errorText[i] + "     -> " + error + " <-");
             }
         }
         return field;
@@ -501,13 +502,15 @@ public class MainController extends BaseController {
         else
         {
             save=false;
-            newCustomerErrorText.setText("Error in phone number");
+            String error = customerPhoneNumberTextField.getText();
+            newCustomerErrorText.setText("Error in Phone number" + "     -> " + error + " <-");
         }
 
     }
 
     private void tjekZipCode() {
         String town = null;
+        String error = customerZipCodeTextField.getText();
 
         if (!customerZipCodeTextField.getText().equals("") && customerZipCodeTextField.getText().chars().allMatch( Character::isDigit ))
         {
@@ -523,14 +526,14 @@ public class MainController extends BaseController {
             if (town==null)
             {
                 save=false;
-                newCustomerErrorText.setText("Error in zip code");
+                newCustomerErrorText.setText("Error in zip code" + "     -> " + error + " <-");
             }
 
         }
         else
         {
             save=false;
-            newCustomerErrorText.setText("Error in zip code");
+            newCustomerErrorText.setText("Error in zip code" + "     -> " + error + " <-");
         }
     }
 
