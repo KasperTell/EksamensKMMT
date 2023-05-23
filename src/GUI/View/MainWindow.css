@@ -204,7 +204,7 @@ Button:pressed{
 }
 
 
-#newCustomerErrorText {
+#newCustomerErrorText, #errorMessageNewProject {
     -fx-font-size: 18;
     -fx-text-background-color: red;
 }

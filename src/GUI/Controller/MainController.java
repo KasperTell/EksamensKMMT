@@ -31,7 +31,7 @@ import java.util.HashMap;
 public class MainController extends BaseController {
 
     @FXML
-    private Label newCustomerErrorText;
+    private Label newCustomerErrorText,errorMessageNewProject;
     @FXML
     private Tab openProjectsTab, closedProjectsTab;
     @FXML //Main view anchor pane
@@ -46,7 +46,7 @@ public class MainController extends BaseController {
     @FXML //All columns for the projects table
     private TableColumn projectNameClosed, projectDateClosed, customerNameClosed, projectNameOpen,customerProjectOpen, projectDateOpen;
     @FXML//Tableview for customers
-    public TableView<Customer> customerTable;
+    private TableView<Customer> customerTable;
 
     @FXML //All columns for the customer table
     private TableColumn customerMailClm, customerPhoneClm, customerZipClm, customerAddressClm, customerNameClm, customerZipToTown;
@@ -410,20 +410,39 @@ public class MainController extends BaseController {
     private void handleAddNewProject(ActionEvent actionEvent) {
         //Setting the data in the variables.
         int id = 1;
-        String title;
-        int customerID;
+        String title="";
+        int customerID=0;
+        save=true;
 
-        if (projectNameTextField.getText()!=null && customerComboBox.getSelectionModel().getSelectedItem()!=null)
-        {
+
+        if (!projectNameTextField.getText().equals("") )
             title = projectNameTextField.getText();
-            customerID = customerComboBox.getSelectionModel().getSelectedItem().getId();
+
+        else
+        {
+            save=false;
+            errorMessageNewProject.setText("Error insert project name");
+        }
+
+
+       if (customerComboBox.getSelectionModel().getSelectedItem()!=null)
+           customerID = customerComboBox.getSelectionModel().getSelectedItem().getId();
+       else
+       {
+           save=false;
+           errorMessageNewProject.setText("Error Select from selection box");
+       }
+
             LocalDate date = LocalDate.now();
             boolean isOpen = true;
             String note="";
             String company="";
-            //Initializing the project.
 
-            Project project = new Project(id, title, customerID, date, isOpen, note,company);
+
+        if (save)
+        {
+
+        Project project = new Project(id, title, customerID, date, isOpen, note,company);
             try {
                 //Send the project to the database.
                 projectModel.createNewProject(project);
