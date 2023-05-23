@@ -143,18 +143,36 @@ public class UserController extends BaseController{
         if (selectedUser!=null)
         {
 
-            if(TechsListView.getSelectionModel().getSelectedItem() != null){
-                selectedUser = TechsListView.getSelectionModel().getSelectedItem();}
-            else if(managersListView.getSelectionModel().getSelectedItem() != null){
-                selectedUser = managersListView.getSelectionModel().getSelectedItem();}
-            else if(salesListView.getSelectionModel().getSelectedItem() != null){
-                selectedUser = salesListView.getSelectionModel().getSelectedItem();}
-            try {
-                userModel.deleteUser(selectedUser);
-            } catch (Exception e){
-                displayError(e);
-                e.printStackTrace();
-            }
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete User");
+           
+            ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+            ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+            alert.getButtonTypes().setAll(okButton, noButton);
+            alert.showAndWait().ifPresent(type -> {
+                if (type == okButton) {
+                    if (TechsListView.getSelectionModel().getSelectedItem() != null) {
+                        selectedUser = TechsListView.getSelectionModel().getSelectedItem();
+                    } else if (managersListView.getSelectionModel().getSelectedItem() != null) {
+                        selectedUser = managersListView.getSelectionModel().getSelectedItem();
+                    } else if (salesListView.getSelectionModel().getSelectedItem() != null) {
+                        selectedUser = salesListView.getSelectionModel().getSelectedItem();
+                    }
+                    try {
+                        userModel.deleteUser(selectedUser);
+                    } catch (Exception e) {
+                        displayError(e);
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+
+
+
+
+
+
         }
 
     }
