@@ -7,24 +7,15 @@ import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-
 public class ProjectFilesModel {
-
-
     private  ListProperty<ProjectFiles> projectFiles;
-
     private ProjectFilesManager projectFilesManager;
     private boolean isRunning = true;
     private ProjectFiles createdFile;
-
     private int runs=0;
-private int number=0 ;
-
-
+    private int number=0 ;
 
     /**
      * Constructor for the class "ProjectFilesModel".

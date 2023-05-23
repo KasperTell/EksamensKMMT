@@ -88,8 +88,6 @@ public class MainController extends BaseController {
      */
     @Override
 
-
-
     public void setup() throws Exception {
 
         //Initializing all our models.
@@ -140,7 +138,6 @@ public class MainController extends BaseController {
             listOfButtons[i].setGraphic(view);
             listOfButtons[i].setTooltip(tip);
         }
-
     }
 
     private void disableButtons() {
@@ -182,7 +179,6 @@ public class MainController extends BaseController {
         });
     }
 
-
     public void listenerMouseClickCloseProject() {
         closedProjectsTable.setOnMouseClicked(event -> {
             selectedProject = closedProjectsTable.getSelectionModel().getSelectedItem();
@@ -199,9 +195,6 @@ public class MainController extends BaseController {
             }
         });
     }
-
-
-
 
     @FXML
     private void listenerLstAllCloseProjects() {
@@ -479,13 +472,9 @@ public class MainController extends BaseController {
             String mail = customerEmailTextField.getText();
 
             saveCustomer(field, companyName, mail);
-
-
             }
 
-
-
-    private String[] tjekNameAndAddressFields() {
+    public String[] tjekNameAndAddressFields() {
         TextField[] textFields={customerFirstNameTextField,customerLastNameTextField,customerAddressTextField};
         String[] field={firstName,lastName,customerAddress};
         String[] errorText={"Error in first Name","Error in Last Name","Error in Address"};
@@ -500,12 +489,9 @@ public class MainController extends BaseController {
                 save=false;
                 newCustomerErrorText.setText(errorText[i]);
             }
-
         }
-
-return field;
-
-    }
+        return field;
+        }
 
 
     private void tjekPhoneNumber() {
@@ -546,7 +532,6 @@ return field;
             save=false;
             newCustomerErrorText.setText("Error in zip code");
         }
-
     }
 
 
@@ -574,15 +559,8 @@ return field;
                 textFields[i].clear();
 
             newCustomerErrorText.setText("");
-
         }
-
-
-
     }
-
-
-
 
     /**
      * When a key is pressed in the search text-field, update the listview showing projects.
