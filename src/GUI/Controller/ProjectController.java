@@ -21,6 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -165,14 +166,11 @@ public class ProjectController extends BaseController {
                         filesPreviewImageView.setImage(null);
                         String fileName = selectedfile.getFilePath().toLowerCase();
                         if (fileName.endsWith(".jpeg") || fileName.endsWith(".png") || fileName.endsWith(".jpg")) {
-                            // Load the image file into the filesPreviewImageView
-                            String fileUrl = selectedfile.getFilePath();
-                            String imageUrl = fileUrl.substring(10);
-                            System.out.println(imageUrl);
 
-                            if (Files.exists(Path.of(fileUrl))) //check om filen eksisterer
+                            
+                            if (Files.exists(Path.of(selectedfile.getFilePath()))) //check om filen eksisterer
                             {
-                                Image image = new Image(imageUrl);
+                                Image image = new Image(new FileInputStream(selectedfile.getFilePath()));
                                 filesPreviewImageView.setImage(image);
                             }
                             else
