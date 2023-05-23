@@ -143,6 +143,7 @@ public class ProjectController extends BaseController {
                     // Check if the selected file is an image file (JPEG, PNG, or JPG)
                     if (selectedfile!=null)
                     {
+                        filesPreviewImageView.setImage(null);
                         String fileName = selectedfile.getFilePath().toLowerCase();
                         if (fileName.endsWith(".jpeg") || fileName.endsWith(".png") || fileName.endsWith(".jpg")) {
                             // Load the image file into the filesPreviewImageView
@@ -153,18 +154,13 @@ public class ProjectController extends BaseController {
                             if (Files.exists(Path.of(fileUrl))) //check om filen eksisterer
                             {
                                 Image image = new Image(imageUrl);
-
                                 filesPreviewImageView.setImage(image);
                             }
                             else
                             {
                                 showFile.showErrorBox("File does not exits","File message");
                             }
-                    }
-
-
-
-
+                        }
 
                     }
                 } catch (Exception e) {
@@ -307,13 +303,7 @@ public class ProjectController extends BaseController {
         showFile.showFile(path);
     }
 
-    public void handleDeleteFile () throws Exception {
-        ProjectFiles fileToDelete = fileTable.getSelectionModel().getSelectedItem();
-        projectFilesModel.deleteFile(fileToDelete);
 
-        File file = new File(fileToDelete.getFilePath());
-        file.delete();
-    }
 
     public void handleOpenMainWindow (ActionEvent actionEvent) throws Exception {
         FXMLLoader loader = new FXMLLoader();
@@ -343,6 +333,14 @@ public class ProjectController extends BaseController {
         stage.show();
     }
 
+    public void handleDeleteFileComputer () throws Exception {
+        ProjectFiles fileToDelete = fileTable.getSelectionModel().getSelectedItem();
+        projectFilesModel.deleteFile(fileToDelete);
+
+        File file = new File(fileToDelete.getFilePath());
+        file.delete();
+    }
+
 
 
     /**
@@ -350,9 +348,10 @@ public class ProjectController extends BaseController {
      * @param actionEvent
      *
      */
+
+
+
         public void handleDeleteFile (ActionEvent actionEvent)  {
-
-
             if (selectedfile != null) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Delete File");
@@ -364,6 +363,7 @@ public class ProjectController extends BaseController {
                     if (type == okButton) {
                         try {
                             projectFilesModel.deleteFile(selectedfile);
+                            handleDeleteFileComputer();
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
@@ -372,6 +372,7 @@ public class ProjectController extends BaseController {
                     }
 
                 });
+
 
 
             }
