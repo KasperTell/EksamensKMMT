@@ -43,7 +43,7 @@ Button:pressed{
     -fx-background-radius: 0;
 }
 
-#addNewProjectButton, #btnAddNewCustomer
+#addNewProjectButton, #btnAddNewCustomer, #clearAllCustomerFieldsButton
 {
     -fx-background-color: #f2f2f2;
     -fx-text-fill: black;

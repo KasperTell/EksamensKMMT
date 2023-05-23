@@ -537,6 +537,19 @@ public class MainController extends BaseController {
         }
     }
 
+    public void handleClearCustomerTextFields(ActionEvent actionEvent) {
+        newCustomerErrorText.setText("");
+        customerPhoneNumberTextField.clear();
+        customerAddressTextField.clear();
+        customerFirstNameTextField.clear();
+        customerLastNameTextField.clear();
+        customerEmailTextField.clear();
+        companyNameTextField.clear();
+        customerZipCodeTextField.clear();
+
+
+    }
+
 
     private void saveCustomer(String[] field, String companyName,String mail) {
 
@@ -659,4 +672,6 @@ public class MainController extends BaseController {
             }
         }
     }
+
+
 }
