@@ -5,12 +5,14 @@ import BLL.ProjectManager;
 import PersonsTypes.PersonTypeChooser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TabPane;
 
 import java.sql.SQLException;
 import java.util.Objects;
 
 public class ProjectModel {
 
+    public TabPane informationTabPane;
     private ObservableList<Project> projectsOpen;
     private ObservableList<Project> projectClose;
     private ObservableList<Project> allTechniciansProject;

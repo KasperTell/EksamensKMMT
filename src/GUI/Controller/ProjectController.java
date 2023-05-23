@@ -6,6 +6,8 @@ import GUI.Model.*;
 import PersonsTypes.PersonTypeChooser;
 import UTIL.CustomerPdf;
 import UTIL.ShowFile;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -92,6 +94,23 @@ public class ProjectController extends BaseController {
         pictureToButton();
         setInformation();
         enableDisableTab();
+        listenerTabs();
+    }
+
+    private void listenerTabs() {
+
+        informationTabPane.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<Tab>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
+
+                        if(informationTabPane.getSelectionModel().getSelectedIndex() == 1 ||informationTabPane.getSelectionModel().getSelectedIndex() == 2)
+                            filesPreviewImageView.setImage(null);
+
+                    }
+                }
+        );
+
     }
 
     private void setInformation() {
