@@ -7,6 +7,8 @@ import PersonsTypes.PersonType;
 import PersonsTypes.PersonTypeChooser;
 import UTIL.ShowFile;
 import javafx.animation.TranslateTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,14 +25,17 @@ import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 
 public class MainController extends BaseController {
 
+    public TabPane projectTabs;
     @FXML
     private Label newCustomerErrorText,errorMessageNewProject;
     @FXML
@@ -107,7 +112,33 @@ public class MainController extends BaseController {
         NotesTextArea.setEditable(false);
         listenerMouseClickOpenProject();
         listenerMouseClickCloseProject();
+        listenerTabs();
     }
+
+    private void listenerTabs() {
+
+        projectTabs.getSelectionModel().selectedItemProperty().addListener(
+                    new ChangeListener<Tab>() {
+                        @Override
+                        public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
+
+                            try {
+                                customerTable.setItems(customerModel.loadCustomerList(0));
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+
+                            }
+                            NotesTextArea.setText("");
+
+                        }
+                    }
+            );
+
+
+
+
+
+        }
 
     private void setupTableForProject() {
         projectDateOpen.setCellValueFactory(new PropertyValueFactory<>("Date"));

@@ -14,11 +14,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="vBoxAnchorPane" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.MainController">
+<AnchorPane fx:id="vBoxAnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.MainController">
    <children>
       <AnchorPane fx:id="mainViewAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0">
          <children>
-            <TabPane layoutX="50.0" layoutY="100.0" prefHeight="575.0" prefWidth="558.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="projectTabs" layoutX="50.0" layoutY="100.0" prefHeight="575.0" prefWidth="558.0" tabClosingPolicy="UNAVAILABLE">
                <tabs>
                   <Tab fx:id="openProjectsTab" text="Open">
                      <content>
