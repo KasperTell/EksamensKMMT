@@ -15,23 +15,23 @@ public class CustomerDAO implements ICustomerDataAccess {
      * Constructor for the class "CustomerDAO".
      * @throws IOException
      */
-    public CustomerDAO() throws IOException {databaseConnector = DatabaseConnector.getInstance();}
+    public CustomerDAO() throws IOException { databaseConnector = DatabaseConnector.getInstance();}
 
     /**
      * Gets a list of all customers from the database.
      * @return
      * @throws SQLException
      */
-    public List<Customer> loadAllCustomers() throws SQLException{
+    public List<Customer> loadAllCustomers() throws SQLException {
         ArrayList<Customer> allCustomers = new ArrayList<>();
         //SQL query and getting the database connection.
         String sql = "SELECT * FROM Customers";
 
-        try(Connection conn = databaseConnector.getConnection()){
+        try(Connection conn = databaseConnector.getConnection()) {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            //Getting the information from the database as long as there are more rows.
-            while(rs.next()){
+            //Getting the information from the database as long as there are more results in the database.
+            while(rs.next()) {
                 int id = rs.getInt("ID");
                 String firstName = rs.getString("First_Name");
                 String lastName = rs.getString("Last_Name");
@@ -40,17 +40,15 @@ public class CustomerDAO implements ICustomerDataAccess {
                 int zipcode = rs.getInt("Zip_Code");
                 String mail = rs.getString("Mail");
                 int phoneNumber = rs.getInt("Phone_Number");
-
-
-                String town=TownToZipCode( zipcode);
+                String town = TownToZipCode(zipcode);
 
                 Customer customer = new Customer(id, firstName, lastName, companyName, address, mail, phoneNumber, zipcode,town);
                 allCustomers.add(customer);
             }
             return allCustomers;
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
-            throw new SQLException("Could not get all customers");
+            throw new SQLException("Could not get all customers from the database", ex);
         }
     }
 
@@ -81,7 +79,7 @@ public class CustomerDAO implements ICustomerDataAccess {
                 customer.setId(rs.getInt(1));
             }
             return customer;
-        } catch(SQLException ex){
+        } catch(SQLException ex) {
             ex.printStackTrace();
             throw new SQLException("Could not create customer", ex);
         }
@@ -91,13 +89,13 @@ public class CustomerDAO implements ICustomerDataAccess {
      * Gets a specific customer from the database based on an ID.
      * @param customerID
      * @return
-     * @throws Exception
+     * @throws SQLException
      */
     public Customer loadCustomer(int customerID) throws SQLException {
         Customer customer = null;
         //SQL Query
         String sql = "SELECT * FROM Customers WHERE ID = ?";
-        // getting the connection to the database.
+        //Getting the connection to the database.
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, customerID);
@@ -112,65 +110,40 @@ public class CustomerDAO implements ICustomerDataAccess {
                 int zipcode = rs.getInt("Zip_Code");
                 String mail = rs.getString("Mail");
                 int phoneNumber = rs.getInt("Phone_Number");
-
                 if (companyName==null)
-                    companyName=firstName+ " "+lastName;
-
-                String town=TownToZipCode( zipcode);
-
+                    companyName=firstName+ " " + lastName;
+                String town=TownToZipCode(zipcode);
 
                 customer = new Customer(id, firstName, lastName, companyName, address, mail, phoneNumber, zipcode,town);
             }
             return customer;
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             throw new SQLException("Failed to add Customer from the database", ex);
         }
     }
 
-
+    /**
+     * Getting the name of the town based on the inserted zipcode.
+     * @param zipCode
+     * @return
+     * @throws SQLException
+     */
     public String TownToZipCode(int zipCode) throws SQLException {
-
         String town = null;
-
         //SQL Query
-        String sql = "Select  ZipCodeToTown.Town FROM ZipCodeToTown\n" +
-                "                Where ZipCode=?";
-        // getting the connection to the database.
+        String sql = "Select  ZipCodeToTown.Town FROM ZipCodeToTown Where ZipCode=?";
+        //Getting the connection to the database.
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, zipCode);
             ResultSet rs = stmt.executeQuery();
             //Getting the information from the database.
             while (rs.next()) {
-
                 town = rs.getString("Town");
-
-
-
             }
             return town;
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             throw new SQLException("Failed to town associated to zipCode from the database", ex);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

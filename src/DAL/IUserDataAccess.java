@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface IUserDataAccess {
-
     User loadUser(String username) throws SQLException;
     boolean validateUsername(String username) throws SQLException;
     List<User> loadUserOfAType(int role) throws SQLException;

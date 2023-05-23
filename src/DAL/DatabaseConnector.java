@@ -1,4 +1,3 @@
-
 package DAL;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
@@ -55,4 +54,3 @@ public class DatabaseConnector {
      */
     public Connection getConnection() throws SQLServerException {return ds.getConnection();}
 }
-

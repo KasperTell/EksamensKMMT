@@ -18,7 +18,7 @@ public class UserDAO implements IUserDataAccess {
      * Constructor for the class "UserDAO".
      * @throws IOException
      */
-    public UserDAO() throws IOException {databaseConnector = DatabaseConnector.getInstance();}
+    public UserDAO() throws IOException { databaseConnector = DatabaseConnector.getInstance();}
 
     /**
      * Getting a list of users/employees.
@@ -116,7 +116,7 @@ public class UserDAO implements IUserDataAccess {
      * Creating a new user/employee in the database.
      * @param user
      * @return
-     * @throws Exception
+     * @throws SQLException
      */
     public User createNewUser(User user) throws SQLException {
         //SQL Query.
@@ -142,11 +142,10 @@ public class UserDAO implements IUserDataAccess {
         }
     }
 
-
     /**
      * Soft deleting a user/employee from the database.
      * @param selectedUser
-     * @throws Exception
+     * @throws SQLException
      */
     public void deleteUser(User selectedUser) throws SQLException {
         LocalDate localDate = LocalDate.now();
@@ -160,7 +159,6 @@ public class UserDAO implements IUserDataAccess {
             stmt.setInt(2, selectedUser.getId());
             stmt.execute();
         } catch (SQLException ex) {
-            ex.printStackTrace();
             throw new SQLException("Could not delete this user", ex);
         }
     }
@@ -169,7 +167,7 @@ public class UserDAO implements IUserDataAccess {
      * Remove a user/employee from a project.
      * @param selectedTechnician
      * @param projectID
-     * @throws Exception
+     * @throws SQLException
      */
     public void removeTechnicianFromProject(User selectedTechnician, int projectID) throws SQLException {
         //SQL Query
@@ -221,7 +219,7 @@ public class UserDAO implements IUserDataAccess {
      * @param technicianID
      * @param projectID
      * @return
-     * @throws Exception
+     * @throws SQLException
      */
     public ProjectTechnician moveTechnician(int technicianID, int projectID) throws SQLException {
         //SQL Query
@@ -269,9 +267,7 @@ public class UserDAO implements IUserDataAccess {
             }
             return allRoles;
         } catch (SQLException ex) {
-            ex.printStackTrace();
             throw new SQLException("Could not get all roles from the database");
         }
     }
 }
-

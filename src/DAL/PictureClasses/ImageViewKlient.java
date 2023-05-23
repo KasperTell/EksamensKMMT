@@ -8,17 +8,19 @@ public class ImageViewKlient {
 
     private IImageViewKlient iImageViewKlient;
 
-        public ImageViewKlient(IImageViewKlient iMedalje)
+    /**
+     * Constructor for the class "ImageViewKlient"
+     * @param iMedalje
+     */
+    public ImageViewKlient(IImageViewKlient iMedalje)
         {
         this.iImageViewKlient = iMedalje;
     }
 
-    public void setiMedalje(IImageViewKlient iMedalje) {
-        this.iImageViewKlient = iMedalje;
-    }
-
- public ImageView getImageView() throws FileNotFoundException {
-    return iImageViewKlient.getImageView();
-}
-
+    /**
+     * Gets the overwritten imageview from one of the other classes.
+     * @return
+     * @throws FileNotFoundException
+     */
+    public ImageView getImageView() throws FileNotFoundException { return iImageViewKlient.getImageView();}
 }

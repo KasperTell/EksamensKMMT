@@ -7,6 +7,8 @@ import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ProjectFilesModel {
@@ -141,9 +143,8 @@ public class ProjectFilesModel {
         Platform.runLater(() -> {
             try {
                 projectFilesManager.updateUsedInDoc(check, id);
-
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         });
 

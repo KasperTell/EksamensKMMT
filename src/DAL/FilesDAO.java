@@ -16,7 +16,7 @@ import java.util.List;
 
 public class FilesDAO implements iFileDataAccess {
 
-    static int fileAmount=0;
+    private static int fileAmount=0;
 
     private DatabaseConnector databaseConnector;
 
@@ -24,7 +24,7 @@ public class FilesDAO implements iFileDataAccess {
      * Constructor for the class "FilesDAO".
      * @throws IOException
      */
-    public FilesDAO() throws IOException {databaseConnector = DatabaseConnector.getInstance();}
+    public FilesDAO() throws IOException { databaseConnector = DatabaseConnector.getInstance();}
 
     /**
      * Getting a list of files from the database based on the project ID.
@@ -55,9 +55,7 @@ public class FilesDAO implements iFileDataAccess {
                 LocalDate date = rs.getDate("Date").toLocalDate();
                 byte usedInDoc = rs.getByte("usedInDoc");
                 int rank = rs.getByte("OrderFiles");
-
                 fileAmount++;
-
                 String filetype = filePath.substring(filePath.length() - 4, filePath.length());
 
                 switch (filetype) {
@@ -73,22 +71,15 @@ public class FilesDAO implements iFileDataAccess {
                         pictureFrame = new ImageViewKlient(new LilleJpeg());
                         break;
                 }
-
-
-
                 picture = pictureFrame.getImageView();
 
-
-
                 //Creating the checkbox and set it as empty.
-                 checkBox = new CheckBox();
-                if (usedInDoc == 0)
+                checkBox = new CheckBox();
+                if (usedInDoc == 0){
                     checkBox.setSelected(true);
-
-
+                }
                     ProjectFiles files = new ProjectFiles(id, projectID1, name, filePath, date, picture, checkBox, rank);
                     loadFilesFromAProject.add(files);
-
             }
             return loadFilesFromAProject;
         } catch (Exception ex) {
@@ -100,29 +91,26 @@ public class FilesDAO implements iFileDataAccess {
      * Update the usability status of the files.
      * @param usedInDoc
      * @param id
-     * @throws Exception
+     * @throws SQLException
      */
-    public void updateUsedInDoc(Boolean usedInDoc, int id) throws Exception {
+    public void updateUsedInDoc(Boolean usedInDoc, int id) throws SQLException {
         byte used;
         //SQL query and getting connection to the database.
         String sql = "UPDATE ProjectFile SET usedInDoc = ? WHERE ID = ?";
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
-
             if (usedInDoc) {
                 used=0;
             } else {
                 used = 1;
             }
-
             // Bind parameters
             stmt.setByte(1, used);
             stmt.setInt(2, id);
-
             stmt.executeUpdate();
         }
         catch (SQLException ex) {
-            throw new Exception("Could not update fileList", ex);
+            throw new SQLException("Could not update fileList", ex);
         }
     }
 
@@ -146,9 +134,9 @@ public class FilesDAO implements iFileDataAccess {
             stmt.setInt(5, 0);
             stmt.setInt(6, file.getRank());
             stmt.execute();
-
             ResultSet rs = stmt.getGeneratedKeys();
-            if(rs.next()){
+
+            if(rs.next()) {
                 file.setId(rs.getInt(1));
             }
             return file;
@@ -166,24 +154,27 @@ public class FilesDAO implements iFileDataAccess {
         //SQL query
         String sql = "DELETE FROM ProjectFile WHERE ID = ?";
         //Getting connection to the database.
-        try(Connection conn = databaseConnector.getConnection()){
+        try(Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
             //Setting the parameter and executing the query.
             stmt.setInt(1, file.getId());
             stmt.execute();
-        } catch (SQLException ex){
+        } catch (SQLException ex) {
             throw new SQLException("Could not delete the file from the database", ex);
         }
     }
 
-    public int getFileAmount() {
-        return fileAmount;
-    }
+    /**
+     * Gets the total amount of files.
+     * @return
+     */
+    public int getFileAmount() { return fileAmount;}
 
     /**
      * Checking if the database has an entry matching the FilePath from the project.
      * @param filepath
      * @return
+     * @throws SQLException
      */
     public boolean doesFileExist(String filepath) throws SQLException {
         //SQL Query.
@@ -197,38 +188,9 @@ public class FilesDAO implements iFileDataAccess {
             if (rs.next()) {
                 return true;
             }
-        } catch (Exception e) {
-            throw new SQLException("Failed to check", e);
+        } catch (SQLException ex) {
+            throw new SQLException("Failed to check", ex);
         }
         return false;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

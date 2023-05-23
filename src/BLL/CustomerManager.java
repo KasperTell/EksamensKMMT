@@ -1,4 +1,3 @@
-
 package BLL;
 
 import BE.Customer;
@@ -17,30 +16,30 @@ public class CustomerManager {
      * Constructor for the class "CustomerManager".
      * @throws IOException
      */
-    public CustomerManager() throws IOException {customerDAO = new CustomerDAO();}
+    public CustomerManager() throws IOException { customerDAO = new CustomerDAO();}
 
     /**
      * Gets a list of all available customers.
      * @return
      * @throws SQLException
      */
-    public List<Customer> loadAllCustomers() throws SQLException {return customerDAO.loadAllCustomers();}
+    public List<Customer> loadAllCustomers() throws SQLException { return customerDAO.loadAllCustomers();}
 
     /**
      * Sends a specific customer through the BLL for creation in the database.
      * @param customer
      * @return
-     * @throws Exception
+     * @throws SQLException
      */
-    public Customer createNewCustomer(Customer customer) throws Exception {return customerDAO.createNewCustomer(customer);}
+    public Customer createNewCustomer(Customer customer) throws SQLException { return customerDAO.createNewCustomer(customer);}
 
     /**
      * Gets a specific customer based on an ID.
      * @param customerID
      * @return
-     * @throws Exception
+     * @throws SQLException
      */
-    public Customer loadCustomer(int customerID) throws Exception{return customerDAO.loadCustomer(customerID);}
+    public Customer loadCustomer(int customerID) throws SQLException { return customerDAO.loadCustomer(customerID);}
 
     /**
      * Gets a specific city based on the zipcode.
@@ -48,5 +47,5 @@ public class CustomerManager {
      * @return
      * @throws SQLException
      */
-    public String TownToZipCode(int zipCode) throws SQLException{return customerDAO.TownToZipCode(zipCode);}
+    public String TownToZipCode(int zipCode) throws SQLException { return customerDAO.TownToZipCode(zipCode);}
 }

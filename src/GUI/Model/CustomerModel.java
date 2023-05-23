@@ -50,9 +50,7 @@ public class CustomerModel {
      * @return
      * @throws Exception
      */
-    public Customer loadCustomer(int customerID) throws Exception {return customerManager.loadCustomer(customerID);}
-
-
+    public Customer loadCustomer(int customerID) throws Exception { return customerManager.loadCustomer(customerID);}
 
 
     /**

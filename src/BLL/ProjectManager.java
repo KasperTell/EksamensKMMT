@@ -15,7 +15,7 @@ public class ProjectManager {
      * Constructor for the class "ProjectManager".
      * @throws IOException
      */
-    public ProjectManager() throws IOException {projectDAO = new ProjectDAO();}
+    public ProjectManager() throws IOException { projectDAO = new ProjectDAO();}
 
     /**
      * Gets a list of all open projects.
@@ -23,7 +23,7 @@ public class ProjectManager {
      * @return
      * @throws Exception
      */
-    public List<Project> loadProjectOfAType(Boolean open) throws Exception {return projectDAO.loadProjectOfAType(open);}
+    public List<Project> loadProjectOfAType(Boolean open) throws Exception { return projectDAO.loadProjectOfAType(open);}
 
     /**
      * Send a created project through BLL.
@@ -31,7 +31,7 @@ public class ProjectManager {
      * @return
      * @throws SQLException
      */
-    public Project createNewProject(Project project) throws SQLException {return projectDAO.createNewProject(project);}
+    public Project createNewProject(Project project) throws SQLException { return projectDAO.createNewProject(project);}
 
     /**
      * Sends information for changing the project from open to closed through BLL.
@@ -39,7 +39,7 @@ public class ProjectManager {
      * @param id
      * @throws Exception
      */
-    public void changeProjectStatus(int projectStatus, int id) throws Exception {projectDAO.changeProjectStatus(projectStatus, id);}
+    public void changeProjectStatus(int projectStatus, int id) throws Exception { projectDAO.changeProjectStatus(projectStatus, id);}
 
     /**
      * Sends information for changing the project from open to closed through BLL.
@@ -47,7 +47,7 @@ public class ProjectManager {
      * @param id
      * @throws Exception
      */
-    public void changeNote(String note, int id) throws Exception {projectDAO.changeNote(note, id);}
+    public void changeNote(String note, int id) throws Exception { projectDAO.changeNote(note, id);}
 
     /**
      * Gets a list based on a search query.
@@ -55,7 +55,7 @@ public class ProjectManager {
      * @return
      * @throws Exception
      */
-    public List<Project> searchByQuery (String query) throws Exception {return projectDAO.searchByQuery(query);}
+    public List<Project> searchByQuery (String query) throws Exception { return projectDAO.searchByQuery(query);}
 
     /**
      * Gets a list of all projects assigned to a logged in.
@@ -63,5 +63,5 @@ public class ProjectManager {
      * @return
      * @throws SQLException
      */
-    public List<Project> allProjectsForTechnician(int technicianID) throws SQLException {return projectDAO.allProjectsForTechnician(technicianID);}
+    public List<Project> allProjectsForTechnician(int technicianID) throws SQLException { return projectDAO.allProjectsForTechnician(technicianID);}
 }

@@ -16,7 +16,7 @@ public class ProjectFilesManager {
      * Constructor for the class "ProjectFilesManager".
      * @throws IOException
      */
-    public ProjectFilesManager() throws IOException {filesDAO = new FilesDAO();}
+    public ProjectFilesManager() throws IOException { filesDAO = new FilesDAO();}
 
     /**
      * Gets a list of files based on an ID.
@@ -24,7 +24,7 @@ public class ProjectFilesManager {
      * @return
      * @throws Exception
      */
-    public List<ProjectFiles> loadFilesFromAProject(int projectID) throws Exception{return filesDAO.loadFilesFromAProject(projectID);}
+    public List<ProjectFiles> loadFilesFromAProject(int projectID) throws Exception { return filesDAO.loadFilesFromAProject(projectID);}
 
     /**
      * Sends an update on a documents status through the BLL.
@@ -32,7 +32,7 @@ public class ProjectFilesManager {
      * @param id
      * @throws Exception
      */
-    public void updateUsedInDoc(Boolean usedInDoc, int id) throws Exception {filesDAO.updateUsedInDoc(usedInDoc,id);}
+    public void updateUsedInDoc(Boolean usedInDoc, int id) throws SQLException { filesDAO.updateUsedInDoc(usedInDoc,id);}
 
     /**
      * Sends a new file through the BLL.
@@ -40,14 +40,14 @@ public class ProjectFilesManager {
      * @return
      * @throws SQLException
      */
-    public ProjectFiles createNewFile(ProjectFiles file) throws SQLException{return filesDAO.createNewFile(file);}
+    public ProjectFiles createNewFile(ProjectFiles file) throws SQLException { return filesDAO.createNewFile(file);}
 
     /**
-     * Sends a file marked for deletion trough the BLL.
+     * Sends a file marked for deletion through the BLL.
      * @param file
      * @throws SQLException
      */
-    public void deleteFile(ProjectFiles file) throws SQLException{filesDAO.deleteFile(file);}
+    public void deleteFile(ProjectFiles file) throws SQLException { filesDAO.deleteFile(file);}
 
     /**
      * Sends a filepath for validation through the BLL.
@@ -55,5 +55,5 @@ public class ProjectFilesManager {
      * @return
      * @throws Exception
      */
-    public boolean doesFileExist(String filepath) throws Exception{return filesDAO.doesFileExist(filepath);}
+    public boolean doesFileExist(String filepath) throws Exception { return filesDAO.doesFileExist(filepath);}
 }
