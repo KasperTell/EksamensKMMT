@@ -5,7 +5,7 @@ public class Customer {
     private String firstName, lastName, companyName, address, mail,town;
 
     /**
-     * Constructor for the class "Customer"
+     * Constructor for the class "Customer".
      * @param id
      * @param firstName
      * @param lastName
@@ -29,10 +29,8 @@ public class Customer {
     }
 
     /**
-     * Getters and setters for the entire class.
-     * @return
+     * Getters and setter for the entire class.
      */
-
     public String getTown() {
         return town;
     }
@@ -49,36 +47,29 @@ public class Customer {
         return address;
     }
 
-
     public String getFirstName() {
         return firstName;
     }
-
 
     public String getLastName() {
         return lastName;
     }
 
-
     public String getCompanyName() {
         return companyName;
     }
-
 
     public int getPhoneNumber() {
         return phoneNumber;
     }
 
-
     public int getZipCode() {
         return zipCode;
     }
 
-
     public String getMail() {
         return mail;
     }
-
 
     /**
      * Overriding the default toString method, so it now returns the customers first name, last name and the company name.

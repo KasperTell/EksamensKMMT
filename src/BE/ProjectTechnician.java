@@ -4,7 +4,7 @@ public class ProjectTechnician {
     private int id, technicianID, projectID;
 
     /**
-     * Constructor for the class "ProjectTechnician"
+     * Constructor for the class "ProjectTechnician".
      * @param id
      * @param technicianID
      * @param projectID
@@ -17,19 +17,12 @@ public class ProjectTechnician {
 
     /**
      * Getters and setters for the entire class.
-     * @return
      */
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id;}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) { this.id = id;}
 
-    public int getTechnicianID() {
-        return technicianID;
-    }
+    public int getTechnicianID() { return technicianID;}
 
     public int getProjectID() {
         return projectID;
