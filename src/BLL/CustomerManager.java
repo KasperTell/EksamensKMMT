@@ -42,12 +42,11 @@ public class CustomerManager {
      */
     public Customer loadCustomer(int customerID) throws Exception{return customerDAO.loadCustomer(customerID);}
 
-
-    public String TownToZipCode(int zipCode) throws SQLException
-    {
-        return customerDAO.TownToZipCode(zipCode);
-    }
-
-
-
+    /**
+     * Gets a specific city based on the zipcode.
+     * @param zipCode
+     * @return
+     * @throws SQLException
+     */
+    public String TownToZipCode(int zipCode) throws SQLException{return customerDAO.TownToZipCode(zipCode);}
 }

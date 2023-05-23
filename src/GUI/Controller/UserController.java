@@ -127,7 +127,11 @@ public class UserController extends BaseController{
 
         User user = new User(id, firstName, lastName, username, password, role);
         try{
-            userModel.createNewUser(user);
+            if(userModel.validateUsername(username)){
+                usernameAlert();
+            } else{
+                userModel.createNewUser(user);
+            }
         } catch (Exception e) {
             displayError(e);
             e.printStackTrace();
@@ -136,8 +140,6 @@ public class UserController extends BaseController{
 
 
     public void handleRemoveEmployee(ActionEvent actionEvent) {
-
-
         if (selectedUser!=null)
         {
 
@@ -156,9 +158,6 @@ public class UserController extends BaseController{
         }
 
     }
-
-
-
 
     public void handleOpenMainWindow(ActionEvent actionEvent) throws Exception {
 
@@ -190,7 +189,6 @@ public class UserController extends BaseController{
                 public void handle(MouseEvent event) {
                     handleOpenNewEmployeeWindow();
                     mainViewAnchorPane.removeEventHandler(MouseEvent.MOUSE_CLICKED, this);
-
                 }
             };
             mainViewAnchorPane.addEventHandler(MouseEvent.MOUSE_CLICKED, menuHandler);
@@ -201,8 +199,11 @@ public class UserController extends BaseController{
             mainViewAnchorPane.setOpacity(1);
         }
         transition.play();
-
-
     }
 
+    private void usernameAlert(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText("Username already exists. Please enter another username");
+        alert.showAndWait();
+    }
 }
