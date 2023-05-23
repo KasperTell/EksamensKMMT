@@ -13,18 +13,23 @@ public class Salesman implements IPersonTypes{
         return "GUI/View/Salesman.css";
     }
 
-    public HashMap<String, Boolean> turnButtonOnOrOff() {
+    public HashMap<ButtonType, Boolean> turnButtonOnOrOff() {
 
-        HashMap<String, Boolean> buttonOnOrOff = new HashMap<>();
+        HashMap<ButtonType, Boolean> buttonOnOrOff = new HashMap<>();
 
-        buttonOnOrOff.put("closeProjectButton", true);
-        buttonOnOrOff.put("reOpenProjectButton", true);
-        buttonOnOrOff.put("newProjectButton", true);
-        buttonOnOrOff.put("newCustomerButton", true);
-        buttonOnOrOff.put("openProjectWindowButton", true);
-        buttonOnOrOff.put("openUserWindowButton", true);
-        buttonOnOrOff.put("closedProjectsTable", false);
-        buttonOnOrOff.put("searchBoxTextField", false);
+
+
+        buttonOnOrOff.put(ButtonType.CloseProjectButton, false);
+        buttonOnOrOff.put(ButtonType.ReOpenProjectButton, true);
+        buttonOnOrOff.put(ButtonType.NewProjectButton, true);
+        buttonOnOrOff.put(ButtonType.NewCustomerButton, true);
+        buttonOnOrOff.put(ButtonType.OpenProjectWindowButton, true);
+        buttonOnOrOff.put(ButtonType.OpenUserWindowButton, true);
+        buttonOnOrOff.put(ButtonType.ClosedProjectsTable, false);
+        buttonOnOrOff.put(ButtonType.SearchBoxTextField, false);
+
+
+
 
         return buttonOnOrOff;
     }

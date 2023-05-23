@@ -15,18 +15,21 @@ public class Technician implements IPersonTypes{
         return "/GUI/View/Technician.css";
     }
 
-    public HashMap<String, Boolean> turnButtonOnOrOff() {
+    public HashMap<ButtonType, Boolean> turnButtonOnOrOff() {
 
-        HashMap<String, Boolean> buttonOnOrOff = new HashMap<>();
 
-        buttonOnOrOff.put("closeProjectButton", false);
-        buttonOnOrOff.put("reOpenProjectButton", true);
-        buttonOnOrOff.put("newProjectButton", true);
-        buttonOnOrOff.put("newCustomerButton", true);
-        buttonOnOrOff.put("openProjectWindowButton", false);
-        buttonOnOrOff.put("openUserWindowButton", true);
-        buttonOnOrOff.put("closedProjectsTable", true);
-        buttonOnOrOff.put("searchBoxTextField", true);
+
+        HashMap<ButtonType, Boolean> buttonOnOrOff = new HashMap<>();
+
+        buttonOnOrOff.put(ButtonType.CloseProjectButton, false);
+        buttonOnOrOff.put(ButtonType.ReOpenProjectButton, true);
+        buttonOnOrOff.put(ButtonType.NewProjectButton, true);
+        buttonOnOrOff.put(ButtonType.NewCustomerButton, true);
+        buttonOnOrOff.put(ButtonType.OpenProjectWindowButton, false);
+        buttonOnOrOff.put(ButtonType.OpenUserWindowButton, true);
+        buttonOnOrOff.put(ButtonType.ClosedProjectsTable, true);
+        buttonOnOrOff.put(ButtonType.SearchBoxTextField, true);
+
 
         return buttonOnOrOff;
     }

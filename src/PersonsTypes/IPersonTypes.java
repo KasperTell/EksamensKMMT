@@ -10,7 +10,7 @@ public interface IPersonTypes {
 
     String getViewCss();
 
-    HashMap<String, Boolean> turnButtonOnOrOff();
+    HashMap<ButtonType, Boolean> turnButtonOnOrOff();
 
 
      Boolean enableTab();

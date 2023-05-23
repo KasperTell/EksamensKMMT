@@ -15,18 +15,18 @@ public class ProjectManager implements IPersonTypes{
     }
 
     @Override
-    public HashMap<String, Boolean> turnButtonOnOrOff() {
+    public HashMap<ButtonType, Boolean> turnButtonOnOrOff() {
 
-        HashMap<String, Boolean> buttonOnOrOff = new HashMap<>();
+        HashMap<ButtonType, Boolean> buttonOnOrOff = new HashMap<>();
 
-        buttonOnOrOff.put("closeProjectButton", false);
-        buttonOnOrOff.put("reOpenProjectButton", false);
-        buttonOnOrOff.put("newProjectButton", false);
-        buttonOnOrOff.put("newCustomerButton", false);
-        buttonOnOrOff.put("openProjectWindowButton", true);
-        buttonOnOrOff.put("openUserWindowButton", false);
-        buttonOnOrOff.put("closedProjectsTable", false);
-        buttonOnOrOff.put("searchBoxTextField", false);
+        buttonOnOrOff.put(ButtonType.CloseProjectButton, false);
+        buttonOnOrOff.put(ButtonType.ReOpenProjectButton, false);
+        buttonOnOrOff.put(ButtonType.NewProjectButton, false);
+        buttonOnOrOff.put(ButtonType.NewCustomerButton, false);
+        buttonOnOrOff.put(ButtonType.OpenProjectWindowButton, true);
+        buttonOnOrOff.put(ButtonType.OpenUserWindowButton, false);
+        buttonOnOrOff.put(ButtonType.ClosedProjectsTable, false);
+        buttonOnOrOff.put(ButtonType.SearchBoxTextField, false);
 
         return buttonOnOrOff;
     }

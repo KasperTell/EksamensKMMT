@@ -2,6 +2,7 @@ package GUI.Controller;
 
 import BE.*;
 import GUI.Model.*;
+import PersonsTypes.ButtonType;
 import PersonsTypes.PersonType;
 import PersonsTypes.PersonTypeChooser;
 import UTIL.ShowFile;
@@ -147,16 +148,16 @@ public class MainController extends BaseController {
 
     private void turnButtonONOrOff() {
 
-        HashMap<String, Boolean> turnButtonOnOrOff = personTypeChooser.turnButtonOnOrOff();
+        HashMap<ButtonType, Boolean> turnButtonOnOrOff = personTypeChooser.turnButtonOnOrOff();
 
-        closeProjectButton.setDisable(turnButtonOnOrOff.get("closeProjectButton"));
-        reOpenProjectButton.setDisable(turnButtonOnOrOff.get("reOpenProjectButton"));
-        newProjectButton.setDisable(turnButtonOnOrOff.get("newProjectButton"));
-        newCustomerButton.setDisable(turnButtonOnOrOff.get("newCustomerButton"));
-        openProjectWindowButton.setDisable(turnButtonOnOrOff.get("openProjectWindowButton"));
-        openUserWindowButton.setDisable(turnButtonOnOrOff.get("openUserWindowButton"));
-        closedProjectsTable.setDisable(turnButtonOnOrOff.get("closedProjectsTable"));
-        searchBoxTextField.setDisable(turnButtonOnOrOff.get("searchBoxTextField"));
+        closeProjectButton.setDisable(turnButtonOnOrOff.get(ButtonType.CloseProjectButton));
+        reOpenProjectButton.setDisable(turnButtonOnOrOff.get(ButtonType.ReOpenProjectButton));
+        newProjectButton.setDisable(turnButtonOnOrOff.get(ButtonType.NewProjectButton));
+        newCustomerButton.setDisable(turnButtonOnOrOff.get(ButtonType.NewCustomerButton));
+        openProjectWindowButton.setDisable(turnButtonOnOrOff.get(ButtonType.OpenProjectWindowButton));
+        openUserWindowButton.setDisable(turnButtonOnOrOff.get(ButtonType.OpenUserWindowButton));
+        closedProjectsTable.setDisable(turnButtonOnOrOff.get(ButtonType.ClosedProjectsTable));
+        searchBoxTextField.setDisable(turnButtonOnOrOff.get(ButtonType.SearchBoxTextField));
 
 
     }

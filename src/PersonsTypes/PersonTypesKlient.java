@@ -28,7 +28,7 @@ public class PersonTypesKlient {
         return iPersonTypes.getViewCss();
     }
 
-    public HashMap<String, Boolean> turnButtonOnOrOff() {
+    public HashMap<ButtonType, Boolean> turnButtonOnOrOff() {
         return iPersonTypes.turnButtonOnOrOff();
     }
 
