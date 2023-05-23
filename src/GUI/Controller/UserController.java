@@ -39,6 +39,9 @@ public class UserController extends BaseController{
 
     @FXML //Combo-Box for picking new employee role.
     private ComboBox<Role> rolesComboBox;
+
+    @FXML
+    private Label errorTextNewUser;
     private UserModel userModel;
     private boolean isMenuOpen;
 
@@ -117,25 +120,60 @@ public class UserController extends BaseController{
 
     public void handleAddEmployee(ActionEvent actionEvent) {
         int id = 1;
-        String firstName = firstNameTextField.getText();
-        String lastName = lastNameTextField.getText();
-        String username = usernameTextField.getText();
-        String password = passwordTextField.getText();
-        String salt = BCrypt.gensalt(12);
-        password = BCrypt.hashpw(password, salt);
-        int role = rolesComboBox.getSelectionModel().getSelectedItem().getId();
+        boolean save=true;
+        String firstName=null,lastName=null,username=null,password=null;
+        int role=0;
 
-        User user = new User(id, firstName, lastName, username, password, role);
-        try{
-            if(userModel.validateUsername(username)){
-                usernameAlert();
-            } else{
-                userModel.createNewUser(user);
+        TextField[] textFields={firstNameTextField,lastNameTextField,usernameTextField,passwordTextField};
+        String[] field={firstName,lastName,username,password};
+        String[] errorText={"Error in first Name","Error in Last Name","Error in user name","Error in password"};
+
+
+        for (int i = 0; i < 4; i++) {
+            if (!textFields[i].getText().equals(""))
+                field[i] = textFields[i].getText();
+
+            else
+            {
+                save=false;
+                String error = textFields[i].getText();
+                errorTextNewUser.setText(errorText[i]);
             }
-        } catch (Exception e) {
-            displayError(e);
-            e.printStackTrace();
         }
+
+        if (rolesComboBox.getSelectionModel().getSelectedItem()!=null)
+            role = rolesComboBox.getSelectionModel().getSelectedItem().getId();
+        else
+        {
+            save=false;
+            errorTextNewUser.setText("Error in combobox");
+        }
+
+        if (save)
+        {
+            String salt = BCrypt.gensalt(12);
+            password = BCrypt.hashpw(password, salt);
+
+
+            User user = new User(id, field[0], field[1], field[2], field[3], role);
+            try{
+                if(userModel.validateUsername(username)){
+                    usernameAlert();
+                } else{
+                    userModel.createNewUser(user);
+                }
+            } catch (Exception e) {
+                displayError(e);
+                e.printStackTrace();
+            }
+
+            for (int i = 0; i < 4; i++) {
+                textFields[i].clear();
+            }
+            errorTextNewUser.setText("");
+            handleOpenNewEmployeeWindow();
+        }
+
     }
 
 
