@@ -114,8 +114,20 @@ Button:pressed{
     -fx-border-radius: 0;
 }
 
+
+.table-row-cell:hover {
+    -fx-text-background-color: #E84910;
+}
+
+.table-row-cell:selected {
+    -fx-text-background-color: #E84910;
+}
+
+
+
 .table-view {
     -fx-background-color: #90AED6;
+    -fx-text-background-color: #f2f2f2;
 }
 
 .table-view .scroll-bar * {
@@ -127,6 +139,7 @@ Button:pressed{
     -fx-pref-height: 0;
     -fx-max-height: 0;
 }
+
 
 .table-view .column-header-background .filler {
     -fx-background-color: transparent;
@@ -140,6 +153,7 @@ Button:pressed{
     -fx-background-color: transparent;
 
 }
+
 
 .table-view .column-header {
     -fx-background-color: #90AED6;
@@ -155,26 +169,20 @@ Button:pressed{
     -fx-padding: 2 0 2 10px;
     -fx-font-size: 18;
 }
-.table-row-cell:hover {
-    -fx-text-background-color: #E84910;
-}
 
-.table-row-cell:selected {
-    -fx-text-background-color: #E84910;
-}
+
 
 .table-row-cell:odd{
     -fx-background-color: #90AED6;
-    -fx-text-background-color: #f2f2f2;
-    -fx-background-insets: 0, 0 0 1 0;
-    -fx-padding: 0.0em;
+
 }
 .table-row-cell:even{
     -fx-background-color: #90AED6;
-    -fx-text-background-color: #f2f2f2;
-    -fx-background-insets: 0, 0 0 1 0;
-    -fx-padding: 0.0em;
+
 }
+
+
+
 
 .list-cell:odd {
     -fx-background-color: #90AED6;
@@ -184,6 +192,20 @@ Button:pressed{
     -fx-background-color: #90AED6;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .list-cell:filled:hover {
     -fx-text-background-color: #E84910;
 }
@@ -192,6 +214,8 @@ Button:pressed{
     -fx-text-background-color: #E84910;
 
 }
+
+
 
 #vbxCreateNewProject, #vbxCreateNewCustomer{
     -fx-background-color: #90AED6;
@@ -208,8 +232,6 @@ Button:pressed{
     -fx-font-size: 18;
     -fx-text-background-color: red;
 }
-
-
 
 
 
