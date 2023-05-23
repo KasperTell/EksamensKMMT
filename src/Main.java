@@ -23,6 +23,8 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root));
         root.getStylesheets().add("GUI/View/Login.css");
         primaryStage.show();
+
+        primaryStage.setResizable(false);
     }
 }
 
