@@ -128,6 +128,13 @@ public class MainController extends BaseController {
 
         private void removeSelection()
         {
+
+            try {
+                customerTable.setItems(customerModel.loadCustomerList(0));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
             NotesTextArea.setText("");
             openProjectsTable.getSelectionModel().clearSelection();
             closedProjectsTable.getSelectionModel().clearSelection();
