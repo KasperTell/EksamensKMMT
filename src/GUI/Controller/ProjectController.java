@@ -295,10 +295,10 @@ public class ProjectController extends BaseController {
 
 
 
-            FilesDAO filesDAO=new FilesDAO();
 
 
-            ProjectFiles projectFiles=new ProjectFiles(1,selectedProject.getId(),filename ,"Resources/Pictures/ImagesSavedFromTechnicians/"+filename,saveDate,null,null,filesDAO.getFileAmount()+1);
+
+            ProjectFiles projectFiles=new ProjectFiles(1,selectedProject.getId(),filename ,"Resources/Pictures/ImagesSavedFromTechnicians/"+filename,saveDate,null,null);
             projectFilesModel.createNewFile(projectFiles);
 
         }

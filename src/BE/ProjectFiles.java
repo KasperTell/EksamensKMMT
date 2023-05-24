@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public class ProjectFiles {
 
-private int id, projectID,rank;
+private int id, projectID;
 private String filePath,name;
 private LocalDate date;
 private ImageView picture;
@@ -22,7 +22,7 @@ private CheckBox usedBox;
      * @param picture
      * @param usedBox
      */
-    public ProjectFiles(int id, int projectID, String name, String filePath, LocalDate date,  ImageView picture, CheckBox usedBox, int rank) {
+    public ProjectFiles(int id, int projectID, String name, String filePath, LocalDate date,  ImageView picture, CheckBox usedBox ) {
         this.id = id;
         this.projectID = projectID;
         this.name=name;
@@ -30,7 +30,7 @@ private CheckBox usedBox;
         this.date = date;
         this.picture = picture;
         this.usedBox = usedBox;
-        this.rank=rank;
+
     }
 
     /**
@@ -76,22 +76,5 @@ private CheckBox usedBox;
         this.name = name;
     }
 
-    public int getRank() {
-        return rank;
-    }
 
-    /**
-     * Overriding the default toString method.
-     * @return
-     */
-    @Override
-    public String toString() {
-        boolean newBox=true;
-        if (usedBox.isSelected())
-            newBox=true;
-            else
-                newBox=false;
-
-        return newBox+"";
-    }
 }

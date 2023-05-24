@@ -148,9 +148,9 @@ public class DrawController extends BaseController {
             WritableImage picture = c.snapshot(null, null);
             ImageIO.write(SwingFXUtils.fromFXImage(picture, null), "png", new File(path.toUri()));
 
-            FilesDAO filesDAO = new FilesDAO();
 
-            ProjectFiles fileToSave = new ProjectFiles(1, id, name, filepath, date, null, null, filesDAO.getFileAmount() + 1);
+
+            ProjectFiles fileToSave = new ProjectFiles(1, id, name, filepath, date, null, null);
 
             projectFilesModel.createNewFile(fileToSave);
         }

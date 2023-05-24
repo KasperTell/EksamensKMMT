@@ -54,7 +54,7 @@ public class FilesDAO implements iFileDataAccess {
                 String filePath = rs.getString("FilePath");
                 LocalDate date = rs.getDate("Date").toLocalDate();
                 byte usedInDoc = rs.getByte("usedInDoc");
-                int rank = rs.getByte("OrderFiles");
+
                 fileAmount++;
                 String filetype = filePath.substring(filePath.length() - 4, filePath.length());
 
@@ -78,7 +78,7 @@ public class FilesDAO implements iFileDataAccess {
                 if (usedInDoc == 0){
                     checkBox.setSelected(true);
                 }
-                    ProjectFiles files = new ProjectFiles(id, projectID1, name, filePath, date, picture, checkBox, rank);
+                    ProjectFiles files = new ProjectFiles(id, projectID1, name, filePath, date, picture, checkBox);
                     loadFilesFromAProject.add(files);
             }
             return loadFilesFromAProject;
@@ -122,7 +122,7 @@ public class FilesDAO implements iFileDataAccess {
      */
     public ProjectFiles createNewFile(ProjectFiles file) throws SQLException {
         //SQL Query
-        String sql = "INSERT INTO ProjectFile(ProjectID, Name, FilePath, Date, UsedInDoc,OrderFiles) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO ProjectFile(ProjectID, Name, FilePath, Date, UsedInDoc) VALUES (?,?,?,?,?)";
         //Getting connection to the database.
         try(Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -132,7 +132,6 @@ public class FilesDAO implements iFileDataAccess {
             stmt.setString(3, file.getFilePath());
             stmt.setDate(4, Date.valueOf(file.getDate()));
             stmt.setInt(5, 0);
-            stmt.setInt(6, file.getRank());
             stmt.execute();
             ResultSet rs = stmt.getGeneratedKeys();
 
