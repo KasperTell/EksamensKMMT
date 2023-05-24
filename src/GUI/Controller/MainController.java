@@ -77,7 +77,7 @@ public class MainController extends BaseController {
     private UserModel userModel;
     private ProjectController controller;
     private boolean isMenuOpen;
-    private int projectNumber,phoneNumber;
+    private int phoneNumber;
     private boolean onOpenProjectList;
 
     private ShowFile showFile=new ShowFile();
@@ -135,9 +135,6 @@ public class MainController extends BaseController {
                         }
                     }
             );
-
-
-
 
 
         }
@@ -235,7 +232,6 @@ public class MainController extends BaseController {
         closedProjectsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
         {
             selectedProject = closedProjectsTable.getSelectionModel().getSelectedItem();
-            projectNumber=closedProjectsTable.getSelectionModel().getSelectedIndex();
 
             if (selectedProject != null)
             {
@@ -263,7 +259,6 @@ public class MainController extends BaseController {
         openProjectsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
         {
             selectedProject = openProjectsTable.getSelectionModel().getSelectedItem();
-            projectNumber=openProjectsTable.getSelectionModel().getFocusedIndex();
 
             if (selectedProject!=null)
             {
@@ -273,15 +268,10 @@ public class MainController extends BaseController {
                     displayError(e);
                     e.printStackTrace();
                 }
-                if(userModel.getLoggedinUser().getRole() == 2 ) {
+
                     reOpenProjectButton.setDisable(true);
                     closeProjectButton.setDisable(false);
-                }
-                if(userModel.getLoggedinUser().getRole() == 2 || userModel.getLoggedinUser().getRole() == 4){
-                    openProjectWindowButton.setDisable(false);
-                    openPDFButton.setDisable(false);
-                    NotesTextArea.setText(selectedProject.getNote());
-                }
+
             }
         });
 
@@ -301,10 +291,6 @@ public class MainController extends BaseController {
         customerZipToTown.setCellValueFactory(new PropertyValueFactory<>("town"));
 
 
-
-
-      /**  openProjectsTable.setItems(projectModel.getAllProjectsOpen());
-        closedProjectsTable.setItems(projectModel.getAllProjectsClose()); */
         customerTable.setItems(customerModel.loadCustomerList(selectedProject.getCustomerID()));
     }
 
