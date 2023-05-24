@@ -38,7 +38,7 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="205.0" prefWidth="287.0">
                      <children>
                         <Button fx:id="saveNoteButton" layoutX="474.0" layoutY="505.0" mnemonicParsing="false" onAction="#saveNoteAction" prefWidth="70.0" text="Save" />
-                        <TextArea fx:id="NotesTextArea" layoutY="1.0" prefHeight="493.0" prefWidth="558.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <TextArea fx:id="NotesTextAreaProject" layoutY="1.0" prefHeight="493.0" prefWidth="558.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </content>

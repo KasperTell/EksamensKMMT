@@ -55,9 +55,9 @@
       </AnchorPane>
       <VBox fx:id="newUserVbox" prefHeight="800.0" prefWidth="345.0" spacing="30.0" translateX="-345.0">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="NEW USER" textAlignment="CENTER" wrappingWidth="320.0">
+            <Text fill="#f2f2f2" strokeType="OUTSIDE" strokeWidth="0.0" text="NEW USER" textAlignment="CENTER" wrappingWidth="320.0">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="34.0" />
                </font>
             </Text>
             <TextField fx:id="firstNameTextField" promptText="First name" />
