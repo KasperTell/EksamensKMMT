@@ -77,24 +77,23 @@ public class MainController extends BaseController {
     private CustomerModel customerModel;
     private UserModel userModel;
     private ProjectController controller;
-    private boolean isMenuOpen;
-    private int phoneNumber;
+    private boolean isMenuOpen,save=true;
+    private int phoneNumber,customerZipCode;
 
     private ShowFile showFile=new ShowFile();
 
     private PersonTypeChooser personTypeChooser = new PersonTypeChooser();
 
     String firstName,lastName,customerAddress;
-    int customerZipCode;
+
     Customer customer;
 
-    boolean save=true;
     /**
      * Set up the view when the view is getting shown.
      */
     @Override
 
-    public void setup() throws Exception {
+    public void setup()  {
 
         //Initializing all our models.
         customerModel = getModel().getCustomerModel();
@@ -251,18 +250,14 @@ public class MainController extends BaseController {
                     e.printStackTrace();
                 }
 
-
-                if (selectedProject!=null){
                     HashMap<ButtonType, Boolean> turnButtonOnOrOff = personTypeChooser.closeProjectButtonOnOrOff();
 
                     closeProjectButton.setDisable(turnButtonOnOrOff.get(ButtonType.CloseProjectButton));
                     reOpenProjectButton.setDisable(turnButtonOnOrOff.get(ButtonType.ReOpenProjectButton));
                     openProjectWindowButton.setDisable(turnButtonOnOrOff.get(ButtonType.OpenProjectWindowButton));
+
                     openPDFButton.setDisable(false);
-
-                  NotesTextArea.setText(selectedProject.getNote());
-
-                }
+                    NotesTextArea.setText(selectedProject.getNote());
 
                 }
 
@@ -283,10 +278,8 @@ public class MainController extends BaseController {
                     displayError(e);
                     e.printStackTrace();
                 }
-            }
 
-            if (selectedProject!=null)
-            {
+
                 HashMap<ButtonType, Boolean> turnButtonOnOrOff = personTypeChooser.openProjectButtonOnOrOff();
 
                 closeProjectButton.setDisable(turnButtonOnOrOff.get(ButtonType.CloseProjectButton));
@@ -294,8 +287,7 @@ public class MainController extends BaseController {
                 openProjectWindowButton.setDisable(turnButtonOnOrOff.get(ButtonType.OpenProjectWindowButton));
 
                 openPDFButton.setDisable(false);
-
-                    NotesTextArea.setText(selectedProject.getNote());
+                NotesTextArea.setText(selectedProject.getNote());
 
 
             }
@@ -343,13 +335,7 @@ public class MainController extends BaseController {
                 e.printStackTrace();
             }
 
-            try {
-                customerTable.setItems(customerModel.loadCustomerList(0));
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-
-            }
-            NotesTextArea.setText("");
+            removeSelection();
         }
 
     }
@@ -375,13 +361,7 @@ public class MainController extends BaseController {
                 e.printStackTrace();
             }
 
-            try {
-                customerTable.setItems(customerModel.loadCustomerList(0));
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-
-            }
-            NotesTextArea.setText("");
+            removeSelection();
 
 
         }
@@ -515,6 +495,8 @@ public class MainController extends BaseController {
             projectNameTextField.setText("");
             customerComboBox.getSelectionModel().clearSelection();
 
+            removeSelection();
+
             //Close the vbox.
 
             newProjectAction();
@@ -619,7 +601,6 @@ public class MainController extends BaseController {
         customerEmailTextField.clear();
         companyNameTextField.clear();
         customerZipCodeTextField.clear();
-
 
     }
 
