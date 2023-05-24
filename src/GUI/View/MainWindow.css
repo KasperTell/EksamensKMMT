@@ -1,105 +1,80 @@
 #mainViewAnchorPane
 {
+    -fx-background-color: linear-gradient(to bottom, #90AED6 45%, #18263A);
+}
 
-    -fx-background-color: linear-gradient(to bottom, #333333 75%, black);
+.text-area
+{
+    -fx-background-color: #f2f2f2;
+    -fx-text-fill: black;
+    -fx-focus-color: transparent;
+    -fx-background-radius: 5px;
+    -fx-padding: 15px;
+}
+
+.text-area .content
+{
+    -fx-background-color: #f2f2f2;
+}
+
+#NotesTextAreaProject
+{
+    -fx-background-radius: 0 0 5 5;
 }
 
 .text-field
 {
     -fx-background-color: #f2f2f2;
     -fx-text-fill: black;
-    -fx-border-width: 1px;
-    -fx-border-color: #f2f2f2;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
+    -fx-border-color: transparent;
+    -fx-border-radius: 5px;
 }
-
-#filesIncludedColumn, #filesDateColumn {
-    -fx-alignment: CENTER;
-}
-
-
 
 Button
 {
-    -fx-background-color: #333333;
-    -fx-text-fill: #f2f2f2;
-    -fx-border-width: 1px;
-    -fx-border-color: black;
-    -fx-border-radius: 5;
+    -fx-background-color: #f2f2f2;
+    -fx-text-fill: black;
+    -fx-border-color: transparent;
     -fx-background-radius: 5;
 }
-Button:pressed{
+
+Button:pressed
+{
     -fx-opacity: 0.50;
 }
-
 
 #newProjectButton, #newCustomerButton, #reOpenProjectButton, #closeProjectButton, #openUserWindowButton, #openProjectWindowButton, #openPDFButton,
 #openMainWindowButton, #openNewEmployeeWindow, #removeEmployeeButton, #drawButton
 {
     -fx-background-color: transparent;
     -fx-border-width: 0px;
-    -fx-border-radius: 0;
     -fx-background-radius: 0;
 }
 
-#addNewProjectButton, #btnAddNewCustomer, #clearAllCustomerFieldsButton
+#customerComboBox, #rolesComboBox, #listTechsComboBox
 {
     -fx-background-color: #f2f2f2;
     -fx-text-fill: black;
-    -fx-border-width: 1px;
-    -fx-border-color: #f2f2f2;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-
-}
-
-#customerComboBox{
-    -fx-background-color: #f2f2f2;
-    -fx-text-fill: black;
-}
-
-#projectNameTextField{
-    -fx-background-color: #f2f2f2;
-    -fx-text-fill: black;
-}
-
-.tab-pane
-{
-    -fx-focus-color: #18263A;
 }
 
 .tab-header-area .tab-header-background
 {
-    -fx-background-color: #90AED6;
+    -fx-background-color: #18263A;
+    -fx-background-radius: 5 5 0 0;
 }
 
 .tab-pane .tab:selected
 {
-    -fx-background-color: #18263A ;
-    -fx-background-insets: 0 0 0 0;
-    -fx-background-radius: 0 0 0 0;
+    -fx-background-color: #E84910;
+    -fx-background-insets: 0 5 5 5;
+    -fx-background-radius: 5 5 5 5;
 }
 
-.tab .tab-label {
+.tab .tab-label
+{
     -fx-alignment: CENTER;
     -fx-text-fill: #f2f2f2;
-    -fx-font-weight: bold;
-    -fx-padding: 0 10 0 10;
-}
-
-.tab-pane:top *.tab-header-area
-{
-    -fx-padding: 0 0 0 0;
-
-    /* NO SPACE LEFT OF FIRST TAB */
-    /* -fx-padding: 0 0 0 30; */
-}
-
-.tab-pane
-{
-    -fx-background-color: transparent;
-
+    -fx-padding: 0 10 5 10;
 }
 
 .tab-pane .tab
@@ -110,131 +85,111 @@ Button:pressed{
 .tab-pane:focused .tab-header-area .headers-region .tab:selected .focus-indicator
 {
     -fx-border-width: 0;
-    -fx-border-insets: 0 0 0 0;
-    -fx-border-radius: 0;
 }
 
 
-.table-row-cell:hover {
-    -fx-text-background-color: #E84910;
+.table-row-cell:hover
+{
+    -fx-text-background-color:  #90AED6;
 }
 
-.table-row-cell:selected {
-    -fx-text-background-color: #E84910;
+.table-row-cell:selected
+{
+    -fx-text-background-color:  #90AED6;
 }
 
-
-
-.table-view {
-    -fx-background-color: #90AED6;
-    -fx-text-background-color: #f2f2f2;
+.table-view
+{
+    -fx-background-color: #f2f2f2;
+    -fx-text-background-color: black;
+    -fx-background-radius: 0 0 5 5;
 }
 
-.table-view .scroll-bar * {
+.table-view .scroll-bar *
+{
     -fx-min-width: 0;
     -fx-pref-width: 0;
     -fx-max-width: 0;
-
     -fx-min-height: 0;
     -fx-pref-height: 0;
     -fx-max-height: 0;
 }
 
-
-.table-view .column-header-background .filler {
+.table-view .column-header-background .filler
+{
     -fx-background-color: transparent;
 }
 
-.table-view .corner {
+.table-view .corner
+{
     -fx-background-color: transparent;
 }
 
-.table-view .column-header-background{
+.table-view .column-header-background
+{
     -fx-background-color: transparent;
-
 }
 
-
-.table-view .column-header {
-    -fx-background-color: #90AED6;
-    -fx-text-background-color: #f2f2f2;
-    -fx-text-alignment: center-left;
+.table-view .column-header
+{
+    -fx-background-color: #f2f2f2;
+    -fx-text-background-color: black;
+    -fx-text-alignment: left;
     -fx-font-size: 18;
-
-
 }
 
-.table-view .table-cell{
+.table-view .table-cell
+{
     -fx-border-color: transparent;
-    -fx-padding: 2 0 2 10px;
+    -fx-padding: 5 10 0 5;
     -fx-font-size: 18;
+    -fx-background-color: #f2f2f2
 }
 
-
-
-.table-row-cell:odd{
-    -fx-background-color: #90AED6;
-
-}
-.table-row-cell:even{
-    -fx-background-color: #90AED6;
-
+#rectangle
+{
+    -fx-fill: #18263A;
 }
 
-
-
-
-.list-cell:odd {
-    -fx-background-color: #90AED6;
+.list-view
+{
+    -fx-background-radius: 0 0 5 5;
+    -fx-background-color: #f2f2f2;
 }
 
-.list-cell:even {
-    -fx-background-color: #90AED6;
+.list-cell
+{
+    -fx-font-size: 18;
+    -fx-background-color: #f2f2f2;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.list-cell:filled:hover {
-    -fx-text-background-color: #E84910;
+.list-cell:filled:hover
+{
+    -fx-text-background-color: #90AED6;
 }
 
-.list-cell:selected{
-    -fx-text-background-color: #E84910;
-
+.list-cell:selected
+{
+    -fx-text-background-color: #90AED6;
 }
 
-
-
-#vbxCreateNewProject, #vbxCreateNewCustomer{
+#vbxCreateNewProject, #vbxCreateNewCustomer, #newUserVbox
+{
     -fx-background-color: #90AED6;
 }
-
 
 #NotesTextArea, #techsOnProjectListView
 {
     -fx-font-size: 18;
 }
 
-
-#newCustomerErrorText, #errorMessageNewProject, #errorTextNewUser {
+#newCustomerErrorText, #errorMessageNewProject, #errorTextNewUser
+{
     -fx-font-size: 18;
     -fx-text-background-color: red;
 }
 
-
-
-
-
-
+#filesIncludedColumn, #filesDateColumn
+{
+    -fx-alignment: CENTER;
+}

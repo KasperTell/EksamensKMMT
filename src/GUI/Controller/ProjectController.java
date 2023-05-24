@@ -35,7 +35,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class ProjectController extends BaseController {
     @FXML
-    private TextArea NotesTextArea;
+    private TextArea NotesTextArea, NotesTextAreaProject;
     @FXML // Main view for this window
     private AnchorPane mainViewAnchorPane;
 
@@ -115,8 +115,8 @@ public class ProjectController extends BaseController {
     }
 
     private void setInformation() {
-        NotesTextArea.setText(selectedProject.getNote());
-        NotesTextArea.setWrapText(true);
+        NotesTextAreaProject.setText(selectedProject.getNote());
+        NotesTextAreaProject.setWrapText(true);
         listTechsComboBox.setItems(userModel.getAllTechnicians());
         try {
             techsOnProjectListView.setItems(userModel.getAllTechniciansOnProject(selectedProject.getId()));
@@ -227,7 +227,7 @@ public class ProjectController extends BaseController {
 
     @FXML
     private void saveNoteAction(ActionEvent actionEvent) {
-        String note = NotesTextArea.getText();
+        String note = NotesTextAreaProject.getText();
         try {
             projectModel.changeNote(note, selectedProject.getId());
         } catch (Exception e) {
