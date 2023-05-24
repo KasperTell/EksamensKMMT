@@ -120,24 +120,14 @@ public class MainController extends BaseController {
                     new ChangeListener<Tab>() {
                         @Override
                         public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
-
                           removeSelection();
-
                         }
                     }
-            );
-
-        }
+            );}
 
 
         private void removeSelection()
         {
-            try {
-                customerTable.setItems(customerModel.loadCustomerList(0));
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-
-            }
             NotesTextArea.setText("");
             openProjectsTable.getSelectionModel().clearSelection();
             closedProjectsTable.getSelectionModel().clearSelection();
