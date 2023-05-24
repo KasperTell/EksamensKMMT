@@ -9,7 +9,8 @@ public enum ButtonType {
     OpenProjectWindowButton,
     OpenUserWindowButton,
     ClosedProjectsTable,
-    SearchBoxTextField
+    SearchBoxTextField,
+    openPDFButton
 }
 
 

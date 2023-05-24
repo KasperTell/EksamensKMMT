@@ -43,5 +43,16 @@ public class PersonTypesKlient {
     }
 
 
+    public HashMap<ButtonType, Boolean> closeProjectButtonOnOrOff() {
+        return iPersonTypes.closeProjectButtonOnOrOff();
+    }
+
+
+    public HashMap<ButtonType, Boolean> openProjectButtonOnOrOff() {
+        return iPersonTypes.openProjectButtonOnOrOff();
+    }
+
+
+
 
 }

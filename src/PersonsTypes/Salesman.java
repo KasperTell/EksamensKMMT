@@ -44,4 +44,33 @@ public class Salesman implements IPersonTypes{
     }
 
 
+    @Override
+    public HashMap<ButtonType, Boolean> closeProjectButtonOnOrOff() {
+        HashMap<ButtonType, Boolean> closeProjectButtonOnOrOff = new HashMap<>();
+
+        closeProjectButtonOnOrOff.put(ButtonType.CloseProjectButton, true);
+        closeProjectButtonOnOrOff.put(ButtonType.ReOpenProjectButton, true);
+        closeProjectButtonOnOrOff.put(ButtonType.OpenProjectWindowButton, true);
+
+
+
+        return closeProjectButtonOnOrOff;
+
+    }
+
+    @Override
+    public HashMap<ButtonType, Boolean> openProjectButtonOnOrOff() {
+        HashMap<ButtonType, Boolean> openProjectButtonOnOrOff = new HashMap<>();
+
+        openProjectButtonOnOrOff.put(ButtonType.CloseProjectButton, true);
+        openProjectButtonOnOrOff.put(ButtonType.ReOpenProjectButton, true);
+        openProjectButtonOnOrOff.put(ButtonType.OpenProjectWindowButton, true);
+
+
+        return openProjectButtonOnOrOff;
+
+
+    }
+
+
 }

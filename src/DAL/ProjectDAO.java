@@ -165,7 +165,7 @@ public class ProjectDAO implements IProjectDataAccess {
         ArrayList<Project> projectsForTechnician = new ArrayList<>();
         //SQL Query
         String sql = "SELECT * FROM Project INNER JOIN ProjectTechnician ON Project.ID = ProjectTechnician.ProjectID" +
-                " INNER JOIN Customers ON Project.customerID = Customers.ID WHERE UserID = ? AND OpenClose = 0 AND Deleted IS NULL";
+                " INNER JOIN Customers ON Project.customerID = Customers.ID WHERE UserID = ? AND OpenClose = 0 ";
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql);
             //Setting the parameter

@@ -44,7 +44,7 @@ public class PersonTypeChooser {
     public HashMap<ButtonType, Boolean> turnButtonOnOrOff()
     {
 
-        HashMap<ButtonType, Boolean> sss=personTypes.turnButtonOnOrOff();
+
 
         return personTypes.turnButtonOnOrOff();
     }
@@ -59,8 +59,21 @@ public class PersonTypeChooser {
 
     }
 
+    public HashMap<ButtonType, Boolean> closeProjectButtonOnOrOff()
+    {
 
 
+
+        return personTypes.closeProjectButtonOnOrOff();
+    }
+
+
+    public HashMap<ButtonType, Boolean> openProjectButtonOnOrOff()
+    {
+
+
+        return personTypes.openProjectButtonOnOrOff();
+    }
 
 
 

@@ -40,6 +40,33 @@ public class Technician implements IPersonTypes{
 
     @Override
     public boolean setListInfo(){return true;}
+
+    @Override
+    public HashMap<ButtonType, Boolean> closeProjectButtonOnOrOff() {
+        HashMap<ButtonType, Boolean> closeProjectButtonOnOrOff = new HashMap<>();
+
+        closeProjectButtonOnOrOff.put(ButtonType.CloseProjectButton, true);
+        closeProjectButtonOnOrOff.put(ButtonType.ReOpenProjectButton, false);
+        closeProjectButtonOnOrOff.put(ButtonType.OpenProjectWindowButton, false);
+
+        return closeProjectButtonOnOrOff;
+    }
+
+    @Override
+    public HashMap<ButtonType, Boolean> openProjectButtonOnOrOff() {
+        HashMap<ButtonType, Boolean> openProjectButtonOnOrOff = new HashMap<>();
+
+        openProjectButtonOnOrOff.put(ButtonType.CloseProjectButton, false);
+        openProjectButtonOnOrOff.put(ButtonType.ReOpenProjectButton, false);
+        openProjectButtonOnOrOff.put(ButtonType.OpenProjectWindowButton, false);
+
+        return openProjectButtonOnOrOff;
+
+
+
+    }
+
+
     }
 
 

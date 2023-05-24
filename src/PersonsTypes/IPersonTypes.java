@@ -15,4 +15,12 @@ public interface IPersonTypes {
 
      Boolean enableTab();
      boolean setListInfo();
-}
+
+
+
+    public HashMap<ButtonType, Boolean> closeProjectButtonOnOrOff();
+
+
+    public HashMap<ButtonType, Boolean> openProjectButtonOnOrOff();
+    }
+

@@ -250,19 +250,22 @@ public class MainController extends BaseController {
                     displayError(e);
                     e.printStackTrace();
                 }
-                if(userModel.getLoggedinUser().getRole() == 2) {
-                    reOpenProjectButton.setDisable(false);
-                    closeProjectButton.setDisable(true);
-                }
-                if(userModel.getLoggedinUser().getRole() == 2 || userModel.getLoggedinUser().getRole() == 4) {
-                    openProjectWindowButton.setDisable(true);
+
+
+                if (selectedProject!=null){
+                    HashMap<ButtonType, Boolean> turnButtonOnOrOff = personTypeChooser.closeProjectButtonOnOrOff();
+
+                    closeProjectButton.setDisable(turnButtonOnOrOff.get(ButtonType.CloseProjectButton));
+                    reOpenProjectButton.setDisable(turnButtonOnOrOff.get(ButtonType.ReOpenProjectButton));
+                    openProjectWindowButton.setDisable(turnButtonOnOrOff.get(ButtonType.OpenProjectWindowButton));
                     openPDFButton.setDisable(false);
 
-                    if (selectedProject!=null)
-                    NotesTextArea.setText(selectedProject.getNote());
-                        openProjectWindowButton.setDisable(false);
+                  NotesTextArea.setText(selectedProject.getNote());
+
                 }
-            }
+
+                }
+
         });
     }
 
@@ -281,17 +284,19 @@ public class MainController extends BaseController {
                     e.printStackTrace();
                 }
             }
-            if(userModel.getLoggedinUser().getRole() == 2) {
-                reOpenProjectButton.setDisable(true);
-                closeProjectButton.setDisable(false);
-            }
-            if(userModel.getLoggedinUser().getRole() == 2 || userModel.getLoggedinUser().getRole() == 4) {
-                openProjectWindowButton.setDisable(true);
+
+            if (selectedProject!=null)
+            {
+                HashMap<ButtonType, Boolean> turnButtonOnOrOff = personTypeChooser.openProjectButtonOnOrOff();
+
+                closeProjectButton.setDisable(turnButtonOnOrOff.get(ButtonType.CloseProjectButton));
+                reOpenProjectButton.setDisable(turnButtonOnOrOff.get(ButtonType.ReOpenProjectButton));
+                openProjectWindowButton.setDisable(turnButtonOnOrOff.get(ButtonType.OpenProjectWindowButton));
+
                 openPDFButton.setDisable(false);
 
-                if (selectedProject!=null)
-                NotesTextArea.setText(selectedProject.getNote());
-                openProjectWindowButton.setDisable(false);
+                    NotesTextArea.setText(selectedProject.getNote());
+
 
             }
 
