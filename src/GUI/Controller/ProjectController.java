@@ -351,6 +351,8 @@ public class ProjectController extends BaseController {
     }
 
     public void handleDeleteFileComputer () throws Exception {
+
+
         ProjectFiles fileToDelete = fileTable.getSelectionModel().getSelectedItem();
         projectFilesModel.deleteFile(fileToDelete);
 
@@ -376,21 +378,22 @@ public class ProjectController extends BaseController {
                 ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
                 ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
                 alert.getButtonTypes().setAll(okButton, noButton);
+
                 alert.showAndWait().ifPresent(type -> {
                     if (type == okButton) {
                         try {
-                            projectFilesModel.deleteFile(selectedfile);
+
                             handleDeleteFileComputer();
+                            projectFilesModel.deleteFile(selectedfile);
+
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
-                        File file = new File(selectedfile.getFilePath());
-                        file.delete();
+                      ;
+                        filesPreviewImageView.setImage(null);
                     }
 
                 });
-
-
 
             }
         }

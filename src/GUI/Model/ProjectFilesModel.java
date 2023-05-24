@@ -177,6 +177,7 @@ public class ProjectFilesModel {
 
 
     public void deleteFile(ProjectFiles file) throws Exception {
+
         projectFilesManager.deleteFile(file);
         projectFiles.clear();
         projectFiles.set(FXCollections.observableArrayList(projectFilesManager.loadFilesFromAProject(file.getProjectID())));
