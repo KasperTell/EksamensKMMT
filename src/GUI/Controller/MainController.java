@@ -35,7 +35,8 @@ import java.util.ResourceBundle;
 
 public class MainController extends BaseController {
 
-    public TabPane projectTabs;
+    @FXML
+    private TabPane projectTabs;
     @FXML
     private Label newCustomerErrorText,errorMessageNewProject;
     @FXML
@@ -78,7 +79,6 @@ public class MainController extends BaseController {
     private ProjectController controller;
     private boolean isMenuOpen;
     private int phoneNumber;
-    private boolean onOpenProjectList;
 
     private ShowFile showFile=new ShowFile();
 
@@ -122,22 +122,31 @@ public class MainController extends BaseController {
                         @Override
                         public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
 
-                            try {
-                                customerTable.setItems(customerModel.loadCustomerList(0));
-                            } catch (Exception e) {
-                                throw new RuntimeException(e);
-
-                            }
-                            NotesTextArea.setText("");
-                            openProjectsTable.getSelectionModel().clearSelection();
-                            closedProjectsTable.getSelectionModel().clearSelection();
+                          removeSelection();
 
                         }
                     }
             );
 
+        }
+
+
+        private void removeSelection()
+        {
+            try {
+                customerTable.setItems(customerModel.loadCustomerList(0));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+
+            }
+            NotesTextArea.setText("");
+            openProjectsTable.getSelectionModel().clearSelection();
+            closedProjectsTable.getSelectionModel().clearSelection();
+            openProjectWindowButton.setDisable(true);
+            openPDFButton.setDisable(true);
 
         }
+
 
     private void setupTableForProject() {
         projectDateOpen.setCellValueFactory(new PropertyValueFactory<>("Date"));
@@ -268,10 +277,16 @@ public class MainController extends BaseController {
                     displayError(e);
                     e.printStackTrace();
                 }
-
-                    reOpenProjectButton.setDisable(true);
-                    closeProjectButton.setDisable(false);
-
+            }
+            if(userModel.getLoggedinUser().getRole() == 2) {
+                reOpenProjectButton.setDisable(true);
+                closeProjectButton.setDisable(false);
+            }
+            if(userModel.getLoggedinUser().getRole() == 2 || userModel.getLoggedinUser().getRole() == 4) {
+                openProjectWindowButton.setDisable(true);
+                openPDFButton.setDisable(false);
+                NotesTextArea.setText(selectedProject.getNote());
+            }
             }
         });
 
