@@ -140,8 +140,8 @@ public class MainController extends BaseController {
 
             }
             NotesTextArea.setText("");
-//            openProjectsTable.getSelectionModel().clearSelection();
-//            closedProjectsTable.getSelectionModel().clearSelection();
+            openProjectsTable.getSelectionModel().clearSelection();
+            closedProjectsTable.getSelectionModel().clearSelection();
             openProjectWindowButton.setDisable(true);
             openPDFButton.setDisable(true);
 
@@ -257,6 +257,8 @@ public class MainController extends BaseController {
                 if(userModel.getLoggedinUser().getRole() == 2 || userModel.getLoggedinUser().getRole() == 4) {
                     openProjectWindowButton.setDisable(true);
                     openPDFButton.setDisable(false);
+
+                    if (selectedProject!=null)
                     NotesTextArea.setText(selectedProject.getNote());
                         openProjectWindowButton.setDisable(false);
                 }
@@ -286,6 +288,8 @@ public class MainController extends BaseController {
             if(userModel.getLoggedinUser().getRole() == 2 || userModel.getLoggedinUser().getRole() == 4) {
                 openProjectWindowButton.setDisable(true);
                 openPDFButton.setDisable(false);
+
+                if (selectedProject!=null)
                 NotesTextArea.setText(selectedProject.getNote());
                 openProjectWindowButton.setDisable(false);
 
