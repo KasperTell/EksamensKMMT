@@ -10,12 +10,12 @@ import java.nio.file.Path;
 public class ShowFile {
 
     public void showFile(String filePath) {
-        boolean filesExits = Files.exists(Path.of(filePath)); //check om filen eksisterer
+        boolean filesExits = Files.exists(Path.of(filePath)); //check if the file exists
         File file = new File(filePath);
         try {
             if (filesExits) {
                 Desktop desktop = Desktop.getDesktop();
-                if (file.exists()) desktop.open(file); //Her åbnes filen i computerens standard program til filtypen.
+                if (file.exists()) desktop.open(file); //Here, the file is opened in the computer's standard program for the file type.
             }
 
 
