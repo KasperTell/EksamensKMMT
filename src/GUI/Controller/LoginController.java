@@ -15,6 +15,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.io.IOException;
+
 public class LoginController extends BaseController {
     @FXML
     private AnchorPane loginAnchorPane;
@@ -36,18 +38,27 @@ public class LoginController extends BaseController {
      * @param actionEvent
      * @throws Exception
      */
-    public void handleSignIn(ActionEvent actionEvent) throws Exception {
+    public void handleSignIn(ActionEvent actionEvent)  {
         //Setting the local variables.
         String username = usernameBox.getText();
         String password = passwordBox.getText();
         
         //Check if the username matches a name from the database, else show error.
-        boolean flag = userModel.validateUsername(username);
+        boolean flag = false;
+        try {
+            flag = userModel.validateUsername(username);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         if(!flag) {
             loginFailedAlert();
         } else {
             //Set the user based on the correct username and get the matching password.
-            user = userModel.loadUser(username);
+            try {
+                user = userModel.loadUser(username);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             //Check if the database password matches the user password, else show error.
             if(BCrypt.checkpw(password, user.getPassword())) {
                 userModel.setLoggedinUser(user);
@@ -95,11 +106,16 @@ public class LoginController extends BaseController {
      * Opens the "main view" window for the specific user role.
      * @throws Exception
      */
-    private void openMainWindow() throws Exception {
+    private void openMainWindow()  {
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/MainWindow.fxml"));
-        AnchorPane pane = loader.load();
+        AnchorPane pane = null;
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
 
         pane.getStylesheets().add(personTypeChooser.getCSS());

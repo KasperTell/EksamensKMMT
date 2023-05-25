@@ -17,6 +17,8 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.io.IOException;
+
 public class UserController extends BaseController{
 
     @FXML //Main pane for this window
@@ -215,11 +217,16 @@ public class UserController extends BaseController{
 
     }
 
-    public void handleOpenMainWindow(ActionEvent actionEvent) throws Exception {
+    public void handleOpenMainWindow(ActionEvent actionEvent)  {
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/MainWindow.fxml"));
-        AnchorPane pane = loader.load();
+        AnchorPane pane = null;
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         pane.getStylesheets().add("/GUI/View/MainWindow.css");
         mainViewAnchorPane.getChildren().setAll(pane);
 

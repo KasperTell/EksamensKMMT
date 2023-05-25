@@ -39,7 +39,7 @@ public class DrawController extends BaseController {
     private double y;
 
     @Override
-    public void setup() throws Exception {
+    public void setup()  {
         projectModel = getModel().getProjectModel();
         projectFilesModel = getModel().getProjectFilesModel();
         clickToolSelect();
@@ -131,7 +131,7 @@ public class DrawController extends BaseController {
     public void handleClear(ActionEvent actionEvent) {tool.clearRect(0,0,canvas.getWidth(), canvas.getHeight());}
     public void handleSaveCanvas(ActionEvent actionEvent) throws Exception {saveCanvas(canvas);}
 
-    public void saveCanvas(Canvas c) throws Exception {
+    public void saveCanvas(Canvas c)  {
 
         int id = projectModel.getSelectedProject().getId();
 
@@ -143,23 +143,27 @@ public class DrawController extends BaseController {
         Path path = Paths.get(filepath);
 
 
-        if (!projectFilesModel.doesFileExist(filepath)) {
+        try {
+            if (!projectFilesModel.doesFileExist(filepath)) {
 
-            WritableImage picture = c.snapshot(null, null);
-            ImageIO.write(SwingFXUtils.fromFXImage(picture, null), "png", new File(path.toUri()));
+                WritableImage picture = c.snapshot(null, null);
+                ImageIO.write(SwingFXUtils.fromFXImage(picture, null), "png", new File(path.toUri()));
 
 
 
-            ProjectFiles fileToSave = new ProjectFiles(1, id, name, filepath, date, null, null);
+                ProjectFiles fileToSave = new ProjectFiles(1, id, name, filepath, date, null, null);
 
-            projectFilesModel.createNewFile(fileToSave);
-        }
-        else {
-            System.out.println("File already exist");
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Something went wrong");
-            alert.setHeaderText("Delete previous drawings before adding a new drawing.");
-            alert.showAndWait();
+                projectFilesModel.createNewFile(fileToSave);
+            }
+            else {
+                System.out.println("File already exist");
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Something went wrong");
+                alert.setHeaderText("Delete previous drawings before adding a new drawing.");
+                alert.showAndWait();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
     }

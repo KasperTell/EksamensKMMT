@@ -114,7 +114,6 @@ public class CustomerPdf {
                     ,customerInfo.get(CustomerInfo.Mail),"Telefon",customerInfo.get(CustomerInfo.PhoneNumber)};
 
 
-
         insertTable2Row(12,100,tekst,true);
 
         whiteSpace(20);

@@ -24,6 +24,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -204,13 +205,7 @@ public class MainController extends BaseController {
             selectedProject = openProjectsTable.getSelectionModel().getSelectedItem();
 
             if (event.getClickCount() == 2) {
-                try {
-                    getCustomerPDFAction();
-                } catch (MalformedURLException e) {
-                    throw new RuntimeException(e);
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                getCustomerPDFAction();
             }
         });
     }
@@ -220,13 +215,7 @@ public class MainController extends BaseController {
             selectedProject = closedProjectsTable.getSelectionModel().getSelectedItem();
 
             if (event.getClickCount() == 2) {
-                try {
-                    getCustomerPDFAction();
-                } catch (MalformedURLException e) {
-                    throw new RuntimeException(e);
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                getCustomerPDFAction();
 
             }
         });
@@ -660,7 +649,7 @@ public class MainController extends BaseController {
      * This will open a new window for editing the project regarding files, PDF and technician.
     */
 
-    public void handleOpenProjectWindow() throws Exception {
+    public void handleOpenProjectWindow()  {
 
         if (selectedProject!=null)
         {
@@ -668,7 +657,12 @@ public class MainController extends BaseController {
             
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/GUI/View/ProjectWindow.fxml"));
-            AnchorPane pane = loader.load();
+            AnchorPane pane = null;
+            try {
+                pane = loader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             pane.getStylesheets().add("/GUI/View/MainWindow.css");
             mainViewAnchorPane.getChildren().setAll(pane);
 
@@ -686,10 +680,15 @@ public class MainController extends BaseController {
      */
 
 
-    public void handleOpenUserWindow(ActionEvent actionEvent) throws Exception {
+    public void handleOpenUserWindow(ActionEvent actionEvent)  {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/UserWindow.fxml"));
-        AnchorPane pane = loader.load();
+        AnchorPane pane = null;
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         pane.getStylesheets().add("/GUI/View/MainWindow.css");
         mainViewAnchorPane.getChildren().setAll(pane);
 
@@ -703,7 +702,7 @@ public class MainController extends BaseController {
      * This will open a PDF file that is attached to the given Project.
      */
 
-    public void getCustomerPDFAction() throws MalformedURLException, FileNotFoundException {
+    public void getCustomerPDFAction()  {
 
 
         if (selectedProject!=null)

@@ -25,6 +25,7 @@ import javax.imageio.metadata.IIOMetadataFormatImpl;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -337,10 +338,15 @@ public class ProjectController extends BaseController {
 
 
 
-    public void handleOpenMainWindow (ActionEvent actionEvent) throws Exception {
+    public void handleOpenMainWindow (ActionEvent actionEvent)  {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/MainWindow.fxml"));
-        AnchorPane pane = loader.load();
+        AnchorPane pane = null;
+        try {
+            pane = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         pane.getStylesheets().add(PersonTypeChooser.personTypes.getCSS());
         mainViewAnchorPane.getChildren().setAll(pane);
 
@@ -349,15 +355,24 @@ public class ProjectController extends BaseController {
         controller.setup();
     }
 
-    public void handleDraw (ActionEvent actionEvent) throws Exception {
+    public void handleDraw (ActionEvent actionEvent)  {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/GUI/View/Draw/DrawWindow.fxml"));
-        Parent root = loader.load();
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         root.getStylesheets().add("/GUI/View/Draw/DrawWindow.css");
 
         DrawController controller = loader.getController();
         controller.setModel(super.getModel());
-        controller.setup();
+        try {
+            controller.setup();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         Stage stage = new Stage();
 
