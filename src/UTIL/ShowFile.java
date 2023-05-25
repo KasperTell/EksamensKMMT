@@ -33,12 +33,5 @@ public class ShowFile {
 
     }
 
-    private void alertUser(String errorMessage,String title){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(errorMessage);
-        alert.showAndWait();
-    }
-
 
 }

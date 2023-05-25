@@ -98,7 +98,7 @@ public class LoginController extends BaseController {
     private void openMainWindow() throws Exception {
 
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource(personTypeChooser.getViewString()));
+        loader.setLocation(getClass().getResource("/GUI/View/MainWindow.fxml"));
         AnchorPane pane = loader.load();
 
 

@@ -5,22 +5,14 @@ import java.util.List;
 
 public interface IPersonTypes {
 
-    String getViewString();
 
 
     String getViewCss();
-
-    HashMap<ButtonType, Boolean> turnButtonOnOrOff();
-
-
-     Boolean enableTab();
-     boolean setListInfo();
-
-
-
-    public HashMap<ButtonType, Boolean> closeProjectButtonOnOrOff();
-
-
+    boolean setListInfo();
+    Boolean enableTab();
+     HashMap<ButtonType, Boolean> turnButtonOnOrOff();
+     public HashMap<ButtonType, Boolean> closeProjectButtonOnOrOff();
     public HashMap<ButtonType, Boolean> openProjectButtonOnOrOff();
+
     }
 

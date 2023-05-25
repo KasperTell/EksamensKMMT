@@ -16,7 +16,6 @@ import java.util.List;
 
 public class FilesDAO implements iFileDataAccess {
 
-    private static int fileAmount=0;
 
     private DatabaseConnector databaseConnector;
 
@@ -55,7 +54,7 @@ public class FilesDAO implements iFileDataAccess {
                 LocalDate date = rs.getDate("Date").toLocalDate();
                 byte usedInDoc = rs.getByte("usedInDoc");
 
-                fileAmount++;
+                
                 String filetype = filePath.substring(filePath.length() - 4, filePath.length());
 
                 switch (filetype) {

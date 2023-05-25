@@ -29,11 +29,7 @@ public class PersonTypeChooser {
 
     }
 
-    public String getViewString()
-    {
-        return personTypes.viewString();
 
-    }
 
     public String getCSS()
     {

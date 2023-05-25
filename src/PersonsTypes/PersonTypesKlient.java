@@ -18,10 +18,7 @@ public class PersonTypesKlient {
         this.iPersonTypes=iPersonTypes;
     }
 
-    public String viewString()
-    {
-        return iPersonTypes.getViewString();
-    }
+
 
     public String getCSS()
     {

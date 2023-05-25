@@ -4,10 +4,7 @@ import java.util.HashMap;
 
 public class ProjectManager implements IPersonTypes{
 
-    @Override
-    public String getViewString() {
-        return "/GUI/View/MainWindow.fxml";
-    }
+
 
     @Override
     public String getViewCss() {
