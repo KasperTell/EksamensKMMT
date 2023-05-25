@@ -162,7 +162,7 @@ public class FilesDAO implements iFileDataAccess {
         }
     }
 
-    
+
     /**
      * Checking if the database has an entry matching the FilePath from the project.
      * @param filepath
