@@ -20,6 +20,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import javax.imageio.metadata.IIOMetadataFormatImpl;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -79,7 +81,7 @@ public class ProjectController extends BaseController {
      * Set up the view when the view is getting shown.
      */
     @Override
-    public void setup() throws InterruptedException {
+    public void setup()  {
         //Initializing all our models.
         userModel = getModel().getUserModel();
         customerModel = getModel().getCustomerModel();
@@ -196,7 +198,7 @@ public class ProjectController extends BaseController {
      * Set up the files information column in the tableview.
      */
     @FXML
-    private void setupFiles() throws InterruptedException {
+    private void setupFiles()  {
 
 
         int projectNumber = selectedProject.getId();
@@ -213,13 +215,15 @@ public class ProjectController extends BaseController {
             e.printStackTrace();
         }
 
-        projectFilesModel.fileLoopStop(); //Stopper tidligere løkker i projectFiles inden ny startes
 
-        try {
-            projectFilesModel.fileLoopStop(); //Stopper tidligere løkker i projectFiles inden ny startes
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+            try {
+                projectFilesModel.fileLoopStop(); //Stopper tidligere løkker i projectFiles inden ny startes
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+
+
 
         projectFilesModel.observer(); //Her startes en løkke, der observere ændringer i CheckBox
     }
@@ -240,9 +244,9 @@ public class ProjectController extends BaseController {
      * Set up the information about the customer in the main view when a project is selected.
      */
 
-    private HashMap<String, String> makeCustomerMap() {
+    private HashMap<CustomerInfo, String> makeCustomerMap() {
 
-        HashMap<String, String> customerInfo = new HashMap<>();
+        HashMap<CustomerInfo, String> customerInfo = new HashMap<>();
 
         if (selectedProject != null) {
             //Setting the information in the labels.
@@ -255,13 +259,13 @@ public class ProjectController extends BaseController {
                 e.printStackTrace();
             }
 
-            customerInfo.put("Company", customer.getCompanyName());
-            customerInfo.put("FirstName", customer.getFirstName());
-            customerInfo.put("Lastname", customer.getLastName());
-            customerInfo.put("Address", customer.getAddress());
-            customerInfo.put("ZipCode", String.valueOf(customer.getZipCode()));
-            customerInfo.put("Mail", customer.getMail());
-            customerInfo.put("PhoneNumber", String.valueOf(customer.getPhoneNumber()));
+            customerInfo.put(CustomerInfo.Company, customer.getCompanyName());
+            customerInfo.put(CustomerInfo.FirstName, customer.getFirstName());
+            customerInfo.put(CustomerInfo.Lastname, customer.getLastName());
+            customerInfo.put(CustomerInfo.Address, customer.getAddress());
+            customerInfo.put(CustomerInfo.ZipCode, String.valueOf(customer.getZipCode()));
+            customerInfo.put(CustomerInfo.Mail, customer.getMail());
+            customerInfo.put(CustomerInfo.PhoneNumber, String.valueOf(customer.getPhoneNumber()));
         }
         return customerInfo;
     }
@@ -272,7 +276,7 @@ public class ProjectController extends BaseController {
      * @param actionEvent
      */
     @FXML
-    private void handleSaveNewFile(ActionEvent actionEvent) throws Exception {
+    private void handleSaveNewFile(ActionEvent actionEvent)  {
         //Opens the default file explore
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
@@ -296,15 +300,17 @@ public class ProjectController extends BaseController {
 
 
 
-
-
             ProjectFiles projectFiles=new ProjectFiles(1,selectedProject.getId(),filename ,"Resources/Pictures/ImagesSavedFromTechnicians/"+filename,saveDate,null,null);
-            projectFilesModel.createNewFile(projectFiles);
+            try {
+                projectFilesModel.createNewFile(projectFiles);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
 
         }
     }
 
-    public void handleOpenCustomerDoc() throws FileNotFoundException, MalformedURLException, MalformedURLException, FileNotFoundException {
+    public void handleOpenCustomerDoc()  {
 
         ArrayList<String> imagePath = new ArrayList<>();
 
@@ -312,9 +318,18 @@ public class ProjectController extends BaseController {
             if (projectFiles.getUsedBox().isSelected())
                 imagePath.add(projectFiles.getFilePath());
         }
-        HashMap<String, String> customerMap = makeCustomerMap();
+        HashMap<CustomerInfo, String> customerMap = makeCustomerMap();
         CustomerPdf customerPdf = new CustomerPdf(imagePath, customerMap, selectedProject.getNote(), selectedProject.getTitle());
-        String path = customerPdf.makePdf();
+        String path = null;
+        try {
+            path = customerPdf.makePdf();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         ShowFile showFile = new ShowFile();
         showFile.showFile(path);
@@ -350,11 +365,15 @@ public class ProjectController extends BaseController {
         stage.show();
     }
 
-    public void handleDeleteFileComputer () throws Exception {
+    public void handleDeleteFileComputer ()  {
 
 
         ProjectFiles fileToDelete = fileTable.getSelectionModel().getSelectedItem();
-        projectFilesModel.deleteFile(fileToDelete);
+        try {
+            projectFilesModel.deleteFile(fileToDelete);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         File file = new File(fileToDelete.getFilePath());
         file.delete();

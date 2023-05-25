@@ -157,7 +157,7 @@ public class ProjectFilesModel {
     public void fileLoopStop() throws InterruptedException {
 
         isRunning=false;
-        Thread.sleep(100);
+
 
 
 

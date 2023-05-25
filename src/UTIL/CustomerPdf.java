@@ -1,5 +1,7 @@
 package UTIL;
 
+import GUI.Model.CustomerInfo;
+import GUI.Model.CustomerModel;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.geom.PageSize;
@@ -33,12 +35,12 @@ public class CustomerPdf {
 
 
     ArrayList<String> imagePath;
-    HashMap<String,String> customerInfo;
+    HashMap<CustomerInfo,String> customerInfo;
 
      private String noteString,title;
 
 
-    public CustomerPdf(ArrayList<String> imagePath, HashMap<String,String> customerList, String noteString, String title) {
+    public CustomerPdf(ArrayList<String> imagePath, HashMap<CustomerInfo,String> customerList, String noteString, String title) {
         this.imagePath = imagePath;
         this.customerInfo = customerList;
         this.noteString=noteString;
@@ -50,13 +52,13 @@ public class CustomerPdf {
 
 
 
-    public String makePdf() throws FileNotFoundException, MalformedURLException {
+    public String makePdf() throws Exception {
 
 
         if (customerInfo.get("Company")==null)
-        path = "Resources/PDF/"+customerInfo.get("FirstName")+" "+customerInfo.get("Lastname")+ " "+title+" installations dokumentation.pdf";
+        path = "Resources/PDF/"+customerInfo.get(CustomerInfo.FirstName)+" "+customerInfo.get(CustomerInfo.Lastname)+ " "+title+" installations dokumentation.pdf";
         else
-            path = "Resources/PDF/"+customerInfo.get("Company")+ " "+title+ " installations dokumentation.pdf";
+            path = "Resources/PDF/"+customerInfo.get(CustomerInfo.Company)+ " "+title+ " installations dokumentation.pdf";
 
         pdfWriter = new PdfWriter(path);
         pdfDocument = new PdfDocument(pdfWriter);
@@ -81,7 +83,7 @@ public class CustomerPdf {
         whiteSpace(350);
 
 
-        tekst=new String[] {"","Installations dokumentation","",customerInfo.get("Company"),"",title};
+        tekst=new String[] {"","Installations dokumentation","",customerInfo.get(CustomerInfo.Company),"",title};
 
 
         insertTable2Row(16,300,tekst,false);
@@ -97,7 +99,7 @@ public class CustomerPdf {
     }
 
 
-    public void page3() throws MalformedURLException {
+    public void page3() throws Exception {
 
         document.add(new AreaBreak());
 
@@ -105,9 +107,11 @@ public class CustomerPdf {
         whiteSpace(50);
 
 
+        CustomerModel customerModel=new CustomerModel();
+                String town=customerModel.TownToZipCode(Integer.parseInt(customerInfo.get(CustomerInfo.ZipCode)));
 
-            tekst=new  String[]{"Firma",customerInfo.get("Company"),"Adresse",customerInfo.get("Address"),"Postkode",customerInfo.get("ZipCode"),"Email"
-                    ,customerInfo.get("Mail"),"Telefon",customerInfo.get("PhoneNumber")};
+            tekst=new  String[]{"Firma",customerInfo.get(CustomerInfo.Company),"Adresse",customerInfo.get(CustomerInfo.Address),"Postkode",customerInfo.get(CustomerInfo.ZipCode)+ " "+town,"Email"
+                    ,customerInfo.get(CustomerInfo.Mail),"Telefon",customerInfo.get(CustomerInfo.PhoneNumber)};
 
 
 
