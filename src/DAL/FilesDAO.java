@@ -54,7 +54,7 @@ public class FilesDAO implements iFileDataAccess {
                 LocalDate date = rs.getDate("Date").toLocalDate();
                 byte usedInDoc = rs.getByte("usedInDoc");
 
-                
+
                 String filetype = filePath.substring(filePath.length() - 4, filePath.length());
 
                 switch (filetype) {
@@ -162,12 +162,7 @@ public class FilesDAO implements iFileDataAccess {
         }
     }
 
-    /**
-     * Gets the total amount of files.
-     * @return
-     */
-    public int getFileAmount() { return fileAmount;}
-
+    
     /**
      * Checking if the database has an entry matching the FilePath from the project.
      * @param filepath
