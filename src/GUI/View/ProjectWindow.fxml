@@ -11,7 +11,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="mainViewAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ProjectController">
+<AnchorPane fx:id="mainViewAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ProjectController">
    <children>
       <TabPane fx:id="informationTabPane" layoutX="50.0" layoutY="100.0" prefHeight="575.0" prefWidth="558.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -22,9 +22,9 @@
                         <TableView fx:id="fileTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="493.0" prefWidth="558.0" AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                               <TableColumn fx:id="filesPictureColumn" prefWidth="62.0" />
-                            <TableColumn fx:id="filesNameColumn" prefWidth="239.0" text="Name" />
+                            <TableColumn fx:id="filesNameColumn" prefWidth="194.4000244140625" text="Name" />
                             <TableColumn fx:id="filesDateColumn" prefWidth="160.0" text="Date" />
-                              <TableColumn fx:id="filesIncludedColumn" prefWidth="96.0" text="Include in PDF" />
+                              <TableColumn fx:id="filesIncludedColumn" prefWidth="140.7999267578125" text="Include in PDF" />
                           </columns>
                         </TableView>
                         <Button fx:id="saveFileButton" layoutX="474.0" layoutY="505.0" mnemonicParsing="false" onAction="#handleSaveNewFile" prefWidth="70.0" text="Save" />
