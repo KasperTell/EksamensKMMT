@@ -132,8 +132,8 @@ public class MainController extends BaseController {
 
             try {
                 customerTable.setItems(customerModel.loadCustomerList(0));
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            } catch (SQLException e) {
+                displayError(e);
             }
 
             NotesTextArea.setText("");
@@ -153,10 +153,10 @@ public class MainController extends BaseController {
         projectDateClosed.setCellValueFactory(new PropertyValueFactory<>("Date"));
         projectNameClosed.setCellValueFactory(new PropertyValueFactory<>("Title"));
         customerNameClosed.setCellValueFactory(new PropertyValueFactory<>("companyName"));
+
         try {
             openProjectsTable.setItems(projectModel.getAllProjectsOpen(userModel.getLoggedinUser().getId()));
-        } catch (Exception e){
-            e.printStackTrace();
+        } catch (SQLException e) {
             displayError(e);
         }
         closedProjectsTable.setItems(projectModel.getAllProjectsClose());
@@ -229,12 +229,7 @@ public class MainController extends BaseController {
 
             if (selectedProject != null)
             {
-                try {
-                    setProjectColumns();
-                } catch (Exception e) {
-                    displayError(e);
-                    e.printStackTrace();
-                }
+                setProjectColumns();
 
                     HashMap<ButtonType, Boolean> turnButtonOnOrOff = personTypeChooser.closeProjectButtonOnOrOff();
 
@@ -258,13 +253,8 @@ public class MainController extends BaseController {
 
             if (selectedProject!=null)
             {
-                try {
-                    setProjectColumns();
-                } catch (Exception e) {
-                    displayError(e);
-                    e.printStackTrace();
-                }
 
+                setProjectColumns();
 
                 HashMap<ButtonType, Boolean> turnButtonOnOrOff = personTypeChooser.openProjectButtonOnOrOff();
 
@@ -285,7 +275,7 @@ public class MainController extends BaseController {
     /**
      * Set the information in the project column in the tableview.
      */
-    private void setProjectColumns() throws Exception {
+    private void setProjectColumns()  {
 
 
         customerNameClm.setCellValueFactory(new PropertyValueFactory<>("companyName"));
@@ -296,7 +286,11 @@ public class MainController extends BaseController {
         customerZipToTown.setCellValueFactory(new PropertyValueFactory<>("town"));
 
 
-        customerTable.setItems(customerModel.loadCustomerList(selectedProject.getCustomerID()));
+        try {
+            customerTable.setItems(customerModel.loadCustomerList(selectedProject.getCustomerID()));
+        } catch (SQLException e) {
+            displayError(e);;
+        }
     }
 
 
@@ -314,11 +308,11 @@ public class MainController extends BaseController {
             int closeProject = 1;
             int id = selectedProject.getId();
             selectedProject = null;
+
             try {
                 projectModel.changeProjectStatus(closeProject, id);
-            } catch (Exception e) {
-                displayError(e);
-                e.printStackTrace();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
 
             removeSelection();
@@ -342,9 +336,8 @@ public class MainController extends BaseController {
 
             try {
                 projectModel.changeProjectStatus(reOpenProject, id);
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 displayError(e);
-                e.printStackTrace();
             }
 
             removeSelection();
@@ -467,16 +460,14 @@ public class MainController extends BaseController {
         {
 
         Project project = new Project(id, title, customerID, date, isOpen, note,company);
+
             try {
-                //Send the project to the database.
                 projectModel.createNewProject(project);
-                newProjectAction();
             } catch (SQLException e) {
-                displayError(e);
-                e.printStackTrace();
-            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
+
+            newProjectAction();
 
             projectNameTextField.setText("");
             customerComboBox.getSelectionModel().clearSelection();
@@ -597,15 +588,16 @@ public class MainController extends BaseController {
             int id = 1;
             customer = new Customer(id, field[0], field[1], companyName, field[2], mail, phoneNumber, customerZipCode, "");
 
-            try {
-                //Sending the customer to the database.
-                customerModel.createNewCustomer(customer);
-                newCustomerAction(); //Close the vbox.
-            } catch (Exception e) {
-                displayError(e);
-                e.printStackTrace();
+            //Sending the customer to the database.
 
+            try {
+                customerModel.createNewCustomer(customer);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
+
+
+            newCustomerAction(); //Close the vbox.
 
             TextField[] textFields={customerFirstNameTextField,customerLastNameTextField,customerAddressTextField,
                     customerPhoneNumberTextField,customerZipCodeTextField,companyNameTextField,customerEmailTextField};
@@ -636,11 +628,11 @@ public class MainController extends BaseController {
             table.getItems().clear();
         }
         table.getItems().clear();
+
         try {
             table.setItems(projectModel.searchByQuery(query));
-        } catch (Exception e) {
-            displayError(e);
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

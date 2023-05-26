@@ -4,6 +4,7 @@ import BE.ProjectFiles;
 import DAL.FilesDAO;
 import DAL.iFileDataAccess;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -24,7 +25,7 @@ public class ProjectFilesManager {
      * @return
      * @throws Exception
      */
-    public List<ProjectFiles> loadFilesFromAProject(int projectID) throws Exception { return filesDAO.loadFilesFromAProject(projectID);}
+    public List<ProjectFiles> loadFilesFromAProject(int projectID) throws SQLException, FileNotFoundException { return filesDAO.loadFilesFromAProject(projectID);}
 
     /**
      * Sends an update on a documents status through the BLL.
@@ -55,5 +56,5 @@ public class ProjectFilesManager {
      * @return
      * @throws Exception
      */
-    public boolean doesFileExist(String filepath) throws Exception { return filesDAO.doesFileExist(filepath);}
+    public boolean doesFileExist(String filepath) throws SQLException { return filesDAO.doesFileExist(filepath);}
 }

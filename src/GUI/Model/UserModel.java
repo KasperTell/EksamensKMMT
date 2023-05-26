@@ -7,6 +7,9 @@ import PersonsTypes.Technician;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javax.imageio.IIOException;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserModel {
@@ -23,7 +26,7 @@ public class UserModel {
      * Constructor for the class "UserModel".
      * @throws Exception
      */
-    public UserModel() throws Exception {
+    public UserModel() throws SQLException, IOException {
         userManager = new UserManager();
         allTechnicians = FXCollections.observableArrayList();
         allSalesmen = FXCollections.observableArrayList();
@@ -42,7 +45,7 @@ public class UserModel {
      * @return
      * @throws Exception
      */
-    public User loadUser(String name)throws Exception{return userManager.loadUser(name);}
+    public User loadUser(String name)throws SQLException{return userManager.loadUser(name);}
 
     public ObservableList<Role> getAllRoles() {return allRoles;}
 
@@ -53,7 +56,7 @@ public class UserModel {
     public ObservableList<User> getAllTechnicians() {return allTechnicians;}
 
     public ObservableList<User> getallSalesmen() {return allSalesmen;}
-    public ObservableList<User> getAllTechniciansOnProject(int projectID) throws Exception {
+    public ObservableList<User> getAllTechniciansOnProject(int projectID) throws SQLException {
         allTechniciansOnProject.clear();
         allTechniciansOnProject.addAll(userManager.filterTechnicianById(projectID));
         return allTechniciansOnProject;
@@ -67,14 +70,14 @@ public class UserModel {
      * @return
      * @throws Exception
      */
-    public boolean validateUsername(String username) throws Exception{return userManager.validateUsername(username);}
+    public boolean validateUsername(String username) throws SQLException{return userManager.validateUsername(username);}
 
     /**
      *
      * @param createdUser
      * @throws Exception
      */
-    public void createNewUser(User createdUser) throws Exception {
+    public void createNewUser(User createdUser) throws SQLException {
         User newUser =  userManager.createNewUser(createdUser);
         if(newUser.getRole() == 4) {
             allTechnicians.add(newUser);
@@ -100,7 +103,7 @@ public class UserModel {
      * @param selectedUser
      * @throws Exception
      */
-    public void deleteUser(User selectedUser) throws Exception {
+    public void deleteUser(User selectedUser) throws SQLException {
         userManager.deleteUser(selectedUser);
         if(selectedUser.getRole() == 2){
         allTechnicians.remove(selectedUser);}
@@ -117,7 +120,7 @@ public class UserModel {
      * @param projectID
      * @throws Exception
      */
-    public void removeTechnicianFromProject(User selectedTechnician, int projectID) throws Exception {
+    public void removeTechnicianFromProject(User selectedTechnician, int projectID) throws SQLException {
         allTechniciansOnProject.remove(selectedTechnician);
         userManager.removeTechnicianFromProject(selectedTechnician, projectID);
     }
@@ -128,7 +131,7 @@ public class UserModel {
      * @param projectID
      * @throws Exception
      */
-    public void moveTechnician(int technicanID, int projectID) throws Exception {
+    public void moveTechnician(int technicanID, int projectID) throws SQLException {
         userManager.moveTechnician(technicanID, projectID);
         allTechniciansOnProject.clear();
         allTechniciansOnProject.addAll(userManager.filterTechnicianById(projectID));

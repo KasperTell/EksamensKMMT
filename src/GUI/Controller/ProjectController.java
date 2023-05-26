@@ -30,6 +30,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -121,11 +122,11 @@ public class ProjectController extends BaseController {
         NotesTextAreaProject.setText(selectedProject.getNote());
         NotesTextAreaProject.setWrapText(true);
         listTechsComboBox.setItems(userModel.getAllTechnicians());
+
         try {
             techsOnProjectListView.setItems(userModel.getAllTechniciansOnProject(selectedProject.getId()));
-        } catch (Exception e) {
-            displayError(e);
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -162,7 +163,7 @@ public class ProjectController extends BaseController {
         fileTable.setOnMouseClicked(event -> {
             selectedfile = fileTable.getSelectionModel().getSelectedItem();
 
-                try {
+
                     // Check if the selected file is an image file (JPEG, PNG, or JPG)
                     if (selectedfile!=null)
                     {
@@ -173,7 +174,12 @@ public class ProjectController extends BaseController {
                             
                             if (Files.exists(Path.of(selectedfile.getFilePath()))) //check om filen eksisterer
                             {
-                                Image image = new Image(new FileInputStream(selectedfile.getFilePath()));
+                                Image image = null;
+                                try {
+                                    image = new Image(new FileInputStream(selectedfile.getFilePath()));
+                                } catch (FileNotFoundException e) {
+                                    throw new RuntimeException(e);
+                                }
                                 filesPreviewImageView.setImage(image);
                             }
                             else
@@ -183,9 +189,7 @@ public class ProjectController extends BaseController {
                         }
 
                     }
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+
 
             if (event.getClickCount() == 2) {
                 showFile.showFile(selectedfile.getFilePath());
@@ -209,20 +213,19 @@ public class ProjectController extends BaseController {
 
 
         try {
-           fileTable.setItems(projectFilesModel.getAllFilesFromProject(projectNumber));
-        } catch (Exception e) {
-            displayError(e);
-            e.printStackTrace();
+            fileTable.setItems(projectFilesModel.getAllFilesFromProject(projectNumber));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
 
-            try {
-                projectFilesModel.fileLoopStop(); //Stopper tidligere løkker i projectFiles inden ny startes
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-
-
+        try {
+            projectFilesModel.fileLoopStop(); //Stopper tidligere løkker i projectFiles inden ny startes
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
 
         projectFilesModel.observer(); //Her startes en løkke, der observere ændringer i CheckBox
@@ -232,11 +235,11 @@ public class ProjectController extends BaseController {
     @FXML
     private void saveNoteAction(ActionEvent actionEvent) {
         String note = NotesTextAreaProject.getText();
+
         try {
             projectModel.changeNote(note, selectedProject.getId());
-        } catch (Exception e) {
-            displayError(e);
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -252,11 +255,11 @@ public class ProjectController extends BaseController {
             //Setting the information in the labels.
             int customerID = selectedProject.getCustomerID();
             Customer customer = null;
+
             try {
                 customer = customerModel.loadCustomer(customerID);
-            } catch (Exception e) {
-                displayError(e);
-                e.printStackTrace();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
 
             customerInfo.put(CustomerInfo.Company, customer.getCompanyName());
@@ -287,11 +290,11 @@ public class ProjectController extends BaseController {
         file = fileChooser.showOpenDialog(stage);
         //If a file is selected. Copy it to the resource folder.
         if (file != null) {
+
             try {
                 Files.copy(file.toPath(), target.resolve(file.toPath().getFileName()), REPLACE_EXISTING);
-            } catch (Exception e) {
-                displayError(e);
-                e.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
 
             String filename=file.toPath().getFileName().toString();
@@ -303,10 +306,12 @@ public class ProjectController extends BaseController {
             ProjectFiles projectFiles=new ProjectFiles(1,selectedProject.getId(),filename ,"Resources/Pictures/ImagesSavedFromTechnicians/"+filename,saveDate,null,null);
             try {
                 projectFilesModel.createNewFile(projectFiles);
-            } catch (Exception e) {
-                displayError(e);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
+
 
         }
     }
@@ -322,16 +327,10 @@ public class ProjectController extends BaseController {
         HashMap<CustomerInfo, String> customerMap = makeCustomerMap();
         CustomerPdf customerPdf = new CustomerPdf(imagePath, customerMap, selectedProject.getNote(), selectedProject.getTitle());
         String path = null;
+
         try {
             path = customerPdf.makePdf();
-        } catch (FileNotFoundException e) {
-            displayError(e);
-            throw new RuntimeException(e);
-        } catch (MalformedURLException e) {
-            displayError(e);
-            throw new RuntimeException(e);
         } catch (Exception e) {
-            displayError(e);
             throw new RuntimeException(e);
         }
 
@@ -372,12 +371,7 @@ public class ProjectController extends BaseController {
 
         DrawController controller = loader.getController();
         controller.setModel(super.getModel());
-        try {
-            controller.setup();
-        } catch (Exception e) {
-            displayError(e);
-            throw new RuntimeException(e);
-        }
+        controller.setup();
 
         Stage stage = new Stage();
 
@@ -389,10 +383,12 @@ public class ProjectController extends BaseController {
 
 
         ProjectFiles fileToDelete = fileTable.getSelectionModel().getSelectedItem();
+
         try {
             projectFilesModel.deleteFile(fileToDelete);
-        } catch (Exception e) {
-            displayError(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
 
@@ -421,15 +417,17 @@ public class ProjectController extends BaseController {
 
                 alert.showAndWait().ifPresent(type -> {
                     if (type == okButton) {
+
+                        handleDeleteFileComputer();
                         try {
-
-                            handleDeleteFileComputer();
                             projectFilesModel.deleteFile(selectedfile);
-
-                        } catch (Exception e) {
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        } catch (FileNotFoundException e) {
                             throw new RuntimeException(e);
                         }
-                      ;
+
+
                         filesPreviewImageView.setImage(null);
                     }
 
@@ -451,11 +449,11 @@ public class ProjectController extends BaseController {
         {
             int projectID = selectedProject.getId();
             int technicianID = listTechsComboBox.getSelectionModel().getSelectedItem().getId();
+
             try {
                 userModel.moveTechnician(technicianID, projectID);
-            } catch (Exception e) {
-                displayError(e);
-                e.printStackTrace();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
 
@@ -482,11 +480,11 @@ public class ProjectController extends BaseController {
                 if (type == okButton) {
                     User selectedTechnician = techsOnProjectListView.getSelectionModel().getSelectedItem();
                     int projectID = selectedProject.getId();
+
                     try {
                         userModel.removeTechnicianFromProject(selectedTechnician, projectID);
-                    } catch (Exception e) {
-                        displayError(e);
-                        e.printStackTrace();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
                     }
 
 

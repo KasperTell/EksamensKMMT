@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TabPane;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -25,7 +26,7 @@ public class ProjectModel {
      * Constructor for the class "ProjectModel".
      * @throws Exception
      */
-    public ProjectModel() throws Exception {
+    public ProjectModel() throws SQLException, IOException {
         projectManager = new ProjectManager();
         projectsOpen = FXCollections.observableArrayList();
         projectClose = FXCollections.observableArrayList();
@@ -52,7 +53,7 @@ public class ProjectModel {
      * @param project
      * @throws SQLException
      */
-    public void createNewProject(Project project) throws Exception {
+    public void createNewProject(Project project) throws SQLException {
     projectManager.createNewProject(project);
     clearLists();
 
@@ -65,7 +66,7 @@ public class ProjectModel {
      * @param id
      * @throws Exception
      */
-    public void changeProjectStatus(int projectStatus, int id) throws Exception {
+    public void changeProjectStatus  (int projectStatus, int id) throws SQLException {
         projectManager.changeProjectStatus(projectStatus, id);
         clearLists();
     }
@@ -76,7 +77,7 @@ public class ProjectModel {
      * @return
      * @throws Exception
      */
-    public ObservableList<Project> searchByQuery(String searchQuery) throws Exception {
+    public ObservableList<Project> searchByQuery(String searchQuery) throws SQLException {
         if(Objects.equals(searchQuery, "")){
             searchedProjects.addAll(projectManager.loadProjectOfAType(true));
         } else {
@@ -93,13 +94,13 @@ public class ProjectModel {
 
 
 
-    public void changeNote(String note, int id) throws Exception {
+    public void changeNote(String note, int id) throws SQLException {
         projectManager.changeNote(note, id);
         clearLists();
 
     }
 
-public void clearLists() throws Exception {
+public void clearLists() throws SQLException {
     projectsOpen.clear();
     projectClose.clear();
     projectClose.addAll(projectManager.loadProjectOfAType(false));

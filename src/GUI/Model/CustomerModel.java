@@ -5,6 +5,8 @@ import BLL.CustomerManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javax.imageio.IIOException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -17,9 +19,10 @@ public class CustomerModel {
 
     /**
      * Constructor for the class "CustomerModel".
-     * @throws Exception
+     * @throws SQLException,IOException
      */
-    public CustomerModel() throws Exception {
+    public CustomerModel() throws SQLException,IOException  {
+
         customerManager = new CustomerManager();
         allCustomers = FXCollections.observableArrayList();
         allCustomers.addAll(customerManager.loadAllCustomers());
@@ -36,9 +39,9 @@ public class CustomerModel {
      * Sends the customer based on a specific ID through the model.
      * @param customerID
      * @return
-     * @throws Exception
+     * @throws SQLException
      */
-    public ObservableList<Customer> loadCustomerList(int customerID) throws Exception {
+    public ObservableList<Customer> loadCustomerList(int customerID) throws SQLException {
         customerInfo.clear();
         customerInfo.addAll(loadCustomer(customerID));
         return customerInfo;}
@@ -48,21 +51,27 @@ public class CustomerModel {
      * Sends the customer based on a specific ID through the model.
      * @param customerID
      * @return
-     * @throws Exception
+     * @throws SQLException
      */
-    public Customer loadCustomer(int customerID) throws Exception { return customerManager.loadCustomer(customerID);}
+    public Customer loadCustomer(int customerID) throws SQLException { return customerManager.loadCustomer(customerID);}
 
 
     /**
      * Sends the customer through the model and adds it to the list of all customers.
      * @param customer
-     * @throws Exception
+     * @throws SQLException
      */
-    public void createNewCustomer(Customer customer) throws Exception {
+    public void createNewCustomer(Customer customer) throws SQLException {
         createdCustomer = customerManager.createNewCustomer(customer);
         allCustomers.add(createdCustomer);
     }
 
+
+    /**
+     * Return the town name related to the zip code as String.
+     * @param zipCode
+     * @throws SQLException
+     */
 
     public String TownToZipCode(int zipCode) throws SQLException
     {

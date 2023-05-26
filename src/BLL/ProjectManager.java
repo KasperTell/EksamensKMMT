@@ -23,7 +23,7 @@ public class ProjectManager {
      * @return
      * @throws Exception
      */
-    public List<Project> loadProjectOfAType(Boolean open) throws Exception { return projectDAO.loadProjectOfAType(open);}
+    public List<Project> loadProjectOfAType(Boolean open) throws SQLException { return projectDAO.loadProjectOfAType(open);}
 
     /**
      * Send a created project through BLL.
@@ -39,7 +39,7 @@ public class ProjectManager {
      * @param id
      * @throws Exception
      */
-    public void changeProjectStatus(int projectStatus, int id) throws Exception { projectDAO.changeProjectStatus(projectStatus, id);}
+    public void changeProjectStatus(int projectStatus, int id) throws SQLException { projectDAO.changeProjectStatus(projectStatus, id);}
 
     /**
      * Sends information for changing the project from open to closed through BLL.
@@ -47,7 +47,7 @@ public class ProjectManager {
      * @param id
      * @throws Exception
      */
-    public void changeNote(String note, int id) throws Exception { projectDAO.changeNote(note, id);}
+    public void changeNote(String note, int id) throws SQLException { projectDAO.changeNote(note, id);}
 
     /**
      * Gets a list based on a search query.
@@ -55,7 +55,7 @@ public class ProjectManager {
      * @return
      * @throws Exception
      */
-    public List<Project> searchByQuery (String query) throws Exception { return projectDAO.searchByQuery(query);}
+    public List<Project> searchByQuery (String query) throws SQLException { return projectDAO.searchByQuery(query);}
 
     /**
      * Gets a list of all projects assigned to a logged in.

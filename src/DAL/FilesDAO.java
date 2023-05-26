@@ -5,9 +5,11 @@ import DAL.PictureClasses.ImageViewKlient;
 import DAL.PictureClasses.LilleJpeg;
 import DAL.PictureClasses.LilleJpg;
 import DAL.PictureClasses.LillePng;
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.ImageView;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
@@ -31,7 +33,7 @@ public class FilesDAO implements iFileDataAccess {
      * @return
      * @throws Exception
      */
-    public List<ProjectFiles> loadFilesFromAProject(int projectID) throws Exception {
+    public List<ProjectFiles> loadFilesFromAProject(int projectID) throws FileNotFoundException, SQLException {
         ArrayList<ProjectFiles> loadFilesFromAProject = new ArrayList<>();
         ImageView picture;
         ImageViewKlient pictureFrame = null;
@@ -74,16 +76,15 @@ public class FilesDAO implements iFileDataAccess {
 
                 //Creating the checkbox and set it as empty.
                 checkBox = new CheckBox();
-                if (usedInDoc == 0){
+                if (usedInDoc == 0) {
                     checkBox.setSelected(true);
                 }
-                    ProjectFiles files = new ProjectFiles(id, projectID1, name, filePath, date, picture, checkBox);
-                    loadFilesFromAProject.add(files);
+                ProjectFiles files = new ProjectFiles(id, projectID1, name, filePath, date, picture, checkBox);
+                loadFilesFromAProject.add(files);
             }
-            return loadFilesFromAProject;
-        } catch (Exception ex) {
-            throw new Exception("Failed to retrieve files from database", ex);
         }
+            return loadFilesFromAProject;
+
     }
 
     /**

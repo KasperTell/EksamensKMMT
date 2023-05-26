@@ -8,6 +8,8 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -24,7 +26,7 @@ public class ProjectFilesModel {
      * @throws Exception
      */
 
-    public ProjectFilesModel() throws Exception {
+    public ProjectFilesModel() throws IOException {
         projectFilesManager = new ProjectFilesManager();
         projectFiles=new SimpleListProperty<>();
     }
@@ -33,9 +35,9 @@ public class ProjectFilesModel {
      * get the list of ProjectFiles.
      * @param projectID
      * @return
-     * @throws Exception
+     * @throws SQLException, FileNotFoundException
      */
-    public ObservableList<ProjectFiles> getAllFilesFromProject(int projectID) throws Exception {
+    public ObservableList<ProjectFiles> getAllFilesFromProject(int projectID) throws SQLException, FileNotFoundException {
 
         projectFiles.clear();
         projectFiles.set(FXCollections.observableArrayList(projectFilesManager.loadFilesFromAProject(projectID)));
@@ -159,13 +161,11 @@ public class ProjectFilesModel {
         isRunning=false;
 
 
-
-
     }
 
 
 
-    public void createNewFile(ProjectFiles file) throws Exception {
+    public void createNewFile(ProjectFiles file) throws SQLException, FileNotFoundException {
         createdFile = projectFilesManager.createNewFile(file);
         projectFiles.clear();
         projectFiles.set(FXCollections.observableArrayList(projectFilesManager.loadFilesFromAProject(createdFile.getProjectID())));
@@ -176,7 +176,7 @@ public class ProjectFilesModel {
 
 
 
-    public void deleteFile(ProjectFiles file) throws Exception {
+    public void deleteFile(ProjectFiles file) throws SQLException, FileNotFoundException {
 
         projectFilesManager.deleteFile(file);
         projectFiles.clear();
@@ -190,6 +190,6 @@ public class ProjectFilesModel {
      * @return
      * @throws Exception
      */
-    public boolean doesFileExist(String filepath) throws Exception{return projectFilesManager.doesFileExist(filepath);}
+    public boolean doesFileExist(String filepath) throws SQLException {return projectFilesManager.doesFileExist(filepath);}
 }
 

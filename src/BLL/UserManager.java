@@ -26,7 +26,7 @@ public class UserManager {
      * @return
      * @throws Exception
      */
-    public User loadUser(String username) throws Exception { return userDAO.loadUser(username);}
+    public User loadUser(String username) throws SQLException { return userDAO.loadUser(username);}
 
     /**
      * Gets a list of all users with a specific role.
@@ -34,7 +34,7 @@ public class UserManager {
      * @return
      * @throws Exception
      */
-    public List<User> loadUserOfAKind(int role) throws Exception { return userDAO.loadUserOfAType(role);}
+    public List<User> loadUserOfAKind(int role) throws SQLException { return userDAO.loadUserOfAType(role);}
 
     /**
      * Sends a created user through BLL.
@@ -42,14 +42,14 @@ public class UserManager {
      * @return
      * @throws Exception
      */
-    public User createNewUser(User user) throws Exception { return userDAO.createNewUser(user);}
+    public User createNewUser(User user) throws SQLException { return userDAO.createNewUser(user);}
 
     /**
      * Send a user marked for soft deletion trough BLL.
      * @param selectedUser
      * @throws Exception
      */
-    public void deleteUser(User selectedUser) throws Exception { userDAO.deleteUser(selectedUser);}
+    public void deleteUser(User selectedUser) throws SQLException { userDAO.deleteUser(selectedUser);}
 
     /**
      * Sends a username for validation through the BLL.
@@ -57,7 +57,7 @@ public class UserManager {
      * @return
      * @throws Exception
      */
-    public boolean validateUsername(String username) throws Exception { return userDAO.validateUsername(username);}
+    public boolean validateUsername(String username) throws SQLException { return userDAO.validateUsername(username);}
 
     /**
      * Gets a list of all the technicians working on a specific project based on an ID.
@@ -65,7 +65,7 @@ public class UserManager {
      * @return
      * @throws Exception
      */
-    public List<User> filterTechnicianById(int projectID) throws Exception { return userDAO.filterTechnicianById(projectID);}
+    public List<User> filterTechnicianById(int projectID) throws SQLException { return userDAO.filterTechnicianById(projectID);}
 
     /**
      * Removes a technician from a project based on the user and project.
@@ -73,7 +73,7 @@ public class UserManager {
      * @param projectID
      * @throws Exception
      */
-    public void removeTechnicianFromProject(User selectedTechnician, int projectID) throws Exception { userDAO.removeTechnicianFromProject(selectedTechnician, projectID);}
+    public void removeTechnicianFromProject(User selectedTechnician, int projectID) throws SQLException { userDAO.removeTechnicianFromProject(selectedTechnician, projectID);}
 
     /**
      * Adds a specific technician to a project.
@@ -82,7 +82,7 @@ public class UserManager {
      * @return
      * @throws Exception
      */
-    public ProjectTechnician moveTechnician(int technicianID, int projectID) throws Exception { return userDAO.moveTechnician(technicianID, projectID);}
+    public ProjectTechnician moveTechnician(int technicianID, int projectID) throws SQLException { return userDAO.moveTechnician(technicianID, projectID);}
 
     /**
      * Gets a list of all available employee roles.
