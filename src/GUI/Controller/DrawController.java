@@ -145,27 +145,31 @@ public class DrawController extends BaseController {
         Path path = Paths.get(filepath);
 
 
-        if (!projectFilesModel.doesFileExist(filepath)) {
+        try {
+            if (!projectFilesModel.doesFileExist(filepath)) {
 
-            WritableImage picture = c.snapshot(null, null);
-            try {
-                ImageIO.write(SwingFXUtils.fromFXImage(picture, null), "png", new File(path.toUri()));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+                WritableImage picture = c.snapshot(null, null);
+                try {
+                    ImageIO.write(SwingFXUtils.fromFXImage(picture, null), "png", new File(path.toUri()));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+
+                ProjectFiles fileToSave = new ProjectFiles(1, id, name, filepath, date, null, null);
+
+                try {
+                    projectFilesModel.createNewFile(fileToSave);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
-
-
-            ProjectFiles fileToSave = new ProjectFiles(1, id, name, filepath, date, null, null);
-
-            try {
-                projectFilesModel.createNewFile(fileToSave);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            else {
+                ShowFile showFile = new ShowFile();
+                showFile.showErrorBox("Something went wrong", "Delete previous drawings before adding a new drawing.");
             }
-        }
-        else {
-            ShowFile showFile = new ShowFile();
-            showFile.showErrorBox("Something went wrong", "Delete previous drawings before adding a new drawing.");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
