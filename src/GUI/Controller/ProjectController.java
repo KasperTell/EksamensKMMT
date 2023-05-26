@@ -183,9 +183,8 @@ public class ProjectController extends BaseController {
                         }
 
                     }
-                } catch (Exception e) {
-                    displayError(e);
-                    e.printStackTrace();
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
                 }
 
             if (event.getClickCount() == 2) {
@@ -305,6 +304,7 @@ public class ProjectController extends BaseController {
             try {
                 projectFilesModel.createNewFile(projectFiles);
             } catch (Exception e) {
+                displayError(e);
                 throw new RuntimeException(e);
             }
 
@@ -325,10 +325,13 @@ public class ProjectController extends BaseController {
         try {
             path = customerPdf.makePdf();
         } catch (FileNotFoundException e) {
+            displayError(e);
             throw new RuntimeException(e);
         } catch (MalformedURLException e) {
+            displayError(e);
             throw new RuntimeException(e);
         } catch (Exception e) {
+            displayError(e);
             throw new RuntimeException(e);
         }
 
@@ -362,6 +365,7 @@ public class ProjectController extends BaseController {
         try {
             root = loader.load();
         } catch (IOException e) {
+            displayError(e);
             throw new RuntimeException(e);
         }
         root.getStylesheets().add("/GUI/View/Draw/DrawWindow.css");
@@ -371,6 +375,7 @@ public class ProjectController extends BaseController {
         try {
             controller.setup();
         } catch (Exception e) {
+            displayError(e);
             throw new RuntimeException(e);
         }
 
@@ -387,6 +392,7 @@ public class ProjectController extends BaseController {
         try {
             projectFilesModel.deleteFile(fileToDelete);
         } catch (Exception e) {
+            displayError(e);
             throw new RuntimeException(e);
         }
 

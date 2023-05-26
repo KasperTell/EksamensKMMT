@@ -4,6 +4,7 @@ import BE.ProjectFiles;
 import DAL.FilesDAO;
 import GUI.Model.ProjectFilesModel;
 import GUI.Model.ProjectModel;
+import UTIL.ShowFile;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -143,29 +145,28 @@ public class DrawController extends BaseController {
         Path path = Paths.get(filepath);
 
 
-        try {
-            if (!projectFilesModel.doesFileExist(filepath)) {
+        if (!projectFilesModel.doesFileExist(filepath)) {
 
-                WritableImage picture = c.snapshot(null, null);
+            WritableImage picture = c.snapshot(null, null);
+            try {
                 ImageIO.write(SwingFXUtils.fromFXImage(picture, null), "png", new File(path.toUri()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
 
+            ProjectFiles fileToSave = new ProjectFiles(1, id, name, filepath, date, null, null);
 
-                ProjectFiles fileToSave = new ProjectFiles(1, id, name, filepath, date, null, null);
-
+            try {
                 projectFilesModel.createNewFile(fileToSave);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-            else {
-                System.out.println("File already exist");
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Something went wrong");
-                alert.setHeaderText("Delete previous drawings before adding a new drawing.");
-                alert.showAndWait();
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
-
+        else {
+            ShowFile showFile = new ShowFile();
+            showFile.showErrorBox("Something went wrong", "Delete previous drawings before adding a new drawing.");
+        }
     }
 
     public void handleBackToMainView(ActionEvent actionEvent) {
