@@ -18,6 +18,7 @@ import javafx.util.Duration;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class UserController extends BaseController{
 
@@ -158,15 +159,15 @@ public class UserController extends BaseController{
 
 
             User user = new User(id, field[0], field[1], field[2], field[3], role);
-            try{
+
+            try {
                 if(userModel.validateUsername(username)){
                     usernameAlert();
                 } else{
                     userModel.createNewUser(user);
                 }
-            } catch (Exception e) {
-                displayError(e);
-                e.printStackTrace();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
 
             for (int i = 0; i < 4; i++) {
@@ -200,16 +201,11 @@ public class UserController extends BaseController{
                     }
                     try {
                         userModel.deleteUser(selectedUser);
-                    } catch (Exception e) {
-                        displayError(e);
-                        e.printStackTrace();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
                     }
                 }
             });
-
-
-
-
 
 
 

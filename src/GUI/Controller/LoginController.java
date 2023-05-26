@@ -16,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class LoginController extends BaseController {
     @FXML
@@ -47,16 +48,18 @@ public class LoginController extends BaseController {
         boolean flag = false;
         try {
             flag = userModel.validateUsername(username);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
         if(!flag) {
             loginFailedAlert();
         } else {
             //Set the user based on the correct username and get the matching password.
+
             try {
                 user = userModel.loadUser(username);
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
             //Check if the database password matches the user password, else show error.

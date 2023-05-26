@@ -18,9 +18,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class DrawController extends BaseController {
@@ -158,19 +160,18 @@ public class DrawController extends BaseController {
 
                 ProjectFiles fileToSave = new ProjectFiles(1, id, name, filepath, date, null, null);
 
-                try {
-                    projectFilesModel.createNewFile(fileToSave);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+                projectFilesModel.createNewFile(fileToSave);
             }
             else {
                 ShowFile showFile = new ShowFile();
                 showFile.showErrorBox("Something went wrong", "Delete previous drawings before adding a new drawing.");
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     public void handleBackToMainView(ActionEvent actionEvent) {
