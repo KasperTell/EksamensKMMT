@@ -154,7 +154,7 @@ public class DrawController extends BaseController {
                 try {
                     ImageIO.write(SwingFXUtils.fromFXImage(picture, null), "png", new File(path.toUri()));
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    displayError(e);
                 }
 
 

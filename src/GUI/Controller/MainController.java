@@ -312,7 +312,7 @@ public class MainController extends BaseController {
             try {
                 projectModel.changeProjectStatus(closeProject, id);
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                displayError(e);
             }
 
             removeSelection();
@@ -464,7 +464,7 @@ public class MainController extends BaseController {
             try {
                 projectModel.createNewProject(project);
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                displayError(e);
             }
 
             newProjectAction();
@@ -551,7 +551,7 @@ public class MainController extends BaseController {
             try {
                 town=customerModel.TownToZipCode(customerZipCode);
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                displayError(e);
 
             }
 
@@ -593,7 +593,7 @@ public class MainController extends BaseController {
             try {
                 customerModel.createNewCustomer(customer);
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                displayError(e);
             }
 
 
@@ -632,7 +632,7 @@ public class MainController extends BaseController {
         try {
             table.setItems(projectModel.searchByQuery(query));
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            displayError(e);
         }
     }
 
@@ -653,7 +653,7 @@ public class MainController extends BaseController {
             try {
                 pane = loader.load();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                displayError(e);
             }
             pane.getStylesheets().add("/GUI/View/MainWindow.css");
             mainViewAnchorPane.getChildren().setAll(pane);
@@ -679,7 +679,7 @@ public class MainController extends BaseController {
         try {
             pane = loader.load();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            displayError(e);
         }
         pane.getStylesheets().add("/GUI/View/MainWindow.css");
         mainViewAnchorPane.getChildren().setAll(pane);

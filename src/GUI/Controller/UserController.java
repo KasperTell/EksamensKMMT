@@ -167,7 +167,7 @@ public class UserController extends BaseController{
                     userModel.createNewUser(user);
                 }
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                displayError(e);
             }
 
             for (int i = 0; i < 4; i++) {
@@ -202,7 +202,7 @@ public class UserController extends BaseController{
                     try {
                         userModel.deleteUser(selectedUser);
                     } catch (SQLException e) {
-                        throw new RuntimeException(e);
+                        displayError(e);
                     }
                 }
             });
@@ -221,7 +221,7 @@ public class UserController extends BaseController{
         try {
             pane = loader.load();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            displayError(e);
         }
         pane.getStylesheets().add("/GUI/View/MainWindow.css");
         mainViewAnchorPane.getChildren().setAll(pane);

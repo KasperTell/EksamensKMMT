@@ -49,7 +49,7 @@ public class LoginController extends BaseController {
         try {
             flag = userModel.validateUsername(username);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            displayError(e);
         }
 
         if(!flag) {
@@ -60,7 +60,7 @@ public class LoginController extends BaseController {
             try {
                 user = userModel.loadUser(username);
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                displayError(e);
             }
             //Check if the database password matches the user password, else show error.
             if(BCrypt.checkpw(password, user.getPassword())) {
@@ -117,7 +117,7 @@ public class LoginController extends BaseController {
         try {
             pane = loader.load();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            displayError(e);
         }
 
 
