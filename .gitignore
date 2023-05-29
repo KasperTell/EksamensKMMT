@@ -119,6 +119,4 @@ fabric.properties
 .idea/**/azureSettings.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij
-
-Config/database.settings
-Config/database.settings.tom
+/Config/database.settings
