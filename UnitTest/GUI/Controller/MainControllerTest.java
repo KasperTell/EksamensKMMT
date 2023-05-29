@@ -8,7 +8,7 @@ import java.util.List;
 class MainControllerTest {
 
     @Test
-    void tjekNameAndAddressFields() {
+    void checkNameAndAddressFields() {
 
         //Arrange
         //Mock-up of TextFields
@@ -24,7 +24,6 @@ class MainControllerTest {
             if (!textFields[i].equals(field[i]))
                 textFields[i] = errorText[i];
             actualLines.add(textFields[i]);
-
         }
 
         //Assert
@@ -34,6 +33,5 @@ class MainControllerTest {
         expectedLines.add("Error in Address");
 
         Assertions.assertLinesMatch(expectedLines, actualLines);
-
     }
 }

@@ -11,7 +11,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("GUI/View/LoginView.fxml"));
         Parent root = loader.load();
@@ -22,9 +21,8 @@ public class Main extends Application {
 
         primaryStage.setScene(new Scene(root));
         root.getStylesheets().add("GUI/View/Login.css");
-        primaryStage.show();
-
         primaryStage.setResizable(false);
+        primaryStage.show();
     }
 }
 

@@ -1,7 +1,6 @@
 package GUI.Controller;
 
 import BE.ProjectFiles;
-import DAL.FilesDAO;
 import GUI.Model.ProjectFilesModel;
 import GUI.Model.ProjectModel;
 import UTIL.ShowFile;
@@ -10,7 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
@@ -50,6 +48,9 @@ public class DrawController extends BaseController {
         dragToolSelect();
     }
 
+    /**
+     * applies the selected image via a switch to a SetOnMouseClicked listener.
+     */
     public void clickToolSelect(){
 
         tool= canvas.getGraphicsContext2D();
@@ -83,6 +84,9 @@ public class DrawController extends BaseController {
         });
     }
 
+    /**
+     * Applies the eraser to a setOnMouseDragged listener.
+     */
     public void dragToolSelect(){
 
         tool = canvas.getGraphicsContext2D();
@@ -97,6 +101,9 @@ public class DrawController extends BaseController {
         });
     }
 
+    /**
+     * Methods to apply different images to GraphicsContent tool.
+     */
     public void setSpeakerTool(){
         Image speaker = new Image("/Pictures/PaintIcons/Speaker.png");
         tool.drawImage(speaker, x - speaker.getWidth() / 2, y - speaker.getHeight() / 2);
@@ -122,6 +129,9 @@ public class DrawController extends BaseController {
         tool.drawImage(techBox, x - techBox.getWidth() / 2, y - techBox.getHeight() / 2);
     }
 
+    /**
+     * Methods to apply an eraser to the GraphicsContent tool.
+     */
     public void setEraserTool(){
         tool.clearRect(x - 25,y - 25,50,50);
     }
@@ -135,18 +145,26 @@ public class DrawController extends BaseController {
     public void handleClear(ActionEvent actionEvent) {tool.clearRect(0,0,canvas.getWidth(), canvas.getHeight());}
     public void handleSaveCanvas(ActionEvent actionEvent) throws Exception {saveCanvas(canvas);}
 
+    /**
+     * Saves graphical content applied to a canvas to a readable .png file.
+     * @param c
+     * @throws Exception
+     */
     public void saveCanvas(Canvas c)  {
 
+        //Gets selectedProject ID
         int id = projectModel.getSelectedProject().getId();
 
+        //Gets selectedProject Title
         String name = projectModel.getSelectedProject().getTitle();
 
         LocalDate date = LocalDate.now();
 
+        //Converts the String to a filepath
         String filepath =  "Resources/Pictures/SavedProjectCanvas/" + "Prototype " +  name + ".png";
         Path path = Paths.get(filepath);
 
-
+        //If a file of the same does not exist a file is written to the path.
         try {
             if (!projectFilesModel.doesFileExist(filepath)) {
 
@@ -157,9 +175,8 @@ public class DrawController extends BaseController {
                     displayError(e);
                 }
 
-
+                //Saves the file properties to the database.
                 ProjectFiles fileToSave = new ProjectFiles(1, id, name, filepath, date, null, null);
-
                 projectFilesModel.createNewFile(fileToSave);
             }
             else {
@@ -171,9 +188,13 @@ public class DrawController extends BaseController {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-
     }
 
+
+    /**
+     * Closes the Draw window
+     * @param actionEvent
+     */
     public void handleBackToMainView(ActionEvent actionEvent) {
         Stage stage = (Stage) saveCanvas.getScene().getWindow();
         stage.close();
