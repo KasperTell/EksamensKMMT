@@ -354,6 +354,7 @@ public class MainController extends BaseController {
     @FXML
     private void newProjectAction() {
         //Initializing a new transition.
+
         TranslateTransition transition = new TranslateTransition();
         vbxCreateNewProject.toFront();
         transition.setNode(vbxCreateNewProject);
@@ -362,6 +363,7 @@ public class MainController extends BaseController {
 
         //If the Vbox is not shown, show it and set the background out of focus.
         if (!isMenuOpen) {
+
             isMenuOpen = true;
             transition.setToX(0);
             mainViewAnchorPane.setOpacity(0.2);
@@ -369,7 +371,7 @@ public class MainController extends BaseController {
                 @Override
                 public void handle(MouseEvent event) {
                     newProjectAction();
-                    mainViewAnchorPane.removeEventHandler(MouseEvent.MOUSE_CLICKED, this);
+              mainViewAnchorPane.removeEventHandler(MouseEvent.MOUSE_CLICKED, this);
 
                 }
             };
@@ -467,7 +469,7 @@ public class MainController extends BaseController {
                 displayError(e);
             }
 
-            newProjectAction();
+            //newProjectAction(); Tilføjet efter
 
             projectNameTextField.setText("");
             customerComboBox.getSelectionModel().clearSelection();
@@ -477,7 +479,7 @@ public class MainController extends BaseController {
             //Close the vbox.
 
             newProjectAction();
-            newProjectAction();
+            //newProjectAction();  Tilføjet efter
 
         }
 
@@ -618,6 +620,7 @@ public class MainController extends BaseController {
     private void searchProjectsByStringQuery(KeyEvent keyEvent) {
         String query = searchBoxTextField.getText();
         TableView<Project> table;
+
         if (openProjectsTab.isSelected()) {
             // Search for open projects
             table = openProjectsTable;
@@ -627,7 +630,7 @@ public class MainController extends BaseController {
             table = closedProjectsTable;
             table.getItems().clear();
         }
-        table.getItems().clear();
+   //     table.getItems().clear();
 
         try {
             table.setItems(projectModel.searchByQuery(query));

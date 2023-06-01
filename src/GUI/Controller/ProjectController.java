@@ -169,7 +169,7 @@ public class ProjectController extends BaseController {
                     {
                         filesPreviewImageView.setImage(null);
                         String fileName = selectedfile.getFilePath().toLowerCase();
-                        if (fileName.endsWith(".jpeg") || fileName.endsWith(".png") || fileName.endsWith(".jpg")) {
+ //                       if (fileName.endsWith(".jpeg") || fileName.endsWith(".png") || fileName.endsWith(".jpg")) {
 
                             
                             if (Files.exists(Path.of(selectedfile.getFilePath()))) //check om filen eksisterer
@@ -188,7 +188,7 @@ public class ProjectController extends BaseController {
                             }
                         }
 
-                    }
+   //                 }
 
 
             if (event.getClickCount() == 2) {
@@ -224,7 +224,7 @@ public class ProjectController extends BaseController {
         try {
             projectFilesModel.fileLoopStop(); //Stopper tidligere løkker i projectFiles inden ny startes
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e); //Øv
         }
 
 

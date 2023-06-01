@@ -53,11 +53,12 @@ public class DrawController extends BaseController {
      */
     public void clickToolSelect(){
 
-        tool= canvas.getGraphicsContext2D();
+        //tool= canvas.getGraphicsContext2D();
         canvas.setOnMouseClicked(e -> {
 
              x = e.getX();
              y = e.getY();
+
 
             switch (speakerSelected + "-" + screenSelected + "-" + projectorSelected + "-" + cableSelected + "-" + techBoxSelected){
 
@@ -98,6 +99,11 @@ public class DrawController extends BaseController {
             if (eraserSelected){
                 setEraserTool();
             }
+
+            if (cableSelected){  //Tomas tilføjelse
+                setCableTool();
+            }
+
         });
     }
 
