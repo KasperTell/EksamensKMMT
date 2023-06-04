@@ -155,6 +155,7 @@ public class UserController extends BaseController{
         if (save)
         {
             String salt = BCrypt.gensalt(12);
+
             field[3] = BCrypt.hashpw(field[3], salt);   //password = BCrypt.hashpw(password, salt); Rettet
 
 
