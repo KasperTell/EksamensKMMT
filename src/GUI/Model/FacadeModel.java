@@ -15,7 +15,7 @@ public class FacadeModel {
      * Constructor for the class "FacadeModel"
      * @throws Exception
      */
-    public FacadeModel() throws Exception{
+    public FacadeModel() throws Exception{  //Skulle have været en specifik expection
         projectFilesModel = new ProjectFilesModel();
         projectModel = new ProjectModel();
         customerModel = new CustomerModel();

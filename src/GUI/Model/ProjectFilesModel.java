@@ -51,7 +51,7 @@ public class ProjectFilesModel {
     public void observer()
     {
          ArrayList<Boolean> oldSelected= new ArrayList<>();
-        number=0;
+        number=0; //Tæller gennemkørsler indeni løkken
 
 
         Thread t = new Thread(() ->
@@ -59,26 +59,26 @@ public class ProjectFilesModel {
             isRunning=true;
 
             if (projectFiles.getSize()!=0) //Ingen grund til gennemløb, hvis der er ingen filer.
-                while (isRunning) {
+                while (isRunning) {  //Denne løkke kan kun standses udefra
 
 
-                    if (projectFiles.size()!=oldSelected.size())
+                    if (projectFiles.size()!=oldSelected.size())    //autooptimeret løkke har anden længde end ikke auto generet løkke
                         {
-                            oldSelected.clear();
-                           runs=0;
+                            oldSelected.clear();        //Slettes ArrayList
+                           runs=0;                      //Første gennemkørsel.
                         }
 
 
                     for (ProjectFiles tjek : projectFiles) { //Her gennemløbes hele projectFiles linje for linje
 
 
-                        if (tjek.getUsedBox().isSelected())
+                        if (tjek.getUsedBox().isSelected())     //Undersøges om tjek altså projectFiles er selected
                         {
 
 
                             if (runs==0)                    //Vi vil sammenligne data fra projectfiles med et oldselection arkiv. I første omgang gemmes i oldselection til sammenligning senere.
                             {
-                                oldSelected.add(number,true);
+                                oldSelected.add(number,true); //Der er en counter kaldt number
 
                             }
 

@@ -1,6 +1,6 @@
 package GUI.Model;
 
-public enum CustomerInfo {
+public enum CustomerInfo { //Forkert placering af klasse
     Company,
     FirstName,
     Lastname,
